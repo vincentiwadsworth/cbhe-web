@@ -9,10 +9,13 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changes_detected }}
     steps:
       - uses: actions/checkout@v4
 
@@ -27,7 +30,12 @@ jobs:
         run: python scripts/fetch_prices.py
 
       - name: Commit updated data
+        id: commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update financial data"
           file_pattern: data/prices.json
+
+      - name: Trigger deploy
+        if: steps.commit.outputs.changes_detected == 'true'
+        run: gh workflow run deploy.yml
