@@ -69,6 +69,8 @@ export default defineConfig({
           "currency-exchange",
           "qr-code-2",
           "palette",
+          "light-mode",
+          "dark-mode",
         ],
       },
     }),

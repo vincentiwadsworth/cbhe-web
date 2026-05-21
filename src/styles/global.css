@@ -137,6 +137,86 @@
   }
 }
 
+/*
+ * Dark mode — inverts surface hierarchy following MD3 spec.
+ * Surfaces go from light to dark; primary shifts lighter.
+ * All color pairs must maintain ≥4.5:1 contrast ratio.
+ * Tokens marked "fixed" are shared across light/dark (same value in both).
+ */
+.dark {
+  /* ===== Primary (lighter tone for dark bg) ===== */
+  --color-primary: #82afe1;
+  --color-on-primary: #001d35;
+  --color-primary-container: #003257;
+  --color-on-primary-container: #d0e4ff;
+  /* primary-fixed tokens unchanged — shared across modes */
+  --color-inverse-primary: #01406c;
+
+  /* ===== Secondary ===== */
+  --color-secondary: #bfc8d4;
+  --color-on-secondary: #2a333f;
+  --color-secondary-container: #3e4854;
+  --color-on-secondary-container: #dbe3f1;
+
+  /* ===== Tertiary ===== */
+  --color-tertiary: #d4bbdd;
+  --color-on-tertiary: #3a2848;
+  --color-tertiary-container: #503d5e;
+  --color-on-tertiary-container: #f1daff;
+
+  /* ===== Error ===== */
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  /* ===== Success ===== */
+  --color-success: #acf4a2;
+  --color-success-container: #1a501b;
+
+  /* ===== Surface (dark hierarchy: lower = darker, higher = lighter) ===== */
+  --color-background: #0e1012;
+  --color-on-background: #e4e2e3;
+  --color-surface: #0e1012;
+  --color-surface-bright: #1a1c1e;
+  --color-surface-dim: #080a0c;
+  --color-surface-container: #16181a;
+  --color-surface-container-low: #121416;
+  --color-surface-container-high: #202224;
+  --color-surface-container-highest: #2c2e30;
+  --color-surface-variant: #2a3a4a;
+  --color-surface-tint: #82afe1;
+
+  /* ===== On Surface ===== */
+  --color-on-surface: #e4e2e3;
+  --color-on-surface-variant: #c4c6cc;
+
+  /* ===== Inverse (swap) ===== */
+  --color-inverse-surface: #e9f1ff;
+  --color-inverse-on-surface: #01406c;
+
+  /* ===== Outline ===== */
+  --color-outline: #8e9196;
+  --color-outline-variant: #44474c;
+
+  /* ===== Shadows (darker, still blue-tinted) ===== */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/*
+ * Theme transition helper — only applied AFTER initial load to prevent
+ * color flash on page navigation. The Layout.astro inline script adds
+ * this class after a 100ms delay.
+ */
+html.theme-transition-ready,
+html.theme-transition-ready *,
+html.theme-transition-ready *::before,
+html.theme-transition-ready *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
 /* Text balance for headings — prevents single-word orphans on mobile */
 h1, h2, h3, h4 {
   text-wrap: balance;
@@ -181,5 +261,25 @@ h1, h2, h3, h4 {
   /* Interactive cards — subtle press without spring */
   .card-press:active {
     transform: scale(0.98);
+  }
+
+  /* Glassmorphism card — semi-transparent with backdrop blur.
+     Requires a non-solid background behind it (gradient, pattern, or image)
+     for the blur effect to be visible. Keep the existing hover behavior
+     on the element itself. */
+  .glass-card {
+    background-color: color-mix(in srgb, var(--color-surface, #f5f3f4) 70%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-color: color-mix(in srgb, var(--color-outline-variant, #c4c6cc) 20%, transparent);
+    box-shadow: var(--shadow-lg, 0 12px 32px rgba(1,64,108,0.12));
+  }
+
+  /* Subtle decorative background for sections containing glass cards.
+     Two soft radial blobs that the backdrop-blur catches for depth. */
+  .bg-decorative {
+    background-image:
+      radial-gradient(circle at 20% 30%, var(--color-primary-container) 0%, transparent 55%),
+      radial-gradient(circle at 80% 70%, var(--color-tertiary-container) 0%, transparent 55%);
   }
 }

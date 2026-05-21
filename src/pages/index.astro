@@ -145,7 +145,7 @@ const gruposHome = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
       {gruposHome.map((group) => (
         <a href={`afiliadas#grupo-${groupSlugs[group.title]}`} class="block group">
-          <article class="bg-surface rounded-lg border-t-4 border-primary-container hover:border-primary/30 hover:shadow-md hover:scale-[1.01] transition-all duration-300 h-full">
+          <article class="glass-card rounded-lg border-t-4 border-primary-container hover:border-primary/30 hover:shadow-md hover:scale-[1.01] transition-all duration-300 h-full">
             <div class="p-6 md:p-8">
               <p class="font-headline font-extrabold text-4xl md:text-5xl text-primary mb-2 tracking-tight">{group.count}</p>
               <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">empresas</p>
@@ -246,7 +246,7 @@ const gruposHome = [
     <SectionHeading title="Novedades" description="Manténgase al día con las últimas noticias, eventos y análisis del sector energético boliviano." />
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {ultimosArticulos.map((articulo) => (
-        <article class="bg-surface-container-low rounded-lg overflow-hidden border border-outline-variant/30 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group">
+        <article class="glass-card rounded-lg overflow-hidden hover:shadow-md hover:border-primary/30 transition-all duration-300 group">
           {articulo.data.image && (
             <div class="h-48 overflow-hidden">
               <img

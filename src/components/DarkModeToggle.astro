@@ -1,0 +1,60 @@
+---
+import Icon from "./Icon.astro";
+/**
+ * DarkModeToggle — accessible theme toggle button.
+ * Uses localStorage for persistence, falls back to system preference.
+ * Keyboard accessible (Enter/Space), touch target ≥44×44px.
+ */
+---
+<script is:inline>
+  (function () {
+    const toggle = document.getElementById("theme-toggle");
+    if (!toggle) return;
+
+    const html = document.documentElement;
+    const sunIcon = toggle.querySelector(".theme-icon-sun");
+    const moonIcon = toggle.querySelector(".theme-icon-moon");
+
+    function setTheme(theme) {
+      if (theme === "dark") {
+        html.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        if (sunIcon) sunIcon.classList.remove("hidden");
+        if (moonIcon) moonIcon.classList.add("hidden");
+        toggle.setAttribute("aria-label", "Activar modo claro");
+      } else {
+        html.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        if (sunIcon) sunIcon.classList.add("hidden");
+        if (moonIcon) moonIcon.classList.remove("hidden");
+        toggle.setAttribute("aria-label", "Activar modo oscuro");
+      }
+    }
+
+    toggle.addEventListener("click", function () {
+      const isDark = html.classList.contains("dark");
+      setTheme(isDark ? "light" : "dark");
+    });
+
+    // Listen for system preference changes — only apply if user hasn't set a preference
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
+      if (localStorage.getItem("theme") === null) {
+        setTheme(e.matches ? "dark" : "light");
+      }
+    });
+  })();
+</script>
+
+<button
+  id="theme-toggle"
+  class="relative flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors"
+  aria-label="Activar modo oscuro"
+  type="button"
+>
+  <span class="theme-icon-sun hidden" aria-hidden="true">
+    <Icon name="material-symbols:light-mode" class="size-5" />
+  </span>
+  <span class="theme-icon-moon" aria-hidden="true">
+    <Icon name="material-symbols:dark-mode" class="size-5" />
+  </span>
+</button>

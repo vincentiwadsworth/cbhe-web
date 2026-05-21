@@ -63,8 +63,13 @@ if (currentPath) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#00507e" />
-    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#00507e" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1012" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Prevent flash of wrong theme: apply dark class BEFORE first paint -->
+    <script is:inline>
+      (function(){var e=localStorage.getItem('theme');if(e==='dark'||(!e&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');setTimeout(function(){document.documentElement.classList.add('theme-transition-ready')},100)})();
+    </script>
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonicalUrl} />
     <base href={baseHref} />
