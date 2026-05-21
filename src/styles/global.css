@@ -103,6 +103,7 @@
   html {
     font-family: "Inter", sans-serif;
     scroll-behavior: smooth;
+    scroll-padding-top: 100px;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
@@ -145,4 +146,40 @@ h1, h2, h3, h4 {
 [data-icon] {
   display: inline-block;
   vertical-align: -0.125em;
+}
+
+/* ===== Feature: Scroll-Driven Reveal ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: reveal-fade-up 1s ease-out both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 20%;
+  }
+}
+
+@keyframes reveal-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Feature: Spring Press Micro-Interactions ===== */
+@layer components {
+  /* Buttons and CTA links — spring press on :active */
+  .spring-press {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .spring-press:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  /* Interactive cards — subtle press without spring */
+  .card-press:active {
+    transform: scale(0.98);
+  }
 }

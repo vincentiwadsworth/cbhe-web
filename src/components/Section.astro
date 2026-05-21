@@ -34,7 +34,7 @@ const bgMap: Record<string, string> = {
 };
 ---
 
-<section class:list={[bgMap[bg], py, scrollMargin && "scroll-mt-24"]} id={id}>
+<section class:list={[bgMap[bg], py, scrollMargin && "scroll-mt-24", "reveal"]} id={id}>
   <div class:list={[maxWidth, "mx-auto px-4 sm:px-6 md:px-8"]}>
     <slot />
   </div>

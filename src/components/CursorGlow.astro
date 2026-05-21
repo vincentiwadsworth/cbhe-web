@@ -1,0 +1,86 @@
+---
+/**
+ * CursorGlow — Subtle gradient glow that follows the mouse cursor.
+ * Hidden on touch devices and when prefers-reduced-motion is active.
+ * Uses requestAnimationFrame for smooth performance.
+ * pointer-events: none ensures it never blocks clicks or keyboard interaction.
+ */
+---
+<script is:inline>
+  (function () {
+    // Bail immediately on touch devices or reduced-motion preference
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const glow = document.getElementById("cursor-glow");
+    if (!glow) return;
+
+    let rafId = 0;
+    let targetX = -200;
+    let targetY = -200;
+    let currentX = -200;
+    let currentY = -200;
+    // Lerp factor — higher = faster follow, lower = smoother delay
+    const SMOOTH = 0.12;
+
+    function update() {
+      // Linear interpolation for smooth trailing
+      currentX += (targetX - currentX) * SMOOTH;
+      currentY += (targetY - currentY) * SMOOTH;
+
+      glow.style.setProperty("--cursor-x", currentX + "px");
+      glow.style.setProperty("--cursor-y", currentY + "px");
+
+      rafId = requestAnimationFrame(update);
+    }
+
+    document.addEventListener("mousemove", function (e) {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    }, { passive: true });
+
+    // Start the animation loop
+    rafId = requestAnimationFrame(update);
+
+    // Cleanup on page unload
+    window.addEventListener("beforeunload", function () {
+      cancelAnimationFrame(rafId);
+    });
+  })();
+</script>
+
+<div
+  id="cursor-glow"
+  style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  "
+  aria-hidden="true"
+>
+  <div style="
+    position: absolute;
+    left: var(--cursor-x, -200px);
+    top: var(--cursor-y, -200px);
+    width: 280px;
+    height: 280px;
+    margin-left: -140px;
+    margin-top: -140px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at center,
+      transparent 40%,
+      var(--color-primary-container, #d0e4ff) 70%,
+      transparent 100%
+    );
+    opacity: 0.12;
+    filter: blur(20px);
+    will-change: left, top;
+    transition: none;
+  "></div>
+</div>

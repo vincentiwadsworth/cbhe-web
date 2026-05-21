@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import CursorGlow from "../components/CursorGlow.astro";
 
 export interface Props {
   title: string;
@@ -159,6 +160,7 @@ if (currentPath) {
     >
       Saltar al contenido principal
     </a>
+    <CursorGlow />
     <slot />
   </body>
 </html>
