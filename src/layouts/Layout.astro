@@ -37,8 +37,10 @@ const baseHref = import.meta.env.BASE_URL === '/'
 // Canonical URL: Astro.url ya incluye site + base + path
 const canonicalUrl = Astro.url.href;
 
-// Open Graph: absolute URL for images (required by social platforms)
+// Open Graph: absolute URLs for images (required by social platforms)
 const ogImageUrl = new URL(image || 'og-default.png', baseHref).href;
+// Square fallback for WhatsApp — WhatsApp usa el último og:image tag y prefiere 1:1
+const ogImageSquareUrl = new URL('og-default-square.png', baseHref).href;
 
 // Breadcrumb: infer from currentPath segments
 const breadcrumbSegments: { name: string; href: string }[] = [];
@@ -88,6 +90,12 @@ if (currentPath) {
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <!-- Square fallback: WhatsApp usa el último og:image y prefiere 1:1 -->
+    <meta property="og:image" content={ogImageSquareUrl} />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="800" />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="CBHE" />
     <meta property="og:locale" content="es_BO" />
