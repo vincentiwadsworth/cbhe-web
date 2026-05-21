@@ -25,7 +25,7 @@ const linkClass = (isActive: boolean) =>
     : "text-on-surface-variant hover:text-primary hover:underline hover:underline-offset-4 transition-colors";
 ---
 
-<nav class="sticky top-0 z-50 bg-surface-bright/90 backdrop-blur-md shadow-sm">
+<nav id="main-nav" class="sticky top-0 z-50 bg-black/20 backdrop-blur-md transition-all duration-300">
   <!-- Skip to main content -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 rounded-md z-[60] bg-surface-bright text-on-surface px-4 py-2">
     Saltar al contenido principal
@@ -57,7 +57,7 @@ const linkClass = (isActive: boolean) =>
       <DarkModeToggle />
       <a
         href="afiliacion"
-          class="bg-primary text-on-primary rounded-md px-6 py-2.5 font-semibold hover:bg-primary/90 hover:shadow-md transition-all min-h-[44px] text-sm md:text-base spring-press"
+          class="border-2 border-primary text-primary rounded-md px-4 sm:px-6 py-2 sm:py-2.5 font-semibold hover:bg-primary/10 transition-all min-h-[44px] text-sm md:text-base spring-press"
       >
         Afiliarse
       </a>
@@ -85,3 +85,17 @@ const linkClass = (isActive: boolean) =>
     </div>
   </div>
 </nav>
+<script>
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.classList.add('bg-surface-bright/90', 'shadow-sm');
+        nav.classList.remove('bg-black/20');
+      } else {
+        nav.classList.add('bg-black/20');
+        nav.classList.remove('bg-surface-bright/90', 'shadow-sm');
+      }
+    }, { passive: true });
+  }
+</script>
