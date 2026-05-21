@@ -6,8 +6,26 @@ import Icon from "./Icon.astro";
  * Keyboard accessible (Enter/Space), touch target ≥44×44px.
  */
 ---
+
+<button
+  id="theme-toggle"
+  class="relative flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors"
+  aria-label="Activar modo oscuro"
+  type="button"
+>
+  <span class="theme-icon-sun hidden" aria-hidden="true">
+    <Icon name="material-symbols:light-mode" class="size-5" />
+  </span>
+  <span class="theme-icon-moon" aria-hidden="true">
+    <Icon name="material-symbols:dark-mode" class="size-5" />
+  </span>
+</button>
+
 <script is:inline>
   (function () {
+    // Defer to next microtask — button must be in DOM before we query it.
+    // With is:inline, the script runs synchronously during parsing, so the
+    // button that appears before the script IS already in the DOM.
     const toggle = document.getElementById("theme-toggle");
     if (!toggle) return;
 
@@ -31,6 +49,14 @@ import Icon from "./Icon.astro";
       }
     }
 
+    // Sync icon with current state on load (flash-prevention script may have
+    // already applied .dark before this runs)
+    if (html.classList.contains("dark")) {
+      if (sunIcon) sunIcon.classList.remove("hidden");
+      if (moonIcon) moonIcon.classList.add("hidden");
+      toggle.setAttribute("aria-label", "Activar modo claro");
+    }
+
     toggle.addEventListener("click", function () {
       const isDark = html.classList.contains("dark");
       setTheme(isDark ? "light" : "dark");
@@ -44,17 +70,3 @@ import Icon from "./Icon.astro";
     });
   })();
 </script>
-
-<button
-  id="theme-toggle"
-  class="relative flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors"
-  aria-label="Activar modo oscuro"
-  type="button"
->
-  <span class="theme-icon-sun hidden" aria-hidden="true">
-    <Icon name="material-symbols:light-mode" class="size-5" />
-  </span>
-  <span class="theme-icon-moon" aria-hidden="true">
-    <Icon name="material-symbols:dark-mode" class="size-5" />
-  </span>
-</button>
