@@ -56,4 +56,17 @@ const empresas = defineCollection({
   }),
 });
 
-export const collections = { cursos, articulos, empresas };
+const testimonios = defineCollection({
+  loader: glob({ base: "./src/content/testimonios", pattern: "**/*.md" }),
+  schema: z.object({
+    name: z.string(),
+    role: z.string(),
+    company: z.string(),
+    quote: z.string(),
+    highlight: z.string(),
+    image: z.string().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { cursos, articulos, empresas, testimonios };

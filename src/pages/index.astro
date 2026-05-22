@@ -7,11 +7,13 @@ import Web3Form from "../components/Web3Form.astro";
 import FormInput from "../components/FormInput.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import PreciosGrid from "../components/PreciosGrid.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
 import preciosData from "../../data/prices.json";
 
 const articulos = await getCollection("articulos", ({ data }) => !data.draft);
 const cursos = await getCollection("cursos", ({ data }) => !data.draft);
 const empresas = await getCollection("empresas");
+const testimonios = await getCollection("testimonios", ({ data }) => !data.draft);
 
 const MESES: Record<string, number> = { Ene:0, Feb:1, Mar:2, Abr:3, May:4, Jun:5, Jul:6, Ago:7, Sep:8, Oct:9, Nov:10, Dic:11 };
 const parseFecha = (d: string) => {
@@ -314,6 +316,28 @@ const gruposHome = [
       ))}
     </div>
   </Section>
+
+  <!-- Testimonios -->
+  <Section bg="surface-container-low">
+    <SectionHeading
+      title="Lo que dicen nuestros miembros"
+      description="Empresas y profesionales del sector energético comparten su experiencia trabajando con la CBHE."
+    />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      {testimonios.map((t, i) => (
+        <TestimonialCard
+          name={t.data.name}
+          role={t.data.role}
+          company={t.data.company}
+          quote={t.data.quote}
+          highlight={t.data.highlight}
+          image={t.data.image}
+          index={i}
+        />
+      ))}
+    </div>
+  </Section>
+
   <!-- Formulario de Afiliación -->
   <Section id="afiliacion" bg="inverse-surface" scrollMargin>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start">

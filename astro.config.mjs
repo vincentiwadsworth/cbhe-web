@@ -71,6 +71,7 @@ export default defineConfig({
           "palette",
           "light-mode",
           "dark-mode",
+          "format-quote",
         ],
       },
     }),
