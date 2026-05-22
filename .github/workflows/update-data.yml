@@ -38,4 +38,6 @@ jobs:
 
       - name: Trigger deploy
         if: steps.commit.outputs.changes_detected == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh workflow run deploy.yml
