@@ -95,69 +95,6 @@ const gruposHome = [
 
   <!-- Datos del Sector -->
   <PreciosGrid data={preciosData} />
-
-  <!-- Quiénes Somos (Resumen) -->
-  <Section bg="surface">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
-      <div>
-        <SectionHeading title="Impulsamos el desarrollo del sector">
-          <Fragment slot="description">
-            <p class="text-on-surface-variant font-body text-base md:text-lg leading-relaxed mb-6">
-              La Cámara Boliviana de Hidrocarburos y Energía (CBHE) agrupa a las principales empresas que operan en la cadena productiva del sector hidrocarburífero y energético del país. Nuestro propósito es ser el eje articulador de la industria.
-            </p>
-            <p class="text-on-surface-variant font-body text-base md:text-lg leading-relaxed mb-8">
-              Nuestra labor está enfocada en la coordinación técnica, el análisis normativo, la promoción de mejores prácticas y el fomento de la capacitación de excelencia, garantizando el desarrollo responsable de los recursos energéticos.
-            </p>
-          </Fragment>
-        </SectionHeading>
-        <a href="quienes-somos" class="inline-flex items-center text-primary font-semibold hover:underline hover:underline-offset-4 transition-colors">
-          Conozca nuestra misión
-          <Icon name="material-symbols:arrow-forward" class="size-4 ml-2" />
-        </a>
-      </div>
-
-      <div class="relative h-[400px] rounded-xl overflow-hidden bg-surface-container-low shadow-sm">
-        <img
-          alt="Instalaciones de la CBHE con torre de estructuras metálicas bajo cielo azul"
-          class="w-full h-full object-cover object-bottom brightness-90 contrast-125"
-          src="images/cbhe-exterior.webp"
-        />
-        <div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-sm p-6 border-t border-outline-variant/30">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-primary font-bold text-2xl">40</p>
-              <p class="text-on-surface-variant text-sm font-medium">Años de trayectoria</p>
-            </div>
-            <div class="w-px h-12 bg-surface-container-highest"></div>
-            <div>
-              <p class="text-primary font-bold text-2xl">{empresas.length}</p>
-              <p class="text-on-surface-variant text-sm font-medium">Empresas afiliadas</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Section>
-
-  <!-- Grupos de Miembros -->
-  <Section bg="surface-container-low">
-    <SectionHeading title="Nuestras afiliadas" description="Representamos a las empresas que integran la cadena de valor de la industria energética, organizadas en cinco grupos especializados con el objetivo de lograr una coordinación eficiente." />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-      {gruposHome.map((group) => (
-        <a href={`afiliadas#grupo-${groupSlugs[group.title]}`} class="block group">
-          <article class="glass-card rounded-lg border-t-4 border-primary-container hover:border-primary/30 hover:shadow-md hover:scale-[1.01] transition-all duration-300 h-full">
-            <div class="p-6 md:p-8">
-              <p class="font-headline font-extrabold text-4xl md:text-5xl text-primary mb-2 tracking-tight">{group.count}</p>
-              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">empresas</p>
-              <h3 class="font-headline font-bold text-on-surface text-lg mb-3 group-hover:text-primary transition-colors">{group.title}</h3>
-              <p class="text-on-surface-variant text-sm leading-relaxed">{group.desc}</p>
-            </div>
-          </article>
-        </a>
-      ))}
-    </div>
-  </Section>
-
   <!-- Alianzas Estratégicas — Infinite Marquee Ribbon -->
   <Section bg="surface">
     <style>
@@ -170,47 +107,7 @@ const gruposHome = [
        * ============================================================
        */
 
-      /* 1. Folded ribbon badge above heading */
-      .alianzas-ribbon {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.375rem 2rem;
-        margin: 0 auto 2rem;
-        background: linear-gradient(135deg, var(--color-primary, #01406c) 0%, color-mix(in srgb, var(--color-primary, #01406c) 80%, #000) 100%);
-        color: var(--color-on-primary, #fff);
-        font-family: "Inter", system-ui, sans-serif;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        text-align: center;
-        clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px));
-        max-width: 280px;
-        width: fit-content;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      }
-      .alianzas-ribbon::before {
-        content: "";
-        position: absolute;
-        bottom: -6px; left: 2px;
-        width: 0; height: 0;
-        border-left: 6px solid transparent;
-        border-top: 6px solid color-mix(in srgb, var(--color-primary, #01406c) 60%, #000);
-        filter: brightness(0.7);
-      }
-      .alianzas-ribbon::after {
-        content: "";
-        position: absolute;
-        bottom: -6px; right: 2px;
-        width: 0; height: 0;
-        border-right: 6px solid transparent;
-        border-top: 6px solid color-mix(in srgb, var(--color-primary, #01406c) 60%, #000);
-        filter: brightness(0.7);
-      }
-
-      /* 2. Marquee viewport — hides overflow, applies gradient fade mask */
+      /* 1. Marquee viewport — hides overflow, applies gradient fade mask */
       .alianzas-marquee {
         position: relative;
         overflow: hidden;
@@ -219,7 +116,7 @@ const gruposHome = [
         mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
       }
 
-      /* 3. Scrolling track — doubles the content for seamless infinite loop */
+      /* 2. Scrolling track — doubles the content for seamless infinite loop */
       .alianzas-track {
         display: flex;
         gap: 1.25rem;
@@ -239,7 +136,7 @@ const gruposHome = [
         animation-play-state: paused;
       }
 
-      /* 4. Logo cards — glassmorphism + individual wave float */
+      /* 3. Logo cards — glassmorphism + individual wave float */
       .alianzas-logo {
         display: flex;
         align-items: center;
@@ -288,7 +185,7 @@ const gruposHome = [
         .alianzas-logo img { height: 2.5rem; max-width: 170px; }
       }
 
-      /* 5. Keyframes */
+      /* 4. Keyframes */
       @keyframes marquee-scroll {
         0%   { transform: translateX(0); }
         100% { transform: translateX(-50%); }
@@ -299,7 +196,7 @@ const gruposHome = [
         50%       { transform: translateY(-5px); }
       }
 
-      /* 6. Accessibility: kill all motion for users who prefer it */
+      /* 5. Accessibility: kill all motion for users who prefer it */
       @media (prefers-reduced-motion: reduce) {
         .alianzas-track,
         .alianzas-logo {
@@ -307,9 +204,6 @@ const gruposHome = [
         }
       }
     </style>
-
-    <!-- Ribbon badge -->
-    <div class="alianzas-ribbon">Red internacional</div>
 
     <SectionHeading title="Alianzas estratégicas" description="Colaboramos con instituciones y organizaciones líderes del sector energético a nivel internacional." align="center" maxW="max-w-2xl" />
 
@@ -359,6 +253,67 @@ const gruposHome = [
     </div>
   </Section>
 
+  <!-- Quiénes Somos (Resumen) -->
+  <Section bg="surface-container-low">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
+      <div>
+        <SectionHeading title="Impulsamos el desarrollo del sector">
+          <Fragment slot="description">
+            <p class="text-on-surface-variant font-body text-base md:text-lg leading-relaxed mb-6">
+              La Cámara Boliviana de Hidrocarburos y Energía (CBHE) agrupa a las principales empresas que operan en la cadena productiva del sector hidrocarburífero y energético del país. Nuestro propósito es ser el eje articulador de la industria.
+            </p>
+            <p class="text-on-surface-variant font-body text-base md:text-lg leading-relaxed mb-8">
+              Nuestra labor está enfocada en la coordinación técnica, el análisis normativo, la promoción de mejores prácticas y el fomento de la capacitación de excelencia, garantizando el desarrollo responsable de los recursos energéticos.
+            </p>
+          </Fragment>
+        </SectionHeading>
+        <a href="quienes-somos" class="inline-flex items-center text-primary font-semibold hover:underline hover:underline-offset-4 transition-colors">
+          Conozca nuestra misión
+          <Icon name="material-symbols:arrow-forward" class="size-4 ml-2" />
+        </a>
+      </div>
+
+      <div class="relative h-[400px] rounded-xl overflow-hidden bg-surface-container-low shadow-sm">
+        <img
+          alt="Instalaciones de la CBHE con torre de estructuras metálicas bajo cielo azul"
+          class="w-full h-full object-cover object-bottom brightness-90 contrast-125"
+          src="images/cbhe-exterior.webp"
+        />
+        <div class="absolute bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-sm p-6 border-t border-outline-variant/30">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-primary font-bold text-2xl">40</p>
+              <p class="text-on-surface-variant text-sm font-medium">Años de trayectoria</p>
+            </div>
+            <div class="w-px h-12 bg-surface-container-highest"></div>
+            <div>
+              <p class="text-primary font-bold text-2xl">{empresas.length}</p>
+              <p class="text-on-surface-variant text-sm font-medium">Empresas afiliadas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Grupos de Miembros -->
+  <Section bg="surface">
+    <SectionHeading title="Nuestras afiliadas" description="Representamos a las empresas que integran la cadena de valor de la industria energética, organizadas en cinco grupos especializados con el objetivo de lograr una coordinación eficiente." />
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+      {gruposHome.map((group) => (
+        <a href={`afiliadas#grupo-${groupSlugs[group.title]}`} class="block group">
+          <article class="glass-card rounded-lg border-t-4 border-primary-container hover:border-primary/30 hover:shadow-md hover:scale-[1.01] transition-all duration-300 h-full">
+            <div class="p-6 md:p-8">
+              <p class="font-headline font-extrabold text-4xl md:text-5xl text-primary mb-2 tracking-tight">{group.count}</p>
+              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">empresas</p>
+              <h3 class="font-headline font-bold text-on-surface text-lg mb-3 group-hover:text-primary transition-colors">{group.title}</h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed">{group.desc}</p>
+            </div>
+          </article>
+        </a>
+      ))}
+    </div>
+  </Section>
   <!-- Formulario de Afiliación -->
   <Section id="afiliacion" bg="inverse-surface" scrollMargin>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start">
