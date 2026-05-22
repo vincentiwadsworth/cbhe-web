@@ -11,6 +11,8 @@ const logos = [
   { input: 'arpel-original.png', output: 'arpel.webp', resize: { width: 200 }, trim: true },
   { input: 'enginzone-original.png', output: 'enginzone.webp', resize: { width: 200 }, trim: true },
   { input: 'icc-original.svg', output: 'icc.webp', resize: { width: 200 }, trim: false },
+  { input: 'spe-original.png', output: 'spe.webp', resize: { width: 200 }, trim: false },
+  { input: 'aapg-original.png', output: 'aapg.webp', resize: { width: 200 }, trim: false },
 ];
 
 for (const logo of logos) {
