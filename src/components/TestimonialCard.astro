@@ -9,6 +9,7 @@
  * @prop highlight  - Key punchy phrase, visually prominent
  * @prop image      - Optional avatar path; omitting shows initials fallback
  * @prop index      - Stagger delay index (0, 1, 2…) for entrance animation
+ * @prop animate    - Enable entrance animation + hover scale (default: true)
  */
 import Icon from "./Icon.astro";
 
@@ -20,6 +21,7 @@ export interface Props {
   highlight: string;
   image?: string;
   index?: number;
+  animate?: boolean;
 }
 
 const {
@@ -30,6 +32,7 @@ const {
   highlight,
   image,
   index = 0,
+  animate = true,
 } = Astro.props;
 
 const initials = name
@@ -67,8 +70,11 @@ const staggerStyle = `--stagger-delay: ${staggerMs}ms`;
 </style>
 
 <article
-  class="testimonial-card glass-card rounded-xl p-6 md:p-8 h-full flex flex-col hover:scale-[1.02] hover:shadow-md transition-[transform,box-shadow] duration-300"
-  style={staggerStyle}
+  class:list={[
+    "glass-card rounded-xl p-6 md:p-8 h-full flex flex-col",
+    animate && "testimonial-card hover:scale-[1.02] hover:shadow-md transition-[transform,box-shadow] duration-300",
+  ]}
+  style={animate ? staggerStyle : ""}
 >
   <!-- Decorative quote icon -->
   <div class="mb-5" aria-hidden="true">

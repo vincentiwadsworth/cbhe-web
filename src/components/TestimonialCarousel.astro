@@ -1,0 +1,177 @@
+---
+/**
+ * TestimonialCarousel — Auto-rotating carousel of TestimonialCards.
+ *
+ * Shows one testimonial at a time with auto-advance, dot indicators,
+ * pause on hover, and touch swipe. Respects prefers-reduced-motion.
+ *
+ * @prop testimonials - Array of testimonial collection entries
+ */
+import TestimonialCard from "./TestimonialCard.astro";
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  testimonials: CollectionEntry<"testimonios">[];
+}
+
+const { testimonials } = Astro.props;
+---
+
+<div class="testimonial-carousel" data-carousel>
+  <style>
+    .carousel-slides {
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 500ms ease-out;
+      will-change: transform;
+    }
+    .carousel-slide {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    /* Kill transition + auto-advance when user prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .carousel-track {
+        transition: none !important;
+      }
+    }
+  </style>
+
+  <div class="carousel-slides" role="region" aria-roledescription="carousel" aria-label="Testimonios de miembros de la CBHE">
+    <div class="carousel-track" data-track>
+      {testimonials.map((t, i) => (
+        <div
+          class="carousel-slide"
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${i + 1} de ${testimonials.length}`}
+          data-slide
+        >
+          <div class="max-w-2xl mx-auto px-0 sm:px-4">
+            <TestimonialCard
+              name={t.data.name}
+              role={t.data.role}
+              company={t.data.company}
+              quote={t.data.quote}
+              highlight={t.data.highlight}
+              image={t.data.image}
+              animate={false}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Dot indicators -->
+  <div class="flex justify-center gap-2 mt-6" data-indicators>
+    {testimonials.map((_, i) => (
+      <button
+        type="button"
+        class="size-3 rounded-full transition-colors duration-300 focus:outline-2 focus:outline-offset-2 focus:outline-primary"
+        class:list={[
+          "size-3 rounded-full transition-colors duration-300",
+          "focus:outline-2 focus:outline-offset-2 focus:outline-primary",
+          i === 0 ? "bg-primary" : "bg-outline-variant hover:bg-primary/50",
+        ]}
+        aria-label={`Ver testimonio ${i + 1}`}
+        data-dot
+        data-dot-index={i}
+      />
+    ))}
+  </div>
+</div>
+
+<script>
+  class TestimonialCarousel {
+    private track: HTMLElement;
+    private dots: NodeListOf<HTMLElement>;
+    private total: number;
+    private current = 0;
+    private interval: ReturnType<typeof setInterval> | null = null;
+    private prefersReducedMotion = false;
+
+    constructor(container: HTMLElement) {
+      this.track = container.querySelector("[data-track]")!;
+      this.dots = container.querySelectorAll("[data-dot]");
+      this.total = this.dots.length;
+
+      this.prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      // Dot click → jump to slide
+      this.dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const idx = Number(dot.getAttribute("data-dot-index"));
+          this.goTo(idx);
+        });
+      });
+
+      // Pause on hover / focus
+      container.addEventListener("mouseenter", () => this.pause());
+      container.addEventListener("mouseleave", () => this.play());
+      container.addEventListener("focusin", () => this.pause());
+      container.addEventListener("focusout", () => this.play());
+
+      // Touch swipe
+      let startX = 0;
+      container.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+      });
+      container.addEventListener("touchend", (e) => {
+        if (this.prefersReducedMotion) return;
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) {
+          diff > 0 ? this.next() : this.prev();
+        }
+      });
+
+      // Start auto-play
+      if (!this.prefersReducedMotion) {
+        this.play();
+      }
+    }
+
+    goTo(index: number) {
+      this.current = index;
+      this.track.style.transform = `translateX(-${index * 100}%)`;
+      this.dots.forEach((dot) => {
+        const dotIdx = Number(dot.getAttribute("data-dot-index"));
+        dot.setAttribute("aria-current", dotIdx === index ? "true" : "false");
+        dot.classList.toggle("bg-primary", dotIdx === index);
+        dot.classList.toggle("bg-outline-variant", dotIdx !== index);
+        dot.classList.toggle("hover:bg-primary/50", dotIdx !== index);
+      });
+    }
+
+    next() {
+      this.goTo((this.current + 1) % this.total);
+    }
+
+    prev() {
+      this.goTo((this.current - 1 + this.total) % this.total);
+    }
+
+    play() {
+      if (this.prefersReducedMotion) return;
+      this.pause();
+      this.interval = setInterval(() => this.next(), 5000);
+    }
+
+    pause() {
+      if (this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
+    }
+  }
+
+  // Initialize all carousels on the page
+  document.querySelectorAll("[data-carousel]").forEach((el) => {
+    new TestimonialCarousel(el as HTMLElement);
+  });
+</script>

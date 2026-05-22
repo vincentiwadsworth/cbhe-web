@@ -7,7 +7,7 @@ import Web3Form from "../components/Web3Form.astro";
 import FormInput from "../components/FormInput.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import PreciosGrid from "../components/PreciosGrid.astro";
-import TestimonialCard from "../components/TestimonialCard.astro";
+import TestimonialCarousel from "../components/TestimonialCarousel.astro";
 import preciosData from "../../data/prices.json";
 
 const articulos = await getCollection("articulos", ({ data }) => !data.draft);
@@ -323,19 +323,7 @@ const gruposHome = [
       title="Lo que dicen nuestros miembros"
       description="Empresas y profesionales del sector energético comparten su experiencia trabajando con la CBHE."
     />
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-      {testimonios.map((t, i) => (
-        <TestimonialCard
-          name={t.data.name}
-          role={t.data.role}
-          company={t.data.company}
-          quote={t.data.quote}
-          highlight={t.data.highlight}
-          image={t.data.image}
-          index={i}
-        />
-      ))}
-    </div>
+    <TestimonialCarousel testimonials={testimonios} />
   </Section>
 
   <!-- Formulario de Afiliación -->
