@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import CursorGlow from "../components/CursorGlow.astro";
+import { getCollection } from "astro:content";
 
 export interface Props {
   title: string;
@@ -35,6 +36,27 @@ const baseHref = import.meta.env.BASE_URL === '/'
   : `${import.meta.env.SITE}${import.meta.env.BASE_URL}/`;
 
 const groqKey = import.meta.env.GROQ_KEY ?? "";
+
+// Build company knowledge base for the chatbot
+const grupoLabels: Record<string, string> = {
+  upstream: "Exploración y Producción",
+  pozo: "Servicios en Pozo",
+  superficie: "Servicios en Superficie",
+  downstream: "Industria y Transporte",
+  auxiliares: "Servicios Auxiliares",
+  adherentes: "Adherentes",
+};
+const todasEmpresas = await getCollection("empresas", ({ data }) => !data.draft);
+const empresasByGrupo = Object.entries(grupoLabels)
+  .map(([key, label]) => {
+    const items = todasEmpresas
+      .filter((e) => e.data.grupo === key)
+      .map((e) => `- ${e.data.nombre}${e.data.website ? ` (${e.data.website})` : ""}`);
+    return items.length > 0 ? `${label} (${items.length}):\n${items.join("\n")}` : "";
+  })
+  .filter(Boolean)
+  .join("\n\n");
+const empresasContext = `Empresas afiliadas a la CBHE:\n\n${empresasByGrupo}`;
 
 // Canonical URL: Astro.url ya incluye site + base + path
 const canonicalUrl = Astro.url.href;
@@ -179,7 +201,7 @@ if (currentPath) {
     <slot />
 
     <!-- AI Chatbot (multi-ai-sdk) -->
-    <script is:inline define:vars={{ groqKey }}>
+    <script is:inline define:vars={{ groqKey, empresasContext }}>
       if (groqKey) {
         import("https://esm.sh/multi-ai-sdk").then(function (mod) {
           mod.embedChat({
@@ -200,22 +222,16 @@ if (currentPath) {
             model: "llama-3.3-70b-versatile",
             maxTokens: 512,
             temperature: 0.7,
-            behavior: {
-              personality: "profesional y servicial",
-              allowTopics: ["empresas afiliadas", "CBHE", "hidrocarburos", "energía", "capacitación", "afiliación", "sector"],
-              blockTopics: ["política partidaria", "religión"],
-              replyLength: "short",
-              language: "Spanish",
-              rules: [
-                "Respondé siempre en español.",
-                "Si no sabés algo, sugerí contactar a cbhe@cbhe.org.bo.",
-                "No inventes nombres de empresas que no estén en el contexto de la página.",
-              ],
-            },
 
-            autoContext: true,
-            maxContextChars: 6000,
-            contextSelector: "main",
+            systemPrompt: [
+              "Sos el asistente virtual de la CBHE (Cámara Boliviana de Hidrocarburos y Energía).",
+              "Respondé siempre en español, de forma profesional pero cercana.",
+              "Respuestas cortas y al punto.",
+              "Si no sabés algo, sugerí contactar a cbhe@cbhe.org.bo.",
+              "No inventes nombres de empresas que no estén en la lista.",
+              "Usa la siguiente información como fuente de verdad:\n",
+              empresasContext,
+            ].join("\n"),
 
             position: "bottom-right",
             theme: {
