@@ -230,7 +230,7 @@ if (currentPath) {
             assistantAvatar: "⚡",
             title: "CBHE",
             subtitle: "Asistente virtual",
-            welcomeMessage: "¡Hola! Preguntame sobre las empresas afiliadas, capacitaciones o cualquier consulta del sector energético.",
+            welcomeMessage: "¡Hola! Preguntame sobre las empresas afiliadas, capacitaciones o cómo afiliarte a la CBHE.",
             suggestedQuestions: [
               "¿Qué empresas son afiliadas?",
               "¿Cómo me afilio?",
@@ -238,7 +238,7 @@ if (currentPath) {
             ],
 
             model: "llama-3.3-70b-versatile",
-            maxTokens: 512,
+            maxTokens: 1024,
             temperature: 0.7,
 
             systemPrompt: [
@@ -247,6 +247,8 @@ if (currentPath) {
               "Respuestas cortas y al punto.",
               "Si no sabés algo, sugerí contactar a cbhe@cbhe.org.bo.",
               "No inventes nombres de empresas que no estén en la lista.",
+              "IMPORTANTE: NO uses formato Markdown. No uses **, *, #, -, ni backticks.",
+              "Usá texto plano con números y saltos de línea para estructurar las respuestas.",
               "Usa la siguiente información como fuente de verdad:\n",
               chatbotContext,
             ].join("\n"),
