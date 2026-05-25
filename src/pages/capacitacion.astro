@@ -63,12 +63,19 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
       <!-- Image + stats card -->
       <div class="relative z-10 hidden lg:block">
         <div class="aspect-4/3 rounded-xl overflow-hidden shadow-2xl relative">
-          <img
-            alt="Ingenieros en entrenamiento"
-            class="w-full h-full object-cover"
-            loading="lazy"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQquKpn8AuYAgAKnfFf8gINHBoa-rSoEErpFGPBdjJ5o8Gj77vhDjZ9sKEczS9eSJEnWtkAPQRJwXcVw-eBBanXCOeW0vJWO7gjLpgkfNtNNQ4Qx-FRH6cki4VB1-29a8EfWw6BMYe1x6vNfymxWVyl1KSFAMZNgT8Im06aEblh1kq9w7SI0-I1T3BAbcOewp9wdANhWvcXE7I__jUwpLYXSiFoen6x8DNd1gnLsj3_TeWe0L_jeNsFs2ZiMLWFrSZlpJHETf0h-A"
-          />
+          {[
+            { src: "/cbhe-web/images/capacitacion/hero-mujer-ingeniera.webp", alt: "Ingeniera en campo — formación técnica CBHE" },
+            { src: "/cbhe-web/images/capacitacion/hero-equipo-diverso.webp", alt: "Equipo diverso colaborando — capacitación CBHE" },
+            { src: "/cbhe-web/images/capacitacion/hero-oficina-meeting.webp", alt: "Capacitación en oficina — formación profesional CBHE" },
+          ].map((img, i) => (
+            <img
+              src={img.src}
+              alt={img.alt}
+              class="absolute inset-0 w-full h-full object-cover fade-slide"
+              style={`animation-delay: ${i * 5}s`}
+              loading={i === 0 ? "eager" : "lazy"}
+            />
+          ))}
           <div class="absolute inset-0 bg-primary/80" style="mix-blend-mode: multiply;"></div>
         </div>
         <div class="absolute -bottom-8 -left-8 bg-surface p-6 rounded-lg shadow-xl border border-outline-variant/30 flex gap-8">
