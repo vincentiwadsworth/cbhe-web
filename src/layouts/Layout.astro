@@ -58,6 +58,20 @@ const empresasByGrupo = Object.entries(grupoLabels)
   .join("\n\n");
 const empresasContext = `Empresas afiliadas a la CBHE:\n\n${empresasByGrupo}`;
 
+// Build courses knowledge base for the chatbot
+const todosCursos = await getCollection("cursos", ({ data }) => !data.draft);
+const cursosContext = todosCursos.length > 0
+  ? "Capacitaciones de la CBHE:\n\n" + todosCursos.map((c) => {
+      const parts = [`- ${c.data.title} (${c.data.category}, ${c.data.modality})`];
+      parts.push(`  Inicio: ${c.data.startDate}`);
+      parts.push(`  Precio: ${c.data.price}`);
+      if (c.data.description) parts.push(`  ${c.data.description.slice(0, 150)}`);
+      return parts.join("\n");
+    }).join("\n\n")
+  : "";
+
+const chatbotContext = [empresasContext, cursosContext].filter(Boolean).join("\n\n");
+
 // Canonical URL: Astro.url ya incluye site + base + path
 const canonicalUrl = Astro.url.href;
 
@@ -201,7 +215,7 @@ if (currentPath) {
     <slot />
 
     <!-- AI Chatbot (multi-ai-sdk) -->
-    <script is:inline define:vars={{ groqKey, empresasContext }}>
+    <script is:inline define:vars={{ groqKey, chatbotContext }}>
       if (groqKey) {
         import("https://esm.sh/multi-ai-sdk").then(function (mod) {
           mod.embedChat({
@@ -230,7 +244,7 @@ if (currentPath) {
               "Si no sabés algo, sugerí contactar a cbhe@cbhe.org.bo.",
               "No inventes nombres de empresas que no estén en la lista.",
               "Usa la siguiente información como fuente de verdad:\n",
-              empresasContext,
+              chatbotContext,
             ].join("\n"),
 
             position: "bottom-right",
