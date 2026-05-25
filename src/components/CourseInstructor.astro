@@ -1,0 +1,199 @@
+---
+import Icon from "./Icon.astro";
+
+/* ------------------------------------------------------------------ */
+/*  Credential extraction — signal detection from instructor bios       */
+/* ------------------------------------------------------------------ */
+
+interface Badge {
+  label: string;
+  type: "nfpa" | "cwi" | "academic" | "experience";
+}
+
+interface ParsedInstructor {
+  name: string;
+  bio?: string;
+  badges: Badge[];
+  title: string | null;
+  affiliation: string | null;
+}
+
+/** Extract credential signals from instructor bio text. */
+function parseCredentials(bio: string): {
+  badges: Badge[];
+  title: string | null;
+  affiliation: string | null;
+} {
+  const badges: Badge[] = [];
+  let title: string | null = null;
+  let affiliation: string | null = null;
+
+  /* --- Badge: NFPA --- */
+  if (/\bNFPA\b/i.test(bio)) {
+    badges.push({ label: "NFPA", type: "nfpa" });
+  }
+
+  /* --- Badge: AWS / CWI --- */
+  if (/\b(AWS|CWI)\b/i.test(bio)) {
+    badges.push({ label: "CWI", type: "cwi" });
+  }
+
+  /* --- Title prefix: Ing. / Lic. at start of bio --- */
+  const titleMatch = bio.match(/^(Ing\.|Lic\.|Licenciado)\s/);
+  if (titleMatch) {
+    title = titleMatch[0].trim().replace(/\.$/, "");
+  }
+
+  /* --- Academic badge: Máster / Master / MSc / Maestría --- */
+  if (/(Máster|Master|MSc|Maestría|M\.Sc\.)/i.test(bio)) {
+    badges.push({ label: "Posgrado", type: "academic" });
+  }
+
+  /* --- Experience badge: "X años", "más de X años", "X años de experiencia" --- */
+  const expMatch = bio.match(
+    /(?:más\s+de\s+)?(\d{1,2})\s*años?\s*(?:de\s+experiencia)?/i,
+  );
+  if (expMatch) {
+    badges.push({ label: `${expMatch[1]}+ años`, type: "experience" });
+  }
+
+  /* --- University affiliation --- */
+  const uniFull = bio.match(
+    /Universidad\s+(?:de\s+)?([\w\s.]+?)(?:,|\.\s|$)/i,
+  );
+  const uniShort = bio.match(/Univ\.\s+(?:de\s+)?([\w\s.]+)/i);
+  const uniMatch = uniFull || uniShort;
+  if (uniMatch) {
+    affiliation = uniMatch[1]?.trim() || null;
+    /* Clean trailing spaces / periods */
+    affiliation = affiliation.replace(/\s+\.$/, "").trim();
+  }
+
+  return { badges, title, affiliation };
+}
+
+/* ------------------------------------------------------------------ */
+/*  Props                                                               */
+/* ------------------------------------------------------------------ */
+
+interface Props {
+  /** Array of instructors with optional bios. */
+  instructors: Array<{ name: string; bio?: string }>;
+  /** Optional wrapper class. */
+  className?: string;
+}
+
+const { instructors = [], className = "" } = Astro.props;
+
+/* ------------------------------------------------------------------ */
+/*  Parse each instructor                                               */
+/* ------------------------------------------------------------------ */
+
+const parsed: ParsedInstructor[] = instructors.map((inst) => {
+  if (!inst.bio) {
+    return { name: inst.name, badges: [], title: null, affiliation: null };
+  }
+  const { badges, title, affiliation } = parseCredentials(inst.bio);
+  return {
+    name: inst.name,
+    bio: inst.bio,
+    badges,
+    title,
+    affiliation,
+  };
+});
+
+/* Badge type → color classes */
+const badgeColors: Record<Badge["type"], string> = {
+  nfpa: "bg-tertiary-container/60 text-on-tertiary-container",
+  cwi: "bg-secondary-container/60 text-on-secondary-container",
+  academic: "bg-primary-container/40 text-on-primary-container",
+  experience: "bg-success-container/60 text-success",
+};
+---
+
+{/* ================================================================== */}
+{/*  Template                                                            */}
+{/* ================================================================== */}
+
+{
+  parsed.length > 0 && (
+    <div class={className}>
+      {/* Instructors grid: 1-col mobile, 2-col tablet+ */}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {parsed.map((inst) => (
+          <article
+            class="bg-surface-container-low rounded-lg p-6 reveal flex flex-col"
+          >
+            {/* Name */}
+            <h3 class="text-lg font-headline font-bold text-on-surface mb-3">
+              {inst.title && (
+                <span class="text-on-surface-variant font-medium">
+                  {inst.title}.{" "}
+                </span>
+              )}
+              {inst.name}
+            </h3>
+
+            {/* Credential badges */}
+            {inst.badges.length > 0 && (
+              <div class="flex flex-wrap gap-1.5 mb-3" role="list" aria-label="Credenciales">
+                {inst.badges.map((badge) => (
+                  <span
+                    class={[
+                      "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold",
+                      badgeColors[badge.type],
+                    ].join(" ")}
+                    role="listitem"
+                  >
+                    {badge.type === "nfpa" && (
+                      <Icon
+                        name="material-symbols:verified"
+                        class="size-3"
+                        aria-hidden="true"
+                      />
+                    )}
+                    {badge.type === "academic" && (
+                      <Icon
+                        name="material-symbols:school"
+                        class="size-3"
+                        aria-hidden="true"
+                      />
+                    )}
+                    {badge.type === "experience" && (
+                      <Icon
+                        name="material-symbols:history"
+                        class="size-3"
+                        aria-hidden="true"
+                      />
+                    )}
+                    {badge.label}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Bio (condensed — line-clamp-4, expandable via hover/focus) */}
+            {inst.bio && (
+              <p class="text-sm text-on-surface-variant leading-relaxed line-clamp-4 group-hover:line-clamp-none transition-all duration-300 flex-grow">
+                {inst.bio}
+              </p>
+            )}
+
+            {/* Affiliation */}
+            {inst.affiliation && (
+              <div class="mt-3 pt-3 border-t border-surface-container-high flex items-center gap-1.5 text-xs text-on-surface-variant">
+                <Icon
+                  name="material-symbols:account-balance"
+                  class="size-3.5"
+                  aria-hidden="true"
+                />
+                {inst.affiliation}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  )
+}
