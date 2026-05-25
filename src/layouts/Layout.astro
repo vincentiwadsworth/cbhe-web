@@ -51,7 +51,11 @@ const empresasByGrupo = Object.entries(grupoLabels)
   .map(([key, label]) => {
     const items = todasEmpresas
       .filter((e) => e.data.grupo === key)
-      .map((e) => `- ${e.data.nombre}${e.data.website ? ` (${e.data.website})` : ""}`);
+      .map((e) => {
+        let line = `- ${e.data.nombre}${e.data.website ? ` (${e.data.website})` : ""}`;
+        if (e.data.description) line += `: ${e.data.description}`;
+        return line;
+      });
     return items.length > 0 ? `${label} (${items.length}):\n${items.join("\n")}` : "";
   })
   .filter(Boolean)

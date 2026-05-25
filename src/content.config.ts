@@ -49,6 +49,7 @@ const empresas = defineCollection({
     grupo: z.enum(["upstream", "pozo", "superficie", "downstream", "auxiliares", "adherentes"]),
     website: z.string().url().optional(),
     email: z.string().email().optional(),
+    description: z.string().optional(),
     logo: z.string().optional(),
     destacada: z.boolean().default(false),
     orden: z.number().default(0),
