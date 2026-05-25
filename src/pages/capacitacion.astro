@@ -105,9 +105,9 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
           que cumplen con los requisitos de las certificadoras más exigentes del sector energético.
         </p>
         <p class="text-base text-on-surface-variant leading-relaxed max-w-lg">
-          Nuestros programas cuentan con el respaldo de entidades como NFPA, UL y FM Approvals,
-          referentes internacionales en seguridad contra incendios, calidad eléctrica y protección
-          de activos industriales.
+          Nuestros programas cuentan con el respaldo de entidades como NFPA, EnginZone, ASTM, AWS,
+          NSC y FPI, referentes internacionales en seguridad contra incendios, soldadura, estándares
+          técnicos y protección de activos industriales.
         </p>
       </div>
 
@@ -129,58 +129,83 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
       </div>
     </div>
 
-    <!-- Bento Grid: Certification logos with varied cell sizes -->
+    <!-- Certification logos grid — authorized training providers -->
     <div class="mt-16 pt-12 border-t border-outline-variant/15">
       <p class="text-center text-xs font-semibold text-outline uppercase tracking-widest mb-8">
         Avaladas por
       </p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        <!-- NFPA — Featured cell (2 col × 2 row on desktop) -->
-        <div class="lg:col-span-2 lg:row-span-2 bg-surface-container-low rounded-xl border border-outline-variant/20 p-6 sm:p-8 flex flex-col items-center justify-center min-h-[180px]">
+        <!-- NFPA Authorized Training Provider -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
           <img
-            src="/cbhe-web/images/capacitacion/logo-nfpa.webp"
-            alt="NFPA — National Fire Protection Association"
-            class="h-16 sm:h-20 md:h-24 w-auto object-contain mb-3"
+            src="/cbhe-web/images/capacitacion/logo-nfpa-atp.png"
+            alt="NFPA — Authorized Training Provider"
+            class="h-14 sm:h-16 md:h-20 w-auto object-contain mb-3"
             loading="lazy"
           />
           <span class="text-sm font-semibold text-on-surface">NFPA</span>
-          <span class="text-xs text-on-surface-variant mt-1 text-center">National Fire Protection Association</span>
+          <span class="text-xs text-on-surface-variant mt-1 text-center">Authorized Training Provider</span>
         </div>
 
-        <!-- Text blurb (1 col × 2 row on desktop) -->
-        <div class="lg:row-span-2 bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col justify-center min-h-[180px]">
-          <p class="text-sm text-on-surface-variant leading-relaxed">
-            Nuestros programas cuentan con el respaldo de las certificadoras más exigentes del sector energético internacional.
-          </p>
-          <div class="mt-4 flex items-center gap-2">
-            <Icon name="material-symbols:verified" class="size-5 text-primary shrink-0" />
-            <span class="text-xs font-semibold text-primary uppercase tracking-wider">Estándares internacionales</span>
-          </div>
-        </div>
-
-        <!-- UL (1 col × 1 row) -->
-        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[140px]">
+        <!-- EnginZone -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
           <img
-            src="/cbhe-web/images/capacitacion/logo-ul.webp"
-            alt="UL — Underwriters Laboratories"
-            class="h-12 sm:h-16 md:h-20 w-auto object-contain mb-2"
+            src="/cbhe-web/images/capacitacion/logo-enginzone.jpg"
+            alt="EnginZone — Capacitación técnica"
+            class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
             loading="lazy"
           />
-          <span class="text-sm font-semibold text-on-surface">UL</span>
-          <span class="text-xs text-on-surface-variant mt-0.5 text-center hidden sm:inline">Underwriters Laboratories</span>
+          <span class="text-sm font-semibold text-on-surface">EnginZone</span>
+          <span class="text-xs text-on-surface-variant mt-1 text-center">Capacitación técnica especializada</span>
         </div>
 
-        <!-- FM Approvals (1 col × 1 row) -->
-        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[140px]">
+        <!-- ASTM International -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
           <img
-            src="/cbhe-web/images/capacitacion/logo-fm.webp"
-            alt="FM Approvals"
-            class="h-12 sm:h-16 md:h-20 w-auto object-contain mb-2"
+            src="/cbhe-web/images/capacitacion/logo-astm.jpg"
+            alt="ASTM International"
+            class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
             loading="lazy"
           />
-          <span class="text-sm font-semibold text-on-surface">FM Approvals</span>
-          <span class="text-xs text-on-surface-variant mt-0.5 text-center hidden sm:inline">Factory Mutual</span>
+          <span class="text-sm font-semibold text-on-surface">ASTM</span>
+          <span class="text-xs text-on-surface-variant mt-1 text-center">International Standards</span>
+        </div>
+
+        <!-- AWS International Agent -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
+          <img
+            src="/cbhe-web/images/capacitacion/logo-aws-agent.png"
+            alt="AWS — American Welding Society International Agent"
+            class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
+            loading="lazy"
+          />
+          <span class="text-sm font-semibold text-on-surface">AWS</span>
+          <span class="text-xs text-on-surface-variant mt-1 text-center">International Agent</span>
+        </div>
+
+        <!-- NSC — National Safety Council -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
+          <img
+            src="/cbhe-web/images/capacitacion/logo-nsc.png"
+            alt="NSC — National Safety Council"
+            class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
+            loading="lazy"
+          />
+          <span class="text-sm font-semibold text-on-surface">NSC</span>
+          <span class="text-xs text-on-surface-variant mt-1 text-center">National Safety Council</span>
+        </div>
+
+        <!-- FPI — Fire Protection Institute -->
+        <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
+          <img
+            src="/cbhe-web/images/capacitacion/logo-fpi.png"
+            alt="FPI — Fire Protection Institute"
+            class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
+            loading="lazy"
+          />
+          <span class="text-sm font-semibold text-on-surface">FPI</span>
+          <span class="text-xs text-on-surface-variant mt-1 text-center">Fire Protection Institute</span>
         </div>
       </div>
     </div>
