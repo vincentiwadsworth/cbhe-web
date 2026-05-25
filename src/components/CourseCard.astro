@@ -1,0 +1,194 @@
+---
+import Icon from "./Icon.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  curso: CollectionEntry<"cursos">;
+  variant?: "default" | "compact" | "featured";
+  /** Override the default CTA button text. Defaults to "Ver detalles". */
+  ctaText?: string;
+  /** Override the default CTA link. Defaults to `capacitacion/{curso.id}`. */
+  ctaHref?: string;
+}
+
+const {
+  curso,
+  variant = "default",
+  ctaText,
+  ctaHref,
+} = Astro.props;
+
+const { data, id } = curso;
+
+/* ------------------------------------------------------------------ */
+/*  Constants & derived state                                          */
+/* ------------------------------------------------------------------ */
+
+const modeIcons: Record<string, string> = {
+  Virtual: "desktop-windows",
+  Presencial: "apartment",
+  Híbrido: "devices",
+};
+
+const isCertification = data.category === "Certificación";
+const categoryIcon = isCertification ? "verified" : "school";
+const categoryClasses = isCertification
+  ? "bg-tertiary-container text-on-tertiary-container"
+  : "bg-primary-container text-on-primary-container";
+
+const defaultCtaHref = `capacitacion/${id}`;
+const computedCtaHref = ctaHref ?? defaultCtaHref;
+const computedCtaText = ctaText ?? "Ver detalles";
+
+/* ------------------------------------------------------------------ */
+/*  Heading level: h3 for default/compact, h2 for featured              */
+/* ------------------------------------------------------------------ */
+
+const TitleTag = variant === "featured" ? "h2" : "h3";
+
+/* ------------------------------------------------------------------ */
+/*  Variant-specific CSS classes                                        */
+/* ------------------------------------------------------------------ */
+
+const imageClasses = {
+  default: "aspect-video",
+  compact: "aspect-4/3",
+  featured: "aspect-21/9",
+};
+
+const contentPadding = {
+  default: "p-6",
+  compact: "p-4",
+  featured: "p-8",
+};
+
+const titleClasses = {
+  default: "text-xl",
+  compact: "text-base",
+  featured: "text-2xl md:text-3xl",
+};
+
+const variantLayout = {
+  default: "flex flex-col",
+  compact: "flex flex-row",
+  featured: "flex flex-col",
+};
+
+const hasImage = Boolean(data.image);
+---
+
+{/* ================================================================== */}
+{/*  Component template                                                 */}
+{/* ================================================================== */}
+
+<article
+  class={[
+    "group glass-card rounded-lg hover:shadow-md hover:border-primary/30 transition-all duration-300 overflow-hidden",
+    variantLayout[variant],
+  ].join(" ")}
+>
+  {/* ----------------------------------------------------------------- */}
+  {/*  Image / icon fallback                                              */}
+  {/* ----------------------------------------------------------------- */}
+  {
+    hasImage ? (
+      <div class={`relative overflow-hidden ${variant === "compact" ? "w-24 sm:w-32 shrink-0 self-stretch" : ""}`}>
+        <div class={`relative overflow-hidden h-full ${imageClasses[variant]}`}>
+          <img
+            src={data.image}
+            alt={data.title}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
+          {/* Modality badge — overlay on image */}
+          <div class="absolute top-4 right-4 bg-surface px-3 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-1 shadow-sm">
+            <Icon name={`material-symbols:${modeIcons[data.modality]}`} class="size-3.5" />
+            {data.modality}
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class={`relative overflow-hidden bg-primary-container flex items-center justify-center ${variant === "compact" ? "w-24 sm:w-32 shrink-0 self-stretch" : ""}`}>
+        <div class={`relative overflow-hidden bg-primary-container flex items-center justify-center h-full ${imageClasses[variant]}`}>
+          <Icon name="material-symbols:school" class="size-16 text-primary opacity-30" />
+          <div class="absolute top-4 right-4 bg-surface px-3 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-1 shadow-sm">
+            <Icon name={`material-symbols:${modeIcons[data.modality]}`} class="size-3.5" />
+            {data.modality}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  {/* ----------------------------------------------------------------- */}
+  {/*  Content area                                                       */}
+  {/* ----------------------------------------------------------------- */}
+  <div class={`${contentPadding[variant]} flex flex-col flex-grow`}>
+    {/* Category badge */}
+    <div class={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 ${categoryClasses} ${variant === "featured" ? "text-sm px-4 py-1.5" : ""}`}>
+      <Icon name={`material-symbols:${categoryIcon}`} class="size-3.5" />
+      {data.category}
+    </div>
+
+    {/* Title */}
+    <TitleTag class={`font-headline font-bold text-on-surface leading-tight mb-4 ${titleClasses[variant]}`}>
+      {data.title}
+    </TitleTag>
+
+    {/* Description (default & featured only — omitted in compact) */}
+    {variant !== "compact" && data.description && (
+      <p class={[
+        "text-sm text-on-surface-variant mb-4",
+        variant === "featured" ? "line-clamp-none text-base" : "line-clamp-2",
+      ].join(" ")}>
+        {data.description}
+      </p>
+    )}
+
+    {/* Meta: date + price (default & featured only) */}
+    {variant !== "compact" && (
+      <div class="space-y-3 mt-auto pt-6 border-t border-surface-container-high">
+        <div class="flex items-center gap-3 text-sm text-on-surface-variant">
+          <Icon name="material-symbols:calendar-today" class="text-outline size-5" />
+          <span>{data.startDate}</span>
+        </div>
+        {data.price && (
+          <div class="flex items-center gap-3 text-sm text-on-surface-variant">
+            <Icon name="material-symbols:payments" class="text-outline size-5" />
+            <span>{data.price}</span>
+          </div>
+        )}
+      </div>
+    )}
+
+    {/* CTA area */}
+    <div class={[
+      "flex gap-2",
+      variant === "compact" ? "mt-3" : "mt-6",
+      variant === "compact" ? "flex-row items-center" : "flex-col",
+    ].join(" ")}>
+      <a
+        href={computedCtaHref}
+        class={[
+          "text-center bg-primary text-on-primary py-3 rounded-md font-semibold hover:bg-primary/90 hover:shadow-md transition-all min-h-[44px] text-sm inline-flex items-center justify-center gap-2 spring-press",
+          variant === "compact" ? "flex-grow" : "w-full",
+        ].join(" ")}
+      >
+        {computedCtaText}
+      </a>
+
+      {/* Secondary Canva link (icon-only) — only when canvaLink exists */}
+      {data.canvaLink && variant !== "compact" && (
+        <a
+          href={data.canvaLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Ver ${data.title} en Canva`}
+          class="text-center bg-surface-container-high text-primary p-3 rounded-md font-semibold hover:bg-surface-container hover:border-primary/30 transition-all min-h-[44px] min-w-[44px] text-sm inline-flex items-center justify-center spring-press"
+        >
+          <Icon name="material-symbols:open-in-new" class="size-4" aria-hidden="true" />
+        </a>
+      )}
+    </div>
+  </div>
+</article>
