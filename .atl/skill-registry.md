@@ -4,43 +4,79 @@
 
 See `_shared/skill-resolver.md` for the full resolution protocol.
 
-## User Skills
+## User Skills (system-level)
 
 | Trigger | Skill | Path |
 |---------|-------|------|
-| Creating a pull request, opening a PR | branch-pr | ~/.config/opencode/skills/branch-pr/SKILL.md |
-| chatbot Julia, debug, n8n_chat_histories | chat-debug | ~/.config/opencode/skills/chat-debug/SKILL.md |
-| limpieza, data cleaning, anuncios_v2 | citrino-data-cleaning | ~/.config/opencode/skills/citrino-data-cleaning/SKILL.md |
-| vps, hostinger, docker, n8n server | citrino-vps | ~/.config/opencode/skills/citrino-vps/SKILL.md |
+| PR creation, opening PR, prepare PR for review | branch-pr | ~/.config/opencode/skills/branch-pr/SKILL.md |
+| PRs >400 lines, stacked PRs, review slices | chained-pr | ~/.config/opencode/skills/chained-pr/SKILL.md |
+| n8n chatbot Julia, debug, ejecuciones, nodos | chat-debug | ~/.config/opencode/skills/chat-debug/SKILL.md |
+| limpieza, data cleaning, calidad de datos, anuncios_v2 | citrino-data-cleaning | ~/.config/opencode/skills/citrino-data-cleaning/SKILL.md |
+| scraping, coordenadas, latitud, longitud, propiedades | citrino-scraping | ~/.config/opencode/skills/citrino-scraping/SKILL.md |
+| VPS, hostinger, docker, n8n server, administrar VPS | citrino-vps | ~/.config/opencode/skills/citrino-vps/SKILL.md |
+| doc design, cognitive load, READMEs, RFCs, onboarding | cognitive-doc-design | ~/.config/opencode/skills/cognitive-doc-design/SKILL.md |
+| PR feedback, issue replies, reviews, Slack, comments | comment-writer | ~/.config/opencode/skills/comment-writer/SKILL.md |
 | resumir documento, documento de referencia | doc-summarizer | ~/.config/opencode/skills/doc-summarizer/SKILL.md |
-| ER, diagrama entidad-relación, schema | er-diagram | ~/.config/opencode/skills/er-diagram/SKILL.md |
-| go tests, Bubbletea TUI testing | go-testing | ~/.config/opencode/skills/go-testing/SKILL.md |
-| creating a GitHub issue, reporting a bug | issue-creation | ~/.config/opencode/skills/issue-creation/SKILL.md |
-| judgment day, doble review, juzgar | judgment-day | ~/.config/opencode/skills/judgment-day/SKILL.md |
-| delegate() model error, fallback | model-fallback-handler | ~/.config/opencode/skills/model-fallback-handler/SKILL.md |
-| n8n, flujos, workflows, chatbot Julia | n8n-flow | ~/.config/opencode/skills/n8n-flow/SKILL.md |
-| PlantUML, diagrama de actividad, swimlanes | plantuml-diagram | ~/.config/opencode/skills/plantuml-diagram/SKILL.md |
-| slides, presentation, pitch deck, action titles | presentation-skills | ~/.config/opencode/skills/presentation-skills/SKILL.md |
-| create a new skill, agent instructions | skill-creator | ~/.config/opencode/skills/skill-creator/SKILL.md |
-| how do I do X, find a skill for X | find-skills | ~/.agents/skills/find-skills/SKILL.md |
-| gh, GitHub CLI, issues, PRs, releases | gh-cli | ~/.agents/skills/gh-cli/SKILL.md |
-| /commit, commit changes, create a git commit | git-commit | ~/.agents/skills/git-commit/SKILL.md |
-| OCR, PDF, ocrmypdf, pdfminer | ocr-processor | ~/.agents/skills/ocr-processor/SKILL.md |
-| Supabase, auth, database, edge functions | supabase | ~/.agents/skills/supabase/SKILL.md |
-| Postgres performance, query optimization | supabase-postgres-best-practices | ~/.agents/skills/supabase-postgres-best-practices/SKILL.md |
-| review my UI, check accessibility, audit design | web-design-guidelines | ~/.agents/skills/web-design-guidelines/SKILL.md |
-| improve accessibility, a11y audit, WCAG compliance | accessibility | ~/.agents/skills/accessibility/SKILL.md |
-| convertir imagen a SVG, raster to vector, SVG from logo, favicon SVG, PNG to SVG, vectorize | raster-to-svg | ~/.config/opencode/skills/raster-to-svg/SKILL.md |
+| ER, diagrama entidad-relación, schema, base de datos | er-diagram | ~/.config/opencode/skills/er-diagram/SKILL.md |
+| Go tests, go test coverage, Bubbletea teatest | go-testing | ~/.config/opencode/skills/go-testing/SKILL.md |
+| crear issue, GitHub issue, bug report, feature request | issue-creation | ~/.config/opencode/skills/issue-creation/SKILL.md |
+| judgment day, dual review, adversarial review, juzgar | judgment-day | ~/.config/opencode/skills/judgment-day/SKILL.md |
+| delegate() model error, rate limit, fallback | model-fallback-handler | ~/.config/opencode/skills/model-fallback-handler/SKILL.md |
+| n8n, flujos, workflows, chatbot Julia, debugging | n8n-flow | ~/.config/opencode/skills/n8n-flow/SKILL.md |
+| PlantUML, diagrama de actividad, swimlanes, activity diagram | plantuml-diagram | ~/.config/opencode/skills/plantuml-diagram/SKILL.md |
+| slides, presentation, pitch deck, action titles, storyline | presentation-skills | ~/.config/opencode/skills/presentation-skills/SKILL.md |
+| Quarto, qmd, quarto render, quarto website, revealjs | quarto | ~/.config/opencode/skills/quarto/SKILL.md |
+| convertir imagen a SVG, raster to vector, PNG to SVG | raster-to-svg | ~/.config/opencode/skills/raster-to-svg/SKILL.md |
+| create new skill, agent instructions, documenting AI patterns | skill-creator | ~/.config/opencode/skills/skill-creator/SKILL.md |
+| improve skills, audit skills, refactor skills, skill quality | skill-improver | ~/.config/opencode/skills/skill-improver/SKILL.md |
+| update skills, skill registry, after skill changes | skill-registry | ~/.config/opencode/skills/skill-registry/SKILL.md |
+| plan commits, work units, commit splitting, reviewable commits | work-unit-commits | ~/.config/opencode/skills/work-unit-commits/SKILL.md |
+
+## User Skills (agent-level)
+
+| Trigger | Skill | Path |
+|---------|-------|------|
+| manage citations, BibTeX, APA, MLA, Chicago | academic-citation-manager | ~/.agents/skills/academic-citation-manager/SKILL.md |
+| academic writing, research methodology, peer review | academic-writing | ~/.agents/skills/academic-writing/SKILL.md |
+| WCAG 2.2, a11y audit, screen reader, keyboard nav | accessibility | ~/.agents/skills/accessibility/SKILL.md |
+| dashboards, analytics, KPI cards, data visualization | creating-dashboards | ~/.agents/skills/creating-dashboards/SKILL.md |
+| reproducible research, data versioning, environments | data-reproducibility | ~/.agents/skills/data-reproducibility/SKILL.md |
+| how do I do X, find skill for X, discover capabilities | find-skills | ~/.agents/skills/find-skills/SKILL.md |
+| gh CLI, GitHub issues, PRs, releases, Actions | gh-cli | ~/.agents/skills/gh-cli/SKILL.md |
+| commit, git commit, conventional commit, /commit | git-commit | ~/.agents/skills/git-commit/SKILL.md |
+| InsForge SDK, database CRUD, auth, storage, functions | insforge | ~/.agents/skills/insforge/SKILL.md |
+| InsForge backend health, security audit, performance | insforge-backend-advisor | ~/.agents/skills/insforge-backend-advisor/SKILL.md |
+| InsForge CLI, infrastructure, SQL, migrations, deploy | insforge-cli | ~/.agents/skills/insforge-cli/SKILL.md |
+| InsForge debug, 4xx/5xx, auth errors, RLS denial | insforge-debug | ~/.agents/skills/insforge-debug/SKILL.md |
+| InsForge OAuth, Clerk, Auth0, JWT RLS, Stripe | insforge-integrations | ~/.agents/skills/insforge-integrations/SKILL.md |
+| literature review, research survey, expert personas | literature-review | ~/.agents/skills/literature-review/SKILL.md |
+| n8n node configuration, parameters, displayOptions | n8n-node-configuration | ~/.agents/skills/n8n-node-configuration/SKILL.md |
+| n8n validation errors, warnings, auto-fix | n8n-validation-expert | ~/.agents/skills/n8n-validation-expert/SKILL.md |
+| n8n workflow patterns, webhook, API, AI, batch | n8n-workflow-patterns | ~/.agents/skills/n8n-workflow-patterns/SKILL.md |
+| PostGIS, geospatial, Postgres spatial data | postgis-skill | ~/.agents/skills/postgis-skill/SKILL.md |
+| select statistical tests, effect sizes, power analysis | quantitative-analysis | ~/.agents/skills/quantitative-analysis/SKILL.md |
+| Recharts, React charts, line/bar/pie/scatter charts | recharts | ~/.agents/skills/recharts/SKILL.md |
+| IEEE/ACM research paper, academic paper, conference | research-paper-writer | ~/.agents/skills/research-paper-writer/SKILL.md |
+| Supabase, database, auth, edge functions, realtime | supabase | ~/.agents/skills/supabase/SKILL.md |
+| Postgres performance, query optimization, indexes | supabase-postgres-best-practices | ~/.agents/skills/supabase-postgres-best-practices/SKILL.md |
+| Tremor, dashboards, KPI cards, charts, data tables | tremor-design-system | ~/.agents/skills/tremor-design-system/SKILL.md |
+| review UI, accessibility, audit design, UX review | web-design-guidelines | ~/.agents/skills/web-design-guidelines/SKILL.md |
+| hypothesis testing, Bayesian, regression, statistics | statistical-analysis | ~/.agents/skills/statistical-analysis/SKILL.md |
 
 ## Project Skills
 
 | Trigger | Skill | Path |
 |---------|-------|------|
-| Astro, .astro files, SSG, content collections | astro | .agents/skills/astro/SKILL.md |
-| write copy, improve copy, marketing copy, CTA | copywriting | .agents/skills/copywriting/SKILL.md |
-| extract design system, design primitives | extract-design-system | .agents/skills/extract-design-system/SKILL.md |
-| publish to GitHub Pages, deploy presentation | publish-to-pages | .agents/skills/publish-to-pages/SKILL.md |
-| UI/UX design, color palette, typography, components | ui-ux-pro-max | .agents/skills/ui-ux-pro-max/SKILL.md |
+| Astro, .astro files, SSG, content collections, deploy | astro | .agents/skills/astro/SKILL.md |
+| write copy, improve copy, marketing copy, CTA, headline | copywriting | .agents/skills/copywriting/SKILL.md |
+| extract design system, design tokens, CSS variables | extract-design-system | .agents/skills/extract-design-system/SKILL.md |
+| publish to GitHub Pages, deploy presentation, PPTX | publish-to-pages | .agents/skills/publish-to-pages/SKILL.md |
+| responsive layouts, container queries, CSS Grid, fluid | responsive-design | .agents/skills/responsive-design/SKILL.md |
+| UI/UX design, color palette, typography, accessibility | ui-ux-pro-max | .agents/skills/ui-ux-pro-max/SKILL.md |
+
+## SDD Phase Skills (reserved)
+
+SDD orchestration skills exist at `~/.config/opencode/skills/sdd-*` but are not indexed here — they are invoked by the orchestrator, not by sub-agents.
 
 ## Compact Rules
 
@@ -188,7 +224,7 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 
 ### extract-design-system
 - Extract colors, typography, spacing, border-radius, shadows from existing site
-- Generate CSS custom properties or Tailwind @theme tokens
+- Generate CSS custom properties or Tailwind `@theme` tokens
 - Output: starter token files for the project
 
 ### publish-to-pages
@@ -207,7 +243,64 @@ Pre-digested rules per skill. Delegators copy matching blocks into sub-agent pro
 - Issue templates: title + body with reproduction steps/scope
 - PR links to issue with `Closes #N`
 
+### responsive-design
+- Use container queries (`@container`) for component-level responsiveness
+- Fluid typography with `clamp()`: prefer `text-fluid-*` utilities or custom `clamp()`
+- Mobile-first: base styles for mobile, `@media (width >= 768px)` for tablet, `@media (width >= 1024px)` for desktop
+- CSS Grid for page layout; flexbox for component-level layout
+- Touch targets ≥44px; `touch-action: manipulation` on interactive elements
+
+### tremor-design-system
+- KPI cards: `Card > Text + Metric` for primary + secondary stats
+- Line/Bar charts: `Chart` component with `categories` and `index` props
+- Data tables: `Table`, `TableHead`, `TableRow`, `TableCell` for structured data
+- Responsive charts: `className="max-sm:... sm:... lg:..."` for breakpoint-aware sizes
+
+### recharts
+- Import pattern: `import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'`
+- Wrap ALL charts in `<ResponsiveContainer width="100%" height={300}>`
+- Accessibility: `aria-label`, role="img", `<Title>` + `<Desc>` on all charts
+- Performance: memoize data, use `PureComponent` for custom shapes
+
+### chained-pr
+- Split PRs >400 lines into ≤400-line chains
+- Each PR in chain: builds on previous, has clear dependency graph
+- Label: `stacked`, `chain-N-of-M` on each PR
+- Merge order: bottom-up (base PR first)
+
+### work-unit-commits
+- One commit = one reviewable unit: a complete change that makes sense alone
+- Keep tests and docs with code in the same commit (don't split test/doc into separate commits)
+- Chained PRs: each commit within a PR is a sub-unit of that PR's scope
+- Commit message explains WHY not just WHAT
+
+### cognitive-doc-design
+- Bottom line first (BLUF): lead with the conclusion, then support
+- One idea per section; use frequent headings to create scan paths
+- Tables > prose for comparisons; diagrams > paragraphs for flows
+- Keep line length ≤80 chars in docs; use `---` separators sparingly
+
+### model-fallback-handler
+- When delegate() returns model error: log error, select fallback model from config
+- Fallback chain: primary → secondary → tertiary
+- Report fallback usage to orchestrator
+
+### quarto
+- Notebooks: `.qmd` files with code cells in `{python}` / `{r}` fences
+- Render: `quarto render` → HTML/PDF/DOCX; preview: `quarto preview`
+- Websites: `_quarto.yml` for project config; `website:` block for nav/sidebar
+- Presentations: `format: revealjs` with `slide-level: 2`
+
+## Skill Discovery Notes
+
+- To discover new skills: use `find-skills` skill or check `skills-lock.json`
+- 26 user-level skills (system), 26 user-level skills (agent), 6 project-level skills
+- SDD skills (12 phases) omitted from compact rules; invoked by orchestrator only
+
 ## Project Conventions
 
-- `AGENTS.md` — Stack, gotchas críticos (subpath links, Astro 6 API, Sveltia CMS, Tailwind v4), workflow rules
-- `.atl/skill-registry.md` — Este archivo. 27 skills catalogados con compact rules
+- `AGENTS.md` — Full project conventions: stack, critical gotchas (subpath links, Astro 6 API, Sveltia CMS, Tailwind v4), workflow rules
+- `.atl/skill-registry.md` — Este archivo. 58 skills catalogados con compact rules
+- `src/styles/global.css` — 50 MD3 design tokens as CSS custom properties
+- `src/content.config.ts` — 4 content collections (cursos, articulos, empresas, testimonios) with Zod schemas
+- `data/prices.json` — Financial data auto-updated via scheduled GitHub Actions workflow
