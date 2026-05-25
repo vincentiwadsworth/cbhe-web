@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import CourseCard from "../components/CourseCard.astro";
 import Icon from "../components/Icon.astro";
 import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
@@ -14,12 +15,6 @@ const parseFecha = (d: string) => {
   return new Date(+año, MESES[mes], +dia).getTime();
 };
 cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data.startDate));
-
-const modeIcons: Record<string, string> = {
-  Virtual: "desktop-windows",
-  Presencial: "apartment",
-  Híbrido: "devices",
-};
 ---
 
 <PageLayout
@@ -226,73 +221,9 @@ const modeIcons: Record<string, string> = {
 
     <div id="cursos-grid" data-load-more="3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {cursos.map((curso) => (
-        <article data-load-more-item class="group glass-card rounded-lg hover:shadow-md hover:border-primary/30 transition-all duration-300 flex flex-col overflow-hidden">
-          {curso.data.image ? (
-            <div class="aspect-video relative overflow-hidden">
-              <img
-                alt={curso.data.title}
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-                src={curso.data.image}
-              />
-              <div class="absolute top-4 right-4 bg-surface px-3 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-1 shadow-sm">
-                <Icon name={`material-symbols:${modeIcons[curso.data.modality]}`} class="size-3.5" />
-                {curso.data.modality}
-              </div>
-            </div>
-          ) : (
-            <div class="aspect-video relative overflow-hidden bg-primary-container flex items-center justify-center">
-              <Icon name="material-symbols:school" class="size-16 text-primary opacity-30" />
-              <div class="absolute top-4 right-4 bg-surface px-3 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-1 shadow-sm">
-                <Icon name={`material-symbols:${modeIcons[curso.data.modality]}`} class="size-3.5" />
-                {curso.data.modality}
-              </div>
-            </div>
-          )}
-          <div class="p-6 flex flex-col flex-grow">
-            <div class="text-xs font-semibold text-tertiary uppercase tracking-wider mb-2">
-              {curso.data.category}
-            </div>
-            <h3 class="text-xl font-headline font-bold text-on-surface leading-tight mb-4">
-              {curso.data.title}
-            </h3>
-            {curso.data.description && (
-              <p class="text-sm text-on-surface-variant line-clamp-2 mb-4">{curso.data.description}</p>
-            )}
-            <div class="space-y-3 mt-auto pt-6 border-t border-surface-container-high">
-              <div class="flex items-center gap-3 text-sm text-on-surface-variant">
-                <Icon name="material-symbols:calendar-today" class="text-outline size-5" />
-                <span>{curso.data.startDate}</span>
-              </div>
-              {curso.data.price && (
-                <div class="flex items-center gap-3 text-sm text-on-surface-variant">
-                  <Icon name="material-symbols:payments" class="text-outline size-5" />
-                  <span>{curso.data.price}</span>
-                </div>
-              )}
-            </div>
-            <div class="mt-6 flex flex-col gap-2">
-              {curso.data.canvaLink ? (
-                <a
-                  href={curso.data.canvaLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="w-full text-center bg-primary text-on-primary py-3 rounded-md font-semibold hover:bg-primary/90 hover:shadow-md transition-all min-h-[44px] text-sm inline-flex items-center justify-center gap-2 spring-press"
-                >
-                  <Icon name="material-symbols:open-in-new" class="size-4" />
-                  Ver más
-                </a>
-              ) : (
-                <a
-                  href={`capacitacion/${curso.id}`}
-                  class="w-full text-center bg-surface-container-high text-primary py-3 rounded-md font-semibold hover:bg-surface-container hover:border-primary/30 transition-all text-sm"
-                >
-                  Ver detalles
-                </a>
-              )}
-            </div>
-          </div>
-        </article>
+        <div data-load-more-item>
+          <CourseCard curso={curso} variant="default" />
+        </div>
       ))}
     </div>
 
