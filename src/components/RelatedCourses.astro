@@ -1,0 +1,71 @@
+---
+import CourseCard from "./CourseCard.astro";
+import type { CollectionEntry } from "astro:content";
+
+/* ------------------------------------------------------------------ */
+/*  Props                                                               */
+/* ------------------------------------------------------------------ */
+
+interface Props {
+  /** Slug of the current course — excluded from results. */
+  currentSlug: string;
+  /** Category to match ("Curso" or "Certificación"). */
+  category: string;
+  /** All non-draft courses from getCollection("cursos", filter). */
+  allCourses: CollectionEntry<"cursos">[];
+  /** Optional wrapper class. */
+  className?: string;
+}
+
+const {
+  currentSlug,
+  category,
+  allCourses = [],
+  className = "",
+} = Astro.props;
+
+/* ------------------------------------------------------------------ */
+/*  Selection logic                                                      */
+/*                                                                      */
+/*  1. Exclude current course                                            */
+/*  2. Match by category first                                           */
+/*  3. Fill remaining slots (up to 3) with any other courses             */
+/*  4. If no courses to show → render nothing                            */
+/* ------------------------------------------------------------------ */
+
+const others = allCourses.filter((c) => c.id !== currentSlug);
+
+const sameCategory = others.filter((c) => c.data.category === category);
+const otherCategory = others.filter((c) => c.data.category !== category);
+
+const related: CollectionEntry<"cursos">[] = [
+  ...sameCategory,
+  ...otherCategory,
+].slice(0, 3);
+
+const isEmpty = related.length === 0;
+---
+
+{/* ================================================================== */}
+{/*  Template                                                            */}
+{/* ================================================================== */}
+
+{
+  !isEmpty && (
+    <section class={className} aria-labelledby="related-heading">
+      <h2
+        id="related-heading"
+        class="text-2xl font-headline font-bold text-on-surface mb-6"
+      >
+        Cursos relacionados
+      </h2>
+
+      {/* Grid: 1-col mobile → 2-col md → 3-col lg */}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {related.map((curso) => (
+          <CourseCard curso={curso} variant="compact" />
+        ))}
+      </div>
+    </section>
+  )
+}
