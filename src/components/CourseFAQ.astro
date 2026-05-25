@@ -1,0 +1,119 @@
+---
+import Icon from "./Icon.astro";
+
+/* ------------------------------------------------------------------ */
+/*  Types                                                               */
+/* ------------------------------------------------------------------ */
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  /** Custom FAQs — defaults to CBHE-standard 5-question set. */
+  faqs?: FAQ[];
+  /** Optional wrapper class applied to the outer section. */
+  className?: string;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Default FAQs                                                        */
+/* ------------------------------------------------------------------ */
+
+const defaultFaqs: FAQ[] = [
+  {
+    question: "¿Cómo me inscribo?",
+    answer:
+      "Contacte al área de Capacitación por WhatsApp al +591 79891193 o escriba a capacitacion@cbhe.org.bo.",
+  },
+  {
+    question: "¿El certificado tiene validez internacional?",
+    answer:
+      "Sí. Nuestros programas cuentan con respaldo de entidades como NFPA, UL y FM Approvals.",
+  },
+  {
+    question: "¿Qué incluye el precio?",
+    answer:
+      "Incluye material digital, acceso a las sesiones en vivo (Zoom) y certificado de finalización emitido por CBHE.",
+  },
+  {
+    question: "¿Hay descuentos para grupos?",
+    answer:
+      "Sí. Consulte descuentos corporativos para grupos de 3 o más participantes.",
+  },
+  {
+    question: "¿Qué pasa si no puedo asistir?",
+    answer:
+      "Comuníquese con anticipación para evaluar opciones de reprogramación. La asistencia al 100% es requisito para el certificado.",
+  },
+];
+
+const { faqs = defaultFaqs, className = "" } = Astro.props;
+---
+
+{/* ================================================================== */}
+{/*  Template                                                            */}
+{/* ================================================================== */}
+
+<section class={className} aria-labelledby="faq-heading">
+  <h2
+    id="faq-heading"
+    class="text-2xl font-headline font-bold text-on-surface mb-6"
+  >
+    Preguntas frecuentes
+  </h2>
+
+  <div class="space-y-3 max-w-3xl">
+    {faqs.map((faq, index) => (
+      <details
+        id={`faq-${index}`}
+        class="faq-item bg-surface-container-low rounded-lg border-l-4 border-transparent transition-[border-color] duration-200 open:border-primary"
+      >
+        <summary class="flex items-center justify-between gap-3 p-4 cursor-pointer font-semibold text-on-surface text-sm sm:text-base select-none min-h-[44px] list-none">
+          <span>{faq.question}</span>
+
+          {/* Custom caret — rotates 180° when open, replaces browser ::marker */}
+          <Icon
+            name="material-symbols:expand-more"
+            class="size-5 text-on-surface-variant shrink-0 transition-transform duration-200 faq-caret"
+            decorative
+          />
+        </summary>
+
+        <div class="faq-answer">
+          <p class="px-4 pb-4 text-sm text-on-surface-variant leading-relaxed">
+            {faq.answer}
+          </p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+{/* ================================================================== */}
+{/*  Component-scoped styles                                             */}
+{/* ================================================================== */}
+
+<style>
+  /* Collapsed state: content hidden, zero height */
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 300ms ease;
+  }
+
+  .faq-answer > p {
+    overflow: hidden;
+  }
+
+  /* Open state: content revealed with smooth animation */
+  .faq-item[open] .faq-answer {
+    grid-template-rows: 1fr;
+  }
+
+  /* Rotate caret on open */
+  .faq-item[open] .faq-caret {
+    transform: rotate(180deg);
+  }
+</style>
