@@ -178,24 +178,66 @@ if (currentPath) {
     <CursorGlow />
     <slot />
 
-    <!-- WebChat.js AI Chatbot -->
+    <!-- AI Chatbot (multi-ai-sdk) -->
     <script is:inline define:vars={{ groqKey }}>
       if (groqKey) {
-        const s = document.createElement("script");
-        s.src = "https://webchat-js.pages.dev/webchat.min.js";
-        s.setAttribute("data-webchat", "");
-        s.setAttribute("data-groq-key", groqKey);
-        s.setAttribute("data-bot-name", "CBHE Assistant");
-        s.setAttribute("data-primary-color", "#01406c");
-        s.setAttribute("data-accent-color", "#82afe1");
-        s.setAttribute("data-position", "bottom-right");
-        s.setAttribute("data-theme", "auto");
-        s.setAttribute("data-lazy-load", "true");
-        s.setAttribute("data-lazy-scrape", "true");
-        s.setAttribute("data-enable-popup", "false");
-        s.setAttribute("data-show-branding", "false");
-        s.setAttribute("data-sound-enabled", "false");
-        document.body.appendChild(s);
+        import("https://esm.sh/multi-ai-sdk").then(function (mod) {
+          mod.embedChat({
+            provider: "groq",
+            apiKey: groqKey,
+
+            assistantName: "CBHE",
+            assistantAvatar: "⚡",
+            title: "CBHE",
+            subtitle: "Asistente virtual",
+            welcomeMessage: "¡Hola! Preguntame sobre las empresas afiliadas, capacitaciones o cualquier consulta del sector energético.",
+            suggestedQuestions: [
+              "¿Qué empresas son afiliadas?",
+              "¿Cómo me afilio?",
+              "¿Qué capacitaciones ofrecen?",
+            ],
+
+            model: "llama-3.3-70b-versatile",
+            maxTokens: 512,
+            temperature: 0.7,
+            behavior: {
+              personality: "profesional y servicial",
+              allowTopics: ["empresas afiliadas", "CBHE", "hidrocarburos", "energía", "capacitación", "afiliación", "sector"],
+              blockTopics: ["política partidaria", "religión"],
+              replyLength: "short",
+              language: "Spanish",
+              rules: [
+                "Respondé siempre en español.",
+                "Si no sabés algo, sugerí contactar a cbhe@cbhe.org.bo.",
+                "No inventes nombres de empresas que no estén en el contexto de la página.",
+              ],
+            },
+
+            autoContext: true,
+            maxContextChars: 6000,
+            contextSelector: "main",
+
+            position: "bottom-right",
+            theme: {
+              primaryColor: "#01406c",
+              fontFamily: "Inter, system-ui, sans-serif",
+              fontSize: 14,
+              borderRadius: 20,
+              width: 380,
+              messagesHeight: 360,
+              darkMode: false,
+            },
+            controls: {
+              modelSwitcher: false,
+              temperatureControl: false,
+              maxTokensControl: false,
+              showTokenUsage: false,
+              allowClear: true,
+              allowCopy: true,
+              allowExport: false,
+            },
+          });
+        });
       }
     </script>
   </body>
