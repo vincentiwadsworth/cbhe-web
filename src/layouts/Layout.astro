@@ -34,6 +34,8 @@ const baseHref = import.meta.env.BASE_URL === '/'
   ? import.meta.env.SITE
   : `${import.meta.env.SITE}${import.meta.env.BASE_URL}/`;
 
+const groqKey = import.meta.env.GROQ_KEY ?? "";
+
 // Canonical URL: Astro.url ya incluye site + base + path
 const canonicalUrl = Astro.url.href;
 
@@ -175,5 +177,26 @@ if (currentPath) {
     </a>
     <CursorGlow />
     <slot />
+
+    <!-- SmartChat.js AI Chatbot -->
+    <script is:inline define:vars={{ groqKey }}>
+      if (groqKey) {
+        const s = document.createElement("script");
+        s.src = "https://dev-nkp.github.io/SmartChat/SmartChat.min.js";
+        s.setAttribute("data-smartchat", "");
+        s.setAttribute("data-groq-key", groqKey);
+        s.setAttribute("data-bot-name", "CBHE Assistant");
+        s.setAttribute("data-primary-color", "#01406c");
+        s.setAttribute("data-accent-color", "#82afe1");
+        s.setAttribute("data-position", "bottom-right");
+        s.setAttribute("data-theme", "auto");
+        s.setAttribute("data-lazy-load", "true");
+        s.setAttribute("data-lazy-scrape", "true");
+        s.setAttribute("data-enable-popup", "false");
+        s.setAttribute("data-show-branding", "false");
+        s.setAttribute("data-sound-enabled", "false");
+        document.body.appendChild(s);
+      }
+    </script>
   </body>
 </html>

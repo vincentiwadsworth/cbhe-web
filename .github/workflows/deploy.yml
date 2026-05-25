@@ -30,6 +30,7 @@ jobs:
       - run: npx astro build
         env:
           WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+          GROQ_KEY: ${{ secrets.GROQ_KEY }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
