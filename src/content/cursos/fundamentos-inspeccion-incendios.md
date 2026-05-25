@@ -2,7 +2,7 @@
 title: "Programa Avanzado: Fundamentos para la Inspección de Incendios"
 category: "Curso"
 modality: "Virtual"
-image: "https://cbhe.org.bo/media/k2/items/cache/1777c3d07087d8dc17fc1be0a58395f6_L.jpg"
+image: "images/cursos/fundamentos-inspeccion-incendios.webp"
 startDate: "17 Ago 2026"
 price: "$420 USD (Aplican descuentos por pago anticipado)"
 registrationDeadline: ""

@@ -2,7 +2,7 @@
 title: "Examen de Certificación: Inspector de Soldadura CAWI/CWI - AWS"
 category: "Certificación"
 modality: "Presencial"
-image: "https://cbhe.org.bo/media/k2/items/cache/1777c3d07087d8dc17fc1be0a58395f6_L.jpg"
+image: "images/cursos/inspector-soldadura.webp"
 startDate: "13 Jun 2026"
 price: "Consultar precios y procedimientos"
 registrationDeadline: ""

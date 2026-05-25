@@ -2,7 +2,7 @@
 title: "Programación en Python para Ingenieros: Fundamentos y Aplicaciones"
 category: "Curso"
 modality: "Virtual"
-image: "https://cbhe.org.bo/media/k2/items/cache/1777c3d07087d8dc17fc1be0a58395f6_L.jpg"
+image: "images/cursos/python-ingenieros.webp"
 startDate: "9 Jun 2026"
 price: "950 Bs. (750 Bs. precio de lanzamiento hasta el 22 de mayo)"
 registrationDeadline: "22 de mayo de 2026"

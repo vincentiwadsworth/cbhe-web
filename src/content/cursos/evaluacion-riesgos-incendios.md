@@ -2,7 +2,7 @@
 title: "Clases Maestras: Evaluación de Riesgos de Incendios"
 category: "Curso"
 modality: "Virtual"
-image: "https://cbhe.org.bo/media/k2/items/cache/1777c3d07087d8dc17fc1be0a58395f6_L.jpg"
+image: "images/cursos/evaluacion-riesgos-incendios.webp"
 startDate: "18 May 2026"
 price: "$170 USD (Descuento del 10% por más de 3 personas)"
 registrationDeadline: ""

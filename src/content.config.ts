@@ -8,7 +8,7 @@ const cursos = defineCollection({
     title: z.string(),
     category: z.enum(["Curso", "Certificación"]),
     modality: z.enum(["Virtual", "Presencial", "Híbrido"]),
-    image: z.string().url().optional(),
+    image: z.string().optional(),
     startDate: z.string(),
     price: z.string(),
     registrationDeadline: z.string().optional(),
