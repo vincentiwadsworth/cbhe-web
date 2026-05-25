@@ -72,6 +72,7 @@ export default defineConfig({
           "light-mode",
           "dark-mode",
           "format-quote",
+          "person",
         ],
       },
     }),
