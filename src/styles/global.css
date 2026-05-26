@@ -291,3 +291,73 @@ h1, h2, h3, h4 {
       radial-gradient(circle at 80% 70%, var(--color-tertiary-container) 0%, transparent 55%);
   }
 }
+
+/* ===== Feature: Afiliadas Directory ===== */
+
+/* Accordion smooth expand/collapse via ::details-content and grid-rows trick */
+.accordion-group::details-content {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms ease-out;
+  interpolate-size: allow-keywords;
+}
+.accordion-group[open]::details-content {
+  grid-template-rows: 1fr;
+}
+
+/* Accordion content wrapper — min-height 0 prevents grid-rows animation from being clipped */
+.accordion-group::details-content > * {
+  min-height: 0;
+}
+
+/* Filter toggle classes — card hidden if EITHER filter matches (AND logic) */
+.hidden-by-search,
+.hidden-by-letter {
+  display: none;
+}
+
+/* Scroll-driven staggered card reveal */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-card {
+    animation: reveal-fade-up 0.6s ease-out both;
+    animation-timeline: view();
+    animation-range: entry 2% cover 15%;
+    animation-delay: calc(var(--card-index) * 80ms);
+  }
+}
+
+/* Destacada card — left accent border, no left radius */
+.card-destacada {
+  border-left-width: 4px;
+  border-left-color: var(--color-primary);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* A-Z letter button states */
+.az-letter.active {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+.az-letter:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Empty state centering */
+.empty-state {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Horizontal scrollbar hide for A-Z bar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

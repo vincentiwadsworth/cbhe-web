@@ -73,6 +73,7 @@ export default defineConfig({
           "dark-mode",
           "format-quote",
           "person",
+          "sort-by-alpha",
         ],
       },
     }),

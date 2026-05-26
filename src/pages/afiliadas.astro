@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Icon from "../components/Icon.astro";
+import AfiliadasSearch from "../components/AfiliadasSearch.astro";
 import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import SubpageHero from "../components/SubpageHero.astro";
@@ -54,6 +55,14 @@ const grouped = GROUPS
 
 const totalEmpresas = empresas.length;
 const subtitleText = `${totalEmpresas} empresas que integran la cadena de valor del sector energético boliviano`;
+
+// Pre-compute which A-Z letters have zero matching companies
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const disabledLetters = new Set(
+  [...ALPHABET].filter(
+    (l) => !empresas.some((e) => e.data.nombre.toUpperCase().startsWith(l))
+  )
+);
 ---
 
 <PageLayout
@@ -72,8 +81,17 @@ const subtitleText = `${totalEmpresas} empresas que integran la cadena de valor 
   />
 
   <Section bg="surface">
+    <AfiliadasSearch
+      totalEmpresas={totalEmpresas}
+      disabledLetters={disabledLetters}
+    />
+
     {grouped.map((group) => (
-      <details id={`grupo-${group.id}`} open class="scroll-mt-24 mb-4 group/detail border border-outline-variant/50 rounded-lg overflow-hidden">
+      <details
+        id={`grupo-${group.id}`}
+        open
+        class="accordion-group scroll-mt-24 mb-4 group/detail border border-outline-variant/50 rounded-lg"
+      >
         <summary class="list-none cursor-pointer flex items-center justify-between bg-surface-container-low px-6 py-4 min-h-[44px] hover:bg-surface-container transition-colors">
           <div class="flex items-center gap-3">
             <span class="font-headline font-bold text-on-surface text-base sm:text-lg">{group.label}</span>
@@ -83,34 +101,45 @@ const subtitleText = `${totalEmpresas} empresas que integran la cadena de valor 
         </summary>
         <div class="p-4 sm:p-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {group.items.map((empresa) => (
-              <article class="bg-surface rounded-lg p-4 sm:p-6 border border-outline-variant/50 hover:shadow-md hover:border-primary/30 transition-all duration-300">
-                <div class="flex items-start gap-4">
-                  {empresa.data.logo && (
-                    <img
-                      src={empresa.data.logo}
-                      alt=""
-                      class="w-10 h-10 sm:w-12 sm:h-12 object-contain shrink-0"
-                      loading="lazy"
-                    />
+            {group.items.map((empresa, index) => (
+              <article
+                data-name={empresa.data.nombre.toLowerCase()}
+                data-letter={empresa.data.nombre.charAt(0).toUpperCase()}
+                style={`--card-index: ${index}`}
+                class:list={[
+                  "reveal-card bg-surface rounded-lg p-4 sm:p-6 border border-outline-variant/50 hover:shadow-md hover:border-primary/30 transition-all duration-300",
+                  empresa.data.destacada ? "card-destacada border-l-4 border-primary rounded-l-none" : "",
+                ]}
+              >
+                {empresa.data.destacada && (
+                  <span class="inline-block bg-primary-container text-on-primary-container px-2 py-0.5 rounded text-xs font-semibold mb-2">
+                    Destacada
+                  </span>
+                )}
+                <h3 class="font-headline font-bold text-on-surface text-base sm:text-lg">
+                  {formatName(empresa.data.nombre)}
+                </h3>
+                <div class="flex flex-wrap gap-3 mt-2">
+                  {empresa.data.website && (
+                    <a
+                      href={empresa.data.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1 text-sm text-primary hover:text-on-primary-container transition-colors"
+                    >
+                      <Icon name="material-symbols:open-in-new" class="size-4" />
+                      Web
+                    </a>
                   )}
-                  <div class="min-w-0">
-                    <h3 class="font-headline font-bold text-on-surface text-base sm:text-lg">{formatName(empresa.data.nombre)}</h3>
-                    <div class="flex flex-wrap gap-3 mt-2">
-                      {empresa.data.website && (
-                        <a href={empresa.data.website} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-primary hover:text-on-primary-container transition-colors">
-                          <Icon name="material-symbols:open-in-new" class="size-4" />
-                          Web
-                        </a>
-                      )}
-                      {empresa.data.email && (
-                        <a href={`mailto:${empresa.data.email}`} class="inline-flex items-center gap-1 text-sm text-primary hover:text-on-primary-container transition-colors">
-                          <Icon name="material-symbols:mail" class="size-4" />
-                          Contacto
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                  {empresa.data.email && (
+                    <a
+                      href={`mailto:${empresa.data.email}`}
+                      class="inline-flex items-center gap-1 text-sm text-primary hover:text-on-primary-container transition-colors"
+                    >
+                      <Icon name="material-symbols:mail" class="size-4" />
+                      Contacto
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
@@ -119,4 +148,85 @@ const subtitleText = `${totalEmpresas} empresas que integran la cadena de valor 
       </details>
     ))}
   </Section>
+
+  <script is:inline>
+    (function () {
+      const cards = document.querySelectorAll("[data-name]");
+      const groups = document.querySelectorAll(".accordion-group");
+      const searchInput = document.getElementById("empresa-search");
+      const counterEl = document.getElementById("result-counter");
+      const emptyStateEl = document.getElementById("empty-state");
+      const letterButtons = document.querySelectorAll("#az-bar .az-letter");
+      const clearBtn = document.getElementById("clear-filters");
+      const total = cards.length;
+
+      let activeLetter = null;
+
+      searchInput.addEventListener("keyup", () => {
+        const q = searchInput.value.toLowerCase();
+        cards.forEach((c) =>
+          c.classList.toggle("hidden-by-search", !c.dataset.name.includes(q))
+        );
+        updateUI();
+      });
+
+      letterButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.disabled) return;
+          activeLetter =
+            activeLetter === btn.dataset.letter ? null : btn.dataset.letter;
+          cards.forEach((c) =>
+            c.classList.toggle(
+              "hidden-by-letter",
+              activeLetter !== null && c.dataset.letter !== activeLetter
+            )
+          );
+          updateLetterStyles();
+          updateUI();
+        });
+      });
+
+      clearBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        activeLetter = null;
+        cards.forEach((c) => {
+          c.classList.remove("hidden-by-search", "hidden-by-letter");
+        });
+        updateLetterStyles();
+        updateUI();
+      });
+
+      function updateLetterStyles() {
+        letterButtons.forEach((btn) => {
+          if (btn.disabled) {
+            btn.classList.add("opacity-30", "cursor-default", "pointer-events-none");
+            btn.classList.remove("active");
+          } else if (btn.dataset.letter === activeLetter) {
+            btn.classList.add("active");
+            btn.classList.remove("opacity-30", "cursor-default", "pointer-events-none");
+          } else {
+            btn.classList.remove("active", "opacity-30", "cursor-default", "pointer-events-none");
+          }
+        });
+      }
+
+      function updateUI() {
+        const visible = [...cards].filter(
+          (c) =>
+            !c.classList.contains("hidden-by-search") &&
+            !c.classList.contains("hidden-by-letter")
+        );
+        counterEl.textContent =
+          "Mostrando " + visible.length + " de " + total + " empresas";
+        emptyStateEl.classList.toggle("hidden", visible.length > 0);
+
+        groups.forEach((g) => {
+          const hasVisible = g.querySelector(
+            '[data-name]:not(.hidden-by-search):not(.hidden-by-letter)'
+          );
+          g.open = hasVisible !== null;
+        });
+      }
+    })();
+  </script>
 </PageLayout>

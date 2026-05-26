@@ -1,0 +1,81 @@
+---
+/**
+ * AfiliadasSearch — Search bar, A-Z letter filter, result counter, and empty state.
+ *
+ * The search input uses an inline JS keyup listener (handled by the parent page's
+ * <script is:inline>) to toggle CSS visibility classes on company cards.
+ * The A-Z bar renders 27 buttons (A-Z) with pre-computed disabled state.
+ *
+ * @prop totalEmpresas  - Total number of non-draft empresas (for counter).
+ * @prop disabledLetters - Set of uppercase letters that have zero matching companies.
+ */
+import Icon from "./Icon.astro";
+
+export interface Props {
+  totalEmpresas: number;
+  disabledLetters: Set<string>;
+}
+
+const { totalEmpresas, disabledLetters } = Astro.props;
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+---
+
+<div id="search-bar" class="mb-8">
+  <!-- Search input -->
+  <div class="relative mb-3 max-w-md sm:max-w-lg">
+    <Icon
+      name="material-symbols:search"
+      class="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-on-surface-variant pointer-events-none"
+    />
+    <input
+      type="text"
+      id="empresa-search"
+      placeholder="Buscar empresa..."
+      class="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant bg-surface text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors text-base"
+      autocomplete="off"
+      aria-label="Buscar empresa por nombre"
+    />
+  </div>
+
+  <!-- Result counter -->
+  <div id="result-counter" class="text-sm text-on-surface-variant mb-4">
+    Mostrando {totalEmpresas} de {totalEmpresas} empresas
+  </div>
+
+  <!-- A-Z letter bar — horizontal scroll on mobile, wraps on desktop -->
+  <div
+    id="az-bar"
+    class="flex overflow-x-auto gap-1 mb-4 touch-pan-x scrollbar-hide"
+    role="group"
+    aria-label="Filtrar por letra inicial"
+  >
+    {ALPHABET.map((letter) => (
+      <button
+        type="button"
+        class="az-letter min-w-[36px] h-9 text-sm font-semibold rounded-md flex-shrink-0 flex items-center justify-center transition-colors bg-surface-container hover:bg-surface-container-high text-on-surface-variant"
+        data-letter={letter}
+        aria-disabled={disabledLetters.has(letter) ? "true" : undefined}
+        disabled={disabledLetters.has(letter)}
+      >
+        {letter}
+      </button>
+    ))}
+  </div>
+
+  <!-- Empty state — hidden by default, shown by JS when no results -->
+  <div id="empty-state" class="empty-state hidden py-12">
+    <p class="text-lg font-semibold text-on-surface mb-2">
+      No se encontraron empresas
+    </p>
+    <p class="text-sm text-on-surface-variant mb-4">
+      Intenta con otro filtro o letra
+    </p>
+    <button
+      type="button"
+      id="clear-filters"
+      class="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-semibold text-sm hover:brightness-95 transition-all spring-press"
+    >
+      Limpiar filtros
+    </button>
+  </div>
+</div>
