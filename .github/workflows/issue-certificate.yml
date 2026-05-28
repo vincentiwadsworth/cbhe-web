@@ -51,12 +51,16 @@ jobs:
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           PUBLIC_VERIFICATION_URL: ${{ secrets.PUBLIC_VERIFICATION_URL }}
         run: |
+          VENC=""
+          if [ -n "${{ inputs.fecha_vencimiento }}" ]; then
+            VENC="--fecha-vencimiento ${{ inputs.fecha_vencimiento }}"
+          fi
           node scripts/issue-certificate.mjs \
             --empresa "${{ inputs.empresa_nombre }}" \
             --tipo "${{ inputs.tipo_certificacion }}" \
             --fecha-emision "${{ inputs.fecha_emision }}" \
             --output ./certificates \
-            $([ -n "${{ inputs.fecha_vencimiento }}" ] && echo '--fecha-vencimiento "${{ inputs.fecha_vencimiento }}"' || true)
+            $VENC
 
       - name: Upload certificate artifacts
         uses: actions/upload-artifact@v4
