@@ -138,18 +138,8 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
   </section>
 </PageLayout>
 
+<script is:inline src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script define:vars={{ supabaseUrl, supabaseKey }}>
-  import { createClient } from "@supabase/supabase-js";
-
-  interface CertificateData {
-    empresa_nombre: string;
-    tipo_certificacion: string;
-    fecha_emision: string;
-    fecha_vencimiento: string | null;
-    estado: string;
-    codigo: string;
-  }
-
   const loadingEl = document.getElementById("cert-loading");
   const foundEl = document.getElementById("cert-found");
   const notFoundEl = document.getElementById("cert-not-found");
@@ -250,7 +240,7 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
         return;
       }
 
-      const supabase = createClient(supabaseUrl, supabaseKey);
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       const { data, error: dbError } = await supabase
         .from("certificados")
         .select("empresa_nombre, tipo_certificacion, fecha_emision, fecha_vencimiento, estado, codigo")
