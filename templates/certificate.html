@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificado CBHE — {{EMPRESA}}</title>
+  <style>
+    /* ===== Reset & Page ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 12mm;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      color: #1b1b1d;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .certificate-page {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      padding: 12mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== Double Border ===== */
+    .certificate-border {
+      border: 3px solid #01406c;
+      padding: 6mm;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .certificate-inner {
+      border: 1px solid #01406c;
+      padding: 10mm 14mm;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== Header ===== */
+    .certificate-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8mm;
+    }
+
+    .certificate-logo {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+
+    .certificate-institution {
+      flex: 1;
+    }
+
+    .certificate-inst-name {
+      font-size: 14pt;
+      font-weight: 700;
+      color: #01406c;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .certificate-inst-sub {
+      font-size: 10pt;
+      font-weight: 500;
+      color: #44474c;
+      margin: 2px 0 0;
+    }
+
+    /* ===== Title ===== */
+    .certificate-title-section {
+      text-align: center;
+      margin-bottom: 10mm;
+    }
+
+    .certificate-title {
+      font-size: 28pt;
+      font-weight: 800;
+      color: #01406c;
+      letter-spacing: 0.15em;
+      margin: 0;
+    }
+
+    .certificate-title-line {
+      width: 80mm;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #01406c, transparent);
+      margin: 6px auto 0;
+    }
+
+    /* ===== Body ===== */
+    .certificate-body {
+      flex: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6mm 0;
+    }
+
+    .certificate-otorgado {
+      font-size: 11pt;
+      color: #44474c;
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .certificate-empresa {
+      font-size: 22pt;
+      font-weight: 800;
+      color: #01406c;
+      margin-bottom: 8px;
+    }
+
+    .certificate-tipo-label {
+      font-size: 10pt;
+      color: #44474c;
+      margin-bottom: 4px;
+    }
+
+    .certificate-tipo {
+      font-size: 14pt;
+      font-weight: 600;
+      color: #1b1b1d;
+    }
+
+    .certificate-dates {
+      display: flex;
+      gap: 40px;
+      margin-top: 10mm;
+    }
+
+    .certificate-date-item {
+      text-align: center;
+    }
+
+    .certificate-date-label {
+      font-size: 8pt;
+      font-weight: 600;
+      color: #44474c;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    .certificate-date-value {
+      font-size: 11pt;
+      font-weight: 500;
+      color: #1b1b1d;
+    }
+
+    /* ===== Footer ===== */
+    .certificate-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 8mm;
+    }
+
+    .certificate-signature-area {
+      width: 50mm;
+      text-align: center;
+    }
+
+    .certificate-signature-line {
+      border-top: 1px solid #01406c;
+      margin-bottom: 4px;
+    }
+
+    .certificate-signature-label {
+      font-size: 7pt;
+      color: #44474c;
+    }
+
+    .certificate-seal {
+      display: flex;
+      justify-content: center;
+    }
+
+    .certificate-seal-circle {
+      width: 28mm;
+      height: 28mm;
+      border: 2px solid #01406c;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.25;
+    }
+
+    .certificate-seal-circle span {
+      font-size: 10pt;
+      font-weight: 800;
+      color: #01406c;
+      letter-spacing: 0.1em;
+    }
+
+    .certificate-qr-area {
+      width: 30mm;
+      text-align: center;
+    }
+
+    .certificate-qr-placeholder {
+      width: 26mm;
+      height: 26mm;
+      margin: 0 auto 4px;
+    }
+
+    .certificate-qr-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .certificate-code {
+      font-size: 6.5pt;
+      font-family: monospace;
+      color: #44474c;
+      word-break: break-all;
+    }
+
+    /* ===== Print ===== */
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .certificate-page {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="certificate-page">
+    <div class="certificate-border">
+      <div class="certificate-inner">
+        <!-- Header -->
+        <header class="certificate-header">
+          <img
+            src="{{LOGO_BASE64}}"
+            alt="CBHE Logo"
+            class="certificate-logo"
+            width="70"
+            height="70"
+          />
+          <div class="certificate-institution">
+            <p class="certificate-inst-name">Colegio de Bomberos e Hidrantes Especiales</p>
+            <p class="certificate-inst-sub">Bolivia</p>
+          </div>
+        </header>
+
+        <!-- Title -->
+        <div class="certificate-title-section">
+          <h1 class="certificate-title">CERTIFICADO</h1>
+          <div class="certificate-title-line"></div>
+        </div>
+
+        <!-- Body -->
+        <main class="certificate-body">
+          <p class="certificate-otorgado">Otorgado a</p>
+          <p class="certificate-empresa">{{EMPRESA}}</p>
+          <p class="certificate-tipo-label">por haber cumplido con los requisitos de</p>
+          <p class="certificate-tipo">{{TIPO}}</p>
+          <div class="certificate-dates">
+            <div class="certificate-date-item">
+              <p class="certificate-date-label">Fecha de Emisión</p>
+              <p class="certificate-date-value">{{FECHA_EMISION}}</p>
+            </div>
+            {{FECHA_VENCIMIENTO_BLOCK}}
+          </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="certificate-footer">
+          <div class="certificate-signature-area">
+            <div class="certificate-signature-line"></div>
+            <p class="certificate-signature-label">Director — CBHE Bolivia</p>
+          </div>
+
+          <div class="certificate-seal">
+            <div class="certificate-seal-circle">
+              <span>CBHE</span>
+            </div>
+          </div>
+
+          <div class="certificate-qr-area">
+            <div class="certificate-qr-placeholder">
+              <img src="{{QR_BASE64}}" alt="Código QR de verificación" />
+            </div>
+            <p class="certificate-code">{{CODIGO}}</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
