@@ -46,21 +46,17 @@ jobs:
             libpango-1.0-0 libcairo2 libasound2t64
 
       - name: Issue certificate
-        run: |
-          ARGS="
-            --empresa \"${{ inputs.empresa_nombre }}\"
-            --tipo \"${{ inputs.tipo_certificacion }}\"
-            --fecha-emision \"${{ inputs.fecha_emision }}\"
-            --output ./certificates
-          "
-          if [ -n "${{ inputs.fecha_vencimiento }}" ]; then
-            ARGS="$ARGS --fecha-vencimiento \"${{ inputs.fecha_vencimiento }}\""
-          fi
-          eval "node scripts/issue-certificate.mjs $ARGS"
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           PUBLIC_VERIFICATION_URL: ${{ secrets.PUBLIC_VERIFICATION_URL }}
+        run: |
+          node scripts/issue-certificate.mjs \
+            --empresa "${{ inputs.empresa_nombre }}" \
+            --tipo "${{ inputs.tipo_certificacion }}" \
+            --fecha-emision "${{ inputs.fecha_emision }}" \
+            --output ./certificates \
+            $([ -n "${{ inputs.fecha_vencimiento }}" ] && echo '--fecha-vencimiento "${{ inputs.fecha_vencimiento }}"' || true)
 
       - name: Upload certificate artifacts
         uses: actions/upload-artifact@v4
