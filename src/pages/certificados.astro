@@ -1,6 +1,6 @@
 ---
 /**
- * verificar.astro — Certificate verification page.
+ * certificados.astro — Certificate verification page.
  *
  * Reads the `c` query parameter client-side and queries Supabase
  * to display certificate details. Three states: loading, found, not-found.
@@ -9,6 +9,9 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "../components/Section.astro";
 import Icon from "../components/Icon.astro";
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 ---
 
 <PageLayout title="Verificar Certificado" description="Verifique la autenticidad de un certificado emitido por la CBHE." noindex>
@@ -135,6 +138,150 @@ import Icon from "../components/Icon.astro";
   </section>
 </PageLayout>
 
-<script>
-  import "../scripts/verify-certificate";
+<script define:vars={{ supabaseUrl, supabaseKey }}>
+  import { createClient } from "@supabase/supabase-js";
+
+  interface CertificateData {
+    empresa_nombre: string;
+    tipo_certificacion: string;
+    fecha_emision: string;
+    fecha_vencimiento: string | null;
+    estado: string;
+    codigo: string;
+  }
+
+  const loadingEl = document.getElementById("cert-loading");
+  const foundEl = document.getElementById("cert-found");
+  const notFoundEl = document.getElementById("cert-not-found");
+  const errorEl = document.getElementById("cert-error");
+  const codeDisplayEl = document.getElementById("cert-code-display");
+
+  function hideAll() {
+    loadingEl?.classList.add("hidden");
+    foundEl?.classList.add("hidden");
+    notFoundEl?.classList.add("hidden");
+    errorEl?.classList.add("hidden");
+  }
+
+  function showState(state) {
+    hideAll();
+    switch (state) {
+      case "loading":
+        loadingEl?.classList.remove("hidden");
+        break;
+      case "found":
+        foundEl?.classList.remove("hidden");
+        break;
+      case "not-found":
+        notFoundEl?.classList.remove("hidden");
+        break;
+      case "error":
+        errorEl?.classList.remove("hidden");
+        break;
+    }
+  }
+
+  function formatDate(dateStr) {
+    try {
+      const date = new Date(dateStr + "T00:00:00");
+      return date.toLocaleDateString("es-BO", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+    } catch {
+      return dateStr;
+    }
+  }
+
+  function populateCard(cert) {
+    const empresaEl = document.getElementById("cert-empresa");
+    const tipoEl = document.getElementById("cert-tipo");
+    const emisionEl = document.getElementById("cert-emision");
+    const vencimientoEl = document.getElementById("cert-vencimiento");
+    const vencimientoContainer = document.getElementById("cert-vencimiento-container");
+    const codigoEl = document.getElementById("cert-codigo");
+    const estadoIcon = document.getElementById("cert-estado-icon");
+    const estadoTitle = document.getElementById("cert-estado-title");
+    const estadoDesc = document.getElementById("cert-estado-desc");
+    const headerEl = document.getElementById("cert-header");
+
+    if (empresaEl) empresaEl.textContent = cert.empresa_nombre;
+    if (tipoEl) tipoEl.textContent = cert.tipo_certificacion;
+    if (emisionEl) emisionEl.textContent = formatDate(cert.fecha_emision);
+    if (codigoEl) codigoEl.textContent = cert.codigo;
+
+    if (cert.fecha_vencimiento) {
+      if (vencimientoEl) vencimientoEl.textContent = formatDate(cert.fecha_vencimiento);
+      vencimientoContainer?.classList.remove("hidden");
+    } else {
+      vencimientoContainer?.classList.add("hidden");
+    }
+
+    const isVigente = cert.estado === "vigente";
+
+    if (estadoIcon) {
+      estadoIcon.setAttribute("name", isVigente ? "material-symbols:verified" : "material-symbols:security");
+      estadoIcon.className = `size-8 shrink-0 ${isVigente ? "text-success" : "text-error"}`;
+    }
+
+    if (estadoTitle) {
+      estadoTitle.textContent = isVigente ? "Certificado Verificado" : `Certificado ${cert.estado === "vencido" ? "Vencido" : "Revocado"}`;
+    }
+
+    if (estadoDesc) {
+      estadoDesc.textContent = isVigente
+        ? "Este certificado es válido y está vigente."
+        : "Este certificado no está vigente.";
+    }
+
+    if (headerEl) {
+      headerEl.className = `px-6 py-4 flex items-center gap-3 ${isVigente ? "bg-success/10" : "bg-error/10"}`;
+    }
+  }
+
+  async function verifyCertificate(codigo) {
+    if (codeDisplayEl) codeDisplayEl.textContent = codigo;
+    showState("loading");
+
+    try {
+      if (!supabaseUrl || !supabaseKey) {
+        showState("error");
+        return;
+      }
+
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      const { data, error: dbError } = await supabase
+        .from("certificados")
+        .select("empresa_nombre, tipo_certificacion, fecha_emision, fecha_vencimiento, estado, codigo")
+        .eq("codigo", codigo)
+        .maybeSingle();
+
+      if (dbError) {
+        console.error("Supabase query error:", dbError);
+        showState("error");
+        return;
+      }
+
+      if (!data) {
+        showState("not-found");
+        return;
+      }
+
+      populateCard(data);
+      showState("found");
+    } catch (err) {
+      console.error("Verification error:", err);
+      showState("error");
+    }
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const codigo = params.get("c")?.trim();
+
+  if (!codigo) {
+    showState("not-found");
+  } else {
+    verifyCertificate(codigo);
+  }
 </script>

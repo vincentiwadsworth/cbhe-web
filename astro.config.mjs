@@ -10,7 +10,7 @@ export default defineConfig({
   base: "/cbhe-web",
   integrations: [
     sitemap({
-      filter: (page) => !page.includes("/gracias") && !page.includes("/verificar"),
+      filter: (page) => !page.includes("/gracias") && !page.includes("/certificados"),
     }),
     icon({
       include: {

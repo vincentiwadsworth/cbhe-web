@@ -2,6 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /gracias
 Disallow: /admin
-Disallow: /verificar
+Disallow: /certificados
 
 Sitemap: https://vincentiwadsworth.github.io/cbhe-web/sitemap-index.xml
