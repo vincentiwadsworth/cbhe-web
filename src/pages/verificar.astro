@@ -1,0 +1,140 @@
+---
+/**
+ * verificar.astro — Certificate verification page.
+ *
+ * Reads the `c` query parameter client-side and queries Supabase
+ * to display certificate details. Three states: loading, found, not-found.
+ * Works gracefully even without Supabase configured (shows error state).
+ */
+import PageLayout from "../layouts/PageLayout.astro";
+import Section from "../components/Section.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<PageLayout title="Verificar Certificado" description="Verifique la autenticidad de un certificado emitido por la CBHE." noindex>
+  <Section bg="surface-container-low">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="mb-8">
+        <div class="inline-flex items-center justify-center size-16 rounded-full bg-primary-container mb-4">
+          <Icon name="material-symbols:qr-code-2" class="size-8 text-primary" />
+        </div>
+        <h1 class="font-headline font-extrabold text-3xl sm:text-4xl text-on-surface mb-3">
+          Verificación de Certificado
+        </h1>
+        <p class="text-on-surface-variant text-base sm:text-lg max-w-md mx-auto">
+          Ingrese el código de verificación o escanee el código QR del certificado para confirmar su autenticidad.
+        </p>
+      </div>
+
+      <!-- ===== State: Loading ===== -->
+      <div id="cert-loading" class="py-12">
+        <div class="flex flex-col items-center gap-4">
+          <div class="size-12 rounded-full border-4 border-primary-container border-t-primary animate-spin"></div>
+          <p class="text-on-surface-variant font-medium">Verificando certificado…</p>
+          <p id="cert-code-display" class="font-mono text-sm text-primary bg-primary-container/40 rounded px-3 py-1"></p>
+        </div>
+      </div>
+
+      <!-- ===== State: Found (rendered by JS) ===== -->
+      <div id="cert-found" class="hidden">
+        <div class="bg-surface rounded-lg shadow-md border border-outline-variant/30 overflow-hidden max-w-lg mx-auto text-left">
+          <!-- Header — dynamic -->
+          <div id="cert-header" class="px-6 py-4 flex items-center gap-3">
+            <Icon id="cert-estado-icon" name="material-symbols:verified" class="size-8 shrink-0 text-success" />
+            <div class="min-w-0">
+              <p id="cert-estado-title" class="font-headline font-bold text-on-surface text-lg leading-tight truncate">Certificado Verificado</p>
+              <p id="cert-estado-desc" class="text-xs text-on-surface-variant mt-0.5">Este certificado es válido y está vigente.</p>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="px-6 py-5 space-y-4">
+            <div>
+              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Empresa</p>
+              <p id="cert-empresa" class="font-headline font-bold text-on-surface text-xl"></p>
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Tipo de Certificación</p>
+              <p id="cert-tipo" class="text-on-surface"></p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Emisión</p>
+                <p id="cert-emision" class="text-on-surface flex items-center gap-1.5">
+                  <Icon name="material-symbols:calendar-today" class="size-4 text-on-surface-variant" />
+                </p>
+              </div>
+              <div id="cert-vencimiento-container">
+                <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Vencimiento</p>
+                <p id="cert-vencimiento" class="text-on-surface flex items-center gap-1.5">
+                  <Icon name="material-symbols:schedule" class="size-4 text-on-surface-variant" />
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-outline-variant/30">
+              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Código de Verificación</p>
+              <p id="cert-codigo" class="font-mono text-sm text-primary bg-primary-container/40 rounded px-3 py-1.5 inline-block select-all"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== State: Not Found ===== -->
+      <div id="cert-not-found" class="hidden py-12">
+        <div class="bg-surface rounded-lg shadow-md border border-error/20 overflow-hidden max-w-lg mx-auto">
+          <div class="px-6 py-4 flex items-center gap-3 bg-error/10">
+            <Icon name="material-symbols:security" class="size-8 text-error shrink-0" />
+            <div>
+              <p class="font-headline font-bold text-on-surface text-lg">Certificado No Encontrado</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">No se encontró ningún certificado con ese código.</p>
+            </div>
+          </div>
+          <div class="px-6 py-5">
+            <p class="text-on-surface-variant text-sm mb-4">
+              El código de verificación no corresponde a ningún certificado registrado. Verifique el código e intente nuevamente.
+            </p>
+            <a
+              href="verificar"
+              class="inline-flex items-center gap-2 text-primary font-semibold hover:underline hover:underline-offset-4 transition-colors"
+            >
+              <Icon name="material-symbols:refresh" class="size-4" />
+              Intentar con otro código
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== State: Error ===== -->
+      <div id="cert-error" class="hidden py-12">
+        <div class="bg-surface rounded-lg shadow-md border border-error/20 overflow-hidden max-w-lg mx-auto">
+          <div class="px-6 py-4 flex items-center gap-3 bg-error/10">
+            <Icon name="material-symbols:security" class="size-8 text-error shrink-0" />
+            <div>
+              <p class="font-headline font-bold text-on-surface text-lg">Error de Verificación</p>
+              <p class="text-xs text-on-surface-variant mt-0.5">No se pudo verificar el certificado en este momento.</p>
+            </div>
+          </div>
+          <div class="px-6 py-5">
+            <p class="text-on-surface-variant text-sm mb-4">
+              Ocurrió un error al intentar verificar el certificado. Esto puede deberse a un problema temporal del servicio. Por favor, intente nuevamente más tarde.
+            </p>
+            <a
+              href="contacto"
+              class="inline-flex items-center gap-2 text-primary font-semibold hover:underline hover:underline-offset-4 transition-colors"
+            >
+              <Icon name="material-symbols:mail" class="size-4" />
+              Contactar a la CBHE
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  import "../scripts/verify-certificate";
+</script>

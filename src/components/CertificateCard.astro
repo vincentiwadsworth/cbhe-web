@@ -1,0 +1,101 @@
+---
+/**
+ * CertificateCard — Displays certificate data in a branded card layout.
+ *
+ * @prop empresa_nombre      - Company name
+ * @prop tipo_certificacion  - Certification type
+ * @prop fecha_emision       - Issue date (formatted string)
+ * @prop fecha_vencimiento   - Expiry date (formatted string, optional)
+ * @prop estado              - Certificate status: vigente | vencido | revocado
+ * @prop codigo              - Verification code
+ */
+import Icon from "./Icon.astro";
+
+export interface Props {
+  empresa_nombre: string;
+  tipo_certificacion: string;
+  fecha_emision: string;
+  fecha_vencimiento?: string;
+  estado: string;
+  codigo: string;
+}
+
+const {
+  empresa_nombre,
+  tipo_certificacion,
+  fecha_emision,
+  fecha_vencimiento,
+  estado,
+  codigo,
+} = Astro.props;
+
+const isVigente = estado === "vigente";
+const isVencido = estado === "vencido";
+
+const estadoLabel: Record<string, string> = {
+  vigente: "Vigente",
+  vencido: "Vencido",
+  revocado: "Revocado",
+};
+---
+
+<div class="bg-surface rounded-lg shadow-md border border-outline-variant/30 overflow-hidden max-w-lg mx-auto">
+  <!-- Header -->
+  <div class:list={["px-6 py-4 flex items-center gap-3", isVigente ? "bg-success/10" : isVencido ? "bg-error/10" : "bg-surface-container"]}>
+    <Icon
+      name={isVigente ? "material-symbols:verified" : "material-symbols:security"}
+      class:list={["size-8 shrink-0", isVigente ? "text-success" : "text-error"]}
+    />
+    <div class="min-w-0">
+      <p class="font-headline font-bold text-on-surface text-lg leading-tight truncate">
+        {isVigente ? "Certificado Verificado" : "Certificado " + (estadoLabel[estado] || estado)}
+      </p>
+      <p class="text-xs text-on-surface-variant mt-0.5">
+        {isVigente ? "Este certificado es válido y está vigente." : "Este certificado no está vigente."}
+      </p>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="px-6 py-5 space-y-4">
+    <!-- Company name -->
+    <div>
+      <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Empresa</p>
+      <p class="font-headline font-bold text-on-surface text-xl">{empresa_nombre}</p>
+    </div>
+
+    <!-- Certification type -->
+    <div>
+      <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Tipo de Certificación</p>
+      <p class="text-on-surface">{tipo_certificacion}</p>
+    </div>
+
+    <!-- Dates -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Emisión</p>
+        <p class="text-on-surface flex items-center gap-1.5">
+          <Icon name="material-symbols:calendar-today" class="size-4 text-on-surface-variant" />
+          {fecha_emision}
+        </p>
+      </div>
+      {fecha_vencimiento && (
+        <div>
+          <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Vencimiento</p>
+          <p class="text-on-surface flex items-center gap-1.5">
+            <Icon name="material-symbols:schedule" class="size-4 text-on-surface-variant" />
+            {fecha_vencimiento}
+          </p>
+        </div>
+      )}
+    </div>
+
+    <!-- Verification code -->
+    <div class="pt-3 border-t border-outline-variant/30">
+      <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Código de Verificación</p>
+      <p class="font-mono text-sm text-primary bg-primary-container/40 rounded px-3 py-1.5 inline-block select-all">
+        {codigo}
+      </p>
+    </div>
+  </div>
+</div>
