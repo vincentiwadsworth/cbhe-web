@@ -360,17 +360,26 @@ if (currentPath) {
           // children only (no recursion) because the SDK writes a single text node
           // as a direct child of the bubble, before .sgq-copy-btn.
           let raw = "";
-          const copyBtn = bubble.querySelector(".sgq-copy-btn");
+          const existingSpan = bubble.querySelector(".sgq-msg-normalized");
           for (const child of bubble.childNodes) {
             if (child.nodeType === 3) raw += child.nodeValue;
           }
-          if (!raw) {
-            // Stream hasn't produced text yet
+          if (!raw && !existingSpan) return;
+          if (existingSpan && raw === existingSpan.dataset.lastRaw) return;
+
+          if (existingSpan) {
+            // Update existing span in-place (no re-create) to avoid reflow cascade
+            existingSpan.dataset.lastRaw = raw;
+            existingSpan.innerHTML = formatBold(formatUrls(escapeHtmlPreservingNewlines(normalizeAssistantText(raw))));
+            // Remove stray raw text nodes added by SDK post-formatting
+            for (const child of bubble.childNodes) {
+              if (child.nodeType === 3) bubble.removeChild(child);
+            }
             return;
           }
-          if (bubble.dataset.lastProcessed === raw) return;
-          bubble.dataset.lastProcessed = raw;
 
+          // First-time processing: build the wrapper span
+          const copyBtn = bubble.querySelector(".sgq-copy-btn");
           const normalized = normalizeAssistantText(raw);
           // Order matters: escape → bold (uses * as anchor) → URLs (already-safe)
           const html = formatBold(formatUrls(escapeHtmlPreservingNewlines(normalized)));
@@ -426,6 +435,14 @@ if (currentPath) {
                         setTimeout(() => postProcessBubble(b), 50);
                       }
                     });
+                  } else if (node.nodeType === 3) {
+                    // Streaming: SDK removes old text node and inserts a new one
+                    // (characterData does not fire; we catch it here via childList)
+                    const bubble = node.parentElement?.closest(".sgq-msg");
+                    if (bubble?.classList.contains("assistant")) {
+                      clearTimeout(bubble._normTimer);
+                      bubble._normTimer = setTimeout(() => postProcessBubble(bubble), 200);
+                    }
                   }
                 });
               } else if (m.type === "characterData") {
