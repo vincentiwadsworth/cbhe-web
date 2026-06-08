@@ -247,8 +247,8 @@ if (currentPath) {
               "REGLAS:",
               "Si no sabés algo, sugerí contactar a cbhe@cbhe.org.bo.",
               "No inventes nombres de empresas que no estén en la lista.",
-              "FORMATO: usá texto plano con números y saltos de línea. NUNCA uses Markdown.",
-              "Sin **, sin *, sin #, sin backticks, sin - para listas. Usá '1.' '2.' o el carácter • para listas.",
+              "FORMATO: usá texto plano con saltos de línea. NO uses Markdown excepto **palabra** para enfatizar 1-3 palabras clave por respuesta (nombres de empresas, categorías, conceptos clave).",
+              "Sin *, sin #, sin backticks, sin - para listas. Usá '1.' '2.' o el carácter • para listas.",
               "Una sola pregunta de cierre, corta y específica. No repitas la pregunta ya implícita en la oferta de profundizar.",
               "",
               "CÓMO RESPONDER:",
@@ -257,11 +257,11 @@ if (currentPath) {
               "",
               "EJEMPLO:",
               "Usuario: ¿Qué empresas son afiliadas?",
-              "Asistente: La CBHE tiene 51 empresas afiliadas en 6 categorías: Exploración y Producción (12), Servicios en Pozo (12), Servicios en Superficie (12), Industria y Transporte (3), Servicios Auxiliares (11) y Adherentes (1). ¿Te interesa alguna categoría en particular?",
+              "Asistente: La CBHE tiene **51 empresas afiliadas** en **6 categorías**: Exploración y Producción (12), Servicios en Pozo (12), Servicios en Superficie (12), Industria y Transporte (3), Servicios Auxiliares (11) y Adherentes (1). ¿Te interesa alguna categoría en particular?",
               "Usuario: ¿Qué hace Repsol?",
-              "Asistente: Repsol E&P Bolivia S.A. se dedica a la exploración y producción de hidrocarburos. Opera en el bloque Caipipendi, que incluye el campo Margarita-Huacaya, uno de los mayores productores de gas natural de Bolivia, en el subandino sur.",
+              "Asistente: **Repsol E&P Bolivia S.A.** se dedica a la **exploración y producción de hidrocarburos**. Opera en el **bloque Caipipendi**, que incluye el campo Margarita-Huacaya, uno de los mayores productores de gas natural de Bolivia, en el subandino sur.",
               "Usuario: Dame la lista de Servicios en Superficie.",
-              "Asistente: Servicios en Superficie (12 empresas):",
+              "Asistente: **Servicios en Superficie** (12 empresas):",
               "1. BOLPEGAS S.R.L.",
               "2. CARLOS CABALLERO S.A.",
               "3. CONFIPETROL S.A. SUCURSAL BOLIVIA",
@@ -296,6 +296,10 @@ if (currentPath) {
                 text-decoration: underline;
                 word-break: break-all;
               }
+              .sgq-msg strong {
+                font-weight: 700;
+                color: #01406c;
+              }
             `,
             controls: {
               modelSwitcher: false,
@@ -316,8 +320,6 @@ if (currentPath) {
         function normalizeAssistantText(raw) {
           if (!raw) return raw;
           return raw
-            // bold **text** → text
-            .replace(/\*\*([^*]+)\*\*/g, "$1")
             // italic *text* or _text_ → text (only when not part of a word)
             .replace(/(^|[\s(])_([^_\n]+)_(?=[\s).,!?]|$)/g, "$1$2")
             .replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s).,!?]|$)/g, "$1$2")
@@ -330,6 +332,12 @@ if (currentPath) {
             // collapse 3+ blank lines into 2
             .replace(/\n{3,}/g, "\n\n")
             .trim();
+        }
+
+        // Convert **word** to <strong>word</strong> for keyword emphasis.
+        // Must run AFTER escapeHtml so ** aren't converted to entities first.
+        function formatBold(s) {
+          return s.replace(/\*\*([^*\n][^*]*?)\*\*/g, "<strong>$1</strong>");
         }
 
         // Format a bare URL as "Web: dominio" so it stands out from prose
@@ -348,36 +356,42 @@ if (currentPath) {
         }
 
         function postProcessBubble(bubble) {
-          // Check if we've already processed this exact text (avoid re-processing
-          // the same text node when streaming replaces it with identical content)
-          const textNodes = [];
-          const walker = document.createTreeWalker(bubble, NodeFilter.SHOW_TEXT, {
-            acceptNode(node) {
-              if (node.parentElement?.classList?.contains("sgq-copy-btn"))
-                return NodeFilter.FILTER_REJECT;
-              if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-              return NodeFilter.FILTER_ACCEPT;
-            },
-          });
-          let n;
-          while ((n = walker.nextNode())) textNodes.push(n);
-          if (textNodes.length === 0) return;
-
-          const combined = textNodes.map((tn) => tn.nodeValue).join("");
-          // Skip if we already processed this exact string
-          if (bubble.dataset.lastProcessed === combined) return;
-          bubble.dataset.lastProcessed = combined;
-
-          const normalized = normalizeAssistantText(combined);
-          // Replace bubble content (preserving the copy button)
+          // Collect raw text from the SDK's live text node(s). We look at direct
+          // children only (no recursion) because the SDK writes a single text node
+          // as a direct child of the bubble, before .sgq-copy-btn.
+          let raw = "";
           const copyBtn = bubble.querySelector(".sgq-copy-btn");
-          const html = formatUrls(escapeHtmlPreservingNewlines(normalized));
+          for (const child of bubble.childNodes) {
+            if (child.nodeType === 3) raw += child.nodeValue;
+          }
+          if (!raw) {
+            // Stream hasn't produced text yet
+            return;
+          }
+          if (bubble.dataset.lastProcessed === raw) return;
+          bubble.dataset.lastProcessed = raw;
+
+          const normalized = normalizeAssistantText(raw);
+          // Order matters: escape → bold (uses * as anchor) → URLs (already-safe)
+          const html = formatBold(formatUrls(escapeHtmlPreservingNewlines(normalized)));
+
+          // Remove ALL existing children except copyBtn
+          const children = Array.from(bubble.childNodes);
+          for (const child of children) {
+            if (child !== copyBtn) bubble.removeChild(child);
+          }
+
+          // Build a wrapper span with the normalized HTML
           const wrapper = document.createElement("span");
+          wrapper.className = "sgq-msg-normalized";
           wrapper.innerHTML = html;
-          // Remove all existing children
-          while (bubble.firstChild) bubble.removeChild(bubble.firstChild);
-          bubble.appendChild(wrapper);
-          if (copyBtn) bubble.appendChild(copyBtn);
+
+          // Insert wrapper as first child (or before copyBtn if it exists)
+          if (copyBtn) {
+            bubble.insertBefore(wrapper, copyBtn);
+          } else {
+            bubble.appendChild(wrapper);
+          }
         }
 
         function escapeHtmlPreservingNewlines(s) {
