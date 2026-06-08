@@ -247,7 +247,9 @@ if (currentPath) {
               "REGLAS:",
               "Si no sabés algo, sugerí contactar a cbhe@cbhe.org.bo.",
               "No inventes nombres de empresas que no estén en la lista.",
-              "Usá texto plano con números y saltos de línea. No uses Markdown (**, *, #, -, backticks).",
+              "FORMATO: usá texto plano con números y saltos de línea. NUNCA uses Markdown.",
+              "Sin **, sin *, sin #, sin backticks, sin - para listas. Usá '1.' '2.' o el carácter • para listas.",
+              "Una sola pregunta de cierre, corta y específica. No repitas la pregunta ya implícita en la oferta de profundizar.",
               "",
               "CÓMO RESPONDER:",
               "Preguntas amplias ('qué empresas hay', 'qué cursos ofrecen'): dale un resumen corto y ofrecé profundizar en algo específico. No listes todo de golpe.",
@@ -258,6 +260,13 @@ if (currentPath) {
               "Asistente: La CBHE tiene 51 empresas afiliadas en 6 categorías: Exploración y Producción (12), Servicios en Pozo (12), Servicios en Superficie (12), Industria y Transporte (3), Servicios Auxiliares (11) y Adherentes (1). ¿Te interesa alguna categoría en particular?",
               "Usuario: ¿Qué hace Repsol?",
               "Asistente: Repsol E&P Bolivia S.A. se dedica a la exploración y producción de hidrocarburos. Opera en el bloque Caipipendi, que incluye el campo Margarita-Huacaya, uno de los mayores productores de gas natural de Bolivia, en el subandino sur.",
+              "Usuario: Dame la lista de Servicios en Superficie.",
+              "Asistente: Servicios en Superficie (12 empresas):",
+              "1. BOLPEGAS S.R.L.",
+              "2. CARLOS CABALLERO S.A.",
+              "3. CONFIPETROL S.A. SUCURSAL BOLIVIA",
+              "(sigue con el resto, numeradas)",
+              "Para detalles de alguna empresa en particular, decime el nombre.",
               "",
               "Fuente de verdad:\n",
               chatbotContext,
@@ -273,6 +282,21 @@ if (currentPath) {
               messagesHeight: 360,
               darkMode: false,
             },
+            customCss: `
+              .sgq-msg {
+                white-space: pre-wrap;
+                line-height: 1.55;
+                padding: 11px 14px;
+              }
+              .sgq-msg.assistant {
+                max-width: 85%;
+              }
+              a.sgq-link {
+                color: #01406c;
+                text-decoration: underline;
+                word-break: break-all;
+              }
+            `,
             controls: {
               modelSwitcher: false,
               temperatureControl: false,
@@ -284,6 +308,130 @@ if (currentPath) {
             },
           });
         });
+
+        // Post-process chatbot output: strip residual markdown that leaks through
+        // (the widget uses textContent so it can't render formatting, but the LLM
+        // still emits * / ** / ` / - markers occasionally).
+        // We observe #sgq-messages and normalize any new assistant bubble.
+        function normalizeAssistantText(raw) {
+          if (!raw) return raw;
+          return raw
+            // bold **text** → text
+            .replace(/\*\*([^*]+)\*\*/g, "$1")
+            // italic *text* or _text_ → text (only when not part of a word)
+            .replace(/(^|[\s(])_([^_\n]+)_(?=[\s).,!?]|$)/g, "$1$2")
+            .replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s).,!?]|$)/g, "$1$2")
+            // inline code `text` → text
+            .replace(/`([^`\n]+)`/g, "$1")
+            // headers at line start: "## Title" → "Title"
+            .replace(/^#{1,6}\s+/gm, "")
+            // bullet markers at line start: "- item" or "* item" → "• item"
+            .replace(/^[\s]*[-\*]\s+/gm, "• ")
+            // collapse 3+ blank lines into 2
+            .replace(/\n{3,}/g, "\n\n")
+            .trim();
+        }
+
+        // Format a bare URL as "Web: dominio" so it stands out from prose
+        function formatUrls(html) {
+          return html.replace(
+            /(?<!["'>])(https?:\/\/[^\s<]+)/g,
+            (m) => {
+              try {
+                const u = new URL(m);
+                return `Web: <a class="sgq-link" href="${m}" target="_blank" rel="noopener">${u.hostname.replace(/^www\./, "")}</a>`;
+              } catch {
+                return m;
+              }
+            },
+          );
+        }
+
+        function postProcessBubble(bubble) {
+          // Check if we've already processed this exact text (avoid re-processing
+          // the same text node when streaming replaces it with identical content)
+          const textNodes = [];
+          const walker = document.createTreeWalker(bubble, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              if (node.parentElement?.classList?.contains("sgq-copy-btn"))
+                return NodeFilter.FILTER_REJECT;
+              if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+              return NodeFilter.FILTER_ACCEPT;
+            },
+          });
+          let n;
+          while ((n = walker.nextNode())) textNodes.push(n);
+          if (textNodes.length === 0) return;
+
+          const combined = textNodes.map((tn) => tn.nodeValue).join("");
+          // Skip if we already processed this exact string
+          if (bubble.dataset.lastProcessed === combined) return;
+          bubble.dataset.lastProcessed = combined;
+
+          const normalized = normalizeAssistantText(combined);
+          // Replace bubble content (preserving the copy button)
+          const copyBtn = bubble.querySelector(".sgq-copy-btn");
+          const html = formatUrls(escapeHtmlPreservingNewlines(normalized));
+          const wrapper = document.createElement("span");
+          wrapper.innerHTML = html;
+          // Remove all existing children
+          while (bubble.firstChild) bubble.removeChild(bubble.firstChild);
+          bubble.appendChild(wrapper);
+          if (copyBtn) bubble.appendChild(copyBtn);
+        }
+
+        function escapeHtmlPreservingNewlines(s) {
+          return s
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            // Restore URLs after escape: formatUrls will re-anchor them via the link.
+            // We need to keep newlines as <br> for HTML display.
+            .replace(/\n/g, "<br>");
+        }
+
+        // Wait for #sgq-messages to appear, then observe
+        function attachObserver() {
+          const messagesEl = document.getElementById("sgq-messages");
+          if (!messagesEl) {
+            setTimeout(attachObserver, 100);
+            return;
+          }
+          const observer = new MutationObserver((mutations) => {
+            for (const m of mutations) {
+              if (m.type === "childList") {
+                m.addedNodes.forEach((node) => {
+                  if (node.nodeType === 1) {
+                    // Newly added assistant bubble (or row containing it)
+                    const bubbles = node.classList?.contains("sgq-msg")
+                      ? [node]
+                      : node.querySelectorAll?.(".sgq-msg") || [];
+                    bubbles.forEach((b) => {
+                      if (b.classList.contains("assistant")) {
+                        // Defer to allow streaming text nodes to be inserted
+                        setTimeout(() => postProcessBubble(b), 50);
+                      }
+                    });
+                  }
+                });
+              } else if (m.type === "characterData") {
+                // Streaming: text node inside a bubble mutated
+                const bubble = m.target.parentElement?.closest(".sgq-msg");
+                if (bubble && bubble.classList.contains("assistant")) {
+                  // Debounce: wait for the stream chunk to finish before re-processing
+                  clearTimeout(bubble._normTimer);
+                  bubble._normTimer = setTimeout(() => postProcessBubble(bubble), 200);
+                }
+              }
+            }
+          });
+          observer.observe(messagesEl, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+          });
+        }
+        attachObserver();
       }
     </script>
   </body>
