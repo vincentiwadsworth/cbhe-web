@@ -337,7 +337,10 @@ if (currentPath) {
         // Convert **word** to <strong>word</strong> for keyword emphasis.
         // Must run AFTER escapeHtml so ** aren't converted to entities first.
         function formatBold(s) {
-          return s.replace(/\*\*([^*\n][^*]*?)\*\*/g, "<strong>$1</strong>");
+          // Convert paired **word** to <strong>word</strong>, then strip any
+          // residual unmatched ** markers (spec R5). Order is important:
+          // matched pairs are converted first, then orphans are removed.
+          return s.replace(/\*\*([^*\n][^*]*?)\*\*/g, "<strong>$1</strong>").replace(/\*{2,}/g, "");
         }
 
         // Format a bare URL as "Web: dominio" so it stands out from prose

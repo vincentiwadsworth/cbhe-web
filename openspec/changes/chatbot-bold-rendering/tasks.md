@@ -28,3 +28,7 @@ Chain strategy: size-exception
 
 - [x] 3.1 Run `npx astro build` and confirm no syntax or type errors
 - [ ] 3.2 Manual QA: open chatbot, send message with `**bold**` markers, inspect DOM for correct `<strong>` rendering and absence of duplicate spans
+
+## Phase 4: Residual Unmatched Markers
+
+- [x] 4.1 In `src/layouts/Layout.astro`, add `.replace(/\*{2,}/g, "")` after the bold conversion in `formatBold` to strip any unmatched `**` or longer runs of asterisks from output (spec R5)
