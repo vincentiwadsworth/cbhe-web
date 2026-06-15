@@ -1,22 +1,22 @@
 {
-  "updated": "2026-06-15T17:16:31.719469+00:00",
+  "updated": "2026-06-15T19:37:46.783493+00:00",
   "usd_bob": {
     "buy": 9.81,
     "sell": 10.02
   },
   "commodities": {
     "WTI": {
-      "price": 80.64,
+      "price": 81.06,
       "unit": "USD/barril",
       "label": "WTI Crudo"
     },
     "BRENT": {
-      "price": 83.33,
+      "price": 83.51,
       "unit": "USD/barril",
       "label": "Brent Crudo"
     },
     "HENRY_HUB": {
-      "price": 3.131,
+      "price": 3.156,
       "unit": "USD/MMBtu",
       "label": "Henry Hub"
     },
