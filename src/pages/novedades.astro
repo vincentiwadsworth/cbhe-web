@@ -14,6 +14,13 @@ const ordenados = articulos.sort(porFechaDesc);
 
 const featured = ordenados.find((a) => a.data.featured);
 const grid = ordenados.filter((a) => !a.data.featured);
+
+const ARTICULO_ICONOS: Record<string, string> = {
+  "Noticias": "material-symbols:description",
+  "Análisis": "material-symbols:fact-check",
+  "Eventos": "material-symbols:calendar-today",
+  "Capacitación": "material-symbols:school",
+};
 ---
 
 <PageLayout
@@ -35,8 +42,12 @@ const grid = ordenados.filter((a) => !a.data.featured);
     <div class="space-y-12">
       {featured && (
         <article class="bg-surface-container-low rounded-lg overflow-hidden flex flex-col md:flex-row group transition-all duration-300 border border-transparent hover:border-primary/30">
-          {featured.data.image && (
+          {featured.data.image ? (
             <div class="md:w-1/2 min-h-[300px] bg-cover bg-center" style={`background-image: url('${featured.data.image}')`}></div>
+          ) : (
+            <div class="md:w-1/2 min-h-[300px] bg-gradient-to-br from-primary-container to-surface-container-high flex items-center justify-center">
+              <Icon name={ARTICULO_ICONOS[featured.data.category]} class="size-16 text-primary/30" />
+            </div>
           )}
           <div class="p-8 md:w-1/2 flex flex-col justify-center">
             <span class="text-xs font-semibold text-primary uppercase tracking-wider font-label mb-4">
@@ -67,11 +78,15 @@ const grid = ordenados.filter((a) => !a.data.featured);
       <div id="novedades-grid" data-load-more="4" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {grid.map((articulo) => (
           <article data-load-more-item class="bg-surface-container-low p-6 rounded-lg transition-all duration-300 border border-transparent hover:border-primary/30 flex flex-col">
-            {articulo.data.image && (
+            {articulo.data.image ? (
               <div
                 class="h-48 rounded bg-cover bg-center mb-6"
                 style={`background-image: url('${articulo.data.image}')`}
               ></div>
+            ) : (
+              <div class="h-48 rounded mb-6 bg-gradient-to-br from-primary-container to-surface-container-high flex items-center justify-center">
+                <Icon name={ARTICULO_ICONOS[articulo.data.category]} class="size-12 text-primary/40" />
+              </div>
             )}
             <span class="text-caption font-semibold text-on-surface-variant uppercase tracking-wider mb-3">
               {articulo.data.category}
