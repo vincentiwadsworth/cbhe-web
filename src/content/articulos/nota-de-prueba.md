@@ -1,9 +1,8 @@
 ---
 title: Nota de prueba
 category: Noticias
-excerpt: Extracto de pruena
-date: 17/06/2026
-image: ''
+excerpt: Nota de prueba — test de Sveltia CMS
+date: 17 Jun 2026
 featured: false
 draft: false
 ---
