@@ -39,10 +39,12 @@ export function parseDateToTimestamp(d: string): number {
 
 /**
  * Parsea "DD MMM YYYY" a ISO 8601 (YYYY-MM-DD) para JSON-LD / OpenGraph.
+ * También soporta prefijo opcional "Inicia:" (usado en startDate de cursos).
  * Fallback: si no reconoce el mes como abreviatura, intenta DD/MM/YYYY.
  */
 export function parseDateToISO(d: string): string {
-  const partes = d.trim().split(" ");
+  const limpio = d.replace(/^Inicia:\s*/i, "").trim();
+  const partes = limpio.split(" ");
   if (partes.length === 3) {
     const [dia, mes, año] = partes;
     const mesISO = MESES_ISO[mes];
@@ -52,8 +54,8 @@ export function parseDateToISO(d: string): string {
   }
 
   // Fallback DD/MM/YYYY
-  if (d.includes("/")) {
-    const [dia, mes, año] = d.trim().split("/");
+  if (limpio.includes("/")) {
+    const [dia, mes, año] = limpio.split("/");
     return `${año}-${mes.padStart(2, "0")}-${dia.padStart(2, "0")}`;
   }
 
