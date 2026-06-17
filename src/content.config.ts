@@ -47,8 +47,8 @@ const empresas = defineCollection({
   schema: z.object({
     nombre: z.string(),
     grupo: z.enum(["upstream", "pozo", "superficie", "downstream", "auxiliares", "adherentes"]),
-    website: z.string().url().optional(),
-    email: z.string().email().optional(),
+    website: z.preprocess((val) => (val === "" ? undefined : val), z.string().url().optional()),
+    email: z.preprocess((val) => (val === "" ? undefined : val), z.string().email().optional()),
     description: z.string().optional(),
     logo: z.string().optional(),
     destacada: z.boolean().default(false),

@@ -9,18 +9,14 @@ import PageLayout from "../layouts/PageLayout.astro";
 import PreciosGrid from "../components/PreciosGrid.astro";
 import TestimonialCarousel from "../components/TestimonialCarousel.astro";
 import preciosData from "../../data/prices.json";
+import { parseDateToTimestamp } from "../utils/date";
 
 const articulos = await getCollection("articulos", ({ data }) => !data.draft);
 const cursos = await getCollection("cursos", ({ data }) => !data.draft);
 const empresas = await getCollection("empresas");
 const testimonios = await getCollection("testimonios", ({ data }) => !data.draft);
 
-const MESES: Record<string, number> = { Ene:0, Feb:1, Mar:2, Abr:3, May:4, Jun:5, Jul:6, Ago:7, Sep:8, Oct:9, Nov:10, Dic:11 };
-const parseFecha = (d: string) => {
-  const limpio = d.replace(/^Inicia:\s*/i, "").trim();
-  const [dia, mes, año] = limpio.split(" ");
-  return new Date(+año, MESES[mes], +dia).getTime();
-};
+const parseFecha = (d: string) => parseDateToTimestamp(d);
 
 const articulosPorFecha = (a: any, b: any) => parseFecha(b.data.date) - parseFecha(a.data.date);
 const cursosPorFecha = (a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data.startDate);

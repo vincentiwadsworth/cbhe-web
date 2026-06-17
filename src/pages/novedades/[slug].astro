@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Icon from "../../components/Icon.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
+import { parseDateToISO } from "../../utils/date";
 
 export async function getStaticPaths() {
   const articulos = await getCollection("articulos", ({ data }) => !data.draft);
@@ -16,14 +17,7 @@ if (!articulo) return Astro.redirect("/404");
 
 const { Content } = await render(articulo);
 
-// Convertir "09 Oct 2025" a ISO 8601 para JSON-LD
-const MESES: Record<string, string> = {
-  Ene: "01", Feb: "02", Mar: "03", Abr: "04",
-  May: "05", Jun: "06", Jul: "07", Ago: "08",
-  Sep: "09", Oct: "10", Nov: "11", Dic: "12",
-};
-const [dia, mes, año] = articulo.data.date.split(" ");
-const isoDate = `${año}-${MESES[mes]}-${dia.padStart(2, "0")}`;
+const isoDate = parseDateToISO(articulo.data.date);
 ---
 
 <PageLayout
