@@ -61,21 +61,49 @@ const gruposHome = [
 
 <PageLayout title="Inicio" description="Cámara Boliviana de Hidrocarburos y Energía — Integramos energías con liderazgo e innovación." active="inicio">
   <!-- Homepage Hero (unique — not a SubpageHero) -->
-  <header class="relative min-h-[85dvh] sm:min-h-[550px] md:min-h-[600px] flex items-center sm:items-end bg-surface-container-low overflow-hidden">
-    <div class="absolute inset-0 z-0">
+  <!-- CSS-only crossfade carousel: 3 images stacked in Grid, GPU-composited opacity keyframes -->
+  <header
+    class="relative min-h-[85dvh] sm:min-h-[550px] md:min-h-[600px] flex items-center sm:items-end bg-surface-container-low overflow-hidden"
+    role="region"
+    aria-label="Galería decorativa del sector hidrocarburífero"
+  >
+    <div class="absolute inset-0 z-0 grid grid-cols-1 grid-rows-1">
       <img
         alt="Vista aérea de gasoducto cruzando el paisaje boliviano entre el Chaco y la Amazonía al atardecer"
-        class="w-full h-full object-cover"
+        class="hero-img w-full h-full object-cover"
         data-hero-image
         fetchpriority="high"
         height="800"
-        src="hero-inicio.webp"
+        src="images/hero/hero-gasoducto.webp"
+        width="1200"
+      />
+      <img
+        alt="Antorcha de gas natural iluminando el cielo nocturno en un campo de explotación boliviano"
+        class="hero-img w-full h-full object-cover"
+        height="800"
+        loading="lazy"
+        src="images/hero/hero-gas-flare.webp"
+        width="1200"
+      />
+      <img
+        alt="Llama azul de hornalla de gas natural representando la energía boliviana sobre fondo oscuro"
+        class="hero-img w-full h-full object-cover"
+        height="800"
+        loading="lazy"
+        src="images/hero/hero-blue-flame.webp"
         width="1200"
       />
       <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/85"></div>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 w-full pb-10 sm:pb-12 md:pb-16 text-center">
+    <!-- Decorative dot indicators — CSS-only, aria-hidden, not interactive -->
+    <div class="absolute bottom-6 left-0 right-0 z-10 flex justify-center gap-2 pointer-events-none" aria-hidden="true">
+      <span class="hero-dot size-2.5 rounded-full bg-inverse-on-surface/60"></span>
+      <span class="hero-dot size-2.5 rounded-full bg-inverse-on-surface/60"></span>
+      <span class="hero-dot size-2.5 rounded-full bg-inverse-on-surface/60"></span>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 w-full pb-16 sm:pb-18 md:pb-20 text-center">
       <h1 class="text-inverse-on-surface font-headline font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-snug mb-5 md:mb-6 tracking-tight max-w-4xl mx-auto">
         <span class="block">Representamos a quienes producen el</span>
         <span class="block"><span class="text-primary-fixed text-4xl sm:text-5xl md:text-6xl lg:text-7xl">99%</span></span>
@@ -94,6 +122,59 @@ const gruposHome = [
       </div>
     </div>
   </header>
+
+  <style>
+    /*
+     * Hero Carousel — CSS-only crossfade.
+     * Zero JS. GPU-composited (opacity only).
+     * 3 images × 6.5s = 19.5s cycle, 1.5s crossfade.
+     * Dots sync via same animation-timing structure.
+     */
+    .hero-img {
+      grid-area: 1 / 1;
+      animation: hero-crossfade 19.5s infinite;
+    }
+    .hero-img:nth-child(1) { animation-delay: 0s; }
+    .hero-img:nth-child(2) { animation-delay: -6.5s; }
+    .hero-img:nth-child(3) { animation-delay: -13s; }
+
+    @keyframes hero-crossfade {
+      0%, 74.3% { opacity: 1; }
+      84.6%     { opacity: 0; }
+      100%      { opacity: 0; }
+    }
+
+    /* Decorative dots — same 19.5s cycle, track active image via opacity */
+    .hero-dot {
+      animation: hero-dot-cycle 19.5s infinite;
+    }
+    .hero-dot:nth-child(1) { animation-delay: 0s; }
+    .hero-dot:nth-child(2) { animation-delay: -6.5s; }
+    .hero-dot:nth-child(3) { animation-delay: -13s; }
+
+    @keyframes hero-dot-cycle {
+      0%, 74.3% { opacity: 1; }
+      84.6%     { opacity: 0.3; }
+      100%      { opacity: 0.3; }
+    }
+
+    /* Reduced motion — global.css already kills all animations via 0.01ms,
+       but ensure grid still stacks properly and first image is visible. */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-img {
+        animation: none;
+      }
+      .hero-img:nth-child(1) { opacity: 1; }
+      .hero-img:nth-child(2) { opacity: 0; }
+      .hero-img:nth-child(3) { opacity: 0; }
+      .hero-dot {
+        animation: none;
+      }
+      .hero-dot:nth-child(1) { opacity: 1; }
+      .hero-dot:nth-child(2) { opacity: 0.3; }
+      .hero-dot:nth-child(3) { opacity: 0.3; }
+    }
+  </style>
 
   <!-- Datos del Sector -->
   <PreciosGrid data={preciosData} />
