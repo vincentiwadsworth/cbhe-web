@@ -131,9 +131,11 @@ const hasImage = Boolean(data.image);
     </div>
 
     {/* Title */}
-    <TitleTag class={`font-headline font-bold text-on-surface leading-tight mb-4 ${titleClasses[variant]}`}>
-      {data.title}
-    </TitleTag>
+    <a href={computedCtaHref} class="block">
+      <TitleTag class={`font-headline font-bold text-on-surface leading-tight mb-4 ${titleClasses[variant]} group-hover:text-primary transition-colors`}>
+        {data.title}
+      </TitleTag>
+    </a>
 
     {/* Description (default & featured only — omitted in compact) */}
     {variant !== "compact" && data.description && (

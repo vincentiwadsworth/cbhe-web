@@ -5,16 +5,11 @@ import Icon from "../components/Icon.astro";
 import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import PageLayout from "../layouts/PageLayout.astro";
+import { parseDateToTimestamp } from "../utils/date";
 
 const cursos = await getCollection("cursos", ({ data }) => !data.draft);
 
-const MESES: Record<string, number> = { Ene:0, Feb:1, Mar:2, Abr:3, May:4, Jun:5, Jul:6, Ago:7, Sep:8, Oct:9, Nov:10, Dic:11 };
-const parseFecha = (d: string) => {
-  const limpio = d.replace(/^Inicia:\s*/i, "").trim();
-  const [dia, mes, año] = limpio.split(" ");
-  return new Date(+año, MESES[mes], +dia).getTime();
-};
-cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data.startDate));
+cursos.sort((a: any, b: any) => parseDateToTimestamp(b.data.startDate) - parseDateToTimestamp(a.data.startDate));
 ---
 
 <PageLayout
