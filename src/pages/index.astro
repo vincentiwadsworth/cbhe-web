@@ -127,52 +127,88 @@ const gruposHome = [
     /*
      * Hero Carousel — CSS-only crossfade.
      * Zero JS. GPU-composited (opacity only).
-     * 3 images × 6.5s = 19.5s cycle, 1.5s crossfade.
-     * Dots sync via same animation-timing structure.
+     *
+     * 3 separate keyframes, one per image, so the loop boundary
+     * (last→first transition) is a TRUE crossfade, not a hard cut.
+     *
+     * Timing: 19.5s cycle = 3 × 6.5s per image (5s visible + 1.5s crossfade).
+     * Order: gasoducto → blue-flame → gas-flare → (loop to gasoducto)
      */
-    .hero-img {
-      grid-area: 1 / 1;
-      animation: hero-crossfade 19.5s infinite;
-    }
-    .hero-img:nth-child(1) { animation-delay: 0s; }
-    .hero-img:nth-child(2) { animation-delay: -6.5s; }
-    .hero-img:nth-child(3) { animation-delay: -13s; }
 
-    @keyframes hero-crossfade {
-      0%, 74.3% { opacity: 1; }
-      84.6%     { opacity: 0; }
-      100%      { opacity: 0; }
-    }
+    /* --- Images --- */
+    .hero-img { grid-area: 1 / 1; }
 
-    /* Decorative dots — same 19.5s cycle, track active image via opacity */
-    .hero-dot {
-      animation: hero-dot-cycle 19.5s infinite;
-    }
-    .hero-dot:nth-child(1) { animation-delay: 0s; }
-    .hero-dot:nth-child(2) { animation-delay: -6.5s; }
-    .hero-dot:nth-child(3) { animation-delay: -13s; }
+    .hero-img:nth-child(1) { animation: hero-img-1 19.5s infinite; }
+    .hero-img:nth-child(2) { animation: hero-img-2 19.5s infinite; }
+    .hero-img:nth-child(3) { animation: hero-img-3 19.5s infinite; }
 
-    @keyframes hero-dot-cycle {
-      0%, 74.3% { opacity: 1; }
-      84.6%     { opacity: 0.3; }
-      100%      { opacity: 0.3; }
+    /* Image 1 (gasoducto): visible [0s-5s], fade to Img3 [5s-6.5s],
+       fade in from Img2 [18s-19.5s] — wraps smoothly at 100%→0% */
+    @keyframes hero-img-1 {
+      0%       { opacity: 1; }
+      25.64%   { opacity: 1; }
+      33.33%   { opacity: 0; }
+      92.31%   { opacity: 0; }
+      100%     { opacity: 1; }
     }
 
-    /* Reduced motion — global.css already kills all animations via 0.01ms,
-       but ensure grid still stacks properly and first image is visible. */
+    /* Image 3 (blue-flame): fade in from Img1 [5s-6.5s],
+       visible [6.5s-11.5s], fade to Img2 [11.5s-13s] */
+    @keyframes hero-img-3 {
+      0%       { opacity: 0; }
+      25.64%   { opacity: 0; }
+      33.33%   { opacity: 1; }
+      59.0%    { opacity: 1; }
+      66.67%   { opacity: 0; }
+      100%     { opacity: 0; }
+    }
+
+    /* Image 2 (gas-flare): fade in from Img3 [11.5s-13s],
+       visible [13s-18s], fade to Img1 [18s-19.5s] */
+    @keyframes hero-img-2 {
+      0%       { opacity: 0; }
+      59.0%    { opacity: 0; }
+      66.67%   { opacity: 1; }
+      92.31%   { opacity: 1; }
+      100%     { opacity: 0; }
+    }
+
+    /* --- Decorative Dots — same timing per position --- */
+    .hero-dot:nth-child(1) { animation: hero-dot-1 19.5s infinite; }
+    .hero-dot:nth-child(2) { animation: hero-dot-2 19.5s infinite; }
+    .hero-dot:nth-child(3) { animation: hero-dot-3 19.5s infinite; }
+
+    @keyframes hero-dot-1 {
+      0%       { opacity: 1; }
+      25.64%   { opacity: 1; }
+      33.33%   { opacity: 0.3; }
+      92.31%   { opacity: 0.3; }
+      100%     { opacity: 1; }
+    }
+    @keyframes hero-dot-3 {
+      0%       { opacity: 0.3; }
+      25.64%   { opacity: 0.3; }
+      33.33%   { opacity: 1; }
+      59.0%    { opacity: 1; }
+      66.67%   { opacity: 0.3; }
+      100%     { opacity: 0.3; }
+    }
+    @keyframes hero-dot-2 {
+      0%       { opacity: 0.3; }
+      59.0%    { opacity: 0.3; }
+      66.67%   { opacity: 1; }
+      92.31%   { opacity: 1; }
+      100%     { opacity: 0.3; }
+    }
+
+    /* --- Reduced Motion: show first image only --- */
     @media (prefers-reduced-motion: reduce) {
-      .hero-img {
-        animation: none;
-      }
-      .hero-img:nth-child(1) { opacity: 1; }
-      .hero-img:nth-child(2) { opacity: 0; }
-      .hero-img:nth-child(3) { opacity: 0; }
-      .hero-dot {
-        animation: none;
-      }
-      .hero-dot:nth-child(1) { opacity: 1; }
-      .hero-dot:nth-child(2) { opacity: 0.3; }
-      .hero-dot:nth-child(3) { opacity: 0.3; }
+      .hero-img:nth-child(1) { animation: none; opacity: 1; }
+      .hero-img:nth-child(2) { animation: none; opacity: 0; }
+      .hero-img:nth-child(3) { animation: none; opacity: 0; }
+      .hero-dot:nth-child(1) { animation: none; opacity: 1; }
+      .hero-dot:nth-child(2) { animation: none; opacity: 0.3; }
+      .hero-dot:nth-child(3) { animation: none; opacity: 0.3; }
     }
   </style>
 
