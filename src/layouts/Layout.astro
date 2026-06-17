@@ -35,7 +35,7 @@ const baseHref = import.meta.env.BASE_URL === '/'
   ? import.meta.env.SITE
   : `${import.meta.env.SITE}${import.meta.env.BASE_URL}/`;
 
-const groqKey = import.meta.env.GROQ_KEY ?? "";
+const deepseekKey = import.meta.env.DEEPSEEK_API_KEY ?? "";
 
 // Build company knowledge base for the chatbot
 const grupoLabels: Record<string, string> = {
@@ -219,12 +219,12 @@ if (currentPath) {
     <slot />
 
     <!-- AI Chatbot (multi-ai-sdk) -->
-    <script is:inline define:vars={{ groqKey, chatbotContext }}>
-      if (groqKey) {
+    <script is:inline define:vars={{ deepseekKey, chatbotContext }}>
+      if (deepseekKey) {
         import("https://esm.sh/multi-ai-sdk").then(function (mod) {
           mod.embedChat({
-            provider: "groq",
-            apiKey: groqKey,
+            provider: "deepseek",
+            apiKey: deepseekKey,
 
             assistantName: "CBHE",
             assistantAvatar: "⚡",
@@ -236,7 +236,7 @@ if (currentPath) {
               "¿Qué capacitaciones ofrecen?",
             ],
 
-            model: "llama-3.3-70b-versatile",
+            model: "deepseek-v4-flash",
             maxTokens: 1024,
             temperature: 0.7,
 
