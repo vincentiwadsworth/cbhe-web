@@ -136,28 +136,16 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
     </div>
   </Section>
 
-  <!-- Certification logos — Infinite Marquee Ribbon -->
+  <!-- Certification logos — Infinite Marquee Ribbon (white bg) -->
   <section class="bg-white pb-16 md:pb-20 reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
       <style>
-        /*
-         * ============================================================
-         * RIBBON MARQUEE — CSS-only infinite scrolling logo banner.
-         * Zero JS. GPU-composited (transform + opacity only).
-         * Wave illusion: staggered translateY per card → flowing ribbon feel.
-         * Gradient fade edges → ribbon tails.
-         * ============================================================
-         */
-
-        /* 1. Marquee viewport — hides overflow, applies gradient fade mask */
         .cert-marquee {
           position: relative;
           overflow: hidden;
           -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
         }
-
-        /* 2. Scrolling track — doubles the content for seamless infinite loop */
         .cert-track {
           display: flex;
           gap: 1.25rem;
@@ -165,19 +153,10 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
           animation: cert-scroll 28s linear infinite;
           will-change: transform;
         }
-        @media (min-width: 640px) {
-          .cert-track { gap: 1.75rem; animation-duration: 34s; }
-        }
-        @media (min-width: 1024px) {
-          .cert-track { gap: 2.25rem; animation-duration: 40s; }
-        }
+        @media (min-width: 640px) { .cert-track { gap: 1.75rem; animation-duration: 34s; } }
+        @media (min-width: 1024px) { .cert-track { gap: 2.25rem; animation-duration: 40s; } }
+        .cert-marquee:hover .cert-track { animation-play-state: paused; }
 
-        /* Pause on hover — user can inspect logos */
-        .cert-marquee:hover .cert-track {
-          animation-play-state: paused;
-        }
-
-        /* 3. Logo cards — clean border on white bg */
         .cert-logo {
           display: flex;
           align-items: center;
@@ -213,15 +192,12 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
           filter: grayscale(1);
           transition: filter 0.3s ease;
         }
-        .cert-logo:hover img {
-          filter: grayscale(0);
-        }
+        .cert-logo:hover img { filter: grayscale(0); }
         @media (min-width: 768px) {
           .cert-logo { padding: 1rem 1.5rem; }
           .cert-logo img { height: 3rem; max-width: 170px; }
         }
 
-        /* 4. Keyframes */
         @keyframes cert-scroll {
           0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
@@ -230,13 +206,8 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
           0%, 100% { transform: translateY(0); }
           50%       { transform: translateY(-5px); }
         }
-
-        /* 5. Accessibility: kill all motion for users who prefer it */
         @media (prefers-reduced-motion: reduce) {
-          .cert-track,
-          .cert-logo {
-            animation: none !important;
-          }
+          .cert-track, .cert-logo { animation: none !important; }
         }
       </style>
 
@@ -244,42 +215,19 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
         Avaladas por
       </p>
 
-      <!-- Infinite marquee ribbon -->
       <div class="cert-marquee">
         <div class="cert-track">
-          <!-- Set A (visible) -->
-          <div class="cert-logo">
-            <img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="NFPA — Authorized Training Provider" loading="lazy" />
-          </div>
-          <div class="cert-logo">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="EnginZone — Capacitación técnica" loading="lazy" />
-          </div>
-          <div class="cert-logo">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="ASTM International" loading="lazy" />
-          </div>
-          <div class="cert-logo">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="AWS — American Welding Society International Agent" loading="lazy" />
-          </div>
-          <div class="cert-logo">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="FPI — Fire Protection Institute" loading="lazy" />
-          </div>
-
-          <!-- Set B (duplicated for seamless loop — hidden from screen readers) -->
-          <div class="cert-logo" aria-hidden="true">
-            <img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="" loading="lazy" />
-          </div>
-          <div class="cert-logo" aria-hidden="true">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="" loading="lazy" />
-          </div>
-          <div class="cert-logo" aria-hidden="true">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="" loading="lazy" />
-          </div>
-          <div class="cert-logo" aria-hidden="true">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="" loading="lazy" />
-          </div>
-          <div class="cert-logo" aria-hidden="true">
-            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="" loading="lazy" />
-          </div>
+          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="NFPA — Authorized Training Provider" loading="lazy" /></div>
+          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="EnginZone — Capacitación técnica" loading="lazy" /></div>
+          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="ASTM International" loading="lazy" /></div>
+          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="AWS — American Welding Society" loading="lazy" /></div>
+          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="FPI — Fire Protection Institute" loading="lazy" /></div>
+          <!-- Set B (duplicated for seamless loop) -->
+          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -314,7 +262,7 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
   </style>
 
   <!-- Course Grid -->
-  <Section id="catalogo" bg="surface-container-low" scrollMargin>
+  <Section id="catalogo" bg="surface" scrollMargin>
     <SectionHeading title="Próximas capacitaciones" description="Formación diseñada para los desafíos actuales del sector." />
 
     <div id="cursos-grid" data-load-more="3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
