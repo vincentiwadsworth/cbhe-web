@@ -136,73 +136,149 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
     </div>
   </Section>
 
-  <!-- Certification logos grid — authorized training providers -->
-  <section class="bg-white py-16 md:py-20 reveal">
+  <!-- Certification logos — Infinite Marquee Ribbon -->
+  <section class="bg-white pb-16 md:pb-20 reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-      <div class="border-t border-outline-variant/15 pt-12">
-        <p class="text-center text-xs font-semibold text-outline uppercase tracking-widest mb-8">
-          Avaladas por
-        </p>
+      <style>
+        /*
+         * ============================================================
+         * RIBBON MARQUEE — CSS-only infinite scrolling logo banner.
+         * Zero JS. GPU-composited (transform + opacity only).
+         * Wave illusion: staggered translateY per card → flowing ribbon feel.
+         * Gradient fade edges → ribbon tails.
+         * ============================================================
+         */
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          <!-- NFPA Authorized Training Provider -->
-          <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
-            <img
-              src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg"
-              alt="NFPA — Authorized Training Provider"
-              class="h-14 sm:h-16 md:h-20 w-auto object-contain mb-3"
-              loading="lazy"
-            />
-            <span class="text-sm font-semibold text-on-surface">NFPA</span>
-            <span class="text-xs text-on-surface-variant mt-1 text-center">Authorized Training Provider</span>
+        /* 1. Marquee viewport — hides overflow, applies gradient fade mask */
+        .cert-marquee {
+          position: relative;
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+
+        /* 2. Scrolling track — doubles the content for seamless infinite loop */
+        .cert-track {
+          display: flex;
+          gap: 1.25rem;
+          width: max-content;
+          animation: cert-scroll 28s linear infinite;
+          will-change: transform;
+        }
+        @media (min-width: 640px) {
+          .cert-track { gap: 1.75rem; animation-duration: 34s; }
+        }
+        @media (min-width: 1024px) {
+          .cert-track { gap: 2.25rem; animation-duration: 40s; }
+        }
+
+        /* Pause on hover — user can inspect logos */
+        .cert-marquee:hover .cert-track {
+          animation-play-state: paused;
+        }
+
+        /* 3. Logo cards — clean border on white bg */
+        .cert-logo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          padding: 0.75rem 1.25rem;
+          border-radius: 0.75rem;
+          border: 1px solid var(--color-outline-variant);
+          background: white;
+          transition: border-color 0.25s ease, box-shadow 0.25s ease;
+          animation: cert-wave 3.2s ease-in-out infinite;
+        }
+        .cert-logo:nth-child(1)  { animation-delay: 0.00s; }
+        .cert-logo:nth-child(2)  { animation-delay: 0.20s; }
+        .cert-logo:nth-child(3)  { animation-delay: 0.40s; }
+        .cert-logo:nth-child(4)  { animation-delay: 0.60s; }
+        .cert-logo:nth-child(5)  { animation-delay: 0.80s; }
+        .cert-logo:nth-child(6)  { animation-delay: 1.00s; }
+        .cert-logo:nth-child(7)  { animation-delay: 1.20s; }
+        .cert-logo:nth-child(8)  { animation-delay: 1.40s; }
+        .cert-logo:nth-child(9)  { animation-delay: 1.60s; }
+        .cert-logo:nth-child(10) { animation-delay: 1.80s; }
+
+        .cert-logo:hover {
+          border-color: var(--color-primary);
+          box-shadow: 0 4px 16px rgba(1, 64, 108, 0.1);
+        }
+        .cert-logo img {
+          height: 2.5rem;
+          width: auto;
+          max-width: 140px;
+          object-fit: contain;
+          filter: grayscale(1);
+          transition: filter 0.3s ease;
+        }
+        .cert-logo:hover img {
+          filter: grayscale(0);
+        }
+        @media (min-width: 768px) {
+          .cert-logo { padding: 1rem 1.5rem; }
+          .cert-logo img { height: 3rem; max-width: 170px; }
+        }
+
+        /* 4. Keyframes */
+        @keyframes cert-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes cert-wave {
+          0%, 100% { transform: translateY(0); }
+          50%       { transform: translateY(-5px); }
+        }
+
+        /* 5. Accessibility: kill all motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+          .cert-track,
+          .cert-logo {
+            animation: none !important;
+          }
+        }
+      </style>
+
+      <p class="text-center text-xs font-semibold text-outline uppercase tracking-widest mb-8">
+        Avaladas por
+      </p>
+
+      <!-- Infinite marquee ribbon -->
+      <div class="cert-marquee">
+        <div class="cert-track">
+          <!-- Set A (visible) -->
+          <div class="cert-logo">
+            <img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="NFPA — Authorized Training Provider" loading="lazy" />
+          </div>
+          <div class="cert-logo">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="EnginZone — Capacitación técnica" loading="lazy" />
+          </div>
+          <div class="cert-logo">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="ASTM International" loading="lazy" />
+          </div>
+          <div class="cert-logo">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="AWS — American Welding Society International Agent" loading="lazy" />
+          </div>
+          <div class="cert-logo">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="FPI — Fire Protection Institute" loading="lazy" />
           </div>
 
-          <!-- EnginZone -->
-          <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
-            <img
-              src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg"
-              alt="EnginZone — Capacitación técnica"
-              class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
-              loading="lazy"
-            />
-            <span class="text-sm font-semibold text-on-surface">EnginZone</span>
-            <span class="text-xs text-on-surface-variant mt-1 text-center">Capacitación técnica especializada</span>
+          <!-- Set B (duplicated for seamless loop — hidden from screen readers) -->
+          <div class="cert-logo" aria-hidden="true">
+            <img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="" loading="lazy" />
           </div>
-
-          <!-- ASTM International -->
-          <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
-            <img
-              src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg"
-              alt="ASTM International"
-              class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
-              loading="lazy"
-            />
-            <span class="text-sm font-semibold text-on-surface">ASTM</span>
-            <span class="text-xs text-on-surface-variant mt-1 text-center">International Standards</span>
+          <div class="cert-logo" aria-hidden="true">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="" loading="lazy" />
           </div>
-
-          <!-- AWS International Agent -->
-          <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
-            <img
-              src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg"
-              alt="AWS — American Welding Society International Agent"
-              class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
-              loading="lazy"
-            />
-            <span class="text-sm font-semibold text-on-surface">AWS</span>
-            <span class="text-xs text-on-surface-variant mt-1 text-center">International Agent</span>
+          <div class="cert-logo" aria-hidden="true">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="" loading="lazy" />
           </div>
-
-          <!-- FPI — Fire Protection Institute -->
-          <div class="bg-surface-container-low rounded-xl border border-outline-variant/20 p-5 sm:p-6 flex flex-col items-center justify-center min-h-[160px] hover:border-primary/20 transition-colors">
-            <img
-              src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg"
-              alt="FPI — Fire Protection Institute"
-              class="h-12 sm:h-14 md:h-16 w-auto object-contain mb-3"
-              loading="lazy"
-            />
-            <span class="text-sm font-semibold text-on-surface">FPI</span>
-            <span class="text-xs text-on-surface-variant mt-1 text-center">Fire Protection Institute</span>
+          <div class="cert-logo" aria-hidden="true">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="" loading="lazy" />
+          </div>
+          <div class="cert-logo" aria-hidden="true">
+            <img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="" loading="lazy" />
           </div>
         </div>
       </div>
@@ -238,7 +314,7 @@ cursos.sort((a: any, b: any) => parseFecha(b.data.startDate) - parseFecha(a.data
   </style>
 
   <!-- Course Grid -->
-  <Section id="catalogo" bg="surface" scrollMargin>
+  <Section id="catalogo" bg="surface-container-low" scrollMargin>
     <SectionHeading title="Próximas capacitaciones" description="Formación diseñada para los desafíos actuales del sector." />
 
     <div id="cursos-grid" data-load-more="3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
