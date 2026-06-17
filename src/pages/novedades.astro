@@ -42,9 +42,11 @@ const grid = ordenados.filter((a) => !a.data.featured);
             <span class="text-xs font-semibold text-primary uppercase tracking-wider font-label mb-4">
               {featured.data.category}
             </span>
-            <h2 class="text-3xl leading-snug font-bold text-on-surface mb-4 font-headline group-hover:text-primary transition-colors">
-              {featured.data.title}
-            </h2>
+            <a href={`novedades/${featured.id}`} class="block">
+              <h2 class="text-3xl leading-snug font-bold text-on-surface mb-4 font-headline group-hover:text-primary transition-colors">
+                {featured.data.title}
+              </h2>
+            </a>
             <p class="text-base text-on-surface-variant leading-relaxed font-body mb-6">
               {featured.data.excerpt}
             </p>
@@ -74,9 +76,11 @@ const grid = ordenados.filter((a) => !a.data.featured);
             <span class="text-caption font-semibold text-on-surface-variant uppercase tracking-wider mb-3">
               {articulo.data.category}
             </span>
-            <h3 class="text-xl font-semibold text-on-surface mb-3 font-headline leading-snug">
-              {articulo.data.title}
-            </h3>
+            <a href={`novedades/${articulo.id}`} class="block">
+              <h3 class="text-xl font-semibold text-on-surface mb-3 font-headline leading-snug">
+                {articulo.data.title}
+              </h3>
+            </a>
             <p class="text-base text-on-surface-variant leading-relaxed font-body flex-grow">
               {articulo.data.excerpt}
             </p>
