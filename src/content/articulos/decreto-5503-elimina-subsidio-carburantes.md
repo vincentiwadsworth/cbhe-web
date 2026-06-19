@@ -1,10 +1,10 @@
 ---
 title: Decreto 5503 elimina el subsidio a los carburantes y activa un paquete de 100 medidas económicas
-category: "Análisis"
+category: Análisis
 excerpt: La norma declara la emergencia nacional económica, libera el precio de los combustibles y propone un nuevo modelo basado en la libertad productiva y la atracción de capital extranjero.
-date: 19 Dic 2025
+date: 19 Jun 2026
 image: https://cbhe.org.bo/media/k2/items/cache/b05b9575dfafbeb31354c15a00c57d7b_XL.jpg
-featured: false
+featured: true
 ---
 
 El presidente Rodrigo Paz Pereira promulgó el Decreto Supremo N° 5503, una norma calificada como de "necesidad y urgencia" que busca revertir la crisis estructural del país mediante la eliminación de la subvención a los combustibles y la activación de un paquete de 100 medidas de reforma económica.
