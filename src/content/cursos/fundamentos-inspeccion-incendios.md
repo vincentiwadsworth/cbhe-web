@@ -1,25 +1,26 @@
 ---
-title: "Programa Avanzado: Fundamentos para la Inspección de Incendios"
-category: "Curso"
-modality: "Virtual"
-image: "images/cursos/fundamentos-inspeccion-incendios.webp"
-startDate: "17 Ago 2026"
-price: "$420 USD (Aplican descuentos por pago anticipado)"
-registrationDeadline: ""
-canvaLink: "https://canva.link/4i67331j3j5q2s6"
+title: 'Programa Avanzado: Fundamentos para la Inspección de Incendios'
+category: Curso
+modality: Virtual
+image: /images/17 DE AGOSTO AL 14 DE SEPTIEMBRE 2026.png
+startDate: 20 Nov 1899
+price: $420 USD (Aplican descuentos por pago anticipado)
+registrationDeadline: ''
+canvaLink: https://canva.link/4i67331j3j5q2s6
+description: ''
 instructors:
-  - name: "Jaime A. Moncada, PE"
-    bio: "Reconocido experto en ingeniería de protección contra incendios con 35 años de experiencia, con énfasis en la problemática de proyectos en Latinoamérica. Graduado en ingeniería de protección contra incendios y poseedor de una maestría en gerencia de tecnología, ambos de la Univ. de Maryland. Obtuvo una licencia para ejercer ingeniería de la protección contra incendios (PE) en EE.UU. Exvicepresidente de la Junta Directiva de la SFPE, expresidente fundador de la Sección Latinoamericana de la NFPA y coeditor de la 5ª Edición del Manual de Protección contra Incendios de la NFPA. Ha publicado más de 200 artículos en revistas especializadas en seguridad y ha presentado en más de 100 conferencias. Director de IFSC (www.ifsc.us), basado en Washington DC."
-  - name: "Jorge Vera, CFPS"
-    bio: "Ingeniero graduado en la Universidad Garcilaso de la Vega en Lima, Perú y Certificado Especialista Protección contra Incendios (CFPS) por la NFPA. Experto en investigación de incendios y en la aplicación de la NFPA 10, siendo instructor de esa norma para la NFPA. Con más de 20 años de experiencia, tiene extenso conocimiento en el análisis de riesgos de incendios en diversos tipos de ocupaciones. Ha sido Vicecomandante General del Cuerpo de Bomberos del Perú, y actualmente es gerente de IFSC del Perú, basado en Lima."
-  - name: "Santiago Alvarado, CFPS"
-    bio: "Reconocido experto en el diseño de sistemas de detección y alarma. Tiene una Maestría en Ingeniería Electrónica de la Universidad Técnica de Wroclaw (Polonia) con una especialidad en sistemas y redes informáticas, ha cursado un diplomado en protección contra incendios con OPCI y ha sido Certificado como Especialista en Protección Contra Incendios (CEPI) con la NFPA. Diseñador de sistemas de detección y alarma, métodos de instrumentación y control de sistemas contra incendios, y sistemas de extinción a base agentes limpios, con más de 25 años de experiencia en protección contra incendios. Ha trabajado en proyecto de generación eléctrica, petroleros, industriales y comerciales. Actualmente es subgerente de IFSC Andina, basado en Bogotá."
-  - name: "Agustín Canavese"
-    bio: "Experto en ingeniería de protección contra incendios con más de 10 años de experiencia con énfasis en el diseño de sistemas de rociadores y en la auditoría de este tipo de sistemas en diversos tipos de instalaciones, desde usos comerciales, petroleros e industriales. Ingeniero Industrial Mecánico de la Universidad de la República, Montevideo, Uruguay, es un Técnico Registrado ante la Dirección Nacional de Bomberos (DNB) y miembro de la National Fire Protection Association (NFPA). Es subgerente de IFSC del Cono Sur, basado en Montevideo, Uruguay."
-  - name: "Andrés Mayobre, CFPS"
-    bio: "Ingeniero Civil, perfil Hidráulico - Ambiental, en la Universidad la República del Uruguay y Certificado Especialista Protección contra Incendios (CFPS antes llamado CEPI) por la NFPA. Es secretario en la Asociación Uruguaya en Protección Contra Incendios (AUPCI). Es un experto en la aplicación de la normativa NFPA y en las normas uruguayas de protección contra incendios, con extensa experiencia en el diseño, inspección y prueba de sistemas de supresión de incendios, con 12 años de experiencia laboral. Ha trabajado en proyectos industriales (incluyendo industria de petrolera, generación eléctrica, minera, y manufacturera) y en edificaciones comerciales. Es gerente de IFSC del Cono Sur (www.ifsc.us), basado en Montevideo, Uruguay."
-  - name: "Emmanuel Reyes, CFPS"
-    bio: "Experto en la aplicación de la normativa NFPA y en la norma R-032, con extensa experiencia en el diseño, inspección y prueba de sistemas de supresión de incendios a base de agua, con casi 15 años de experiencia en protección contra incendio. Ingeniero mecánico graduado del Instituto Tecnológico de Santo Domingo, República Dominicana y Certificado Especialista Protección contra Incendios (CFPS) por la NFPA. Ha trabajado en proyectos industriales, de generación eléctrica y en edificaciones comerciales. Es subgerente de IFSC Dominicana, basado en Santo Domingo, RD."
+  - name: Jaime A. Moncada, PE
+    bio: Reconocido experto en ingeniería de protección contra incendios con 35 años de experiencia, con énfasis en la problemática de proyectos en Latinoamérica. Graduado en ingeniería de protección contra incendios y poseedor de una maestría en gerencia de tecnología, ambos de la Univ. de Maryland. Obtuvo una licencia para ejercer ingeniería de la protección contra incendios (PE) en EE.UU. Exvicepresidente de la Junta Directiva de la SFPE, expresidente fundador de la Sección Latinoamericana de la NFPA y coeditor de la 5ª Edición del Manual de Protección contra Incendios de la NFPA. Ha publicado más de 200 artículos en revistas especializadas en seguridad y ha presentado en más de 100 conferencias. Director de IFSC (www.ifsc.us), basado en Washington DC.
+  - name: Jorge Vera, CFPS
+    bio: Ingeniero graduado en la Universidad Garcilaso de la Vega en Lima, Perú y Certificado Especialista Protección contra Incendios (CFPS) por la NFPA. Experto en investigación de incendios y en la aplicación de la NFPA 10, siendo instructor de esa norma para la NFPA. Con más de 20 años de experiencia, tiene extenso conocimiento en el análisis de riesgos de incendios en diversos tipos de ocupaciones. Ha sido Vicecomandante General del Cuerpo de Bomberos del Perú, y actualmente es gerente de IFSC del Perú, basado en Lima.
+  - name: Santiago Alvarado, CFPS
+    bio: Reconocido experto en el diseño de sistemas de detección y alarma. Tiene una Maestría en Ingeniería Electrónica de la Universidad Técnica de Wroclaw (Polonia) con una especialidad en sistemas y redes informáticas, ha cursado un diplomado en protección contra incendios con OPCI y ha sido Certificado como Especialista en Protección Contra Incendios (CEPI) con la NFPA. Diseñador de sistemas de detección y alarma, métodos de instrumentación y control de sistemas contra incendios, y sistemas de extinción a base agentes limpios, con más de 25 años de experiencia en protección contra incendios. Ha trabajado en proyecto de generación eléctrica, petroleros, industriales y comerciales. Actualmente es subgerente de IFSC Andina, basado en Bogotá.
+  - name: Agustín Canavese
+    bio: Experto en ingeniería de protección contra incendios con más de 10 años de experiencia con énfasis en el diseño de sistemas de rociadores y en la auditoría de este tipo de sistemas en diversos tipos de instalaciones, desde usos comerciales, petroleros e industriales. Ingeniero Industrial Mecánico de la Universidad de la República, Montevideo, Uruguay, es un Técnico Registrado ante la Dirección Nacional de Bomberos (DNB) y miembro de la National Fire Protection Association (NFPA). Es subgerente de IFSC del Cono Sur, basado en Montevideo, Uruguay.
+  - name: Andrés Mayobre, CFPS
+    bio: Ingeniero Civil, perfil Hidráulico - Ambiental, en la Universidad la República del Uruguay y Certificado Especialista Protección contra Incendios (CFPS antes llamado CEPI) por la NFPA. Es secretario en la Asociación Uruguaya en Protección Contra Incendios (AUPCI). Es un experto en la aplicación de la normativa NFPA y en las normas uruguayas de protección contra incendios, con extensa experiencia en el diseño, inspección y prueba de sistemas de supresión de incendios, con 12 años de experiencia laboral. Ha trabajado en proyectos industriales (incluyendo industria de petrolera, generación eléctrica, minera, y manufacturera) y en edificaciones comerciales. Es gerente de IFSC del Cono Sur (www.ifsc.us), basado en Montevideo, Uruguay.
+  - name: Emmanuel Reyes, CFPS
+    bio: Experto en la aplicación de la normativa NFPA y en la norma R-032, con extensa experiencia en el diseño, inspección y prueba de sistemas de supresión de incendios a base de agua, con casi 15 años de experiencia en protección contra incendio. Ingeniero mecánico graduado del Instituto Tecnológico de Santo Domingo, República Dominicana y Certificado Especialista Protección contra Incendios (CFPS) por la NFPA. Ha trabajado en proyectos industriales, de generación eléctrica y en edificaciones comerciales. Es subgerente de IFSC Dominicana, basado en Santo Domingo, RD.
 draft: false
 ---
 
