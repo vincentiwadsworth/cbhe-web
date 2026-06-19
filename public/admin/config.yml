@@ -7,7 +7,7 @@ backend:
   name: github
   repo: vincentiwadsworth/cbhe-web
   branch: main
-  skip_ci: true
+  skip_ci: false
 
 media_folder: "public/images"
 public_folder: "/images"

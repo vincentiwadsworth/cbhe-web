@@ -14,7 +14,7 @@ Necesita una cuenta de GitHub. El área de tecnología se la proporcionará.
 2. Inicie sesión con su cuenta de GitHub
 3. En la barra lateral izquierda, seleccione su colección
 4. Haga clic en un contenido para editar, o en **Nuevo** para crear uno
-5. Al terminar, use **Save and Publish** para publicar en el sitio
+5. Al terminar, use **Save** para publicar en el sitio
 
 El sitio tiene tres secciones editables, una por área:
 
@@ -28,14 +28,14 @@ El sitio tiene tres secciones editables, una por área:
 
 ## Guardar vs Publicar
 
-El botón de guardar tiene un menú desplegable con dos opciones. Esta es la distinción más importante del sistema:
+El botón de guardar tiene un menú desplegable con dos opciones:
 
 | Opción | Qué hace |
 |--------|----------|
-| **Save** | Guarda como borrador. El sitio **no cambia**. |
-| **Save and Publish** | Guarda **y publica** en el sitio en vivo (tarda 1-2 minutos). |
+| **Save** (botón principal) | Guarda **y publica** en el sitio en vivo (tarda 1-2 minutos). |
+| **Save without Publishing** (menú desplegable) | Guarda como borrador. El sitio **no cambia**. |
 
-> Si usa **Save** por error, no pasa nada: el cambio quedó guardado pero no se publicó. Vuelva a abrir el contenido y use **Save and Publish** cuando esté listo.
+> Use **Save without Publishing** cuando prepare algo que aún no desea mostrar en el sitio. Cuando esté listo, abra el contenido y use **Save**.
 
 ---
 
@@ -161,7 +161,7 @@ El sistema confirma si el certificado está **vigente**, **vencido** o **revocad
 | Problema | Solución |
 |----------|----------|
 | No puedo ingresar al panel | Su cuenta de GitHub necesita acceso al repositorio. Contacte al área de tecnología. |
-| Guardé con Save y el sitio no cambió | Es correcto: Save es borrador. Use **Save and Publish** para publicar. |
+| Guardé con Save without Publishing y el sitio no cambió | Es correcto: es un borrador. Use **Save** para publicar. |
 | Guardé con Save and Publish y el sitio no cambia | El despliegue tarda 1-2 minutos. Si pasan 5 minutos sin cambios, contacte al área de tecnología. |
 | La imagen no se ve | Verifique que sea JPG, PNG o WebP y pese menos de 500 KB. |
 | El certificado no se generó | Verifique que las fechas estén en formato `2026-06-19` (año-mes-día). Si persiste, contacte al área de tecnología. |
@@ -175,8 +175,8 @@ El sistema confirma si el certificado está **vigente**, **vencido** o **revocad
 |---------|---------------|
 | CMS | Panel donde edita el contenido del sitio. |
 | GitHub | Plataforma donde está guardado el sitio. Su cuenta le da acceso. |
-| Save | Guarda como borrador. El sitio no cambia. |
-| Save and Publish | Guarda y publica en el sitio en vivo. |
+| Save | Guarda y publica en el sitio en vivo. |
+| Save without Publishing | Guarda como borrador. El sitio no cambia. |
 | Markdown | Formato de texto simple para negrita, listas y enlaces. |
 | Workflow | Flujo automático en GitHub para emitir certificados. |
 | Borrador | Contenido guardado pero oculto del sitio público. |
