@@ -7,7 +7,7 @@ backend:
   name: github
   repo: vincentiwadsworth/cbhe-web
   branch: main
-  skip_ci: false
+  skip_ci: true
 
 media_folder: "public/images"
 public_folder: "/images"
@@ -34,7 +34,7 @@ collections:
           options: ["Virtual", "Presencial", "Híbrido"],
         }
       - { name: image, label: Imagen (opcional, si no hay Canva), widget: image, required: false }
-      - { name: startDate, label: "Fecha de inicio", widget: date, format: "DD MMM YYYY", hint: "Usar el calendario. El formato es 9 Jun 2026. El orden en la web es automático por esta fecha." }
+      - { name: startDate, label: "Fecha de inicio", widget: datetime, type: date, format: "DD MMM YYYY", hint: "Usar el calendario. El formato es 9 Jun 2026. El orden en la web es automático por esta fecha." }
       - { name: price, label: Precio / Inversión, widget: string, hint: "Ej: 950 Bs. (750 Bs. lanzamiento hasta 22 de mayo)" }
       - { name: registrationDeadline, label: Fecha límite inscripción, widget: string, required: false, hint: "Solo si hay precio de lanzamiento" }
       - { name: canvaLink, label: Link a Canva, widget: string, required: false, hint: "URL del diseño en Canva con toda la info del curso" }
@@ -82,7 +82,7 @@ collections:
             ],
         }
       - { name: excerpt, label: Extracto, widget: text }
-      - { name: date, label: Fecha, widget: date, format: "DD MMM YYYY", hint: "Usar el calendario. El formato es 17 Jun 2026" }
+      - { name: date, label: Fecha, widget: datetime, type: date, format: "DD MMM YYYY", hint: "Usar el calendario. El formato es 17 Jun 2026" }
       - {
           name: image,
           label: Imagen,
