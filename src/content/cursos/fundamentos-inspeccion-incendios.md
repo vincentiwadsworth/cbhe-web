@@ -3,7 +3,7 @@ title: 'Programa Avanzado: Fundamentos para la Inspección de Incendios'
 category: Curso
 modality: Virtual
 image: /images/17 DE AGOSTO AL 14 DE SEPTIEMBRE 2026.png
-startDate: 20 Nov 1899
+startDate: 22 Feb 1897
 price: $420 USD (Aplican descuentos por pago anticipado)
 registrationDeadline: ''
 canvaLink: https://canva.link/4i67331j3j5q2s6
