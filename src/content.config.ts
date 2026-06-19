@@ -36,7 +36,7 @@ const articulos = defineCollection({
     ]),
     excerpt: z.string(),
     date: z.string(),
-    image: z.preprocess((val) => (val === "" ? undefined : val), z.string().url().optional()),
+    image: z.string().optional(),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
