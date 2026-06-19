@@ -4,7 +4,7 @@ category: Noticias
 excerpt: Especialistas de Estados Unidos y Brasil explicaron cómo los cambios regulatorios están impulsando nuevos proyectos vinculados a combustibles sostenibles. Mientras tanto, Bolivia enfrenta el desafío de recuperar las condiciones necesarias para atraer inversiones y reactivar su sector hidrocarburífero.
 date: 19 Jun 2026
 image: /images/descarga (2).png
-featured: true
+featured: false
 draft: false
 ---
 
