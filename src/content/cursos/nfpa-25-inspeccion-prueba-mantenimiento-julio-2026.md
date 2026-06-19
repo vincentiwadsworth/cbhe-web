@@ -1,13 +1,16 @@
 ---
-title: "Curso NFPA 25: Inspección, Prueba y Mantenimiento de Sistemas contra Incendios a Base de Agua (Edición 2023)"
-category: "Curso"
-modality: "Virtual"
-image: "images/cursos/nfpa-25-inspeccion-incendios.webp"
-startDate: "14 Jul 2026"
-price: "8000 Bs."
+title: 'Curso NFPA 25: Inspección, Prueba y Mantenimiento de Sistemas contra Incendios a Base de Agua (Edición 2023)'
+category: Curso
+modality: Virtual
+image: /images/Arte Redes Cuadrado FPI (4).png
+startDate: 14 Jul 2026
+price: 7500 Bs.
+registrationDeadline: 10/07/2026
+canvaLink: ''
+description: ''
 instructors:
-  - name: "Ing. Jose Anibal Castillo"
-    bio: "Ingeniero Eléctrico y Mecánico con una maestría en Ingeniería de Protección contra Incendio de la Universidad de Maryland, Estados Unidos. Cuenta con experiencia internacional como Consultor de Códigos en NFPA, especializado en revisión técnica y traducción de normas como NFPA 13, NFPA 101 y NFPA 72. Ha ejecutado una gran cantidad de proyectos enfocados al sector industrial, comercial y residencial."
+  - name: Ing. Jose Anibal Castillo
+    bio: Ingeniero Eléctrico y Mecánico con una maestría en Ingeniería de Protección contra Incendio de la Universidad de Maryland, Estados Unidos. Cuenta con experiencia internacional como Consultor de Códigos en NFPA, especializado en revisión técnica y traducción de normas como NFPA 13, NFPA 101 y NFPA 72. Ha ejecutado una gran cantidad de proyectos enfocados al sector industrial, comercial y residencial.
 draft: false
 ---
 
