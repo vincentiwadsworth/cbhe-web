@@ -1,13 +1,16 @@
 ---
-title: "Curso NFPA 70E: Seguridad Eléctrica en Lugares de Trabajo (Edición 2024)"
-category: "Curso"
-modality: "Virtual"
-image: "images/cursos/nfpa-70e-seguridad-electrica.webp"
-startDate: "27 Apr 2026"
-price: "8000 Bs."
+title: 'Curso NFPA 70E: Seguridad Eléctrica en Lugares de Trabajo (Edición 2024)'
+category: Curso
+modality: Virtual
+image: /images/Arte Redes Cuadrado FPI (1).png
+startDate: 23 Jun 2026
+price: 8000 Bs.
+registrationDeadline: ''
+canvaLink: ''
+description: ''
 instructors:
-  - name: "Ing. Patricio Llaneza"
-    bio: "Instructor autorizado por NFPA. Instructor en seguridad eléctrica, administración y uso de equipos de protección personal (EPP). Miembro del Grupo Latinoamericano de Ingenieros en Seguridad Eléctrica de la NFPA 70E. Traductor y revisor técnico de la norma NFPA 70E en español. Consultor especialista en la implementación de normas nacionales e internacionales de seguridad eléctrica, especializado en Latinoamérica y los EE.UU."
+  - name: Ing. Patricio Llaneza
+    bio: Instructor autorizado por NFPA. Instructor en seguridad eléctrica, administración y uso de equipos de protección personal (EPP). Miembro del Grupo Latinoamericano de Ingenieros en Seguridad Eléctrica de la NFPA 70E. Traductor y revisor técnico de la norma NFPA 70E en español. Consultor especialista en la implementación de normas nacionales e internacionales de seguridad eléctrica, especializado en Latinoamérica y los EE.UU.
 draft: false
 ---
 
@@ -29,10 +32,12 @@ Ingenieros eléctricos, gerentes de seguridad, electricistas, contratistas eléc
 ## Temario
 
 ### Módulo 1
+
 - Introducción
 - Resumen de seguridad eléctrica
 
 ### Módulo 2
+
 - Planificación, políticas y procedimientos
 - Responsabilidades
 - Elaboración de un programa de seguridad eléctrica (PSE)
@@ -42,6 +47,7 @@ Ingenieros eléctricos, gerentes de seguridad, electricistas, contratistas eléc
 - Mantenimiento para seguridad
 
 ### Módulo 3
+
 - Trabajos que exponen a los empleados a peligros eléctricos
 - ¿Cuándo existe un peligro?
 - Establecer una condición de trabajo eléctricamente segura (CTES)
@@ -50,6 +56,7 @@ Ingenieros eléctricos, gerentes de seguridad, electricistas, contratistas eléc
 - Preparándose para realizar el trabajo
 
 ### Módulo 4
+
 - Equipos y condiciones especiales
 - Líneas de celdas electrolíticas
 - Baterías y cuartos de baterías
