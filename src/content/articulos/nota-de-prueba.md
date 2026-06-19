@@ -1,5 +1,5 @@
 ---
-title: Nota de prueba
+title: Prueba
 category: Noticias
 excerpt: Nota de prueba — test de Sveltia CMS
 date: 17 Jun 2026
