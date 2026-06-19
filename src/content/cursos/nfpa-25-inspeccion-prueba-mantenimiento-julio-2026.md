@@ -2,7 +2,7 @@
 title: 'Curso NFPA 25: Inspección, Prueba y Mantenimiento de Sistemas contra Incendios a Base de Agua (Edición 2023)'
 category: Curso
 modality: Virtual
-image: /images/nfpa25.jfif
+image: /images/nfpa25.jpg
 startDate: 14 Jul 2026
 price: 7500 Bs.
 registrationDeadline: 10/07/2026
