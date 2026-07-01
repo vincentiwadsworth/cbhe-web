@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-01T14:39:35.076594+00:00",
+  "updated": "2026-07-01T17:46:22.554996+00:00",
   "usd_bob": {
     "buy": 9.76,
     "sell": 9.96
   },
   "commodities": {
     "WTI": {
-      "price": 68.78,
+      "price": 68.39,
       "unit": "USD/barril",
       "label": "WTI Crudo"
     },
     "BRENT": {
-      "price": 71.87,
+      "price": 71.37,
       "unit": "USD/barril",
       "label": "Brent Crudo"
     },
