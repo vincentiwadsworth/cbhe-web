@@ -6,6 +6,7 @@ import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import { parseDateToTimestamp } from "../utils/date";
+import { resolveImageUrl } from "../utils/images";
 
 const cursos = await getCollection("cursos", ({ data }) => !data.draft);
 
@@ -59,8 +60,8 @@ cursos.sort((a: any, b: any) => parseDateToTimestamp(b.data.startDate) - parseDa
       <div class="relative z-10 hidden lg:block">
         <div class="aspect-4/3 rounded-xl overflow-hidden shadow-2xl relative">
           {[
-            { src: "/cbhe-web/images/capacitacion/hero-equipo-diverso.webp", alt: "Equipo diverso colaborando — capacitación CBHE" },
-            { src: "/cbhe-web/images/capacitacion/hero-oficina-meeting.webp", alt: "Capacitación en oficina — formación profesional CBHE" },
+            { src: resolveImageUrl("/images/capacitacion/hero-equipo-diverso.webp"), alt: "Equipo diverso colaborando — capacitación CBHE" },
+            { src: resolveImageUrl("/images/capacitacion/hero-oficina-meeting.webp"), alt: "Capacitación en oficina — formación profesional CBHE" },
           ].map((img, i) => (
             <img
               src={img.src}
@@ -115,9 +116,9 @@ cursos.sort((a: any, b: any) => parseDateToTimestamp(b.data.startDate) - parseDa
       <!-- Carousel -->
       <div class="relative aspect-[16/9] rounded-lg overflow-hidden bg-surface-container-low shadow-sm">
         {[
-          { src: "/cbhe-web/images/capacitacion/carousel-1.webp", alt: "Capacitación técnica CBHE — sesión de formación" },
-          { src: "/cbhe-web/images/capacitacion/carousel-2.webp", alt: "Capacitación técnica CBHE — trabajo en equipo" },
-          { src: "/cbhe-web/images/capacitacion/carousel-3.webp", alt: "Capacitación técnica CBHE — sesión práctica" },
+          { src: resolveImageUrl("/images/capacitacion/carousel-1.webp"), alt: "Capacitación técnica CBHE — sesión de formación" },
+          { src: resolveImageUrl("/images/capacitacion/carousel-2.webp"), alt: "Capacitación técnica CBHE — trabajo en equipo" },
+          { src: resolveImageUrl("/images/capacitacion/carousel-3.webp"), alt: "Capacitación técnica CBHE — sesión práctica" },
         ].map((img, i) => (
           <img
             src={img.src}
@@ -212,17 +213,17 @@ cursos.sort((a: any, b: any) => parseDateToTimestamp(b.data.startDate) - parseDa
 
       <div class="cert-marquee">
         <div class="cert-track">
-          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="NFPA — Authorized Training Provider" loading="lazy" /></div>
-          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="EnginZone — Capacitación técnica" loading="lazy" /></div>
-          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="ASTM International" loading="lazy" /></div>
-          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="AWS — American Welding Society" loading="lazy" /></div>
-          <div class="cert-logo"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="FPI — Fire Protection Institute" loading="lazy" /></div>
+          <div class="cert-logo"><img src={resolveImageUrl("/images/capacitacion/Logos/NFPA%20AUTORIZED.svg")} alt="NFPA — Authorized Training Provider" loading="lazy" /></div>
+          <div class="cert-logo"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20Enginzone.svg")} alt="EnginZone — Capacitación técnica" loading="lazy" /></div>
+          <div class="cert-logo"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20ASTM.svg")} alt="ASTM International" loading="lazy" /></div>
+          <div class="cert-logo"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20AWS.svg")} alt="AWS — American Welding Society" loading="lazy" /></div>
+          <div class="cert-logo"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20FPI.svg")} alt="FPI — Fire Protection Institute" loading="lazy" /></div>
           <!-- Set B (duplicated for seamless loop) -->
-          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/NFPA%20AUTORIZED.svg" alt="" loading="lazy" /></div>
-          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20Enginzone.svg" alt="" loading="lazy" /></div>
-          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20ASTM.svg" alt="" loading="lazy" /></div>
-          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20AWS.svg" alt="" loading="lazy" /></div>
-          <div class="cert-logo" aria-hidden="true"><img src="/cbhe-web/images/capacitacion/Logos/Logo%20FPI.svg" alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src={resolveImageUrl("/images/capacitacion/Logos/NFPA%20AUTORIZED.svg")} alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20Enginzone.svg")} alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20ASTM.svg")} alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20AWS.svg")} alt="" loading="lazy" /></div>
+          <div class="cert-logo" aria-hidden="true"><img src={resolveImageUrl("/images/capacitacion/Logos/Logo%20FPI.svg")} alt="" loading="lazy" /></div>
         </div>
       </div>
     </div>
@@ -315,7 +316,7 @@ cursos.sort((a: any, b: any) => parseDateToTimestamp(b.data.startDate) - parseDa
         <div class="flex justify-center lg:justify-end">
           <div class="bg-inverse-on-surface/10 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-inverse-on-surface/15 text-center">
             <img
-              src="/cbhe-web/images/qr-capacitacion.png"
+              src={resolveImageUrl("/images/qr-capacitacion.png")}
               alt="Código QR de Capacitación CBHE"
               class="w-44 h-44 sm:w-48 sm:h-48 rounded-lg mb-4 mx-auto"
               loading="lazy"
