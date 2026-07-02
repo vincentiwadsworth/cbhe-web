@@ -4,4 +4,4 @@ Disallow: /gracias
 Disallow: /admin
 Disallow: /certificados
 
-Sitemap: https://vincentiwadsworth.github.io/cbhe-web/sitemap-index.xml
+Sitemap: https://cbhe.org.bo/sitemap-index.xml
