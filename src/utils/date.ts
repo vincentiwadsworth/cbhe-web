@@ -38,6 +38,18 @@ export function parseDateToTimestamp(d: string): number {
 }
 
 /**
+ * Retorna true si la fecha (en formato "DD MMM YYYY" o "DD/MM/YYYY")
+ * ya pasó (es anterior a hoy a las 00:00 local).
+ */
+export function isPastDate(d: string): boolean {
+  const ts = parseDateToTimestamp(d);
+  if (ts === 0) return false; // no se pudo parsear → no ocultar
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  return ts < hoy.getTime();
+}
+
+/**
  * Parsea "DD MMM YYYY" a ISO 8601 (YYYY-MM-DD) para JSON-LD / OpenGraph.
  * También soporta prefijo opcional "Inicia:" (usado en startDate de cursos).
  * Fallback: si no reconoce el mes como abreviatura, intenta DD/MM/YYYY.
