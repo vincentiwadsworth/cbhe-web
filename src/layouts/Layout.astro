@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import CursorGlow from "../components/CursorGlow.astro";
 import { getCollection } from "astro:content";
+import { isPastDate } from "../utils/date";
 
 export interface Props {
   title: string;
@@ -63,7 +64,8 @@ const empresasByGrupo = Object.entries(grupoLabels)
 const empresasContext = `Empresas afiliadas a la CBHE:\n\n${empresasByGrupo}`;
 
 // Build courses knowledge base for the chatbot
-const todosCursos = await getCollection("cursos", ({ data }) => !data.draft);
+const todosCursos = (await getCollection("cursos", ({ data }) => !data.draft))
+  .filter((c) => !isPastDate(c.data.startDate));
 const cursosContext = todosCursos.length > 0
   ? "Capacitaciones de la CBHE:\n\n" + todosCursos.map((c) => {
       const parts = [`- ${c.data.title} (${c.data.category}, ${c.data.modality})`];
@@ -74,7 +76,22 @@ const cursosContext = todosCursos.length > 0
     }).join("\n\n")
   : "";
 
-const chatbotContext = [empresasContext, cursosContext].filter(Boolean).join("\n\n");
+// Build afiliación knowledge base for the chatbot
+const afiliacionContext = `Cómo afiliarse a la CBHE — Requisitos para ser miembro activo:
+
+Para ser miembro Activo de la CBHE se requiere cumplir con los siguientes requisitos:
+
+a) Solicitud formal de ingreso: presentar solicitud escrita demostrando ser empresa legalmente constituida en Bolivia y que su actividad se relaciona con hidrocarburos o energía.
+b) Adhesión al marco normativo: conocer y someterse al Estatuto, Reglamentos y Código de Ética de la CBHE.
+c) Cumplimiento legal y operativo: estar inscrito en todos los registros del ordenamiento jurídico boliviano y operar en el sector de hidrocarburos y energía.
+d) Aprobación del directorio: ser aceptado por al menos dos tercios (2/3) de los directores.
+e) Compromiso financiero: pagar la cuota de ingreso y las cuotas ordinarias y extraordinarias que fije la institución.
+
+Proceso: una vez presentada la solicitud con documentación completa, el Directorio evalúa la incorporación en la sesión más próxima. El equipo de afiliaciones acompaña durante todo el proceso.
+
+Para iniciar el proceso, la empresa debe completar el formulario de afiliación disponible en la sección "Afiliación" del sitio web cbhe.org.bo o contactar directamente al equipo de la CBHE.`;
+
+const chatbotContext = [empresasContext, cursosContext, afiliacionContext].filter(Boolean).join("\n\n");
 
 // Canonical URL: Astro.url ya incluye site + base + path
 const canonicalUrl = Astro.url.href;
