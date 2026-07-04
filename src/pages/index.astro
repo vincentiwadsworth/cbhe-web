@@ -534,7 +534,7 @@ const gruposHome = [
                 alt={articulo.data.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
-                src={articulo.data.image}
+                src={resolveImageUrl(articulo.data.image)}
               />
             </div>
           )}
@@ -570,7 +570,7 @@ const gruposHome = [
                 alt={curso.data.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
-                src={curso.data.image}
+                src={resolveImageUrl(curso.data.image)}
               />
             ) : (
               <div class="w-full h-full bg-primary-container flex items-center justify-center">

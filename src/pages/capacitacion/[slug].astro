@@ -8,6 +8,7 @@ import CourseInstructor from "../../components/CourseInstructor.astro";
 import CourseFAQ from "../../components/CourseFAQ.astro";
 import CourseCTA from "../../components/CourseCTA.astro";
 import RelatedCourses from "../../components/RelatedCourses.astro";
+import { resolveImageUrl } from "../../utils/images";
 
 export async function getStaticPaths() {
   const cursos = await getCollection("cursos", ({ data }) => !data.draft);
@@ -96,7 +97,7 @@ const hasBody = Boolean(curso.body && curso.body.trim());
       curso.data.image ? (
         <figure class="mb-10 rounded-xl overflow-hidden">
           <img
-            src={curso.data.image}
+            src={resolveImageUrl(curso.data.image)}
             alt={curso.data.title}
             class="w-full h-auto object-cover rounded-xl"
             loading="eager"
