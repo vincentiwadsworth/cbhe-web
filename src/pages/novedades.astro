@@ -5,6 +5,7 @@ import Section from "../components/Section.astro";
 import SubpageHero from "../components/SubpageHero.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import { parseDateToTimestamp } from "../utils/date";
+import { resolveImageUrl } from "../utils/images";
 
 const articulos = await getCollection("articulos", ({ data }) => !data.draft);
 
@@ -43,7 +44,7 @@ const ARTICULO_ICONOS: Record<string, string> = {
       {featured && (
         <article class="bg-surface-container-low rounded-lg overflow-hidden flex flex-col md:flex-row group transition-all duration-300 border border-transparent hover:border-primary/30">
           {featured.data.image ? (
-            <div class="md:w-1/2 min-h-[300px] bg-cover bg-center" style={`background-image: url('${featured.data.image}')`}></div>
+            <div class="md:w-1/2 min-h-[300px] bg-cover bg-center" style={`background-image: url('${resolveImageUrl(featured.data.image)}')`}></div>
           ) : (
             <div class="md:w-1/2 min-h-[300px] bg-gradient-to-br from-primary-container to-surface-container-high flex items-center justify-center">
               <Icon name={ARTICULO_ICONOS[featured.data.category]} class="size-16 text-primary/30" />
@@ -81,7 +82,7 @@ const ARTICULO_ICONOS: Record<string, string> = {
             {articulo.data.image ? (
               <div
                 class="h-48 rounded bg-cover bg-center mb-6"
-                style={`background-image: url('${articulo.data.image}')`}
+                style={`background-image: url('${resolveImageUrl(articulo.data.image)}')`}
               ></div>
             ) : (
               <div class="h-48 rounded mb-6 bg-gradient-to-br from-primary-container to-surface-container-high flex items-center justify-center">

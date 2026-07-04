@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import Icon from "../../components/Icon.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { parseDateToISO } from "../../utils/date";
+import { resolveImageUrl } from "../../utils/images";
 
 export async function getStaticPaths() {
   const articulos = await getCollection("articulos", ({ data }) => !data.draft);
@@ -64,7 +65,7 @@ const isoDate = parseDateToISO(articulo.data.date);
   {articulo.data.image && (
     <figure class="mb-12 rounded-xl overflow-hidden">
       <img
-        src={articulo.data.image}
+        src={resolveImageUrl(articulo.data.image)}
         alt={articulo.data.title}
         class="w-full h-auto object-cover rounded-xl"
         loading="lazy"

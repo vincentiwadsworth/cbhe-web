@@ -1,5 +1,6 @@
 ---
 import Icon from "./Icon.astro";
+import { resolveImageUrl } from "../utils/images";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -51,7 +52,7 @@ const TitleTag = variant === "featured" ? "h2" : "h3";
 /* ------------------------------------------------------------------ */
 
 const imageClasses = {
-  default: "aspect-video",
+  default: "aspect-square",
   compact: "aspect-4/3",
   featured: "aspect-21/9",
 };
@@ -95,7 +96,7 @@ const hasImage = Boolean(data.image);
       <div class={`relative overflow-hidden ${variant === "compact" ? "w-24 sm:w-32 shrink-0 self-stretch" : ""}`}>
         <div class={`relative overflow-hidden h-full ${imageClasses[variant]}`}>
           <img
-            src={data.image}
+            src={resolveImageUrl(data.image)}
             alt={data.title}
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
