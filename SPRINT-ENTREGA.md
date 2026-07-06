@@ -52,7 +52,7 @@
 > - **Sin `fecha_vencimiento` ni `estado`** (sin vigencia).
 > - **QR generation/storage** se resuelve en una fase posterior.
 >
-> La DB ya tiene las dos tablas nuevas. La migración folder está desincronizada — la Tarea B1 cierra eso.
+> La DB ya tiene las dos tablas nuevas con RLS en target state (verificado vía REST API el 6 jul). La migración 003 cierra la desincronización entre la DB real y el repo: rename `sello-cbhe` → `sello`, nuevos triggers con prefijo `CBHE-C-`/`CBHE-S-`, GRANTs explícitos, cleanup de funciones huerfanas.
 
 **Problema**
 - Un solo sistema (`certificados`) para dos flujos distintos: Sello CBHE (empresas, Tania) y Capacitación (personas, Alejandra). Las dos personas no pueden operar independientemente: comparten tabla, sin scope separation.
@@ -80,17 +80,23 @@
 
 **Tareas concretas (en este sprint)**
 
-### Tarea B1 · Migración 003 (schema + RLS) — **PRIMERO** ⏳
+### Tarea B1 · Migración 003 (rename + triggers + grants + cleanup) — **PRIMERO** ⏳
 - **Archivo nuevo**: `supabase/migrations/003_split_certificados.sql`
+- **Alcance reducido tras verificación de DB (6 jul 2026)**: el plan original (DROP + CREATE + RLS) ya está implementado en la DB real — verificado vía REST API con service_role. Lo que queda es trabajo mecánico e idempotente.
 - **Contenido**:
-  - `DROP TABLE IF EXISTS public.certificados CASCADE` (defensivo)
-  - `CREATE TABLE public.capacitacion` + `public."sello-cbhe"` (o `sello` si se renombra) — matcheando el estado actual de la DB
-  - `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` en ambas
-  - Policies: `anon SELECT` en ambas, `service_role` full CRUD (bypass por diseño)
-  - Grants al `anon` y `service_role`
-- **Acción adicional**: ejecutar la migración contra la DB para alinear el estado.
-- **Esfuerzo**: ~1-2h · **Riesgo**: MEDIUM (cambio de schema + RLS)
-- **Done cuando**: la DB matchea la migración 003 y los policies pasan tests SQL directos (`anon` SELECT ambas, `service_role` CRUD ambas, `anon` writes rechazados).
+  - `ALTER TABLE public."sello-cbhe" RENAME TO public.sello;` (decidido 6 jul)
+  - `generate_capacitacion_code()` — retorna `CBHE-C-{10 alfanum chars}` (espejo del patrón de la 002 con prefijo discriminador)
+  - `generate_sello_code()` — retorna `CBHE-S-{10 alfanum chars}`
+  - `set_capacitacion_code()` y `set_sello_code()` — trigger functions BEFORE INSERT (compatibles con código explícito)
+  - Triggers `trg_set_capacitacion_code` y `trg_set_sello_code`
+  - `GRANT SELECT ... TO anon` y `GRANT ALL ... TO service_role` (idempotentes, no rompen si ya están)
+  - `GRANT USAGE ON SCHEMA public TO anon, service_role;` por si falta
+  - `DROP FUNCTION IF EXISTS public.generate_certificate_code() CASCADE;` (huérfana de la 002)
+  - `DROP FUNCTION IF EXISTS public.set_certificate_code() CASCADE;` (huérfana de la 002)
+  - `DROP TABLE IF EXISTS public.certificados CASCADE;` (defensivo — ya no existe, pero mantiene la migración re-runnable)
+- **Acción adicional**: ejecutar la migración contra la DB live y re-correrla para confirmar idempotencia.
+- **Esfuerzo**: ~30min-1h · **Riesgo**: LOW (cambios idempotentes, sin DROP destructivo, sin RLS rewrite)
+- **Done cuando**: la DB live matchea el estado target (sello renombrado, triggers crean códigos con prefijo, grants explícitos, funciones huerfanas dropeadas) y re-correr la migración no produce cambios.
 
 ### Tarea B2 · Modificar `src/pages/certificados.astro` — **SEGUNDO** ⏳
 - **Archivo**: `src/pages/certificados.astro` (modify, 277 → ~290 líneas estimadas)

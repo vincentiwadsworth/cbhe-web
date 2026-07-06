@@ -44,29 +44,32 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 | Trigger de código con prefijo (DB) | **Prefijos se manejan en cliente (landing)** |
 | `scripts/issue-certificate.mjs` para uso diario | **Solo para batch, refactor pendiente (D1)** |
 
-**DB state (real, ya migrado por el usuario 6 jul 2026)**:
-- `public.capacitacion` — `id (uuid PK)`, `codigo (text UNIQUE)`, `cursante_nombre (text)`, `fecha_emision (date)`, `created_at (timestamptz)`, `nombre_capacitacion (text NULL)` + btree idx `codigo`.
-- `public."sello-cbhe"` — `id (uuid PK)`, `codigo (text UNIQUE)`, `empresa_nombre (text)`, `tipo_certificado (text default 'Sello CBHE')`, `fecha_emision (date)`, `created_at (timestamptz)` + btree idx `codigo`.
-- ⚠️ `sello-cbhe` tiene guión — recomendación: renombrar a `sello` en la migración 003 (decisión abierta).
-- `public.certificados` (vieja) — sigue hasta que B1 la dropee con `DROP IF EXISTS CASCADE`.
+**DB state (real, ya migrado por el usuario 6 jul 2026 — verificado vía REST API)**:
+- `public.capacitacion` — `id (uuid PK)`, `codigo (text UNIQUE)`, `cursante_nombre (text)`, `fecha_emision (date)`, `created_at (timestamptz)`, `nombre_capacitacion (text NULL)` + btree idx `codigo`. 1 row de muestra: `CBHE-Xcl7ajCGIT` (formato viejo, generado antes de la decisión de prefijos).
+- `public."sello-cbhe"` — `id (uuid PK)`, `codigo (text UNIQUE)`, `empresa_nombre (text)`, `tipo_certificado (text default 'Sello CBHE')`, `fecha_emision (date)`, `created_at (timestamptz)` + btree idx `codigo`. 0 rows.
+- `public.certificados` — **NO EXISTE** (ya dropeada antes; el `DROP IF EXISTS` de la migración 003 es no-op pero se mantiene por idempotencia).
+- RLS ya en target: `anon SELECT` funciona, `anon INSERT` rejected (401), `service_role` CRUD full.
 
 **Decisiones del usuario (cerradas 6 jul 2026)**:
-- Schema: dos tablas reales + DROP defensivo de `certificados`
+- Schema: dos tablas reales + DROP defensivo de `certificados` (idempotente)
 - Ruta: una sola landing (`/certificados/`)
 - Prefijos: `CBHE-C-` (capacitacion) / `CBHE-S-` (sello) — discriminador en el cliente
-- RLS: `anon SELECT` ambas; `authenticated` con scope por email; `service_role` full CRUD
+- RLS: `anon SELECT` ambas; `service_role` full CRUD (verificado live)
 - Emisión UI normal: Supabase Studio nativo
 - Emisión batch: GH Actions con `service_role`
 - Provisioning: magic link a `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo`
 - Training: "Guía + sesión breve" (~1h total)
 - QR generation/storage: fase posterior — Supabase Storage confirmado viable (D3)
 - Onboarding: "Guía + sesión breve"
+- **Rename `sello-cbhe` → `sello`** (decidido 6 jul tras verificar DB)
+- **Triggers nuevos** para auto-generar `CBHE-C-` / `CBHE-S-` codes (los triggers de la 002 están dead porque `certificados` no existe)
+- **GRANTs explícitos** + **cleanup de funciones huerfanas** (`generate_certificate_code`, `set_certificate_code`)
 
 **Tareas concretas (en este sprint)**:
 
 | # | Tarea | Estado | Esfuerzo | Riesgo |
 |---|---|---|---|---|
-| B1 | Migración 003 (`supabase/migrations/003_split_certificados.sql` con schema + RLS) | ⏳ TODO | 1-2h | MEDIUM |
+| B1 | Migración 003 (`supabase/migrations/003_split_certificados.sql`: rename + triggers + grants + cleanup) | ⏳ TODO | 30min-1h | LOW |
 | B2 | Modificar `src/pages/certificados.astro` (prefijo + query + UI) | ⏳ TODO | 2-3h | LOW |
 
 **DEFER (fase posterior)**:
@@ -79,9 +82,9 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 | D4 | Provisioning de users (Tania, Alejandra) | 30min |
 | D5 | Training (sesión breve + GUIA-CERTIFICADOS.md) | 1h |
 
-**Artifacts**: `openspec/changes/cert-parallel-split/` con `proposal.md` y `tasks.md`.
+**Artifacts**: `openspec/changes/cert-parallel-split/` con `proposal.md`, `specs/cert-split-storage/spec.md`, `specs/cert-split-verification/spec.md`, `tasks.md`.
 
-**Próximo paso concreto**: ejecutar B1 (migración 003).
+**Próximo paso concreto**: ejecutar B1 (migración 003 reducida: rename + triggers + grants + cleanup). tasks.md y STATUS.md ya están alineados con el scope real post-verificación de DB.
 
 **Esfuerzo total estimado**: ~1 día sprint actual (B1+B2) + ~1 día deferred (D1-D5) · **Riesgo**: LOW-MEDIUM.
 
@@ -130,9 +133,9 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 
 ## Pendiente al retomar
 
-- [ ] **Change-B**: ejecutar Tarea B1 (migración 003 — schema + RLS).
+- [ ] **Change-B**: ejecutar Tarea B1 (migración 003 reducida: rename + triggers + grants + cleanup).
 - [ ] **Change-B**: ejecutar Tarea B2 (modificar `certificados.astro`).
-- [ ] **Change-B**: ciclo SDD (proposal + tasks ya en `openspec/changes/cert-parallel-split/`; queda apply → verify → archive).
+- [ ] **Change-B**: ciclo SDD (proposal + 2 specs + tasks ya en `openspec/changes/cert-parallel-split/`; queda apply → verify → archive).
 - [ ] **Change-B**: ejecutar DEFER (D1-D5) en fase posterior — no bloquea el sprint actual.
 - [ ] **Change-C**: ciclo completo (depende de B).
 - [ ] **DNS `cbhe.org.bo`**: confirmar si se configuró (estaba programado para el 6 de julio).
