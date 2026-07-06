@@ -2,10 +2,10 @@
 
 **Objetivo**: dejar el sitio en `cbhe.org.bo` listo para entrega formal a la CBHE, con sistema de certificados dual operativo y documentación de handoff para el equipo no-técnico.
 
-**Rama base**: `feat/custom-domain` (HEAD `dc21d90` — Change-A cerrado y pusheado a la branch)
+**Rama base**: `feat/custom-domain` (HEAD `2fe7cb8` — Change-A cerrado y pusheado a la branch + 2 commits de housekeeping)
 **Estrategia**: 3 PRs independientes (single-pr, budget 400 líneas por PR)
 **Artifact store**: OpenSpec (`openspec/changes/`)
-**Estado**: Change-A DONE ✅ · Change-B (decisiones cerradas, SDD pendiente) · Change-C (pendiente, depende de B)
+**Estado**: Change-A DONE ✅ · Change-B (scope cut 6 jul, ejecución en curso — B1 migración + B2 page) · Change-C (pendiente, depende de B)
 
 ---
 
@@ -43,46 +43,89 @@
 
 ---
 
-## Change-B · `cert-parallel-split`
+## Change-B · `cert-parallel-split` — **EJECUCIÓN EN CURSO** 🔄
+
+> **Cambio de scope (6 jul 2026)**: el plan original (dos páginas separadas, PDF, GH Actions para emisión diaria, `fecha_vencimiento`, `estado`) se simplificó drásticamente. Nueva dirección:
+> - **Una sola landing de verificación** (la `/certificados/` actual con copy/UX minimalista mejorado).
+> - **Sin PDF** (descartado).
+> - **Sin GH Actions para emisión diaria** (queda para batch/emergencias con `service_role`).
+> - **Sin `fecha_vencimiento` ni `estado`** (sin vigencia).
+> - **QR generation/storage** se resuelve en una fase posterior.
+>
+> La DB ya tiene las dos tablas nuevas. La migración folder está desincronizada — la Tarea B1 cierra eso.
 
 **Problema**
 - Un solo sistema (`certificados`) para dos flujos distintos: Sello CBHE (empresas, Tania) y Capacitación (personas, Alejandra). Las dos personas no pueden operar independientemente: comparten tabla, sin scope separation.
 - La emisión hoy es CLI-only (`workflow_dispatch` de GitHub Actions), no usable para no-técnicas. Tania y Alejandra no pueden emitir sin asistencia.
 - Los datos de cada flujo deben ser propiedad de su owner y resguardados por ella.
+- La página de verificación actual (`src/pages/certificados.astro`) y el script de emisión (`scripts/issue-certificate.mjs`) están atados al esquema viejo de `certificados` con campos que no aplican.
 
-**Decisiones del usuario (cerradas)**
-- **Schema**: dos tablas separadas — `capacitacion` (personas, Alejandra) y `sello` (empresas, Tania). DROP de `certificados` (data es de muestra, sin QRs físicos en producción, sin impacto en URLs existentes).
-- **Rutas de verificación públicas**: `/capacitacion/?c=CODE` y `/sello/?c=CODE`.
-- **Prefijos de código**: `CBHE-C-XXXXXXXXXX` (capacitacion) y `CBHE-S-XXXXXXXXXX` (sello) para disambiguar visualmente.
-- **RLS**: cada tabla accesible solo por su owner vía Supabase Auth. `service_role` para emisión batch.
-- **Emisión — UI**: spreadsheet-like (NocoDB o Supabase Studio). Tania y Alejandra son dueñas de los datos y deben resguardarlos (export Excel periódico).
+**Schema real en DB (ya migrado, 6 jul 2026)**
+- `public.capacitacion` — `id (uuid PK)`, `codigo (text UNIQUE)`, `cursante_nombre (text)`, `fecha_emision (date)`, `created_at (timestamptz)`, `nombre_capacitacion (text NULL)` + btree index en `codigo`.
+- `public."sello-cbhe"` — `id (uuid PK)`, `codigo (text UNIQUE)`, `empresa_nombre (text)`, `tipo_certificado (text default 'Sello CBHE')`, `fecha_emision (date)`, `created_at (timestamptz)` + btree index en `codigo`.
+- ⚠️ **`sello-cbhe` tiene guión medio** — requiere quoting en cada query (`FROM "sello-cbhe"`). **Decisión abierta**: ¿renombramos a `sello_cbhe` o `sello` en la migración 003? Recomendación: renombrar a `sello` (limpio, sin guión).
+- `public.certificados` (vieja) — sigue en la DB hasta que la Tarea B1 la dropee con `DROP TABLE IF EXISTS CASCADE`.
 
-**Decisiones abiertas (delegadas a sdd-propose)**
-- ¿NocoDB self-hosted o Supabase Studio nativo como UI de emisión?
-- ¿DROP + CREATE fresh de la tabla, o RENAME + CREATE (preservando las 17 filas de muestra)?
-- Estrategia de provisioning de users (Tania, Alejandra) en Supabase: ¿invitación directa, o vía magic link?
+**Decisiones del usuario (cerradas 6 jul 2026)**
+- **Schema**: dos tablas reales (ya creadas en DB). DROP defensivo de `certificados` en la migración 003 (data es de muestra, descartable).
+- **Ruta de verificación pública**: **UNA SOLA landing** — la `/certificados/` actual, con copy/UX minimalista. No más `/capacitacion/?c=CODE` y `/sello/?c=CODE` separados.
+- **Prefijos de código**: `CBHE-C-XXXXXXXXXX` (capacitacion) y `CBHE-S-XXXXXXXXXX` (sello). La landing detecta el prefijo y consulta la tabla correcta.
+- **RLS**: `anon` SELECT en ambas tablas (verificación pública). `authenticated` con scope por email — `tania@cbhe.org.bo` solo `sello-cbhe`, `alejandra@cbhe.org.bo` solo `capacitacion`. `service_role` full CRUD en ambas (batch/emergencias).
+- **Emisión — UI normal**: Supabase Studio nativo, cada owner accede a su tabla vía auth user.
+- **Emisión — batch/emergencias**: GH Actions con `service_role`, refactor mínimo del script.
+- **Sin PDF, sin vigencia**: la página de verificación muestra los datos básicos del cert sin estado ni vencimiento.
+- **QR generation/storage**: fase posterior. Supabase Storage confirmado viable (S3-compatible, buckets + RLS + URL pública).
+- **Provisioning de users**: magic link a `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo`.
+- **Training**: guía + sesión breve (~1h total).
 
-**Cambios esperados**
-- Nueva migración Supabase `003_split_certificados.sql` con tablas `capacitacion` y `sello` + RLS + trigger de código con prefijo.
-- Refactor o reemplazo de `scripts/issue-certificate.mjs` por flujo vía UI.
-- Refactor de `.github/workflows/issue-certificate.yml` (queda para emisión batch de service_role, no para uso diario).
-- Nuevas páginas: `src/pages/capacitacion.astro` y `src/pages/sello.astro` (verificación pública).
-- Página anterior `src/pages/certificados.astro` removida o redirigida.
+**Tareas concretas (en este sprint)**
+
+### Tarea B1 · Migración 003 (schema + RLS) — **PRIMERO** ⏳
+- **Archivo nuevo**: `supabase/migrations/003_split_certificados.sql`
+- **Contenido**:
+  - `DROP TABLE IF EXISTS public.certificados CASCADE` (defensivo)
+  - `CREATE TABLE public.capacitacion` + `public."sello-cbhe"` (o `sello` si se renombra) — matcheando el estado actual de la DB
+  - `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` en ambas
+  - Policies: `anon SELECT`, `authenticated SELECT` con scope por email, `service_role` full CRUD
+  - Grants al `anon` y `authenticated` role
+- **Acción adicional**: ejecutar la migración contra la DB para alinear el estado.
+- **Esfuerzo**: ~1-2h · **Riesgo**: MEDIUM (cambio de schema + RLS)
+- **Done cuando**: la DB matchea la migración 003 y los policies pasan tests SQL directos (Tania no ve capacitacion y viceversa).
+
+### Tarea B2 · Modificar `src/pages/certificados.astro` — **SEGUNDO** ⏳
+- **Archivo**: `src/pages/certificados.astro` (modify, 277 → ~290 líneas estimadas)
+- **Cambios**:
+  - Detección de prefijo del código (`CBHE-C-` vs `CBHE-S-`) en el script inline
+  - Query a la tabla correcta (`capacitacion` o `sello-cbhe`)
+  - Mapeo de campos: `cursante_nombre` / `empresa_nombre`, `nombre_capacitacion` / `tipo_certificado`
+  - Sacar UI de `fecha_vencimiento` y `estado` (vigente/vencido/revocado) — solo "Verificado"
+  - Actualizar copy: "Certificado de Capacitación" / "Sello CBHE" según el tipo, tono minimalista
+- **Esfuerzo**: ~2-3h · **Riesgo**: LOW (página ya funciona, cambios mecánicos)
+- **Done cuando**: `npx astro build` sin errores + verificación visual con Playwright en `/certificados/?c=CBHE-C-XXX` y `/certificados/?c=CBHE-S-XXX` muestra los datos correctos.
+
+**Tareas DEFER (fase posterior) ⏸️**
+- **D1 · Refactor `scripts/issue-certificate.mjs`** — soportar `--tipo capacitacion|sello` y campos correctos. Solo para batch con `service_role`. ~1-2h.
+- **D2 · Refactor `.github/workflows/issue-certificate.yml`** — alinear con el script refactoreado. ~30min.
+- **D3 · QR generation + Supabase Storage** — generación del PNG (script local? Edge Function?), upload al bucket, link en el cert. ~3-4h.
+- **D4 · Provisioning de users** — crear `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo` en Supabase Auth con magic link. ~30min.
+- **D5 · Training** — sesión breve de 30min con cada una + entrega de `GUIA-CERTIFICADOS.md`. ~1h.
 
 **Acceptance**
-- Tania emite un Sello sin asistencia técnica usando la UI provista.
-- Alejandra emite un Certificado de Capacitación sin asistencia técnica.
-- Verificación pública funciona: `/capacitacion/?c=CBHE-C-XXX` muestra datos correctos, `/sello/?c=CBHE-S-XXX` muestra datos correctos.
+- `npx astro build` sin warnings ni errores.
+- `/certificados/?c=CBHE-C-XXX` muestra datos del cursante y la capacitación.
+- `/certificados/?c=CBHE-S-XXX` muestra datos de la empresa y el tipo de certificado.
 - RLS impide que Tania vea datos de Capacitación y viceversa (verificado con tests SQL directos).
-- `npx astro build` sin errores.
+- La DB matchea la migración 003 (commiteada en el repo, ejecutable desde cero).
+- `SPRINT-ENTREGA.md` y `openspec/changes/cert-parallel-split/` reflejan el estado real.
 
-**Out of scope**
-- Rediseño visual de las páginas de verificación (queda el look&feel actual).
-- Pasarela de pago, automatizaciones, integración con email marketing.
+**Out of scope (Change-B)**
+- QR generation/storage (D3) — fase posterior.
+- PDF generation — descartado por el usuario.
+- Rediseño visual de la página de verificación (más allá del copy mínimo y la remoción de UI innecesaria).
+- NocoDB o cualquier UI custom — se usa Supabase Studio nativo.
 - Migración de los 17 certs de muestra (data descartable).
-- QR codes dinámicos con watermark (mantener los actuales generados vía Puppeteer).
 
-**Esfuerzo**: 3-5 días (incluye setup de UI, training breve de Tania y Alejandra, sign-off de seguridad de RLS) · **Riesgo**: MEDIUM (involucra schema, auth, training, datos de personas reales).
+**Esfuerzo**: ~1 día (B1 + B2) + ~1 día deferred (D1-D5) · **Riesgo**: LOW-MEDIUM.
 
 ---
 
@@ -153,7 +196,7 @@ Manual operativo del sistema dual de certificados, separado de la guía del siti
 
 ## Out of scope (sprint)
 
-- **DNS `cbhe.org.bo`** — pendiente del usuario, **lunes 6 de julio**. Una vez configurado, el sprint se deploya naturalmente a producción.
+- **DNS `cbhe.org.bo`** — pendiente del usuario. Una vez configurado, el sprint se deploya naturalmente a producción.
 - Rediseño UX global (issues #7-16) — sprint aparte.
 - Rediseño PreciosGrid — sprint aparte.
 - Migración de los 17 certs de muestra — data descartable.

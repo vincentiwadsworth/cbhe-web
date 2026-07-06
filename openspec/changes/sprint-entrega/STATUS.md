@@ -2,11 +2,11 @@
 
 **Sprint**: `sprint-entrega`
 **Branch base**: `feat/custom-domain`
-**Última actualización**: 2026-07-03
+**Última actualización**: 2026-07-06
 
 ## Resumen
 
-Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes y tarjetas 1:1, (2) sistema de certificados dual (Sello + Capacitación), (3) documentación de handoff para el equipo no-técnico.
+Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes y tarjetas 1:1 [DONE], (2) sistema de certificados dual (Sello + Capacitación) [EN CURSO — scope cut], (3) documentación de handoff para el equipo no-técnico [PENDIENTE, depende de B].
 
 ## Cambios
 
@@ -31,28 +31,59 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 - `src/pages/novedades/[slug].astro`: import + 1 image wrap
 - `src/utils/images.ts`: tracked (era untracked, agregado vía amend)
 
-### Change-B · `cert-parallel-split` — DECISIONES CERRADAS, SDD PENDIENTE
+### Change-B · `cert-parallel-split` — EJECUCIÓN EN CURSO 🔄
 
-**Decisiones tomadas con el usuario** (3 jul 2026):
+**Scope cut (6 jul 2026)**: el plan original se simplificó drásticamente.
 
-| Decisión | Elección |
+| Antes | Ahora |
 |---|---|
-| UI de emisión | Supabase Studio nativo (no NocoDB). Tania y Alejandra acceden al Table Editor con RLS aplicado. |
-| Migración de data | DROP + CREATE fresh. Los 17 certs son sample, se descartan. |
-| User provisioning | Auth users separados con magic link: `tania@cbhe.org.bo` (sello) y `alejandra@cbhe.org.bo` (capacitacion). NO team members compartidos. |
-| GitHub Actions | Mantener para emergencias (batch con `service_role`). UI es la vía normal. |
+| Dos páginas: `/capacitacion/?c=CODE` y `/sello/?c=CODE` | **Una sola landing**: `/certificados/?c=CODE` |
+| PDF generation (Puppeteer) | **Descartado** |
+| GH Actions para emisión diaria | **Solo para batch/emergencias con `service_role`** |
+| `fecha_vencimiento`, `estado` (vigente/vencido/revocado) | **Fuera del schema — sin vigencia** |
+| Trigger de código con prefijo (DB) | **Prefijos se manejan en cliente (landing)** |
+| `scripts/issue-certificate.mjs` para uso diario | **Solo para batch, refactor pendiente (D1)** |
 
-**Próximo paso**: lanzar `sdd-propose` con las decisiones cerradas.
+**DB state (real, ya migrado por el usuario 6 jul 2026)**:
+- `public.capacitacion` — `id (uuid PK)`, `codigo (text UNIQUE)`, `cursante_nombre (text)`, `fecha_emision (date)`, `created_at (timestamptz)`, `nombre_capacitacion (text NULL)` + btree idx `codigo`.
+- `public."sello-cbhe"` — `id (uuid PK)`, `codigo (text UNIQUE)`, `empresa_nombre (text)`, `tipo_certificado (text default 'Sello CBHE')`, `fecha_emision (date)`, `created_at (timestamptz)` + btree idx `codigo`.
+- ⚠️ `sello-cbhe` tiene guión — recomendación: renombrar a `sello` en la migración 003 (decisión abierta).
+- `public.certificados` (vieja) — sigue hasta que B1 la dropee con `DROP IF EXISTS CASCADE`.
 
-**Scope esperado**:
-- Nueva migración `supabase/migrations/003_split_certificados.sql` con tablas `capacitacion` y `sello` + RLS + triggers con prefijos.
-- DROP de tabla `certificados` (data descartable).
-- Nuevas páginas de verificación: `src/pages/capacitacion.astro` y `src/pages/sello.astro`.
-- Refactor de `scripts/issue-certificate.mjs` y `.github/workflows/issue-certificate.yml` (queda para batch).
-- Crear las dos auth users en Supabase con magic link.
-- Documentar el setup en una guía para Tania y Alejandra.
+**Decisiones del usuario (cerradas 6 jul 2026)**:
+- Schema: dos tablas reales + DROP defensivo de `certificados`
+- Ruta: una sola landing (`/certificados/`)
+- Prefijos: `CBHE-C-` (capacitacion) / `CBHE-S-` (sello) — discriminador en el cliente
+- RLS: `anon SELECT` ambas; `authenticated` con scope por email; `service_role` full CRUD
+- Emisión UI normal: Supabase Studio nativo
+- Emisión batch: GH Actions con `service_role`
+- Provisioning: magic link a `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo`
+- Training: "Guía + sesión breve" (~1h total)
+- QR generation/storage: fase posterior — Supabase Storage confirmado viable (D3)
+- Onboarding: "Guía + sesión breve"
 
-**Esfuerzo estimado**: 3-5 días · **Riesgo**: MEDIUM (schema + auth + RLS + training).
+**Tareas concretas (en este sprint)**:
+
+| # | Tarea | Estado | Esfuerzo | Riesgo |
+|---|---|---|---|---|
+| B1 | Migración 003 (`supabase/migrations/003_split_certificados.sql` con schema + RLS) | ⏳ TODO | 1-2h | MEDIUM |
+| B2 | Modificar `src/pages/certificados.astro` (prefijo + query + UI) | ⏳ TODO | 2-3h | LOW |
+
+**DEFER (fase posterior)**:
+
+| # | Tarea | Esfuerzo |
+|---|---|---|
+| D1 | Refactor `scripts/issue-certificate.mjs` (--tipo + campos correctos) | 1-2h |
+| D2 | Refactor `.github/workflows/issue-certificate.yml` | 30min |
+| D3 | QR generation + Supabase Storage | 3-4h |
+| D4 | Provisioning de users (Tania, Alejandra) | 30min |
+| D5 | Training (sesión breve + GUIA-CERTIFICADOS.md) | 1h |
+
+**Artifacts**: `openspec/changes/cert-parallel-split/` con `proposal.md` y `tasks.md`.
+
+**Próximo paso concreto**: ejecutar B1 (migración 003).
+
+**Esfuerzo total estimado**: ~1 día sprint actual (B1+B2) + ~1 día deferred (D1-D5) · **Riesgo**: LOW-MEDIUM.
 
 ### Change-C · `editor-handoff-docs` — PENDIENTE, depende de B
 
@@ -68,31 +99,42 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 | Commit | Cambio |
 |---|---|
 | `74b9059` | Change-A: fix images + cards 1:1 |
-| (futuro) | Change-B: cert parallel split |
+| `35e4125` | fix(navbar): 238px overflow at 768px (side finding del visual verify) |
+| `dc21d90` | chore(gitignore): ignore Playwright + skill-registry cache |
+| `5cf40e3` | docs(sprint): mark Change-A as fully closed with 3-commit closeout trail |
+| `2fe7cb8` | docs(agents): document local preview gotcha with custom domain |
+| (futuro) | Change-B: cert parallel split (B1 + B2) |
 | (futuro) | Change-C: editor handoff docs |
 
-## Decisiones cerradas del sprint
+**HEAD actual**: `2fe7cb8`.
+
+## Decisiones cerradas del sprint (6 jul 2026)
 
 - Estructura: 3 PRs independientes (no 1 monolítico, no 4 separados)
-- Schema cert: dos tablas separadas (`capacitacion`, `sello`), DROP de `certificados`
-- Rutas públicas: `/capacitacion/?c=CODE` y `/sello/?c=CODE` (no hay QRs físicos en producción)
-- Prefijos: `CBHE-C-` (capacitacion), `CBHE-S-` (sello)
+- Schema cert: dos tablas reales (`capacitacion`, `sello-cbhe`), DROP defensivo de `certificados`
+- **Ruta pública: UNA sola landing** `/certificados/?c=CODE` (no dos rutas separadas)
+- Prefijos: `CBHE-C-` (capacitacion), `CBHE-S-` (sello) — discriminador en cliente
 - UI de emisión: Supabase Studio (cada owner ve solo su tabla por RLS)
 - Auth: magic link a emails institucionales (no team members compartidos)
-- GH Actions: mantener para batch/emergencias
+- GH Actions: mantener para batch/emergencias con `service_role`
+- Sin PDF, sin vigencia (`fecha_vencimiento`/`estado` fuera del schema)
+- QR generation/storage: fase posterior (Supabase Storage confirmado viable)
+- Onboarding: guía + sesión breve (~1h total)
 
 ## Out of scope (sprint)
 
-- DNS `cbhe.org.bo`: pendiente usuario, lunes 6 de julio
-- Rediseño UX global (issues #7-16)
-- Rediseño PreciosGrid
+- **DNS `cbhe.org.bo`** — pendiente del usuario. Una vez configurado, el sprint se deploya naturalmente a producción.
+- Rediseño UX global (issues #7-16) — sprint aparte.
+- Rediseño PreciosGrid — sprint aparte.
+- Migración de los 17 certs de muestra (data descartable).
 
 ## Pendiente al retomar
 
-- [ ] Change-B: lanzar `sdd-propose` con las 4 decisiones cerradas
-- [ ] Change-B: ciclo completo (proposal → spec → design → tasks → apply → verify → archive)
-- [ ] Change-C: ciclo completo (depende de B)
-- [ ] DNS `cbhe.org.bo`: usuario configura el 6 de julio
-- [ ] Visual verification de Change-A en `cbhe.org.bo` cuando DNS esté activo
-- [ ] Cuando los 3 changes estén merged: visual verification final en producción
-- [ ] Decidir merge de `feat/custom-domain` → `main` (un PR grande o 3 PRs stacked)
+- [ ] **Change-B**: ejecutar Tarea B1 (migración 003 — schema + RLS).
+- [ ] **Change-B**: ejecutar Tarea B2 (modificar `certificados.astro`).
+- [ ] **Change-B**: ciclo SDD (proposal + tasks ya en `openspec/changes/cert-parallel-split/`; queda apply → verify → archive).
+- [ ] **Change-B**: ejecutar DEFER (D1-D5) en fase posterior — no bloquea el sprint actual.
+- [ ] **Change-C**: ciclo completo (depende de B).
+- [ ] **DNS `cbhe.org.bo`**: confirmar si se configuró (estaba programado para el 6 de julio).
+- [ ] **Visual verification de Change-A en `cbhe.org.bo`** cuando DNS esté activo.
+- [ ] **Decidir merge de `feat/custom-domain` → `main`** (un PR grande o 3 PRs stacked) cuando los 3 changes estén merged.
