@@ -5,7 +5,7 @@
 **Rama base**: `feat/custom-domain` (HEAD `2fe7cb8` — Change-A cerrado y pusheado a la branch + 2 commits de housekeeping)
 **Estrategia**: 3 PRs independientes (single-pr, budget 400 líneas por PR)
 **Artifact store**: OpenSpec (`openspec/changes/`)
-**Estado**: Change-A DONE ✅ · Change-B (scope cut 6 jul, ejecución en curso — B1 migración + B2 page) · Change-C (pendiente, depende de B)
+**Estado**: Change-A DONE ✅ · Change-B DONE ✅ · Change-C (pendiente, depende de B)
 
 ---
 
@@ -43,7 +43,7 @@
 
 ---
 
-## Change-B · `cert-parallel-split` — **EJECUCIÓN EN CURSO** 🔄
+## Change-B · `cert-parallel-split` — **DONE** ✅
 
 > **Cambio de scope (6 jul 2026)**: el plan original (dos páginas separadas, PDF, GH Actions para emisión diaria, `fecha_vencimiento`, `estado`) se simplificó drásticamente. Nueva dirección:
 > - **Una sola landing de verificación** (la `/certificados/` actual con copy/UX minimalista mejorado).
@@ -96,16 +96,17 @@
 - **Riesgo real**: LOW
 - **Done cuando**: ✅ CUMPLIDO — la DB live matchea el estado target.
 
-### Tarea B2 · Modificar `src/pages/certificados.astro` — **SEGUNDO** ⏳
-- **Archivo**: `src/pages/certificados.astro` (modify, 277 → ~290 líneas estimadas)
+### Tarea B2 · Modificar `src/pages/certificados.astro` — **SEGUNDO** ✅
+- **Archivo**: `src/pages/certificados.astro` (modify, 277 → 265 líneas, -12 net)
 - **Cambios**:
   - Detección de prefijo del código (`CBHE-C-` vs `CBHE-S-`) en el script inline
-  - Query a la tabla correcta (`capacitacion` o `sello-cbhe`)
+  - Query a la tabla correcta (`capacitacion` o `sello`)
   - Mapeo de campos: `cursante_nombre` / `empresa_nombre`, `nombre_capacitacion` / `tipo_certificado`
   - Sacar UI de `fecha_vencimiento` y `estado` (vigente/vencido/revocado) — solo "Verificado"
   - Actualizar copy: "Certificado de Capacitación" / "Sello CBHE" según el tipo, tono minimalista
-- **Esfuerzo**: ~2-3h · **Riesgo**: LOW (página ya funciona, cambios mecánicos)
-- **Done cuando**: `npx astro build` sin errores + verificación visual con Playwright en `/certificados/?c=CBHE-C-XXX` y `/certificados/?c=CBHE-S-XXX` muestra los datos correctos.
+  - Migration 004 como descubrimiento durante RLS verification de B2: políticas anon SELECT faltantes
+- **Esfuerzo**: ~2-3h · **Riesgo**: LOW · **Real**: ~1h (page) + ~20min (RLS fix)
+- **Done cuando**: ✅ CUMPLIDO — `npx astro build` sin errores (29 pages, 0 errors) + verificación visual con Playwright en `/certificados/?c=CBHE-C-XXX`, `/certificados/?c=CBHE-S-XXX`, `/certificados/?c=NO-EXISTE` (4/4 test cases PASS + 9/9 responsive checks).
 
 **Tareas DEFER (fase posterior) ⏸️**
 - **D1 · Refactor `scripts/issue-certificate.mjs`** — soportar `--tipo capacitacion|sello` y campos correctos. Solo para batch con `service_role`. ~1-2h.
@@ -114,13 +115,26 @@
 - **D4 · Provisioning de users** — crear `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo` en Supabase Auth con magic link. ~30min.
 - **D5 · Training** — sesión breve de 30min con cada una + entrega de `GUIA-CERTIFICADOS.md`. ~1h.
 
+**Cierre (8 commits, 6 jul 2026)**
+- `4d9174f`: docs(scope cut + SDD artifacts)
+- `fefa469`: docs(spec phase + RLS simplification)
+- `0df65b6`: docs(align B1 scope with verified DB state)
+- `3856c04`: feat(migration 003 — rename + triggers + grants + cleanup)
+- `85cf930`: docs(mark B1 applied + verified)
+- `4487abc`: feat(B2 dual-table verification page)
+- `63c0e44`: feat(migration 004 — explicit anon SELECT policies, discovered during B2 verify)
+- `4eaeced`: docs(mark B2 applied + RLS verified)
+
 **Acceptance**
-- `npx astro build` sin warnings ni errores.
-- `/certificados/?c=CBHE-C-XXX` muestra datos del cursante y la capacitación.
-- `/certificados/?c=CBHE-S-XXX` muestra datos de la empresa y el tipo de certificado.
-- RLS solo permite `anon SELECT` (público) y `service_role` full CRUD. Acceso por owner lo gestiona Vincent en Supabase Studio.
-- La DB matchea la migración 003 (commiteada en el repo, ejecutable desde cero).
-- `SPRINT-ENTREGA.md` y `openspec/changes/cert-parallel-split/` reflejan el estado real.
+- [x] `npx astro build` sin warnings ni errores (29 pages, 0 errors).
+- [x] `/certificados/?c=CBHE-C-XXX` muestra datos del cursante y la capacitación. ✅ (Playwright PASS)
+- [x] `/certificados/?c=CBHE-S-XXX` muestra datos de la empresa y el tipo de certificado. ✅ (Playwright PASS)
+- [x] `/certificados/?c=NO-EXISTE` → "Certificado No Encontrado". ✅ (Playwright PASS)
+- [x] `/certificados/?c=CBHE-Xcl7ajCGIT` (legacy, sin prefijo) → "No encontrado". ✅ (Playwright PASS — sin data leak)
+- [x] RLS: `anon SELECT` funciona (verificado por row count, no solo HTTP status), `service_role` full CRUD. ✅
+- [x] La DB matchea las migraciones 003 + 004 (commiteadas, idempotentes, aplicadas live).
+- [x] `SPRINT-ENTREGA.md`, `STATUS.md`, y `openspec/changes/` reflejan el estado real.
+- [x] SDD cycle completo: proposal → spec → design → tasks → apply → verify → **archive**.
 
 **Out of scope (Change-B)**
 - QR generation/storage (D3) — fase posterior.
