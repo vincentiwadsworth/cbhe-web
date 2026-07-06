@@ -12,6 +12,9 @@
 | Forms | Web3Forms | `WEB3FORMS_KEY` env var |
 | Icons | astro-icon | `material-symbols` (33 selected), hyphens not underscores |
 | Fonts | Inter self-hosted | `@fontsource/inter/latin-*.css`, Latin subset only |
+| Cert DB | Supabase Postgres | Tablas `capacitacion` y `sello`, RLS con `anon SELECT` + `service_role` CRUD |
+| Cert storage | Supabase Storage | Bucket `certificados-qr` (público), filename `{codigo}.png` |
+| Auto-QR | Supabase Edge Function + DB Webhook | `generate-qr` (Deno), trigger por INSERT en cada tabla |
 
 ## Critical Gotchas
 
@@ -40,6 +43,18 @@
 - `@import "tailwindcss"` en vez de `@tailwind base/components/utilities`.
 - `peer-checked:` solo funciona en HERMANOS directos del elemento `.peer`, no en nietos.
 
+### Supabase Edge Functions (Deno, no Node)
+- Imports via `https://esm.sh/...` para libs de Node (ej. `qrcode` → `https://esm.sh/qrcode@1.5.3`).
+- Deploy: `supabase functions deploy generate-qr` (requiere CLI autenticada al proyecto).
+- Secrets del proyecto (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`) accesibles vía `Deno.env.get()` sin config extra.
+- Logs: Supabase Dashboard → Edge Functions → Logs.
+- Límite free tier: 500K invocaciones/mes, 2s CPU máx por invocación.
+
+### Supabase Database Webhooks
+- Disparan asíncrono en INSERT/UPDATE/DELETE — NO bloquean la fila aunque la Edge Function falle.
+- Payload en `record` y nombre de tabla en `table`. La función decide qué hacer.
+- Si la fila queda con la columna target NULL, retry manual desde Dashboard → Database → Webhooks → Logs → Retry.
+
 ## Workflow Rules
 
 - **NUNCA cerrar un issue sin build + verificación previa.** Orden: escribir → `npx astro build` → inspeccionar output → si funciona, commit + push → cerrar issue.
@@ -54,6 +69,21 @@
 - `.env` (gitignored): `WEB3FORMS_KEY=...`
 - GitHub Secret `WEB3FORMS_KEY` configurado para Actions.
 - Deploy en `https://vincentiwadsworth.github.io/cbhe-web/`
+
+## Certificates System
+
+### Tables (post-Change-B)
+- `public.capacitacion` — `id uuid PK`, `codigo text UNIQUE` (prefijo `CBHE-C-`), `cursante_nombre text`, `nombre_capacitacion text NULL`, `fecha_emision date`, `qr_url text NULL`, `created_at timestamptz`.
+- `public.sello` — `id uuid PK`, `codigo text UNIQUE` (prefijo `CBHE-S-`), `empresa_nombre text`, `tipo_certificado text default 'Sello CBHE'`, `fecha_emision date`, `qr_url text NULL`, `created_at timestamptz`.
+- RLS: `anon SELECT` en ambas (verificación pública), `service_role` full CRUD. Sin scope por owner.
+- Prefijo del código determina tabla: `CBHE-C-*` → `capacitacion`, `CBHE-S-*` → `sello`.
+
+### Auto-QR pipeline
+- **Storage bucket**: `certificados-qr` (público), filename `{codigo}.png`.
+- **Edge Function**: `supabase/functions/generate-qr/index.ts` (Deno). Genera PNG con `qrcode` (vía esm.sh), sube al bucket, `UPDATE {tabla} SET qr_url = publicUrl WHERE id = record.id`.
+- **DB Webhooks**: INSERT en `capacitacion` e INSERT en `sello` → ambos invocan `generate-qr` con `{ record, table }` en el body.
+- **URL encoded in QR**: `PUBLIC_VERIFICATION_URL/certificados/?c={codigo}` (default `https://vincentiwadsworth.github.io/cbhe-web`).
+- **Mostrar en landing**: `src/pages/certificados.astro` debe renderizar `<img src={qr_url} />` cuando la fila consultada tiene `qr_url` no-NULL.
 
 ## Design System
 

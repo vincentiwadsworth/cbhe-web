@@ -120,39 +120,55 @@ Los campos de contenido usan Markdown. Escriba estos símbolos para dar formato:
 
 ## Emitir certificados digitales
 
-Los certificados de capacitación se emiten desde GitHub. El sistema genera automáticamente el código único, el código QR y el PDF.
+Los certificados se emiten directamente desde Supabase Studio. El sistema genera de forma automática el código único del certificado y su código QR de verificación.
 
-### Pasos
+### Acceder a Supabase Studio
 
-1. Ingrese a [https://github.com/vincentiwadsworth/cbhe-web](https://github.com/vincentiwadsworth/cbhe-web)
-2. Vaya a la pestaña **Actions** (Acciones)
-3. En el panel izquierdo, seleccione **Issue Certificate**
-4. Haga clic en **Run workflow** (botón verde)
-5. Complete el formulario:
-   - **Nombre de la empresa**: nombre completo de la empresa certificada
-   - **Tipo de certificación**: ej: "Inspección de Sistemas contra Incendios"
-   - **Fecha de emisión**: formato `2026-06-19` (año-mes-día)
-   - **Fecha de vencimiento**: opcional, mismo formato
-6. Haga clic en **Run workflow** (verde) para confirmar
-7. Espere 1-2 minutos a que termine
-8. Haga clic en la ejecución completada (marca verde ✓)
-9. Descargue el archivo **certificate** — contiene el PDF y el código QR
+1. Ingrese a [https://supabase.com/dashboard](https://supabase.com/dashboard)
+2. Seleccione el proyecto CBHE
+3. En la barra lateral, vaya a **Table Editor**
 
-### Qué genera el sistema automáticamente
+### Emitir un Certificado de Capacitación
 
-- **Código único**: formato `CBHE-xxxxxxxxxx` (ej: `CBHE-aB3kLm9xQz`)
-- **PDF**: certificado en formato A4 horizontal con logo, datos y código QR
-- **Código QR**: apunta a la página de verificación pública
-- **Registro en la base de datos**: el certificado queda registrado para verificación
+1. En **Table Editor**, abra la tabla `capacitacion`
+2. Haga clic en **Insert row**
+3. Complete los campos:
+   - **codigo**: dejar vacío. El sistema lo genera con el prefijo `CBHE-C-`.
+   - **cursante_nombre**: nombre completo del cursante.
+   - **fecha_emision**: fecha de emisión (usar el calendario).
+   - **nombre_capacitacion**: nombre del curso o certificación.
+4. Haga clic en **Save**
+
+El código QR se genera automáticamente en segundos y queda asociado al registro.
+
+### Emitir un Sello CBHE
+
+1. En **Table Editor**, abra la tabla `sello`
+2. Haga clic en **Insert row**
+3. Complete los campos:
+   - **codigo**: dejar vacío. El sistema lo genera con el prefijo `CBHE-S-`.
+   - **empresa_nombre**: nombre de la empresa.
+   - **fecha_emision**: fecha de emisión (usar el calendario).
+   - **tipo_certificado**: tipo (por defecto, "Sello CBHE").
+4. Haga clic en **Save**
+
+El código QR se genera automáticamente en segundos y queda asociado al registro.
+
+### Entregar el certificado al destinatario
+
+Una vez generado el QR, tiene dos formas de entregarlo al destinatario:
+
+- Compartir la URL de verificación: `https://cbhe.org.bo/certificados/?c=CBHE-C-XXXXXXXXXX` (Capacitación) o `https://cbhe.org.bo/certificados/?c=CBHE-S-XXXXXXXXXX` (Sello)
+- Compartir la imagen del QR: abra la URL, haga clic derecho sobre la imagen del QR y seleccione **Guardar imagen como…**
 
 ### Verificación pública
 
 Quien reciba el certificado puede verificarlo de dos formas:
 
-- Escaneando el código QR del PDF con su celular
-- O visitando `https://cbhe.org.bo/certificados/` e ingresando el código
+- Visitando la URL de verificación correspondiente
+- O escaneando el código QR con la cámara del celular
 
-El sistema confirma si el certificado está **vigente**, **vencido** o **revocado**.
+La página muestra los datos del certificado (nombre, fecha, tipo) y el código QR.
 
 ---
 
@@ -164,7 +180,9 @@ El sistema confirma si el certificado está **vigente**, **vencido** o **revocad
 | Guardé con Save without Publishing y el sitio no cambió | Es correcto: es un borrador. Use **Save** para publicar. |
 | Guardé con Save and Publish y el sitio no cambia | El despliegue tarda 1-2 minutos. Si pasan 5 minutos sin cambios, contacte al área de tecnología. |
 | La imagen no se ve | Verifique que sea JPG, PNG o WebP y pese menos de 500 KB. |
-| El certificado no se generó | Verifique que las fechas estén en formato `2026-06-19` (año-mes-día). Si persiste, contacte al área de tecnología. |
+| El certificado no se generó | Verifique que la fecha de emisión esté en formato de calendario. Si persiste, contacte al área de tecnología. |
+| El código QR no aparece después de emitir | La generación es automática pero asíncrona. Espere 1-2 minutos. Si no aparece, contacte al área de tecnología. |
+| Inserté el certificado en la tabla equivocada | En **Table Editor**, abra la fila, copie los datos, bórrela y vuelva a insertar en la tabla correcta. |
 | Quiero editar los testimonios de la página principal | Los testimonios no se editan desde el panel. Contacte al área de tecnología. |
 
 ---
@@ -174,11 +192,14 @@ El sistema confirma si el certificado está **vigente**, **vencido** o **revocad
 | Término | Qué significa |
 |---------|---------------|
 | CMS | Panel donde edita el contenido del sitio. |
-| GitHub | Plataforma donde está guardado el sitio. Su cuenta le da acceso. |
+| Supabase Studio | Panel donde se gestionan los certificados digitales. |
+| GitHub | Plataforma donde está guardado el sitio. Su cuenta le da acceso al CMS. |
 | Save | Guarda y publica en el sitio en vivo. |
 | Save without Publishing | Guarda como borrador. El sitio no cambia. |
 | Markdown | Formato de texto simple para negrita, listas y enlaces. |
-| Workflow | Flujo automático en GitHub para emitir certificados. |
+| Código QR | Imagen que codifica la URL de verificación del certificado. Se genera automáticamente al insertar la fila. |
+| `CBHE-C-` | Prefijo de los códigos de Certificados de Capacitación. |
+| `CBHE-S-` | Prefijo de los códigos de Sello CBHE. |
 | Borrador | Contenido guardado pero oculto del sitio público. |
 
 ---
@@ -196,4 +217,4 @@ npm run preview  # preview del build
 
 Variables de entorno (`.env`): `WEB3FORMS_KEY`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `PUBLIC_VERIFICATION_URL`.
 
-Estructura: `src/content/` (colecciones: `articulos`, `cursos`, `empresas`, `testimonios`), `src/pages/`, `public/admin/` (Sveltia), `scripts/issue-certificate.mjs`, `supabase/migrations/`.
+Estructura: `src/content/` (colecciones: `articulos`, `cursos`, `empresas`, `testimonios`), `src/pages/`, `public/admin/` (Sveltia), `scripts/issue-certificate.mjs`, `supabase/migrations/`, `supabase/functions/generate-qr/` (Edge Function para auto-QR).
