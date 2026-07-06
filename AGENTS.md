@@ -66,3 +66,4 @@
 - Si un push a `main` triggerea deploy pero el sitio en prod no actualiza, **chequear `gh run list`** antes de tocar nada.
 - El job `deploy` puede quedarse en `Waiting for a hosted runner to come online` indefinidamente por saturación de GitHub. **Fix inmediato**: `gh workflow run deploy.yml --ref main` (manual se procesa aunque los auto-triggers estén trabados).
 - Para investigar: `gh run view <id> --json jobs --jq '.jobs[] | {name, status, steps: [.steps[] | {name, status}]}'`.
+- **Local preview con custom domain rompe los assets**: `Astro.site` (ej. `https://cbhe.org.bo`) hace que el dist tenga URLs absolutas, y `astro preview` en `127.0.0.1` las pide cross-origin → ORB las bloquea y la página se ve sin CSS. **Workaround**: cambiar `site` a la URL local temporalmente, rebuild, verificar con Playwright, restaurar.
