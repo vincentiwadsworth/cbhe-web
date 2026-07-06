@@ -6,51 +6,52 @@ Concrete task breakdown for the Change-B sprint. Mirrors the **Tareas concretas*
 
 ### B1 · Migración 003 (rename + triggers + grants + cleanup) — **PRIMERO** ✅
 
-- **Status**: FILE WRITTEN — PENDING LIVE DB EXECUTION
-- **File**: `supabase/migrations/003_split_certificados.sql` (new)
-- **Depends on**: nothing (DB already has both tables — verified 6 jul 2026 via REST API)
-- **Estimated effort**: ~30min-1h · **Risk**: LOW
+- **Status**: APPLIED & VERIFIED on live DB (2026-07-06)
+- **File**: `supabase/migrations/003_split_certificados.sql` (new, committed `3856c04`)
+- **Depends on**: nothing
+- **Estimated effort**: ~30min-1h · **Risk**: LOW · **Actual**: ~30 min (file write) + 5 min (user-run migration in Studio) + 1 min (post-verification via REST)
 
 > **Scope cut after DB verification (6 jul 2026)**: the original B1 plan assumed `DROP TABLE` + `CREATE TABLE` + `ENABLE RLS` + policies. Verified live DB state shows everything is already in target shape — tables exist with correct columns, RLS already enabled with the right policies (`anon SELECT`, `service_role` full). What remains is mechanical and idempotent.
 
 **Subtasks**:
-- [x] `ALTER TABLE public."sello-cbhe" RENAME TO public.sello;` (decided: rename, the hyphen is friction in every query)
-- [x] Define `generate_capacitacion_code()` function — returns `CBHE-C-{10 alfanum chars}` using `gen_random_bytes(10)` + char map (mirrors 002 pattern but with the `CBHE-C-` prefix)
-- [x] Define `generate_sello_code()` function — returns `CBHE-S-{10 alfanum chars}` (same pattern, different prefix)
-- [x] Define `set_capacitacion_code()` trigger function — BEFORE INSERT, sets `codigo` if NULL or empty (backward-compatible: explicit codigo is preserved)
-- [x] Define `set_sello_code()` trigger function — same pattern
+- [x] `ALTER TABLE public."sello-cbhe" RENAME TO public.sello;`
+- [x] Define `generate_capacitacion_code()` function
+- [x] Define `generate_sello_code()` function
+- [x] Define `set_capacitacion_code()` trigger function
+- [x] Define `set_sello_code()` trigger function
 - [x] Bind `trg_set_capacitacion_code` BEFORE INSERT on `public.capacitacion`
 - [x] Bind `trg_set_sello_code` BEFORE INSERT on `public.sello`
-- [x] `GRANT SELECT ON public.capacitacion TO anon;` (idempotent — re-run safe)
+- [x] `GRANT SELECT ON public.capacitacion TO anon;`
 - [x] `GRANT SELECT ON public.sello TO anon;`
 - [x] `GRANT ALL ON public.capacitacion TO service_role;`
 - [x] `GRANT ALL ON public.sello TO service_role;`
-- [x] `GRANT USAGE ON SCHEMA public TO anon, service_role;` (in case missing)
-- [x] `DROP FUNCTION IF EXISTS public.generate_certificate_code() CASCADE;` (orphan from migration 002)
-- [x] `DROP FUNCTION IF EXISTS public.set_certificate_code() CASCADE;` (orphan from migration 002)
-- [x] `DROP TABLE IF EXISTS public.certificados CASCADE;` (defensive — already gone in live DB, but `IF EXISTS` makes the migration re-runnable on a fresh DB)
-- [x] Run the migration against the live DB (⏳ HAND-OFF: user must run SQL in Supabase Studio SQL Editor)
-- [x] Re-run the migration to confirm idempotency (⏳ HAND-OFF: user must re-run in Studio after first run)
+- [x] `GRANT USAGE ON SCHEMA public TO anon, service_role;`
+- [x] `DROP FUNCTION IF EXISTS public.generate_certificate_code() CASCADE;`
+- [x] `DROP FUNCTION IF EXISTS public.set_certificate_code() CASCADE;`
+- [x] `DROP TABLE IF EXISTS public.certificados CASCADE;` (defensive)
+- [x] Run the migration against the live DB ✅ (user ran in Supabase Studio; got "Success. No rows returned")
+- [x] Re-run the migration to confirm idempotency ✅ (re-ran in Studio; no errors, no state changes)
 
 **Acceptance**:
-- [x] Migration file committed to `feat/custom-domain` (file written; commit handled by orchestrator)
-- [x] Migration is fully idempotent (re-running produces no errors and no state changes) (verified by code review: all statements use IF EXISTS/IF NOT EXISTS/OR REPLACE guards; rename uses ALTER TABLE IF EXISTS; certificados trigger drop uses DO block guard; ⏳ live confirmation requires DB execution)
-- [x] `sello-cbhe` renamed to `sello` (no more hyphen quoting in app code) (SQL command in migration: `ALTER TABLE IF EXISTS public."sello-cbhe" RENAME TO sello;` — ⏳ live confirmation requires DB execution)
-- [x] Both new tables have working `BEFORE INSERT` triggers that auto-generate `CBHE-C-XXXXX` / `CBHE-S-XXXXX` codes when `codigo` is NULL or empty (functions + triggers defined in migration; ⏳ live confirmation requires DB execution)
-- [x] Explicit `codigo` values are still respected (backward compat with any direct INSERTs) (trigger functions check `IS NULL OR = ''`, preserving explicit values; ⏳ live confirmation requires DB execution)
-- [x] `anon` has `SELECT` grants on both tables (explicit GRANT SELECT statements in migration; verified: anon SELECT already works on live DB)
-- [x] `service_role` has `ALL` grants on both tables (explicit GRANT ALL statements in migration; verified: service_role already has full access on live DB)
-- [x] Orphan functions from 002 are dropped (DROP FUNCTION IF EXISTS ... CASCADE in migration; ⏳ live confirmation requires DB execution)
+- [x] Migration file committed to `feat/custom-domain` (`3856c04`)
+- [x] Migration is fully idempotent ✅ (re-ran in Studio: no errors, no state changes)
+- [x] `sello-cbhe` renamed to `sello` ✅ (verified via REST: `sello` exists, `sello-cbhe` returns 404)
+- [x] Both tables have working BEFORE INSERT triggers ✅ (verified: INSERT with NULL codigo → `CBHE-C-lx2resrnqK` and `CBHE-S-qoFEs58iTw` auto-generated)
+- [x] Explicit `codigo` values are still respected ✅ (verified: `CBHE-C-EXPLICIT7782` preserved through INSERT)
+- [x] `anon` has `SELECT` grants on both tables ✅ (verified: anon SELECT returns 200 on both)
+- [x] `service_role` has `ALL` grants on both tables ✅ (verified: service_role full CRUD works)
+- [x] Orphan functions from 002 are dropped ✅ (verified: `generate_certificate_code` and `set_certificate_code` return 404 via RPC)
 
-**Verification (SQL tests, via REST or psql)**:
-- [x] Table `sello` exists (renamed); `sello-cbhe` does NOT exist (pre-state verified: `sello-cbhe` exists; `sello` returns PGRST205 "not found"; ⏳ post-execution: user re-verifies after running SQL)
-- [x] `INSERT INTO capacitacion (cursante_nombre, fecha_emision) VALUES ('Test', '2026-07-06')` → row gets a `CBHE-C-XXXXX` code automatically (⏳ requires DB execution to confirm trigger fires)
-- [x] `INSERT INTO sello (empresa_nombre, fecha_emision) VALUES ('Test SA', '2026-07-06')` → row gets a `CBHE-S-XXXXX` code automatically (⏳ requires DB execution to confirm trigger fires)
-- [x] `INSERT INTO capacitacion (codigo, cursante_nombre, fecha_emision) VALUES ('CBHE-C-MANUAL', 'Test', '2026-07-06')` → explicit code preserved (⏳ requires DB execution to confirm trigger preserves explicit value)
-- [x] `anon SELECT` works on both (anon client via REST) (✅ verified: HTTP 200 on both `capacitacion` and `sello-cbhe` via REST with anon key)
-- [x] `anon INSERT` rejected on both (401) (✅ verified: HTTP 401 on `capacitacion` insert with anon key)
-- [x] `service_role` CRUD works on both (✅ verified: service_role GET returns rows + metadata on both tables; INSERT fails only due to NOT NULL codigo — trigger will fix)
-- [x] Re-running the migration produces no errors and no state changes (⏳ requires DB execution: user re-runs SQL in Studio after first run)
+**Verification (SQL tests, all PASSED 2026-07-06 via REST API)**:
+- [x] `public.sello` exists, `public."sello-cbhe"` does NOT exist
+- [x] `INSERT INTO capacitacion (cursante_nombre, fecha_emision) VALUES (...)` → `CBHE-C-XXXXX` auto-generated
+- [x] `INSERT INTO sello (empresa_nombre, fecha_emision) VALUES (...)` → `CBHE-S-XXXXX` auto-generated
+- [x] `INSERT INTO capacitacion (codigo, ...)` → explicit code preserved (`CBHE-C-EXPLICIT7782`)
+- [x] `anon SELECT` works on both (HTTP 200)
+- [x] `anon INSERT` rejected on both (HTTP 401)
+- [x] `service_role` CRUD works on both
+- [x] Re-running the migration produces no errors and no state changes
+- [x] Test rows cleaned up after verification
 
 ---
 

@@ -69,7 +69,7 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 
 | # | Tarea | Estado | Esfuerzo | Riesgo |
 |---|---|---|---|---|
-| B1 | Migración 003 (`supabase/migrations/003_split_certificados.sql`: rename + triggers + grants + cleanup) | ⏳ TODO | 30min-1h | LOW |
+| B1 | Migración 003 (`supabase/migrations/003_split_certificados.sql`: rename + triggers + grants + cleanup) | ✅ DONE (live applied + verified 6 jul 2026) | 30min-1h | LOW |
 | B2 | Modificar `src/pages/certificados.astro` (prefijo + query + UI) | ⏳ TODO | 2-3h | LOW |
 
 **DEFER (fase posterior)**:
@@ -84,7 +84,7 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 
 **Artifacts**: `openspec/changes/cert-parallel-split/` con `proposal.md`, `specs/cert-split-storage/spec.md`, `specs/cert-split-verification/spec.md`, `tasks.md`.
 
-**Próximo paso concreto**: ejecutar B1 (migración 003 reducida: rename + triggers + grants + cleanup). tasks.md y STATUS.md ya están alineados con el scope real post-verificación de DB.
+**Próximo paso concreto**: ejecutar B2 (modificar `src/pages/certificados.astro`). B1 ya está aplicada y verificada en la DB live — rename `sello-cbhe` → `sello`, triggers auto-generando `CBHE-C-`/`CBHE-S-`, GRANTs explícitos, funciones huerfanas de la 002 dropeadas, idempotencia confirmada.
 
 **Esfuerzo total estimado**: ~1 día sprint actual (B1+B2) + ~1 día deferred (D1-D5) · **Riesgo**: LOW-MEDIUM.
 
@@ -106,10 +106,14 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 | `dc21d90` | chore(gitignore): ignore Playwright + skill-registry cache |
 | `5cf40e3` | docs(sprint): mark Change-A as fully closed with 3-commit closeout trail |
 | `2fe7cb8` | docs(agents): document local preview gotcha with custom domain |
-| (futuro) | Change-B: cert parallel split (B1 + B2) |
+| `4d9174f` | docs(sprint): Change-B scope cut + cert-parallel-split openspec artifacts |
+| `fefa469` | docs(sprint): Change-B cert-parallel-split spec phase + RLS simplification |
+| `0df65b6` | docs(sprint): align Change-B B1 scope with verified DB state |
+| `3856c04` | feat(supabase): migration 003 split certificados (B1) |
+| (futuro) | Change-B: certificados.astro modify (B2) |
 | (futuro) | Change-C: editor handoff docs |
 
-**HEAD actual**: `2fe7cb8`.
+**HEAD actual**: `3856c04`.
 
 ## Decisiones cerradas del sprint (6 jul 2026)
 
@@ -133,7 +137,7 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 
 ## Pendiente al retomar
 
-- [ ] **Change-B**: ejecutar Tarea B1 (migración 003 reducida: rename + triggers + grants + cleanup).
+- [x] ~~**Change-B**: ejecutar Tarea B1 (migración 003 reducida: rename + triggers + grants + cleanup).~~ ✅ APPLIED + VERIFIED 6 jul 2026.
 - [ ] **Change-B**: ejecutar Tarea B2 (modificar `certificados.astro`).
 - [ ] **Change-B**: ciclo SDD (proposal + 2 specs + tasks ya en `openspec/changes/cert-parallel-split/`; queda apply → verify → archive).
 - [ ] **Change-B**: ejecutar DEFER (D1-D5) en fase posterior — no bloquea el sprint actual.
