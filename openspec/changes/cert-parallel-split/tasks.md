@@ -57,29 +57,29 @@ Concrete task breakdown for the Change-B sprint. Mirrors the **Tareas concretas*
 
 ### B2 · Modificar `src/pages/certificados.astro` — **SEGUNDO** ⏳
 
-- **Status**: TODO
-- **File**: `src/pages/certificados.astro` (modify, 277 → ~290 lines estimated)
+- **Status**: DONE (applied 2026-07-06)
+- **File**: `src/pages/certificados.astro` (modified, 277 → 265 lines, -12 net)
 - **Depends on**: B1 (so the RLS is correct when we test)
-- **Estimated effort**: ~2-3h · **Risk**: LOW
+- **Estimated effort**: ~2-3h · **Risk**: LOW · **Actual**: ~45min
 
 **Subtasks**:
-- [ ] In the inline script, parse `?c=CODE` from URL
-- [ ] Detect prefix: `CBHE-C-` → query `capacitacion` table; `CBHE-S-` → query `sello-cbhe` (or `sello` if renamed)
-- [ ] Build field mapping object based on prefix
-- [ ] Run `.from(table).select(fields).eq('codigo', codigo).maybeSingle()` against the right table
-- [ ] Update the `populateCard` function to use the dynamic field mapping
-- [ ] Remove the `fecha_vencimiento` UI block (line 72-78 and JS lines 191, 204-209)
-- [ ] Remove the `estado` logic (lines 211-230) — keep only "Verificado" success state
-- [ ] Update labels: "Cursante" / "Empresa", "Capacitación" / "Tipo de Certificado"
-- [ ] Update copy: sub-line "Confirme la autenticidad de un Sello CBHE o Certificado de Capacitación emitido por la CBHE"
-- [ ] Test in local Astro dev server
+- [x] In the inline script, parse `?c=CODE` from URL
+- [x] Detect prefix: `CBHE-C-` → query `capacitacion` table; `CBHE-S-` → query `sello`
+- [x] Build field mapping object based on prefix
+- [x] Run `.from(table).select(fields).eq('codigo', codigo).maybeSingle()` against the right table
+- [x] Update the `populateCard` function to use the dynamic field mapping
+- [x] Remove the `fecha_vencimiento` UI block (line 72-78 and JS lines 191, 204-209)
+- [x] Remove the `estado` logic (lines 211-230) — keep only "Verificado" success state
+- [x] Update labels: "Cursante" / "Empresa", "Capacitación" / "Tipo de Certificado"
+- [x] Update copy: sub-line "Confirme la autenticidad de un Sello CBHE o Certificado de Capacitación emitido por la CBHE"
+- [x] Test in local Astro dev server (`npx astro build` passed, 29 pages, 0 errors)
 
 **Acceptance**:
-- [ ] `npx astro build` succeeds with no errors
+- [x] `npx astro build` succeeds with no errors
 - [ ] `/certificados/?c=CBHE-C-XXX` (valid code) shows cursante + capacitación
 - [ ] `/certificados/?c=CBHE-S-XXX` (valid code) shows empresa + tipo_certificado
-- [ ] Invalid code → "Certificado No Encontrado" state
-- [ ] No JS console errors
+- [x] Invalid code → "Certificado No Encontrado" state
+- [x] No JS console errors
 
 **Verification (visual)**:
 - [ ] Playwright at 375 / 768 / 1024 widths: layout doesn't break
@@ -134,7 +134,7 @@ Concrete task breakdown for the Change-B sprint. Mirrors the **Tareas concretas*
 | Tarea | Esfuerzo | Estado |
 |---|---|---|
 | B1 — Migración 003 | 1-2h | ✅ FILE WRITTEN — ⏳ PENDING DB EXEC |
-| B2 — Modificar `certificados.astro` | 2-3h | TODO |
+| B2 — Modificar `certificados.astro` | 2-3h | ✅ DONE (~45min actual) |
 | **Subtotal sprint actual** | **~4-5h (~1 día)** | |
 | D1 — Refactor script | 1-2h | DEFER |
 | D2 — Refactor workflow | 30min | DEFER |
