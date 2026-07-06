@@ -14,12 +14,11 @@ Concrete task breakdown for the Change-B sprint. Mirrors the **Tareas concretas*
 **Subtasks**:
 - [ ] Write `DROP TABLE IF EXISTS public.certificados CASCADE` (defensive — drops old table if still present)
 - [ ] Write `CREATE TABLE public.capacitacion` matching the current DB state (use the SQL the user shared as ground truth)
-- [ ] Decide and apply rename: `sello-cbhe` → `sello` (recommended) via `ALTER TABLE ... RENAME TO` if keeping the hyphen would cause too much friction. Otherwise keep hyphen + quoting.
-- [ ] Write `CREATE TABLE public."sello-cbhe"` (or `sello` if renamed) matching the current DB state
+- [ ] Apply rename: `sello-cbhe` → `sello` via `ALTER TABLE ... RENAME TO` (decided: rename, the hyphen is friction everywhere)
+- [ ] Write `CREATE TABLE public.sello` matching the current DB state
 - [ ] `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` on both
 - [ ] Write `anon` SELECT policies on both
-- [ ] Write `authenticated` ALL policies scoped by `auth.jwt() ->> 'email'`
-- [ ] Write `GRANT` statements for `anon`, `authenticated`, `service_role`
+- [ ] Write `GRANT` statements for `anon` and `service_role` only
 - [ ] Run the migration against the live DB to align state
 - [ ] Verify the migration is idempotent (re-run on a fresh DB and confirm)
 
@@ -28,13 +27,12 @@ Concrete task breakdown for the Change-B sprint. Mirrors the **Tareas concretas*
 - [ ] DROP of old `certificados` is defensive (`IF EXISTS`)
 - [ ] Both new tables match the current DB schema
 - [ ] RLS enabled on both
-- [ ] Policies: `anon SELECT`, `authenticated` scoped by email, `service_role` full CRUD
+- [ ] Policies: `anon SELECT`, `service_role` full CRUD
 - [ ] Migration is idempotent (can be re-run)
 
 **Verification (SQL tests)**:
-- [ ] `tania@cbhe.org.bo` (authenticated) SELECT on `capacitacion` → empty
-- [ ] `alejandra@cbhe.org.bo` (authenticated) SELECT on `sello-cbhe` → empty
 - [ ] `anon` SELECT on both → rows returned
+- [ ] `anon` INSERT/UPDATE/DELETE on both → rejected by RLS
 - [ ] `service_role` INSERT/SELECT/UPDATE/DELETE on both → works without restriction
 
 ---
@@ -98,12 +96,11 @@ Concrete task breakdown for the Change-B sprint. Mirrors the **Tareas concretas*
 - Link from the cert (via Storage URL or stored as `qr_url` column)
 - **Estimated effort**: ~3-4h
 
-### D4 · Provisioning de users
+### D4 · Provisioning de users — **MANAGED OUTSIDE**
 
-- Create `tania@cbhe.org.bo` in Supabase Auth (magic link, scope = `sello-cbhe`)
-- Create `alejandra@cbhe.org.bo` in Supabase Auth (magic link, scope = `capacitacion`)
-- Verify RLS scoping works as expected (test with each user logging in)
-- **Estimated effort**: ~30min
+- Owner access (`tania@cbhe.org.bo`, `alejandra@cbhe.org.bo`) is managed by Vincent directly in Supabase Studio, outside this change's scope.
+- No RLS dependency on owner identity — see `cert-split-storage` spec.
+- **Estimated effort**: N/A (Vincent, manual)
 
 ### D5 · Training
 
@@ -124,7 +121,7 @@ Concrete task breakdown for the Change-B sprint. Mirrors the **Tareas concretas*
 | D1 — Refactor script | 1-2h | DEFER |
 | D2 — Refactor workflow | 30min | DEFER |
 | D3 — QR + Storage | 3-4h | DEFER |
-| D4 — Provisioning | 30min | DEFER |
+| D4 — Provisioning | — | FUERA (Vincent) |
 | D5 — Training | 1h | DEFER |
-| **Subtotal deferred** | **~6-8h (~1 día)** | |
-| **Total** | **~10-13h (~2 días)** | |
+| **Subtotal deferred** | **~5-7h (~1 día)** | |
+| **Total** | **~9-12h (~2 días)** | |

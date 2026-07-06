@@ -88,32 +88,21 @@ CREATE INDEX IF NOT EXISTS "capacitación_codigo_idx"
 
 ```sql
 ALTER TABLE public.capacitacion ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public."sello-cbhe" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.sello ENABLE ROW LEVEL SECURITY;
 
 -- Public verification: anon can SELECT both
 CREATE POLICY "anon_select_capacitacion" ON public.capacitacion
   FOR SELECT TO anon USING (true);
-CREATE POLICY "anon_select_sello" ON public."sello-cbhe"
+CREATE POLICY "anon_select_sello" ON public.sello
   FOR SELECT TO anon USING (true);
 
--- Owner scope: authenticated users see only their table
-CREATE POLICY "tania_sello" ON public."sello-cbhe"
-  FOR ALL TO authenticated
-  USING (auth.jwt() ->> 'email' = 'tania@cbhe.org.bo')
-  WITH CHECK (auth.jwt() ->> 'email' = 'tania@cbhe.org.bo');
-
-CREATE POLICY "alejandra_capacitacion" ON public.capacitacion
-  FOR ALL TO authenticated
-  USING (auth.jwt() ->> 'email' = 'alejandra@cbhe.org.bo')
-  WITH CHECK (auth.jwt() ->> 'email' = 'alejandra@cbhe.org.bo');
-
 -- Grants
-GRANT SELECT ON public.capacitacion TO anon, authenticated;
-GRANT SELECT ON public."sello-cbhe" TO anon, authenticated;
-GRANT ALL ON public.capacitacion, public."sello-cbhe" TO service_role;
+GRANT SELECT ON public.capacitacion TO anon;
+GRANT SELECT ON public.sello TO anon;
+GRANT ALL ON public.capacitacion, public.sello TO service_role;
 ```
 
-**Note**: `service_role` bypasses RLS by design, so no explicit policy needed for it.
+**Note**: `service_role` bypasses RLS by design, so no explicit policy needed for it. Per-owner access (Tania, Alejandra) is managed outside this change via Supabase Studio with `service_role`.
 
 ### Verification Page
 
@@ -143,10 +132,8 @@ GRANT ALL ON public.capacitacion, public."sello-cbhe" TO service_role;
 | Risk | Likelihood | Mitigation |
 |------|------------|------------|
 | `sello-cbhe` hyphen causes friction in every query/policy | Medium | Rename to `sello` in migration 003 |
-| RLS misconfiguration leaks data across owners | Low | Test SQL: `tania@` runs SELECT on `capacitacion` → empty; `alejandra@` runs SELECT on `sello-cbhe` → empty |
 | Migration 003 doesn't match current DB exactly | Low | Use the SQL the user shared as ground truth; run on a fresh DB to confirm |
 | Verification page breaks for valid codes | Low | Manual test with both `CBHE-C-*` and `CBHE-S-*` codes |
-| `auth.jwt() ->> 'email'` returns null for some auth methods | Low | Confirm magic-link is the chosen auth method (it is) |
 
 ## Rollback Plan
 
@@ -165,9 +152,8 @@ GRANT ALL ON public.capacitacion, public."sello-cbhe" TO service_role;
 
 - [ ] `supabase/migrations/003_split_certificados.sql` is committed and matches the current DB state.
 - [ ] Running the migration on a fresh DB creates the two tables with RLS.
-- [ ] `tania@cbhe.org.bo` (authenticated) cannot SELECT from `capacitacion` (verified with SQL test).
-- [ ] `alejandra@cbhe.org.bo` (authenticated) cannot SELECT from `sello-cbhe` (verified with SQL test).
 - [ ] `anon` can SELECT from both tables (verified with SQL test).
+- [ ] `service_role` has full CRUD on both tables (verified with SQL test).
 - [ ] `/certificados/?c=CBHE-C-XXX` (valid code) shows cursante + capacitación details.
 - [ ] `/certificados/?c=CBHE-S-XXX` (valid code) shows empresa + tipo_certificado details.
 - [ ] Invalid code → "Certificado No Encontrado".

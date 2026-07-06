@@ -70,8 +70,8 @@
 - **Schema**: dos tablas reales (ya creadas en DB). DROP defensivo de `certificados` en la migración 003 (data es de muestra, descartable).
 - **Ruta de verificación pública**: **UNA SOLA landing** — la `/certificados/` actual, con copy/UX minimalista. No más `/capacitacion/?c=CODE` y `/sello/?c=CODE` separados.
 - **Prefijos de código**: `CBHE-C-XXXXXXXXXX` (capacitacion) y `CBHE-S-XXXXXXXXXX` (sello). La landing detecta el prefijo y consulta la tabla correcta.
-- **RLS**: `anon` SELECT en ambas tablas (verificación pública). `authenticated` con scope por email — `tania@cbhe.org.bo` solo `sello-cbhe`, `alejandra@cbhe.org.bo` solo `capacitacion`. `service_role` full CRUD en ambas (batch/emergencias).
-- **Emisión — UI normal**: Supabase Studio nativo, cada owner accede a su tabla vía auth user.
+- **RLS**: `anon` SELECT en ambas tablas (verificación pública). `service_role` full CRUD en ambas (batch/emergencias). El acceso por owner (Tania, Alejandra) lo gestiona Vincent directamente en Supabase Studio, sin scope por email en RLS.
+- **Emisión — UI normal**: Supabase Studio nativo con service_role, gestionado por Vincent.
 - **Emisión — batch/emergencias**: GH Actions con `service_role`, refactor mínimo del script.
 - **Sin PDF, sin vigencia**: la página de verificación muestra los datos básicos del cert sin estado ni vencimiento.
 - **QR generation/storage**: fase posterior. Supabase Storage confirmado viable (S3-compatible, buckets + RLS + URL pública).
@@ -86,11 +86,11 @@
   - `DROP TABLE IF EXISTS public.certificados CASCADE` (defensivo)
   - `CREATE TABLE public.capacitacion` + `public."sello-cbhe"` (o `sello` si se renombra) — matcheando el estado actual de la DB
   - `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` en ambas
-  - Policies: `anon SELECT`, `authenticated SELECT` con scope por email, `service_role` full CRUD
-  - Grants al `anon` y `authenticated` role
+  - Policies: `anon SELECT` en ambas, `service_role` full CRUD (bypass por diseño)
+  - Grants al `anon` y `service_role`
 - **Acción adicional**: ejecutar la migración contra la DB para alinear el estado.
 - **Esfuerzo**: ~1-2h · **Riesgo**: MEDIUM (cambio de schema + RLS)
-- **Done cuando**: la DB matchea la migración 003 y los policies pasan tests SQL directos (Tania no ve capacitacion y viceversa).
+- **Done cuando**: la DB matchea la migración 003 y los policies pasan tests SQL directos (`anon` SELECT ambas, `service_role` CRUD ambas, `anon` writes rechazados).
 
 ### Tarea B2 · Modificar `src/pages/certificados.astro` — **SEGUNDO** ⏳
 - **Archivo**: `src/pages/certificados.astro` (modify, 277 → ~290 líneas estimadas)
@@ -114,7 +114,7 @@
 - `npx astro build` sin warnings ni errores.
 - `/certificados/?c=CBHE-C-XXX` muestra datos del cursante y la capacitación.
 - `/certificados/?c=CBHE-S-XXX` muestra datos de la empresa y el tipo de certificado.
-- RLS impide que Tania vea datos de Capacitación y viceversa (verificado con tests SQL directos).
+- RLS solo permite `anon SELECT` (público) y `service_role` full CRUD. Acceso por owner lo gestiona Vincent en Supabase Studio.
 - La DB matchea la migración 003 (commiteada en el repo, ejecutable desde cero).
 - `SPRINT-ENTREGA.md` y `openspec/changes/cert-parallel-split/` reflejan el estado real.
 
