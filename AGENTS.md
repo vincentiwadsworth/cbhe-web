@@ -43,6 +43,7 @@
 ## Workflow Rules
 
 - **NUNCA cerrar un issue sin build + verificación previa.** Orden: escribir → `npx astro build` → inspeccionar output → si funciona, commit + push → cerrar issue.
+- **Sprint activo**: ver [`SPRINT-ENTREGA.md`](./SPRINT-ENTREGA.md) para el scope actual (entrega del proyecto). Trabajar con SDD.
 - **Skills instalados deben usarse proactivamente.** `web-design-guidelines` y `ui-ux-pro-max` como checklist en cada cambio visual. `astro` skill dice "Always consult docs.astro.build".
 - **gh CLI** disponible y autenticado como `vincentiwadsworth`. Issues, labels, secrets, PRs.
 - **Repositorio público** requerido para GitHub Pages en plan gratuito.
@@ -59,3 +60,9 @@
 - Tailwind genera `bg-*`, `text-*`, `border-*` para todos los `--color-*`.
 - Inter Latin 400-800 como única familia tipográfica.
 - 33 íconos Material Symbols pre-cargados en `astro.config.mjs`.
+
+## GitHub Pages Deploy Gotchas
+
+- Si un push a `main` triggerea deploy pero el sitio en prod no actualiza, **chequear `gh run list`** antes de tocar nada.
+- El job `deploy` puede quedarse en `Waiting for a hosted runner to come online` indefinidamente por saturación de GitHub. **Fix inmediato**: `gh workflow run deploy.yml --ref main` (manual se procesa aunque los auto-triggers estén trabados).
+- Para investigar: `gh run view <id> --json jobs --jq '.jobs[] | {name, status, steps: [.steps[] | {name, status}]}'`.
