@@ -50,7 +50,7 @@
 > - **Sin PDF** (descartado).
 > - **Sin GH Actions para emisión diaria** (queda para batch/emergencias con `service_role`).
 > - **Sin `fecha_vencimiento` ni `estado`** (sin vigencia).
-> - **QR generation/storage** se resuelve en una fase posterior.
+> - **QR generation/storage** — fase posterior (ver tareas D3 y D6).
 >
 > La DB ya tiene las dos tablas nuevas con RLS en target state (verificado vía REST API el 6 jul). La migración 003 cierra la desincronización entre la DB real y el repo: rename `sello-cbhe` → `sello`, nuevos triggers con prefijo `CBHE-C-`/`CBHE-S-`, GRANTs explícitos, cleanup de funciones huerfanas.
 
@@ -111,9 +111,10 @@
 **Tareas DEFER (fase posterior) ⏸️**
 - **D1 · Refactor `scripts/issue-certificate.mjs`** — soportar `--tipo capacitacion|sello` y campos correctos. Solo para batch con `service_role`. ~1-2h.
 - **D2 · Refactor `.github/workflows/issue-certificate.yml`** — alinear con el script refactoreado. ~30min.
-- **D3 · QR generation + Supabase Storage** — generación del PNG (script local? Edge Function?), upload al bucket, link en el cert. ~3-4h.
+- **D3 · Auto-QR generation pipeline** — Edge Function `generate-qr` (Deno) + Database Webhooks sobre `capacitacion` y `sello` + bucket Storage público `certificados-qr`. Disparo asíncrono en INSERT, no bloquea la fila. ~3-4h.
 - **D4 · Provisioning de users** — crear `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo` en Supabase Auth con magic link. ~30min.
 - **D5 · Training** — sesión breve de 30min con cada una + entrega de `GUIA-CERTIFICADOS.md`. ~1h.
+- **D6 · Renderizar QR en `/certificados/`** — `src/pages/certificados.astro`: si la fila tiene `qr_url` no-NULL, mostrar `<img src={qr_url} alt="Código QR" />` junto a los datos del cert. ~30min.
 
 **Cierre (8 commits, 6 jul 2026)**
 - `4d9174f`: docs(scope cut + SDD artifacts)
@@ -137,7 +138,7 @@
 - [x] SDD cycle completo: proposal → spec → design → tasks → apply → verify → **archive**.
 
 **Out of scope (Change-B)**
-- QR generation/storage (D3) — fase posterior.
+- QR generation/storage (D3, D6) — fase posterior.
 - PDF generation — descartado por el usuario.
 - Rediseño visual de la página de verificación (más allá del copy mínimo y la remoción de UI innecesaria).
 - NocoDB o cualquier UI custom — se usa Supabase Studio nativo.
