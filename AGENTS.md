@@ -47,6 +47,7 @@
 - **Skills instalados deben usarse proactivamente.** `web-design-guidelines` y `ui-ux-pro-max` como checklist en cada cambio visual. `astro` skill dice "Always consult docs.astro.build".
 - **gh CLI** disponible y autenticado como `vincentiwadsworth`. Issues, labels, secrets, PRs.
 - **Repositorio público** requerido para GitHub Pages en plan gratuito.
+- **Para reportar un side finding como "pre-existente"**, checkout el parent commit y re-verificar ahí — "también pasa en home" no alcanza. La barra: si vuelve a aparecer sin el cambio aplicado, era pre-existente; si no, fue introducido.
 
 ## Environment
 
@@ -66,4 +67,4 @@
 - Si un push a `main` triggerea deploy pero el sitio en prod no actualiza, **chequear `gh run list`** antes de tocar nada.
 - El job `deploy` puede quedarse en `Waiting for a hosted runner to come online` indefinidamente por saturación de GitHub. **Fix inmediato**: `gh workflow run deploy.yml --ref main` (manual se procesa aunque los auto-triggers estén trabados).
 - Para investigar: `gh run view <id> --json jobs --jq '.jobs[] | {name, status, steps: [.steps[] | {name, status}]}'`.
-- **Local preview con custom domain rompe los assets**: `Astro.site` (ej. `https://cbhe.org.bo`) hace que el dist tenga URLs absolutas, y `astro preview` en `127.0.0.1` las pide cross-origin → ORB las bloquea y la página se ve sin CSS. **Workaround**: cambiar `site` a la URL local temporalmente, rebuild, verificar con Playwright, restaurar.
+- **Local preview con custom domain rompe los assets**: `Astro.site` (ej. `https://cbhe.org.bo`) hace que el dist tenga URLs absolutas, y `astro preview` en `127.0.0.1` las pide cross-origin → ORB las bloquea y la página se ve sin CSS. **Workaround**: cambiar `site` a la URL local temporalmente, rebuild, preview, verificar con Playwright, restaurar. **No intentes route interception en Playwright** — es frágil y los handlers se pierden entre `close`/`open` del browser.
