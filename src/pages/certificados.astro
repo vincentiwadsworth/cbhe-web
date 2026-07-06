@@ -25,7 +25,7 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
           Verificación de Certificado
         </h1>
         <p class="text-on-surface-variant text-base sm:text-lg max-w-md mx-auto">
-          Ingrese el código de verificación o escanee el código QR del certificado para confirmar su autenticidad.
+          Confirme la autenticidad de un Sello CBHE o Certificado de Capacitación emitido por la CBHE.
         </p>
       </div>
 
@@ -42,7 +42,7 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
       <div id="cert-found" class="hidden">
         <div class="bg-surface rounded-lg shadow-md border border-outline-variant/30 overflow-hidden max-w-lg mx-auto text-left">
           <!-- Header — dynamic -->
-          <div id="cert-header" class="px-6 py-4 flex items-center gap-3">
+          <div id="cert-header" class="px-6 py-4 flex items-center gap-3 bg-success/10">
             <Icon id="cert-estado-icon" name="material-symbols:verified" class="size-8 shrink-0 text-success" />
             <div class="min-w-0">
               <p id="cert-estado-title" class="font-headline font-bold text-on-surface text-lg leading-tight truncate">Certificado Verificado</p>
@@ -53,28 +53,20 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
           <!-- Body -->
           <div class="px-6 py-5 space-y-4">
             <div>
-              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Empresa</p>
-              <p id="cert-empresa" class="font-headline font-bold text-on-surface text-xl"></p>
+              <p id="cert-label-primary" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Empresa</p>
+              <p id="cert-primary" class="font-headline font-bold text-on-surface text-xl"></p>
             </div>
 
             <div>
-              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Tipo de Certificación</p>
-              <p id="cert-tipo" class="text-on-surface"></p>
+              <p id="cert-label-secondary" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Tipo de Certificación</p>
+              <p id="cert-secondary" class="text-on-surface"></p>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Emisión</p>
-                <p id="cert-emision" class="text-on-surface flex items-center gap-1.5">
-                  <Icon name="material-symbols:calendar-today" class="size-4 text-on-surface-variant" />
-                </p>
-              </div>
-              <div id="cert-vencimiento-container">
-                <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Vencimiento</p>
-                <p id="cert-vencimiento" class="text-on-surface flex items-center gap-1.5">
-                  <Icon name="material-symbols:schedule" class="size-4 text-on-surface-variant" />
-                </p>
-              </div>
+            <div>
+              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Emisión</p>
+              <p id="cert-emision" class="text-on-surface flex items-center gap-1.5">
+                <Icon name="material-symbols:calendar-today" class="size-4 text-on-surface-variant" />
+              </p>
             </div>
 
             <div class="pt-3 border-t border-outline-variant/30">
@@ -184,50 +176,40 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
     }
   }
 
-  function populateCard(cert) {
-    const empresaEl = document.getElementById("cert-empresa");
-    const tipoEl = document.getElementById("cert-tipo");
+  function populateCard(cert, mapping) {
+    const primaryLabelEl = document.getElementById("cert-label-primary");
+    const primaryEl = document.getElementById("cert-primary");
+    const secondaryLabelEl = document.getElementById("cert-label-secondary");
+    const secondaryEl = document.getElementById("cert-secondary");
     const emisionEl = document.getElementById("cert-emision");
-    const vencimientoEl = document.getElementById("cert-vencimiento");
-    const vencimientoContainer = document.getElementById("cert-vencimiento-container");
     const codigoEl = document.getElementById("cert-codigo");
-    const estadoIcon = document.getElementById("cert-estado-icon");
-    const estadoTitle = document.getElementById("cert-estado-title");
-    const estadoDesc = document.getElementById("cert-estado-desc");
-    const headerEl = document.getElementById("cert-header");
 
-    if (empresaEl) empresaEl.textContent = cert.empresa_nombre;
-    if (tipoEl) tipoEl.textContent = cert.tipo_certificacion;
+    if (primaryLabelEl) primaryLabelEl.textContent = mapping.labels.primary;
+    if (primaryEl) primaryEl.textContent = cert[mapping.fieldKeys.primary];
+    if (secondaryLabelEl) secondaryLabelEl.textContent = mapping.labels.secondary;
+    if (secondaryEl) secondaryEl.textContent = cert[mapping.fieldKeys.secondary];
     if (emisionEl) emisionEl.textContent = formatDate(cert.fecha_emision);
     if (codigoEl) codigoEl.textContent = cert.codigo;
+  }
 
-    if (cert.fecha_vencimiento) {
-      if (vencimientoEl) vencimientoEl.textContent = formatDate(cert.fecha_vencimiento);
-      vencimientoContainer?.classList.remove("hidden");
-    } else {
-      vencimientoContainer?.classList.add("hidden");
+  function getMapping(codigo) {
+    if (codigo.startsWith("CBHE-C-")) {
+      return {
+        table: "capacitacion",
+        select: "cursante_nombre, nombre_capacitacion, fecha_emision, codigo",
+        labels: { primary: "Cursante", secondary: "Capacitación" },
+        fieldKeys: { primary: "cursante_nombre", secondary: "nombre_capacitacion" },
+      };
     }
-
-    const isVigente = cert.estado === "vigente";
-
-    if (estadoIcon) {
-      estadoIcon.setAttribute("name", isVigente ? "material-symbols:verified" : "material-symbols:security");
-      estadoIcon.className = `size-8 shrink-0 ${isVigente ? "text-success" : "text-error"}`;
+    if (codigo.startsWith("CBHE-S-")) {
+      return {
+        table: "sello",
+        select: "empresa_nombre, tipo_certificado, fecha_emision, codigo",
+        labels: { primary: "Empresa", secondary: "Tipo de Certificado" },
+        fieldKeys: { primary: "empresa_nombre", secondary: "tipo_certificado" },
+      };
     }
-
-    if (estadoTitle) {
-      estadoTitle.textContent = isVigente ? "Certificado Verificado" : `Certificado ${cert.estado === "vencido" ? "Vencido" : "Revocado"}`;
-    }
-
-    if (estadoDesc) {
-      estadoDesc.textContent = isVigente
-        ? "Este certificado es válido y está vigente."
-        : "Este certificado no está vigente.";
-    }
-
-    if (headerEl) {
-      headerEl.className = `px-6 py-4 flex items-center gap-3 ${isVigente ? "bg-success/10" : "bg-error/10"}`;
-    }
+    return null;
   }
 
   async function verifyCertificate(codigo) {
@@ -240,10 +222,16 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
         return;
       }
 
+      const mapping = getMapping(codigo);
+      if (!mapping) {
+        showState("not-found");
+        return;
+      }
+
       const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
       const { data, error: dbError } = await supabase
-        .from("certificados")
-        .select("empresa_nombre, tipo_certificacion, fecha_emision, fecha_vencimiento, estado, codigo")
+        .from(mapping.table)
+        .select(mapping.select)
         .eq("codigo", codigo)
         .maybeSingle();
 
@@ -258,7 +246,7 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
         return;
       }
 
-      populateCard(data);
+      populateCard(data, mapping);
       showState("found");
     } catch (err) {
       console.error("Verification error:", err);
