@@ -74,19 +74,20 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 
 **DEFER (fase posterior)**:
 
-| # | Tarea | Esfuerzo |
-|---|---|---|
-| D1 | Refactor `scripts/issue-certificate.mjs` (--tipo + campos correctos) | 1-2h |
-| D2 | Refactor `.github/workflows/issue-certificate.yml` | 30min |
-| D3 | QR generation + Supabase Storage | 3-4h |
-| D4 | Provisioning de users (Tania, Alejandra) | 30min |
-| D5 | Training (sesión breve + GUIA-CERTIFICADOS.md) | 1h |
+| # | Tarea | Esfuerzo | Estado |
+|---|---|---|---|
+| D3 | Auto-QR pipeline (Edge Function + Storage + Webhooks) | 3-4h | 🔄 En ejecución (`auto-qr-generation`) |
+| D6 | Renderizar QR en `/certificados/` | 30min | 🔄 En ejecución (`auto-qr-generation`) |
+| D1 | Refactor `scripts/issue-certificate.mjs` (--tipo + campos) | 1-2h | ⏸️ Pendiente |
+| D2 | Refactor `.github/workflows/issue-certificate.yml` | 30min | ⏸️ Pendiente |
+| D4 | Provisioning de users (Tania, Alejandra) | 30min | ⏸️ Pendiente |
+| D5 | Training (sesión breve + GUIA-CERTIFICADOS.md) | 1h | ⏸️ Pendiente |
 
 **Artifacts**: archivados en `openspec/changes/archive/2026-07-06-cert-parallel-split/` con `proposal.md`, `specs/cert-split-storage/spec.md`, `specs/cert-split-verification/spec.md`, `tasks.md`, `archive-report.md`.
 
 **Nuevas specs fuente**: `openspec/specs/cert-split-storage/spec.md` + `openspec/specs/cert-split-verification/spec.md`.
 
-**Próximo paso concreto**: iniciar Change-C (`editor-handoff-docs`). B está archivado y listo para merge.
+**Próximo paso concreto**: ejecutar Change `auto-qr-generation` (D3+D6) — en curso. Después, Change-C (`editor-handoff-docs`) puede empezar.
 
 **Esfuerzo total estimado**: ~1 día sprint actual (B1+B2) + ~1 día deferred (D1-D5) · **Riesgo**: LOW-MEDIUM.
 

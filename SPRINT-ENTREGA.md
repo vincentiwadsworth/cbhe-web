@@ -70,8 +70,8 @@
 - **Schema**: dos tablas reales (ya creadas en DB). DROP defensivo de `certificados` en la migración 003 (data es de muestra, descartable).
 - **Ruta de verificación pública**: **UNA SOLA landing** — la `/certificados/` actual, con copy/UX minimalista. No más `/capacitacion/?c=CODE` y `/sello/?c=CODE` separados.
 - **Prefijos de código**: `CBHE-C-XXXXXXXXXX` (capacitacion) y `CBHE-S-XXXXXXXXXX` (sello). La landing detecta el prefijo y consulta la tabla correcta.
-- **RLS**: `anon` SELECT en ambas tablas (verificación pública). `service_role` full CRUD en ambas (batch/emergencias). El acceso por owner (Tania, Alejandra) lo gestiona Vincent directamente en Supabase Studio, sin scope por email en RLS.
-- **Emisión — UI normal**: Supabase Studio nativo con service_role, gestionado por Vincent.
+- **RLS**: `anon` SELECT en ambas tablas (verificación pública). `service_role` full CRUD en ambas (batch/emergencias). El acceso por owner (Tania, Alejandra) lo gestiona Nicolás directamente en Supabase Studio, sin scope por email en RLS.
+- **Emisión — UI normal**: Supabase Studio nativo con service_role, gestionado por Nicolás.
 - **Emisión — batch/emergencias**: GH Actions con `service_role`, refactor mínimo del script.
 - **Sin PDF, sin vigencia**: la página de verificación muestra los datos básicos del cert sin estado ni vencimiento.
 - **QR generation/storage**: fase posterior. Supabase Storage confirmado viable (S3-compatible, buckets + RLS + URL pública).
@@ -109,12 +109,18 @@
 - **Done cuando**: ✅ CUMPLIDO — `npx astro build` sin errores (29 pages, 0 errors) + verificación visual con Playwright en `/certificados/?c=CBHE-C-XXX`, `/certificados/?c=CBHE-S-XXX`, `/certificados/?c=NO-EXISTE` (4/4 test cases PASS + 9/9 responsive checks).
 
 **Tareas DEFER (fase posterior) ⏸️**
+
+### Change `auto-qr-generation` (en ejecución)
+- **D3 · Auto-QR generation pipeline** — Edge Function `generate-qr` (Deno) + Database Webhooks sobre `capacitacion` y `sello` + bucket Storage público `certificados-qr`. Disparo asíncrono en INSERT, no bloquea la fila. ~3-4h.
+- **D6 · Renderizar QR en `/certificados/`** — `src/pages/certificados.astro`: si la fila tiene `qr_url` no-NULL, mostrar `<img src={qr_url} alt="Código QR" />` junto a los datos del cert. ~30min.
+
+### Script de emisión batch
 - **D1 · Refactor `scripts/issue-certificate.mjs`** — soportar `--tipo capacitacion|sello` y campos correctos. Solo para batch con `service_role`. ~1-2h.
 - **D2 · Refactor `.github/workflows/issue-certificate.yml`** — alinear con el script refactoreado. ~30min.
-- **D3 · Auto-QR generation pipeline** — Edge Function `generate-qr` (Deno) + Database Webhooks sobre `capacitacion` y `sello` + bucket Storage público `certificados-qr`. Disparo asíncrono en INSERT, no bloquea la fila. ~3-4h.
+
+### Provisioning y training
 - **D4 · Provisioning de users** — crear `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo` en Supabase Auth con magic link. ~30min.
 - **D5 · Training** — sesión breve de 30min con cada una + entrega de `GUIA-CERTIFICADOS.md`. ~1h.
-- **D6 · Renderizar QR en `/certificados/`** — `src/pages/certificados.astro`: si la fila tiene `qr_url` no-NULL, mostrar `<img src={qr_url} alt="Código QR" />` junto a los datos del cert. ~30min.
 
 **Cierre (8 commits, 6 jul 2026)**
 - `4d9174f`: docs(scope cut + SDD artifacts)
