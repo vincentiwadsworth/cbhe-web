@@ -2,7 +2,7 @@
 
 **Objetivo**: dejar el sitio en `cbhe.org.bo` listo para entrega formal a la CBHE, con sistema de certificados dual operativo y documentación de handoff para el equipo no-técnico.
 
-**Rama base**: `feat/custom-domain` (HEAD `74b9059` — Change-A merged)
+**Rama base**: `feat/custom-domain` (HEAD `dc21d90` — Change-A cerrado y pusheado a la branch)
 **Estrategia**: 3 PRs independientes (single-pr, budget 400 líneas por PR)
 **Artifact store**: OpenSpec (`openspec/changes/`)
 **Estado**: Change-A DONE ✅ · Change-B (decisiones cerradas, SDD pendiente) · Change-C (pendiente, depende de B)
@@ -24,6 +24,11 @@
 - `src/pages/index.astro` líneas 537 y 573: envolver `data.image`.
 - `src/pages/novedades.astro` líneas 46 y 84: envolver `data.image` en `url(...)`.
 - `src/pages/novedades/[slug].astro` línea 67: envolver `articulo.data.image`.
+
+**Cierre (3 commits, 6 jul 2026)**
+- `d1a6caf`: archive de los 5 SDD artifacts a `openspec/changes/archive/2026-07-03-fix-image-paths-and-card-aspect/` + housekeeping (AGENTS.md sprint ref + deploy gotchas, skill-registry refresh, este doc, sprint tracker).
+- `35e4125`: fix del side finding del visual verify — 238px overflow horizontal del navbar a 768px (`md:flex` → `lg:flex` en `src/components/Navbar.astro:47` y `md:hidden` → `lg:hidden` en `:66`). Verificado con Playwright en 375/768/1024.
+- `dc21d90`: gitignore cleanup (`.playwright-mcp/`, `/*.png`, `/.atl/.skill-registry.cache.json`).
 
 **Acceptance**
 - `npx astro build` sin warnings ni errores.
