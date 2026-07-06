@@ -6,7 +6,7 @@
 
 ## Resumen
 
-Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes y tarjetas 1:1 [DONE], (2) sistema de certificados dual (Sello + Capacitación) [EN CURSO — scope cut], (3) documentación de handoff para el equipo no-técnico [PENDIENTE, depende de B].
+Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes y tarjetas 1:1 [DONE], (2) sistema de certificados dual (Sello + Capacitación) [DONE ✅], (3) documentación de handoff para el equipo no-técnico [PENDIENTE, depende de C].
 
 ## Cambios
 
@@ -31,7 +31,7 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 - `src/pages/novedades/[slug].astro`: import + 1 image wrap
 - `src/utils/images.ts`: tracked (era untracked, agregado vía amend)
 
-### Change-B · `cert-parallel-split` — EJECUCIÓN EN CURSO 🔄
+### Change-B · `cert-parallel-split` — DONE ✅
 
 **Scope cut (6 jul 2026)**: el plan original se simplificó drásticamente.
 
@@ -70,7 +70,7 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 | # | Tarea | Estado | Esfuerzo | Riesgo |
 |---|---|---|---|---|
 | B1 | Migración 003 (`supabase/migrations/003_split_certificados.sql`: rename + triggers + grants + cleanup) | ✅ DONE (live applied + verified 6 jul 2026) | 30min-1h | LOW |
-| B2 | Modificar `src/pages/certificados.astro` (prefijo + query + UI) | ⏳ TODO | 2-3h | LOW |
+| B2 | Modificar `src/pages/certificados.astro` (prefijo + query + UI) + migration 004 (RLS fix) | ✅ DONE (applied + visual verified 6 jul 2026) | 2-3h | LOW |
 
 **DEFER (fase posterior)**:
 
@@ -82,13 +82,15 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 | D4 | Provisioning de users (Tania, Alejandra) | 30min |
 | D5 | Training (sesión breve + GUIA-CERTIFICADOS.md) | 1h |
 
-**Artifacts**: `openspec/changes/cert-parallel-split/` con `proposal.md`, `specs/cert-split-storage/spec.md`, `specs/cert-split-verification/spec.md`, `tasks.md`.
+**Artifacts**: archivados en `openspec/changes/archive/2026-07-06-cert-parallel-split/` con `proposal.md`, `specs/cert-split-storage/spec.md`, `specs/cert-split-verification/spec.md`, `tasks.md`, `archive-report.md`.
 
-**Próximo paso concreto**: ejecutar B2 (modificar `src/pages/certificados.astro`). B1 ya está aplicada y verificada en la DB live — rename `sello-cbhe` → `sello`, triggers auto-generando `CBHE-C-`/`CBHE-S-`, GRANTs explícitos, funciones huerfanas de la 002 dropeadas, idempotencia confirmada.
+**Nuevas specs fuente**: `openspec/specs/cert-split-storage/spec.md` + `openspec/specs/cert-split-verification/spec.md`.
+
+**Próximo paso concreto**: iniciar Change-C (`editor-handoff-docs`). B está archivado y listo para merge.
 
 **Esfuerzo total estimado**: ~1 día sprint actual (B1+B2) + ~1 día deferred (D1-D5) · **Riesgo**: LOW-MEDIUM.
 
-### Change-C · `editor-handoff-docs` — PENDIENTE, depende de B
+### Change-C · `editor-handoff-docs` — PENDIENTE ✅ (B está archivado, puede empezar)
 
 **Scope planeado**:
 - `GUIA-EDITORES.md` (nuevo): manual de uso del sitio para Comunicación, Alejandra, Tania.
@@ -110,10 +112,13 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 | `fefa469` | docs(sprint): Change-B cert-parallel-split spec phase + RLS simplification |
 | `0df65b6` | docs(sprint): align Change-B B1 scope with verified DB state |
 | `3856c04` | feat(supabase): migration 003 split certificados (B1) |
-| (futuro) | Change-B: certificados.astro modify (B2) |
+| `85cf930` | docs(sprint): mark Change-B B1 as applied + verified (live DB, 6 jul 2026) |
+| `4487abc` | feat(certificados): B2 dual-table verification page |
+| `63c0e44` | feat(supabase): migration 004 explicit anon SELECT policies |
+| `4eaeced` | docs(sprint): mark B2 applied + RLS verified (visual verify deferred) |
 | (futuro) | Change-C: editor handoff docs |
 
-**HEAD actual**: `3856c04`.
+**HEAD actual**: `4eaeced`.
 
 ## Decisiones cerradas del sprint (6 jul 2026)
 
@@ -138,10 +143,10 @@ Sprint para cerrar la entrega formal del proyecto CBHE con: (1) fix de imágenes
 ## Pendiente al retomar
 
 - [x] ~~**Change-B**: ejecutar Tarea B1 (migración 003 reducida: rename + triggers + grants + cleanup).~~ ✅ APPLIED + VERIFIED 6 jul 2026.
-- [ ] **Change-B**: ejecutar Tarea B2 (modificar `certificados.astro`).
-- [ ] **Change-B**: ciclo SDD (proposal + 2 specs + tasks ya en `openspec/changes/cert-parallel-split/`; queda apply → verify → archive).
+- [x] ~~**Change-B**: ejecutar Tarea B2 (modificar `certificados.astro` + migration 004).~~ ✅ APPLIED + VISUAL VERIFIED 6 jul 2026.
+- [x] ~~**Change-B**: ciclo SDD completo (proposal → spec → tasks → apply → verify → archive).~~ ✅ ARCHIVED 6 jul 2026.
 - [ ] **Change-B**: ejecutar DEFER (D1-D5) en fase posterior — no bloquea el sprint actual.
-- [ ] **Change-C**: ciclo completo (depende de B).
+- [ ] **Change-C**: ciclo completo (B ya está archivado, puede empezar).
 - [ ] **DNS `cbhe.org.bo`**: confirmar si se configuró (estaba programado para el 6 de julio).
 - [ ] **Visual verification de Change-A en `cbhe.org.bo`** cuando DNS esté activo.
 - [ ] **Decidir merge de `feat/custom-domain` → `main`** (un PR grande o 3 PRs stacked) cuando los 3 changes estén merged.
