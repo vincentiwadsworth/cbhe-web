@@ -80,23 +80,21 @@
 
 **Tareas concretas (en este sprint)**
 
-### Tarea B1 · Migración 003 (rename + triggers + grants + cleanup) — **PRIMERO** ⏳
-- **Archivo nuevo**: `supabase/migrations/003_split_certificados.sql`
+### Tarea B1 · Migración 003 (rename + triggers + grants + cleanup) — **PRIMERO** ✅
+- **Archivo nuevo**: `supabase/migrations/003_split_certificados.sql` (174 líneas, commiteado en `3856c04`)
 - **Alcance reducido tras verificación de DB (6 jul 2026)**: el plan original (DROP + CREATE + RLS) ya está implementado en la DB real — verificado vía REST API con service_role. Lo que queda es trabajo mecánico e idempotente.
-- **Contenido**:
-  - `ALTER TABLE public."sello-cbhe" RENAME TO public.sello;` (decidido 6 jul)
-  - `generate_capacitacion_code()` — retorna `CBHE-C-{10 alfanum chars}` (espejo del patrón de la 002 con prefijo discriminador)
-  - `generate_sello_code()` — retorna `CBHE-S-{10 alfanum chars}`
-  - `set_capacitacion_code()` y `set_sello_code()` — trigger functions BEFORE INSERT (compatibles con código explícito)
-  - Triggers `trg_set_capacitacion_code` y `trg_set_sello_code`
-  - `GRANT SELECT ... TO anon` y `GRANT ALL ... TO service_role` (idempotentes, no rompen si ya están)
-  - `GRANT USAGE ON SCHEMA public TO anon, service_role;` por si falta
-  - `DROP FUNCTION IF EXISTS public.generate_certificate_code() CASCADE;` (huérfana de la 002)
-  - `DROP FUNCTION IF EXISTS public.set_certificate_code() CASCADE;` (huérfana de la 002)
-  - `DROP TABLE IF EXISTS public.certificados CASCADE;` (defensivo — ya no existe, pero mantiene la migración re-runnable)
-- **Acción adicional**: ejecutar la migración contra la DB live y re-correrla para confirmar idempotencia.
-- **Esfuerzo**: ~30min-1h · **Riesgo**: LOW (cambios idempotentes, sin DROP destructivo, sin RLS rewrite)
-- **Done cuando**: la DB live matchea el estado target (sello renombrado, triggers crean códigos con prefijo, grants explícitos, funciones huerfanas dropeadas) y re-correr la migración no produce cambios.
+- **Contenido**: ver lista completa en `openspec/changes/cert-parallel-split/tasks.md` (B1 subtasks).
+- **Estado (6 jul 2026)**: ✅ **APPLIED + VERIFIED** en la DB live. Usuario corrió la migración en Supabase Studio SQL Editor → `Success. No rows returned`. Verificación post-vía REST API confirmó:
+  - `public.sello` existe, `public."sello-cbhe"` ya no existe (404)
+  - INSERT sin codigo en `capacitacion` → `CBHE-C-lx2resrnqK` auto-generado
+  - INSERT sin codigo en `sello` → `CBHE-S-qoFEs58iTw` auto-generado
+  - INSERT con codigo explícito `CBHE-C-EXPLICIT7782` → preservado
+  - `anon SELECT` ambas OK, `anon INSERT` ambas REJECTED (401), `service_role` full CRUD
+  - Funciones huerfanas de la 002 eliminadas
+  - Re-run de la migración idempotente (sin errores, sin cambios)
+- **Esfuerzo real**: ~30 min (escritura) + 5 min (user-run) + 1 min (post-verify) = ~36 min
+- **Riesgo real**: LOW
+- **Done cuando**: ✅ CUMPLIDO — la DB live matchea el estado target.
 
 ### Tarea B2 · Modificar `src/pages/certificados.astro` — **SEGUNDO** ⏳
 - **Archivo**: `src/pages/certificados.astro` (modify, 277 → ~290 líneas estimadas)
