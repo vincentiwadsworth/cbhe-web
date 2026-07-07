@@ -110,9 +110,9 @@
 
 **Tareas DEFER (fase posterior) ⏸️**
 
-### Change `auto-qr-generation` (en ejecución)
-- **D3 · Auto-QR generation pipeline** — Edge Function `generate-qr` (Deno) + Database Webhooks sobre `capacitacion` y `sello` + bucket Storage público `certificados-qr`. Disparo asíncrono en INSERT, no bloquea la fila. ~3-4h.
-- **D6 · Renderizar QR en `/certificados/`** — `src/pages/certificados.astro`: si la fila tiene `qr_url` no-NULL, mostrar `<img src={qr_url} alt="Código QR" />` junto a los datos del cert. ~30min.
+### Change `auto-qr-generation` — **DONE** ✅ (7 jul 2026)
+- **D3 · Auto-QR generation pipeline** — Edge Function `generate-qr` (Deno) deployada vía MCP OAuth + triggers `pg_net` sobre `capacitacion` y `sello` + bucket Storage público `certificados-qr`. Verificado con inserts de prueba: QR generado correctamente en ambas tablas.
+- **D6 · Renderizar QR en `/certificados/`** — `src/pages/certificados.astro`: si la fila tiene `qr_url` no-NULL, mostrar `<img src={qr_url} alt="Código QR" />` junto a los datos del cert.
 
 ### Script de emisión batch
 - **D1 · Refactor `scripts/issue-certificate.mjs`** — soportar `--tipo capacitacion|sello` y campos correctos. Solo para batch con `service_role`. ~1-2h.

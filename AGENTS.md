@@ -45,7 +45,7 @@
 
 ### Supabase Edge Functions (Deno, no Node)
 - Imports via `https://esm.sh/...` para libs de Node (ej. `qrcode` → `https://esm.sh/qrcode@1.5.3`).
-- Deploy: `supabase functions deploy generate-qr` (requiere CLI autenticada al proyecto).
+- Deploy via MCP OAuth (`supabase_deploy_edge_function`). PAT tokens (`sbp_`) no tienen scope `edge_functions:write`.
 - Secrets del proyecto (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`) accesibles vía `Deno.env.get()` sin config extra.
 - Logs: Supabase Dashboard → Edge Functions → Logs.
 - Límite free tier: 500K invocaciones/mes, 2s CPU máx por invocación.
@@ -54,6 +54,7 @@
 - Disparan asíncrono en INSERT/UPDATE/DELETE — NO bloquean la fila aunque la Edge Function falle.
 - Payload en `record` y nombre de tabla en `table`. La función decide qué hacer.
 - Si la fila queda con la columna target NULL, retry manual desde Dashboard → Database → Webhooks → Logs → Retry.
+- Alternativa programática: triggers `pg_net` con `net.http_post()`. El Dashboard webhook UI no es accesible vía Management API.
 
 ## Workflow Rules
 
