@@ -206,7 +206,7 @@ La página muestra los datos del certificado (nombre, fecha, tipo) y el código 
 
 ## Para desarrolladores
 
-Stack: Astro 6, Tailwind 4, Sveltia CMS, Supabase (verificación de certificados), GitHub Pages.
+Stack: Astro 6, Tailwind 4, Sveltia CMS, Supabase (verificación de certificados con QR automático), GitHub Pages.
 
 ```bash
 npm ci
