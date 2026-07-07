@@ -6,8 +6,8 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://cbhe.org.bo",
-  base: "/",
+  site: "https://vincentiwadsworth.github.io",
+  base: "/cbhe-web/",
   integrations: [
     sitemap({
       filter: (page) => !page.includes("/gracias") && !page.includes("/certificados"),
