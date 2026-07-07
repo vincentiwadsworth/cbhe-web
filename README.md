@@ -120,7 +120,7 @@ Los campos de contenido usan Markdown. Escriba estos símbolos para dar formato:
 
 ## Emitir certificados digitales
 
-Los certificados se emiten directamente desde Supabase Studio. El sistema genera de forma automática el código único del certificado y su código QR de verificación.
+Certificados y Sellos se emiten desde Supabase Studio. El sistema genera automáticamente el código único, la fecha de creación y el código QR.
 
 ### Acceder a Supabase Studio
 
@@ -128,47 +128,44 @@ Los certificados se emiten directamente desde Supabase Studio. El sistema genera
 2. Seleccione el proyecto CBHE
 3. En la barra lateral, vaya a **Table Editor**
 
-### Emitir un Certificado de Capacitación
+### Emitir un Certificado de Capacitación (Alejandra)
 
-1. En **Table Editor**, abra la tabla `capacitacion`
+1. Abra la tabla **`capacitacion_input`**
 2. Haga clic en **Insert row**
-3. Complete los campos:
-   - **codigo**: dejar vacío. El sistema lo genera con el prefijo `CBHE-C-`.
-   - **cursante_nombre**: nombre completo del cursante.
-   - **fecha_emision**: fecha de emisión (usar el calendario).
-   - **nombre_capacitacion**: nombre del curso o certificación.
+3. Complete los tres campos:
+   - **cursante_nombre**: nombre completo del cursante
+   - **nombre_capacitacion**: nombre del curso o certificación
+   - **fecha_emision**: fecha de emisión (usar el calendario)
 4. Haga clic en **Save**
 
-El código QR se genera automáticamente en segundos y queda asociado al registro.
+El código (`CBHE-C-XXXXXXXXXX`) y el QR se generan automáticamente. Para ver el resultado completo, abra la tabla **`capacitacion`**.
 
-### Emitir un Sello CBHE
+### Emitir un Sello CBHE (Tania)
 
-1. En **Table Editor**, abra la tabla `sello`
+1. Abra la tabla **`sello_input`**
 2. Haga clic en **Insert row**
-3. Complete los campos:
-   - **codigo**: dejar vacío. El sistema lo genera con el prefijo `CBHE-S-`.
-   - **empresa_nombre**: nombre de la empresa.
-   - **fecha_emision**: fecha de emisión (usar el calendario).
-   - **tipo_certificado**: tipo (por defecto, "Sello CBHE").
+3. Complete los dos campos:
+   - **empresa_nombre**: nombre de la empresa
+   - **fecha_emision**: fecha de emisión (usar el calendario)
 4. Haga clic en **Save**
 
-El código QR se genera automáticamente en segundos y queda asociado al registro.
+El código (`CBHE-S-XXXXXXXXXX`) y el QR se generan automáticamente. Para ver el resultado completo, abra la tabla **`sello`**.
 
 ### Entregar el certificado al destinatario
 
-Una vez generado el QR, tiene dos formas de entregarlo al destinatario:
+Una vez generado el QR, tiene dos formas de entregarlo:
 
-- Compartir la URL de verificación: `https://cbhe.org.bo/certificados/?c=CBHE-C-XXXXXXXXXX` (Capacitación) o `https://cbhe.org.bo/certificados/?c=CBHE-S-XXXXXXXXXX` (Sello)
+- Compartir la URL de verificación: `https://vincentiwadsworth.github.io/cbhe-web/certificados/?c=CBHE-C-XXXXXXXXXX` (Capacitación) o `https://vincentiwadsworth.github.io/cbhe-web/certificados/?c=CBHE-S-XXXXXXXXXX` (Sello)
 - Compartir la imagen del QR: abra la URL, haga clic derecho sobre la imagen del QR y seleccione **Guardar imagen como…**
 
 ### Verificación pública
 
 Quien reciba el certificado puede verificarlo de dos formas:
 
-- Visitando la URL de verificación correspondiente
-- O escaneando el código QR con la cámara del celular
+- Visitando la URL de verificación
+- Escaneando el código QR con la cámara del celular
 
-La página muestra los datos del certificado (nombre, fecha, tipo) y el código QR.
+La página muestra los datos del certificado y el código QR.
 
 ---
 

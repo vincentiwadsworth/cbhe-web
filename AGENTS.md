@@ -82,9 +82,15 @@
 ### Auto-QR pipeline
 - **Storage bucket**: `certificados-qr` (público), filename `{codigo}.png`.
 - **Edge Function**: `supabase/functions/generate-qr/index.ts` (Deno). Genera PNG con `qrcode` (vía esm.sh), sube al bucket, `UPDATE {tabla} SET qr_url = publicUrl WHERE id = record.id`.
-- **DB Webhooks**: INSERT en `capacitacion` e INSERT en `sello` → ambos invocan `generate-qr` con `{ record, table }` en el body.
+- **DB Webhooks**: triggers `pg_net` con `net.http_post()` en INSERT de `capacitacion` y `sello` → invocan `generate-qr` con `{ record, table }` en el body.
 - **URL encoded in QR**: `PUBLIC_VERIFICATION_URL/certificados/?c={codigo}` (default `https://vincentiwadsworth.github.io/cbhe-web`).
 - **Mostrar en landing**: `src/pages/certificados.astro` debe renderizar `<img src={qr_url} />` cuando la fila consultada tiene `qr_url` no-NULL.
+
+### Input views (UX para no-técnicos)
+- `public.capacitacion_input` — expone `cursante_nombre, nombre_capacitacion, fecha_emision`. Oculta `id, codigo, qr_url, created_at`.
+- `public.sello_input` — expone `empresa_nombre, fecha_emision`. Oculta `id, codigo, qr_url, created_at, tipo_certificado`.
+- Views simples (una tabla, sin joins) son auto-updatable en PostgreSQL. INSERT directo desde Supabase Table Editor.
+- Supabase Studio ofrece modificar datos desde una view.
 
 ## Design System
 
