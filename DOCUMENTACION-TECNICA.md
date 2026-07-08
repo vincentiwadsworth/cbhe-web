@@ -1,6 +1,6 @@
 # Documentación Técnica — cbhe-web
 
-> **Para**: desarrolladores. Para operar el sitio o emitir certificados, consulte las guías en el [README](./README.md).
+> **Para**: desarrolladores. Para operar el CMS, consulte la [Guía de Editores](./GUIA-EDITORES.md). Para emitir certificados, consulte la [Guía de Certificados](./GUIA-CERTIFICADOS.md).
 
 **Última revisión**: 2026-07-08
 

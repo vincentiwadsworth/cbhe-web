@@ -92,6 +92,11 @@
 - Views simples (una tabla, sin joins) son auto-updatable en PostgreSQL. INSERT directo desde Supabase Table Editor.
 - Supabase Studio ofrece modificar datos desde una view.
 
+### Verb convention (docs y código)
+- **Emitir**: acción humana. El operador emite un certificado INSERTando una fila en `capacitacion` o `sello` desde Supabase Studio. La emisión es manual.
+- **Generar**: acción automática del sistema. El QR se genera vía trigger `pg_net` → Edge Function `generate-qr` → Storage bucket → `UPDATE qr_url`. Cero intervención humana.
+- **Verificar**: acción del público. Escanea QR → landing `/certificados/?c=CODIGO` consulta la DB vía `anon SELECT` y muestra los datos. Solo lectura.
+
 ## Design System
 
 - 50 tokens MD3 en `src/styles/global.css` (nombres como `primary-container`, `on-surface-variant`).

@@ -63,7 +63,7 @@ El código se genera **solo** al guardar el registro. Usted no necesita escribir
 ```mermaid
 flowchart TD
   Start([🏢 Inicio]) --> Login[Abrir Supabase Studio]
-  Login --> TableEditor[Table Editor → sello]
+  Login -->   TableEditor[Table Editor → sello_input]
   TableEditor --> Insert[Insert row]
   Insert --> FillFields["Completar:<br/>empresa_nombre<br/>fecha_emision"]
   FillFields --> Save[Guardar]
@@ -84,16 +84,16 @@ flowchart TD
 ### Pasos
 
 1. **Abrir Supabase Studio** en el navegador. Nicolás le proporciona el acceso.
-2. Ir a **Table Editor** → seleccionar la tabla **`sello`** en el panel izquierdo.
+2. Ir a **Table Editor** → seleccionar la vista **`sello_input`** en el panel izquierdo.
 3. Hacer clic en **Insert row**.
 4. Completar **dos campos**:
    - `empresa_nombre`: nombre de la empresa que recibe el sello.
    - `fecha_emision`: fecha en que se emite el certificado.
 5. Hacer clic en **Guardar**.
 6. El sistema genera automáticamente el **código `CBHE-S-XXXXX`** y, en aproximadamente 5 segundos, el **código QR**.
-7. El certificado está listo. Verifique que la columna `qr_url` tenga un valor (no esté vacía). Si está vacía, vea la [Sección 8](#8-procedimiento-ante-errores).
+7. El certificado está listo. Verifique que la columna `qr_url` tenga un valor (no esté vacía). Si está vacía, vea la [Sección 8](#8-procedimiento-ante-errores). Para ver el resultado completo con todos los campos, abra la tabla **`sello`**.
 
-> **Nota**: también puede usar la vista `sello_input`, que muestra solo los dos campos necesarios y oculta los campos del sistema. El resultado es el mismo.
+> La vista `sello_input` muestra solo los dos campos que usted necesita completar. Los campos del sistema (`id`, `codigo`, `qr_url`, `created_at`, `tipo_certificado`) quedan ocultos para simplificar la pantalla.
 
 ---
 
@@ -102,7 +102,7 @@ flowchart TD
 ```mermaid
 flowchart TD
   Start([👤 Inicio]) --> Login[Abrir Supabase Studio]
-  Login --> TableEditor[Table Editor → capacitacion]
+  Login -->   TableEditor[Table Editor → capacitacion_input]
   TableEditor --> Insert[Insert row]
   Insert --> FillFields["Completar:<br/>cursante_nombre<br/>nombre_capacitacion<br/>fecha_emision"]
   FillFields --> Save[Guardar]
@@ -123,7 +123,7 @@ flowchart TD
 ### Pasos
 
 1. **Abrir Supabase Studio** en el navegador. Nicolás le proporciona el acceso.
-2. Ir a **Table Editor** → seleccionar la tabla **`capacitacion`** en el panel izquierdo.
+2. Ir a **Table Editor** → seleccionar la vista **`capacitacion_input`** en el panel izquierdo.
 3. Hacer clic en **Insert row**.
 4. Completar **tres campos**:
    - `cursante_nombre`: nombre completo de la persona que realizó el curso.
@@ -131,9 +131,9 @@ flowchart TD
    - `fecha_emision`: fecha en que se emite el certificado.
 5. Hacer clic en **Guardar**.
 6. El sistema genera automáticamente el **código `CBHE-C-XXXXX`** y, en aproximadamente 5 segundos, el **código QR**.
-7. El certificado está listo. Verifique que la columna `qr_url` tenga un valor (no esté vacía). Si está vacía, vea la [Sección 8](#8-procedimiento-ante-errores).
+7. El certificado está listo. Verifique que la columna `qr_url` tenga un valor (no esté vacía). Si está vacía, vea la [Sección 8](#8-procedimiento-ante-errores). Para ver el resultado completo con todos los campos, abra la tabla **`capacitacion`**.
 
-> **Nota**: también puede usar la vista `capacitacion_input`, que muestra solo los tres campos necesarios y oculta los campos del sistema. El resultado es el mismo.
+> La vista `capacitacion_input` muestra solo los tres campos que usted necesita completar. Los campos del sistema (`id`, `codigo`, `qr_url`, `created_at`) quedan ocultos para simplificar la pantalla.
 
 ---
 
@@ -285,7 +285,7 @@ Ante cualquier duda o problema con el sistema de certificados, contactar a:
 
 ## Documentos relacionados
 
-- [Sobre el Proyecto](./README.md) — descripción general del proyecto para quien no es del área técnica
+- [README](./README.md) — descripción general del proyecto y costo operativo
 - [Documentación Técnica](./DOCUMENTACION-TECNICA.md) — stack tecnológico, arquitectura, build y deploy (para developers)
 - [Guía para Editores del Sitio](./GUIA-EDITORES.md) — cómo gestionar el contenido del sitio web (artículos, cursos, empresas)
 - [Pendientes de Despliegue](./PENDIENTES-DESPLIEGUE.md) — checklist de handoff y tareas pendientes
