@@ -1,12 +1,12 @@
-# cbhe-web
+# Sitio web institucional de la CBHE
 
-> Sitio web institucional de la Cámara Boliviana de Hidrocarburos y Energía.
+Este repositorio contiene el sitio web institucional de la Cámara Boliviana de Hidrocarburos y Energía, construido para que el equipo publique contenido, emita QR para sus certificados y permita al público verificarlos sin instalar nada. 
 
-## ¿Qué es este proyecto?
+Esta web reemplaza al sitio anterior, actualizando la imagen institucional web de la CBHE y al mismo tiempo le da al equipo independencia operativa al equipo: quienes publican y emiten no necesitan conocimientos técnicos ni depender de un desarrollador para las tareas diarias. 
 
-`cbhe-web` es el sitio web institucional de la CBHE, construido para que el equipo de la Cámara publique contenido, emita certificados digitales con código QR y permita al público verificarlos sin instalar nada. Reemplaza por completo al sitio anterior y le da al equipo independencia operativa: quienes publican y emiten no necesitan conocimientos técnicos ni depender de un desarrollador para las tareas diarias. La CBHE es dueña del código, los datos y la infraestructura. El costo operativo es de $0 por mes — la explicación detallada está más abajo.
+La CBHE es dueña del código, los datos y la infraestructura. El costo operativo es de $0 por mes (explicación detallada está más abajo).
 
-## ¿Qué hace?
+## Características
 
 | Funcionalidad | Quién la usa | Cómo funciona |
 |---|---|---|
@@ -15,7 +15,7 @@
 | Sello CBHE | Responsable de Gestión | Emitir el sello desde Supabase, el QR se genera de forma automática y el público puede verificarlo escaneándolo |
 | Certificados de Capacitación | Responsable de Capacitación | Emitir el certificado desde Supabase, el QR se genera de forma automática y el público puede verificarlo escaneándolo |
 
-## Arquitectura en 1 minuto
+## Arquitectura
 
 ```mermaid
 graph LR
@@ -62,23 +62,21 @@ graph LR
     class GitHub,SupabaseDB,QRAuto servicio
 ```
 
-## ¿Cuánto cuesta operarlo?
+## Costo operativo
 
-**GitHub Pages** aloja el sitio sin costo porque el repositorio es público. Si el repositorio se volviera privado, el hosting gratuito se perdería. GitHub Pages no impone límite de tráfico ni almacenamiento.
+**Sitio web** alojado sin costo mediante el servicio **Github Pages** con rendimiento profesional, sin límite de tráfico ni almacenamiento.
 
-**Supabase** provee la base de datos PostgreSQL, el almacenamiento de archivos y las funciones que generan los códigos QR. El plan gratuito incluye 500 MB de base de datos, 2 GB de almacenamiento y 500.000 ejecuciones de funciones por mes. Con el volumen proyectado de certificados —alrededor de 100 por año— el uso está por debajo del 1 % del límite.
+**Verificador de certificados** corre en una base de datos alojada en el servicio **Supabase**, que también provee el almacenamiento de archivos QR y las funciones que los generan. El plan gratuito incluye 500 MB de base de datos, 2 GB de almacenamiento y 500.000 ejecuciones de funciones por mes. Con el volumen proyectado de certificados —alrededor de 100 por año— el uso proyectado está **por debajo del 1 % del límite**.
 
 Si alguna vez se excedieran los límites gratuitos de Supabase, el plan Pro cuesta aproximadamente $25 por mes. GitHub Pages seguiría sin costo.
 
-**Total hoy: $0 por mes.**
+## Valor agregado de este sitio
 
-## ¿Qué hace diferente a este sitio?
+1. **Edición fácil y personalizada.** El equipo publica artículos, actualiza páginas, gestiona empresas afiliadas y administra cursos desde un panel web hecho a medida. No necesita HTML, no necesita un desarrollador, no necesita acceder al código fuente.
 
-1. **QR automático.** Cuando la Responsable de Gestión o la Responsable de Capacitación emiten un certificado, el sistema detecta el nuevo registro, genera el código QR, lo almacena y lo asocia al certificado en segundos. No hay intervención manual en ningún paso del proceso.
+2. **QR automático.** Cuando la Responsable de Gestión o la Responsable de Capacitación registran un certificado, el sistema detecta el nuevo registro, genera el código QR, lo almacena y lo asocia al certificado en segundos, sin initervención manual.
 
-2. **Verificación pública inmediata.** Cualquier persona puede verificar un certificado escaneando el QR con su teléfono. El sistema consulta la base de datos en el momento y muestra la información oficial del certificado. No se necesita aplicación, cuenta ni contraseña.
-
-3. **Edición del sitio sin saber programar.** El equipo publica artículos, actualiza páginas, gestiona empresas afiliadas y administra cursos desde un panel web. No necesita HTML, no necesita un desarrollador, no necesita acceder al código fuente.
+3. **Verificación pública inmediata.** Cualquier persona puede verificar un certificado escaneando el QR con su teléfono. El sistema consulta la base de datos en el momento y muestra la información oficial del certificado. No se necesita aplicación, cuenta ni contraseña.
 
 ## Guías
 
