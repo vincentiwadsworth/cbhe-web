@@ -206,6 +206,7 @@ flowchart TD
 | **Sello CBHE** | Certificación que la CBHE otorga a empresas socialmente responsables |
 | **Upstream / Downstream** | Segmentos de la industria: exploración/producción vs. transporte/distribución |
 | **`[skip ci]`** | Etiqueta en un commit que le dice a GitHub "no hagas deploy". Save la incluye; Save & Publish no |
+| **DNS** | Sistema que traduce nombres de dominio (cbhe.org.bo) a direcciones de internet. Como la guía telefónica de la web: sin DNS, un dominio no lleva a ningún lado. Se configura en nic.bo |
 
 ---
 

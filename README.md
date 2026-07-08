@@ -2,7 +2,7 @@
 
 > Sitio web institucional de la Cámara Boliviana de Hidrocarburos y Energía.
 >
-> **Guías para el equipo CBHE**: [Guía de Editores](./GUIA-EDITORES.md) · [Guía de Certificados](./GUIA-CERTIFICADOS.md)
+> **Para el equipo CBHE**: [Sobre el Proyecto](./SOBRE-EL-PROYECTO.md) · [Guía de Editores](./GUIA-EDITORES.md) · [Guía de Certificados](./GUIA-CERTIFICADOS.md)
 
 **Última revisión**: 2026-07-08
 
@@ -229,6 +229,7 @@ npm run preview    # preview del build estático
 
 ## Documentos relacionados
 
+- [Sobre el Proyecto](./SOBRE-EL-PROYECTO.md) — resumen ejecutivo, costos, DNS y entrega para directores
 - [Guía de Editores](./GUIA-EDITORES.md) — operación del CMS para el equipo CBHE
 - [Guía de Certificados](./GUIA-CERTIFICADOS.md) — emisión y verificación de certificados
 - [tour-del-proyecto.md](./tour-del-proyecto.md) — arquitectura interna detallada

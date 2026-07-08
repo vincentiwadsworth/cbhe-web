@@ -232,10 +232,11 @@ Runbook operativo del sistema dual de certificados, separado de la guía del sit
 
 **Esfuerzo**: 1-2 días (post Change-B y auto-QR, para reflejar el sistema final) · **Riesgo**: LOW.
 
-**Cierre (2 commits programados, 8 jul 2026)**
+**Cierre (3 commits, 8-9 jul 2026)**
 - `docs(GUIA-EDITORES.md)`: 228 líneas, 3 diagramas Mermaid (sveltia-workflow, deploy-pipeline, image-flow), 5 tablas. Runbook para editores no-técnicos del CMS Sveltia.
 - `docs(GUIA-CERTIFICADOS.md)`: 290 líneas, 5 diagramas Mermaid (schema-dual, emitir-sello, emitir-capacitacion, qr-pipeline, verificacion-publica), 3 tablas. Runbook para Tania y Alejandra.
 - `docs(README.md)`: refactor quirúrgico (217→236 líneas), 1 diagrama Mermaid (system-architecture), Quick Start, estructura del proyecto, links cruzados a las guías.
+- `docs(SOBRE-EL-PROYECTO.md)`: documento estratégico-institucional para directores. Resumen ejecutivo, tabla de funcionalidades, arquitectura en 1 minuto (Mermaid), costo $0/mes explicado, features diferenciadoras (QR automático, verificación pública, CMS no-técnico), checklist de la reunión de entrega (GitHub account, transferencia de repo, DNS), explicación pedagógica de DNS con paso a paso para nic.bo, FAQs.
 
 **Acceptance**
 - [x] `npx astro build` sin warnings ni errores (29 pages, 0 errors nuevos).
