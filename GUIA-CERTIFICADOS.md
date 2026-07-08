@@ -159,7 +159,11 @@ sequenceDiagram
   Note over Studio,DB: ⏱ ~2-5 segundos en total
 ```
 
+> **El QR se genera una sola vez al crear el registro (INSERT).** Si modifica datos después (nombre, fecha, curso), **el QR no cambia** — el código `CBHE-C-XXXXX` / `CBHE-S-XXXXX` y la URL de verificación permanecen iguales. El QR codifica la URL `cbhe.org.bo/certificados/?c=CBHE-C-XXXXX`, que depende solo del código único.
+
 > **Importante**: después de guardar, **espere unos 5 segundos** y refresque la vista de la tabla. La columna `qr_url` debe mostrar un enlace. Si pasados 30 segundos sigue vacía, vea la [Sección 8](#8-procedimiento-ante-errores).
+
+> **El QR se genera una sola vez al crear el registro.** Si modifica los datos después de creado (nombre, fecha, curso), **el QR no cambia** — el código `CBHE-C-XXXXX` y la URL de verificación permanecen iguales. El QR codifica la URL `cbhe.org.bo/certificados/?c=CBHE-C-XXXXX`, que depende únicamente del código único del certificado, no de los datos que usted completa.
 
 ---
 
@@ -229,12 +233,12 @@ Reemplace `CBHE-C-Xg7Klm3NpQ` por el código real del certificado. El sistema de
 
 | Error | Causa probable | Solución |
 |---|---|---|
-| `qr_url` aparece vacío después de guardar | El QR no se generó a tiempo o falló la Edge Function | **Espere 30 segundos** y refresque la tabla. Si sigue vacío, avise a Nicolás para reintentar desde Supabase Dashboard → Database → Webhooks → Logs → Retry. |
-| El código QR escaneado muestra "Certificado No Encontrado" | El QR se generó pero el código no existe en la base de datos (fue eliminado) | Verifique en Supabase Studio que el registro existe en la tabla correcta. Si fue eliminado por error, solicite a Nicolás que lo restaure. |
-| Insertó un sello en la tabla `capacitacion` (o viceversa) | Confusión entre las dos tablas al hacer Insert row | **No elimine el registro todavía.** Copie los datos, cree un nuevo registro en la tabla correcta, y luego solicite a Nicolás que elimine el registro equivocado. |
-| La página de verificación muestra "Error de Verificación" | Servicio de Supabase caído o problema de conexión | Espere unos minutos y vuelva a intentar. Si el error persiste más de 15 minutos, avise a Nicolás. |
-| El código generado tiene un formato incorrecto | Falla en el trigger de generación de código | Avisar a Nicolás. El código DEBE tener formato `CBHE-C-XXXXXXXXXX` (10 caracteres) o `CBHE-S-XXXXXXXXXX` (10 caracteres). |
-| No puede acceder a Supabase Studio | Credenciales vencidas o problema de autenticación | Avisar a Nicolás para reestablecer el acceso. |
+| `qr_url` aparece vacío después de guardar | La Edge Function no se ejecutó a tiempo o falló | **Espere 30 segundos** y refresque la tabla. Si sigue vacío, **genere un nuevo certificado**: cree otro registro con los mismos datos. El sistema asignará un código nuevo y generará el QR automáticamente. El registro sin QR queda como fallido — no se usa y no afecta nada. |
+| Insertó un sello en la tabla equivocada (o viceversa) | Confusión entre las dos tablas al hacer Insert row | **No elimine el registro erróneo todavía.** Cree un nuevo registro en la tabla correcta (el código y el QR se generan solos). Luego elimine el registro equivocado: seleccione la fila y haga clic en **Delete**. Los códigos eliminados no se reutilizan, no hay riesgo de duplicados. |
+| El código generado tiene un formato incorrecto | Fallo del trigger de generación de código | **Genere un nuevo certificado** con los mismos datos (INSERT nuevo). El registro con código defectuoso puede eliminarse o dejarse — no afecta al sistema. |
+| "Certificado No Encontrado" al escanear el QR | Registro eliminado o código erróneo | Verifique en Supabase Studio que el registro existe en la tabla correspondiente. Si fue borrado por error, **genere un nuevo certificado** con los mismos datos. El código anterior deja de funcionar. |
+| La página de verificación muestra error | Servicio de Supabase caído o problema de conexión | Espere unos minutos y vuelva a intentar. Si el error persiste más de 15 minutos, contacte a Nicolás — es una falla del sistema, no un error de uso. |
+| No puede acceder a Supabase Studio | Credenciales vencidas o problema de autenticación | Contacte a Nicolás para restablecer el acceso. |
 
 ---
 
