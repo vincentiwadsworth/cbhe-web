@@ -1,7 +1,7 @@
 # Guía de Certificados — CBHE
 
-> **Para**: Tania (Sello CBHE), Alejandra (Capacitación)
-> **Última revisión**: 8 de julio de 2026
+> **Para**: Responsable de Gestión (Sello CBHE), Responsable de Capacitación
+> **Última revisión**: 9 de julio de 2026
 
 ---
 
@@ -17,7 +17,7 @@
 | Aspecto | Sello CBHE | Certificado de Capacitación |
 |---|---|---|
 | **¿Para quién?** | Empresas | Personas (cursantes) |
-| **¿Quién lo emite?** | Tania | Alejandra |
+| **¿Quién lo emite?** | Responsable de Gestión | Responsable de Capacitación |
 | **Tabla en el sistema** | `sello` | `capacitacion` |
 | **Prefijo del código** | `CBHE-S-` | `CBHE-C-` |
 | **Campos a completar** | `empresa_nombre`, `fecha_emision` | `cursante_nombre`, `nombre_capacitacion`, `fecha_emision` |
@@ -216,12 +216,12 @@ Reemplace `CBHE-C-Xg7Klm3NpQ` por el código real del certificado. El sistema de
 
 | Quién | Tabla | Qué puede hacer | Cómo accede |
 |---|---|---|---|
-| **Tania** | `sello` | Emitir sellos CBHE | Solicita a Nicolás, que opera Supabase Studio |
-| **Alejandra** | `capacitacion` | Emitir certificados de capacitación | Solicita a Nicolás, que opera Supabase Studio |
+| **Responsable de Gestión** | `sello` | Emitir sellos CBHE | Solicita a Nicolás, que opera Supabase Studio |
+| **Responsable de Capacitación** | `capacitacion` | Emitir certificados de capacitación | Solicita a Nicolás, que opera Supabase Studio |
 | **Nicolás** | `capacitacion` y `sello` | Crear, modificar y eliminar registros | Supabase Studio (acceso completo) |
 | **Público** | `capacitacion` y `sello` | Verificar certificados (solo lectura) | Escaneando el QR o visitando la URL de verificación |
 
-> **Nota**: el acceso a Supabase Studio está gestionado por Nicolás. Si Tania o Alejandra necesitan acceso directo en el futuro, se puede configurar.
+> **Nota**: el acceso a Supabase Studio está gestionado por Nicolás. Si la Responsable de Gestión o la Responsable de Capacitación necesitan acceso directo en el futuro, se puede configurar.
 
 ---
 
@@ -280,11 +280,12 @@ Cuando el certificado está listo (código generado + QR visible en `qr_url`):
 Ante cualquier duda o problema con el sistema de certificados, contactar a:
 
 - **Nicolás** — administrador técnico del sistema
-- **Documentación técnica**: [README.md](./README.md) (referencia para developers)
 
 ---
 
 ## Documentos relacionados
 
+- [Sobre el Proyecto](./README.md) — descripción general del proyecto para quien no es del área técnica
+- [Documentación Técnica](./DOCUMENTACION-TECNICA.md) — stack tecnológico, arquitectura, build y deploy (para developers)
 - [Guía para Editores del Sitio](./GUIA-EDITORES.md) — cómo gestionar el contenido del sitio web (artículos, cursos, empresas)
-- [Referencia Técnica (README)](./README.md) — stack tecnológico, arquitectura, build y deploy
+- [Pendientes de Despliegue](./PENDIENTES-DESPLIEGUE.md) — checklist de handoff y tareas pendientes

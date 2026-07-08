@@ -1,7 +1,7 @@
 # Guía de Editores — CBHE
 
-> **Para**: Comunicación, Alejandra, Tania  
-> **Última revisión**: 8 de julio de 2026
+> **Para**: Responsable de Comunicación, Responsable de Capacitación, Responsable de Gestión  
+> **Última revisión**: 9 de julio de 2026
 
 ## Resumen rápido
 
@@ -14,10 +14,10 @@
 ## 1. Acceso al CMS
 
 - **URL**: `https://cbhe.org.bo/admin/`
-- **Iniciar sesión**: botón _Login with GitHub_ → autorizar con tu cuenta de GitHub.
-- **Primera vez**: Nicolás te crea la cuenta de GitHub y te da un **token de acceso personal**. Guardalo en un lugar seguro (es tu contraseña del CMS).
-- **¿No entra?**: revisá que el token no haya expirado. Si expiró, pedile uno nuevo a Nicolás.
-- El CMS se llama **Sveltia** — es el panel donde escribís, editás y publicás todo el contenido del sitio.
+- **Iniciar sesión**: botón _Login with GitHub_ → autorizar con su cuenta de GitHub.
+- **Primera vez**: Nicolás crea la cuenta de GitHub y da un **token de acceso personal**. Guárdelo en un lugar seguro (es su contraseña del CMS).
+- **¿No entra?**: revise que el token no haya expirado. Si expiró, pedirle uno nuevo a Nicolás.
+- El CMS se llama **Sveltia** — es el panel donde se escribe, edita y publica todo el contenido del sitio.
 
 ---
 
@@ -153,7 +153,7 @@ flowchart TD
 | Orden | — | Número | Menor número = aparece primero. Si hay empate, orden alfabético |
 | Borrador | — | Switch | Activado = no aparece en el sitio |
 
-> **Nota**: Los **Testimonios** no se editan desde Sveltia CMS — se gestionan directamente en los archivos del proyecto. Si necesitás agregar o modificar un testimonio, coordinalo con Nicolás.
+> **Nota**: Los **Testimonios** no se editan desde Sveltia CMS — se gestionan directamente en los archivos del proyecto. Si necesita agregar o modificar un testimonio, coordínelo con Nicolás.
 
 ---
 
@@ -178,14 +178,14 @@ flowchart TD
 
 | Problema | Causa probable | Solución |
 |----------|---------------|----------|
-| No puedo entrar al CMS | Token de GitHub expirado o incorrecto | Pedile un token nuevo a Nicolás (scope `repo`) |
-| El sitio no se actualiza después de publicar | El job de deploy está trabado en GitHub | Avisale a Nicolás — puede disparar el deploy manualmente |
-| "Error al guardar" en Sveltia | Imagen demasiado grande (>2 MB) | Redimensioná la imagen antes de subirla |
-| La imagen no se ve en el sitio | La referencia en Markdown tiene una ruta incorrecta | Usá siempre `/images/nombre-archivo.jpg` (con barra inicial) |
-| Guardé un artículo pero no aparece | El switch **Borrador** (`draft`) está activado | Desactivá el switch y volvé a publicar |
-| El curso no aparece en el catálogo | Filtro de borrador activo o `draft: true` | Verificá que `draft` esté en `false` y volvé a publicar |
+| No puedo entrar al CMS | Token de GitHub expirado o incorrecto | Pedirle un token nuevo a Nicolás (scope `repo`) |
+| El sitio no se actualiza después de publicar | El job de deploy está trabado en GitHub | Avisarle a Nicolás — puede disparar el deploy manualmente |
+| "Error al guardar" en Sveltia | Imagen demasiado grande (>2 MB) | Redimensione la imagen antes de subirla |
+| La imagen no se ve en el sitio | La referencia en Markdown tiene una ruta incorrecta | Use siempre `/images/nombre-archivo.jpg` (con barra inicial) |
+| Guardé un artículo pero no aparece | El switch **Borrador** (`draft`) está activado | Desactive el switch y vuelva a publicar |
+| El curso no aparece en el catálogo | Filtro de borrador activo o `draft: true` | Verifique que `draft` esté en `false` y vuelva a publicar |
 | No encuentro la colección que busco | Solo se muestran colecciones configuradas en el CMS | Cursos, Artículos y Empresas están en Sveltia. Testimonios se editan a mano |
-| El formulario de contacto no funciona | `WEB3FORMS_KEY` mal configurada | Avisale a Nicolás — es una variable de entorno del build |
+| El formulario de contacto no funciona | `WEB3FORMS_KEY` mal configurada | Avisarle a Nicolás — es una variable de entorno del build |
 
 ---
 
@@ -225,5 +225,7 @@ flowchart TD
 
 ## Documentos relacionados
 
+- [README](./README.md) — panorama general del proyecto (no técnico)
+- [Documentación Técnica](./DOCUMENTACION-TECNICA.md) — para developers que necesiten entender el stack técnico
 - [Guía de Certificados](./GUIA-CERTIFICADOS.md) — para emitir Sellos CBHE y Certificados de Capacitación
-- [Referencia Técnica (README)](./README.md) — para developers que necesiten entender el stack técnico
+- [Pendientes de Despliegue](./PENDIENTES-DESPLIEGUE.md) — checklist de handoff para puesta en producción

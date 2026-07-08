@@ -233,18 +233,20 @@ Runbook operativo del sistema dual de certificados, separado de la guía del sit
 **Esfuerzo**: 1-2 días (post Change-B y auto-QR, para reflejar el sistema final) · **Riesgo**: LOW.
 
 **Cierre (3 commits, 8-9 jul 2026)**
-- `docs(GUIA-EDITORES.md)`: 228 líneas, 3 diagramas Mermaid (sveltia-workflow, deploy-pipeline, image-flow), 5 tablas. Runbook para editores no-técnicos del CMS Sveltia.
-- `docs(GUIA-CERTIFICADOS.md)`: 290 líneas, 5 diagramas Mermaid (schema-dual, emitir-sello, emitir-capacitacion, qr-pipeline, verificacion-publica), 3 tablas. Runbook para Tania y Alejandra.
-- `docs(README.md)`: refactor quirúrgico (217→236 líneas), 1 diagrama Mermaid (system-architecture), Quick Start, estructura del proyecto, links cruzados a las guías.
-- `docs(SOBRE-EL-PROYECTO.md)`: documento estratégico-institucional para directores. Resumen ejecutivo, tabla de funcionalidades, arquitectura en 1 minuto (Mermaid), costo $0/mes explicado, features diferenciadoras (QR automático, verificación pública, CMS no-técnico), checklist de la reunión de entrega (GitHub account, transferencia de repo, DNS), explicación pedagógica de DNS con paso a paso para nic.bo, FAQs.
+- `docs(GUIA-EDITORES.md)`: 228 líneas, 3 diagramas Mermaid (sveltia-workflow, deploy-pipeline, image-flow), 5 tablas. Runbook para editores no-técnicos del CMS Sveltia. Tono tercera persona formal, roles sin nombres.
+- `docs(GUIA-CERTIFICADOS.md)`: 290 líneas, 5 diagramas Mermaid (schema-dual, emitir-sello, emitir-capacitacion, qr-pipeline, verificacion-publica), 3 tablas. Runbook para responsables de certificados. Tono tercera persona formal, roles sin nombres.
+- `docs(README.md)`: reescritura completa como cara del proyecto. Resumen ejecutivo, tabla de funcionalidades, arquitectura en 1 minuto (Mermaid), costo $0/mes, features diferenciadoras, links a las 3 guías, FAQs.
+- `docs(DOCUMENTACION-TECNICA.md)`: referencia técnica para desarrolladores (10 secciones: stack, quick start, estructura, build/deploy, arquitectura, certificados, CMS, env vars, convenciones, gotchas). Contenido movido del README anterior.
+- `docs(PENDIENTES-DESPLIEGUE.md)`: checklist puntual de la reunión de entrega (cuenta GitHub institucional, transferencia de repo, DNS en nic.bo con explicación pedagógica).
+- Eliminado `SOBRE-EL-PROYECTO.md` — contenido fundido en README + PENDIENTES-DESPLIEGUE.
 
 **Acceptance**
 - [x] `npx astro build` sin warnings ni errores (29 pages, 0 errors nuevos).
-- [x] 9 diagramas Mermaid en total (3 + 5 + 1), todos con classDef de alto contraste.
+- [x] Diagramas Mermaid en README + DOCUMENTACION-TECNICA + GUIA-EDITORES + GUIA-CERTIFICADOS, todos con classDef de alto contraste.
 - [x] Diagramas usan datos reales: schema de Supabase, Sveltia config, Edge Function code, deploy workflow.
-- [x] Links cruzados entre los 3 documentos.
-- [x] Cada guía con "Última revisión: 8 de julio de 2026" visible.
-- [ ] Sign-off verbal de Tania, Alejandra y Comunicación (pendiente).
+- [x] Links cruzados entre los 4 documentos (README, GUIA-EDITORES, GUIA-CERTIFICADOS, DOCUMENTACION-TECNICA).
+- [x] Cada guía con "Última revisión: 9 de julio de 2026" visible.
+- [ ] Sign-off verbal de Responsable de Gestión, Responsable de Capacitación y Responsable de Comunicación (pendiente).
 
 **Out of scope (Change-C)**
 - Traducciones a otros idiomas.
