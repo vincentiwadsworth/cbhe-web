@@ -5,7 +5,7 @@
 **Rama base**: `feat/custom-domain` (HEAD `2fe7cb8` — Change-A cerrado y pusheado a la branch + 2 commits de housekeeping)
 **Estrategia**: 3 PRs independientes (single-pr, budget 400 líneas por PR)
 **Artifact store**: OpenSpec (`openspec/changes/`)
-**Estado**: Change-A DONE ✅ · Change-B DONE ✅ · Change-C (pendiente, depende de B)
+**Estado**: Change-A DONE ✅ · Change-B DONE ✅ · Change-C DONE ✅
 
 ---
 
@@ -154,62 +154,103 @@
 
 ---
 
-## Change-C · `editor-handoff-docs`
+## Change-C · `editor-handoff-docs` — **DONE** ✅
+
+> **Refinamiento 8 jul 2026**: adoptadas mejores prácticas 2026 de handoff de sitios web + Mermaid.js para diagramas. Principio rector: **diagrams over text** — el cliente escanea, no lee. Cada diagrama reemplaza 3-4 párrafos de texto.
 
 **Problema**
 - El equipo CBHE (Comunicación, Alejandra, Tania) necesita operar el sitio y el sistema de certificados sin asistencia técnica.
 - El `README.md` actual mezcla instrucciones para editores y para developers, no apto para no-técnicos.
 - El sistema dual de certificados necesita su propio manual de operación, separado de la guía del sitio.
-- Estas guías son **entregables puntuales, concisos y profesionales** — el tono debe ser de manual de operaciones, no tutorial técnico.
+- La documentación tradicional (párrafos largos, PDFs) no sobrevive: el cliente imprime una vez y pierde el documento. Necesitamos **diagramas que respondan preguntas en 10 segundos**, no prosa que tome 10 minutos.
+
+**Arquitectura de documentación (modelo 3-docs, estándar 2026)**
+
+| Documento | Tipo | Audiencia | Vive en | Formato |
+|---|---|---|---|---|
+| `GUIA-EDITORES.md` | Runbook | Comunicación, Alejandra, Tania | Repo (GitHub renderiza Mermaid nativo) | Markdown + Mermaid flowcharts |
+| `GUIA-CERTIFICADOS.md` | Runbook operativo | Tania, Alejandra | Repo | Markdown + Mermaid flowcharts/sequence/ER |
+| `README.md` | Technical Reference | Próximo developer | Repo (raíz) | Markdown + Mermaid architecture |
 
 **Cambios**
 
 ### Documento 1: `GUIA-EDITORES.md` (nuevo)
-Manual de uso del sitio, para no-técnicos.
+Runbook de uso del sitio para no-técnicos.
 - **Audiencia**: Comunicación (publica artículos, novedades, testimonios, empresas), Alejandra (gestiona cursos), Tania (opera Sello CBHE).
-- **Contenido**:
-  1. Acceso al CMS Sveltia (login con GitHub, token, primera vez).
-  2. Save vs Save and Publish — diferencia clave, qué dispara deploy.
-  3. Imágenes: cómo subirlas desde Sveltia, formato y tamaño recomendado.
-  4. Borradores: qué son, cómo se manejan, cuándo aparecen en el sitio.
-  5. Campos por colección: tabla con semántica de cada campo, no solo el nombre.
-  6. Markdown cheat sheet (negrita, links, imágenes, listas).
-  7. Problemas comunes y soluciones (tabla pregunta/respuesta).
-  8. Glosario de términos del dominio (CBHE, RSE, Sello, etc.).
-  9. Contacto para soporte técnico.
+- **Estrategia**: menos de 30% prosa, más de 70% diagramas + tablas. Una tarea frecuente = un flowchart.
+- **Diagramas Mermaid**:
+  1. `sveltia-workflow` (flowchart) — ciclo de vida de contenido: login → escribir → Save (borrador) vs Save & Publish (live) → deploy → visible
+  2. `deploy-pipeline` (sequence) — qué dispara cada acción: commit sin `[skip ci]` → GitHub Actions → build → deploy a `cbhe.org.bo`
+  3. `image-flow` (flowchart) — subir imagen → formato/tamaño → referenciar en contenido
+- **Secciones con texto mínimo**:
+  - Acceso inicial (login URL, token GitHub, primera vez) — 5 bullets máximo
+  - Campos por colección — tabla, no párrafos
+  - Markdown cheat sheet — tabla de sintaxis
+  - Problemas comunes — tabla pregunta/respuesta
+  - Glosario de términos del dominio (CBHE, RSE, Sello)
+  - Contacto para soporte técnico
 
 ### Documento 2: `GUIA-CERTIFICADOS.md` (nuevo)
-Manual operativo del sistema dual de certificados, separado de la guía del sitio.
-- **Audiencia**: Tania (Sello), Alejandra (Capacitación), Comunicación (valida códigos cuando le preguntan).
-- **Contenido**:
-  1. Diferencia entre Sello CBHE y Certificado de Capacitación (tabla comparativa).
-  2. Cómo emitir un Sello paso a paso (con capturas, flujo en la UI).
-  3. Cómo emitir un Certificado de Capacitación paso a paso.
-  4. Cómo verificar públicamente (URLs, qué ve el público visitante).
-  5. Cómo resguardar datos: export a Excel periódico, dónde guardarlo, política de backup.
-  6. Roles y permisos: qué puede hacer cada persona en su tabla.
-  7. Procedimiento ante errores: revocar, reemitir, corregir.
-  8. Procedimiento de entrega al destinatario: PDF, QR, link de verificación.
+Runbook operativo del sistema dual de certificados, separado de la guía del sitio.
+- **Audiencia**: Tania (Sello CBHE), Alejandra (Capacitación), Comunicación (valida códigos cuando le preguntan).
+- **Estrategia**: cada operación = un flowchart. Conceptos de sistema = sequence/ER diagrams.
+- **Diagramas Mermaid**:
+  1. `schema-dual` (erDiagram) — tablas `capacitacion` y `sello`, campos, prefijos (`CBHE-C-` vs `CBHE-S-`), relación con la landing
+  2. `emitir-capacitacion` (flowchart) — paso a paso: Supabase Studio → tabla `capacitacion` → INSERT → trigger → QR auto-generado
+  3. `emitir-sello` (flowchart) — ídem para tabla `sello`
+  4. `qr-pipeline` (sequence) — INSERT → pg_net webhook → Edge Function `generate-qr` → Storage bucket → UPDATE `qr_url`
+  5. `verificacion-publica` (flowchart) — visitante escanea QR → `/certificados/?c=CODIGO` → detecta prefijo → consulta tabla → muestra datos
+- **Secciones con texto mínimo**:
+  - Diferencia Sello vs Capacitación — tabla comparativa, no prosa
+  - Roles y permisos — tabla con columnas: quién / qué tabla / qué puede hacer
+  - Procedimiento ante errores — tabla: error / causa / solución
+  - Resguardo de datos (export, backup) — 3 pasos numerados
+  - Entrega al destinatario — pasos numerados, no párrafos
 
 ### Documento 3: `README.md` (refactor quirúrgico)
-- Mantiene secciones técnicas para developers (Astro, Tailwind, build, deploy).
+- Mantiene secciones técnicas para developers (stack, build, deploy, gotchas).
 - Remueve las secciones ahora cubiertas por `GUIA-EDITORES.md` y `GUIA-CERTIFICADOS.md`.
-- Agrega links cruzados a las dos guías al inicio del archivo.
+- Agrega **1 diagrama de arquitectura general** (Mermaid graph) — sistema completo: Astro SSG → GitHub Pages, Sveltia CMS → GitHub, Supabase (DB + Storage + Edge Functions + Webhooks), certificados (emisión → QR → verificación).
+- Links cruzados a las dos guías al inicio del archivo.
+- Sección "Quick Start" para un developer nuevo: `git clone`, `npm install`, `npm run dev`, estructura de carpetas en una tabla.
 
 **Acceptance**
 - Las 3 personas involucradas aprueban sus guías (sign-off verbal, registrado en este doc).
-- Las guías están en español, con capturas y tono profesional pero accesible.
-- Links cruzados funcionan desde y hacia `README.md`.
-- Las guías reflejan el sistema dual implementado en Change-B.
+- Las guías están en español, con diagramas Mermaid y tono profesional pero accesible.
+- Los diagramas se renderizan correctamente en GitHub (sin dependencias externas).
+- Cada tarea frecuente tiene su flowchart; los conceptos de sistema tienen sequence/ER.
+- Links cruzados funcionan entre los 3 documentos.
 - Cada guía tiene fecha de última revisión visible al inicio.
+- `README.md` permite a un developer nuevo clonar, instalar y buildear sin asistencia.
 
 **Out of scope**
 - Traducciones a otros idiomas.
-- Videos tutoriales.
+- Videos tutoriales (pueden agregarse post-entrega).
 - FAQ en línea, integración con Zendesk/Intercom.
 - Documentación de arquitectura interna (eso queda en `tour-del-proyecto.md`).
+- Export a PDF — los .md con Mermaid se renderizan nativo en GitHub.
 
-**Esfuerzo**: 1-2 días (después de Change-B implementado, para que refleje el sistema final) · **Riesgo**: LOW.
+**Esfuerzo**: 1-2 días (post Change-B y auto-QR, para reflejar el sistema final) · **Riesgo**: LOW.
+
+**Cierre (2 commits programados, 8 jul 2026)**
+- `docs(GUIA-EDITORES.md)`: 228 líneas, 3 diagramas Mermaid (sveltia-workflow, deploy-pipeline, image-flow), 5 tablas. Runbook para editores no-técnicos del CMS Sveltia.
+- `docs(GUIA-CERTIFICADOS.md)`: 290 líneas, 5 diagramas Mermaid (schema-dual, emitir-sello, emitir-capacitacion, qr-pipeline, verificacion-publica), 3 tablas. Runbook para Tania y Alejandra.
+- `docs(README.md)`: refactor quirúrgico (217→236 líneas), 1 diagrama Mermaid (system-architecture), Quick Start, estructura del proyecto, links cruzados a las guías.
+
+**Acceptance**
+- [x] `npx astro build` sin warnings ni errores (29 pages, 0 errors nuevos).
+- [x] 9 diagramas Mermaid en total (3 + 5 + 1), todos con classDef de alto contraste.
+- [x] Diagramas usan datos reales: schema de Supabase, Sveltia config, Edge Function code, deploy workflow.
+- [x] Links cruzados entre los 3 documentos.
+- [x] Cada guía con "Última revisión: 8 de julio de 2026" visible.
+- [ ] Sign-off verbal de Tania, Alejandra y Comunicación (pendiente).
+
+**Out of scope (Change-C)**
+- Traducciones a otros idiomas.
+- Videos tutoriales (pueden agregarse post-entrega).
+- FAQ en línea, integración con Zendesk/Intercom.
+- Documentación de arquitectura interna (eso queda en `tour-del-proyecto.md`).
+- Export a PDF — los .md con Mermaid se renderizan nativo en GitHub.
 
 ---
 

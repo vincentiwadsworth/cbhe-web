@@ -1,217 +1,236 @@
-# CBHE Web — Guía para Editores
+# cbhe-web
 
-**Sitio web de la Cámara Boliviana de Hidrocarburos y Energía. Manual para gestionar el contenido sin conocimientos técnicos.**
+> Sitio web institucional de la Cámara Boliviana de Hidrocarburos y Energía.
+>
+> **Guías para el equipo CBHE**: [Guía de Editores](./GUIA-EDITORES.md) · [Guía de Certificados](./GUIA-CERTIFICADOS.md)
 
-Panel de edición: [https://vincentiwadsworth.github.io/cbhe-web/admin/](https://vincentiwadsworth.github.io/cbhe-web/admin/)
-
----
-
-## Inicio rápido
-
-Necesita una cuenta de GitHub. El área de tecnología se la proporcionará.
-
-1. Abra el panel de edición (enlace arriba)
-2. Inicie sesión con su cuenta de GitHub
-3. En la barra lateral izquierda, seleccione su colección
-4. Haga clic en un contenido para editar, o en **Nuevo** para crear uno
-5. Al terminar, use **Save** para publicar en el sitio
-
-El sitio tiene tres secciones editables, una por área:
-
-| Área | Sección del sitio | Colección en el panel |
-|------|-------------------|-----------------------|
-| Comunicación | Novedades | Artículos |
-| Capacitación | Cursos y certificaciones | Cursos |
-| Gestión | Empresas afiliadas | Empresas Afiliadas |
+**Última revisión**: 2026-07-08
 
 ---
 
-## Guardar vs Publicar
+## Quick Start
 
-El botón de guardar tiene un menú desplegable con dos opciones:
+```bash
+git clone https://github.com/vincentiwadsworth/cbhe-web.git
+cd cbhe-web
+npm install
+npm run dev        # http://localhost:4321
+```
 
-| Opción | Qué hace |
-|--------|----------|
-| **Save** (botón principal) | Guarda **y publica** en el sitio en vivo (tarda 1-2 minutos). |
-| **Save without Publishing** (menú desplegable) | Guarda como borrador. El sitio **no cambia**. |
-
-> Use **Save without Publishing** cuando prepare algo que aún no desea mostrar en el sitio. Cuando esté listo, abra el contenido y use **Save**.
-
----
-
-## Imágenes y borradores
-
-**Imágenes:** arrastre la imagen al campo o selecciónela de su computadora. Formato recomendado: JPG o WebP, menor a 500 KB. Para logos: PNG con fondo transparente.
-
-**Borrador:** cada contenido tiene una casilla **Borrador**. Si la marca, el contenido existe en el panel pero no se muestra en el sitio público. Útil cuando prepare algo que aún no desea mostrar.
+Requisitos: Node.js >= 22.12.0.
 
 ---
 
-## Campos por colección
+## Arquitectura del sistema
 
-### Artículos (Comunicación)
+```mermaid
+graph TB
+    subgraph GitHub["GitHub"]
+        Repo["📦 Repositorio<br/>cbhe-web"]
+        Actions["⚙️ GitHub Actions"]
+        Pages["🌍 GitHub Pages<br/>cbhe.org.bo"]
+        CMS["📝 Sveltia CMS"]
+    end
 
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Título | Sí | Título del artículo |
-| Categoría | Sí | Noticias, Análisis, Eventos o Capacitación |
-| Extracto | Sí | Resumen breve (1-2 líneas) para la vista previa |
-| Fecha | Sí | Fecha del artículo (usar el calendario) |
-| Imagen | No | Imagen destacada |
-| Destacado en portada | No | Marcar para mostrar en la página principal |
-| Contenido completo | Sí | Texto del artículo en Markdown (ver abajo) |
-| Borrador | No | Ocultar del sitio |
+    subgraph Supabase["Supabase"]
+        DB[("🗄️ PostgreSQL<br/>capacitacion · sello")]
+        Storage[("📁 Storage<br/>certificados-qr")]
+        Edge["⚡ Edge Function<br/>generate-qr"]
+        Webhooks["🔔 DB Webhooks<br/>pg_net"]
+    end
 
-### Cursos (Capacitación)
+    subgraph AstroSSG["Sitio — Astro SSG"]
+        Content["📄 Content<br/>Collections"]
+        Astro["🏗️ Astro Build"]
+        Static["📋 Static HTML/CSS"]
+    end
 
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Título | Sí | Nombre del curso o certificación |
-| Categoría | Sí | Curso o Certificación |
-| Modalidad | Sí | Virtual, Presencial o Híbrido |
-| Imagen | No | Imagen del curso (opcional si hay link de Canva) |
-| Fecha de inicio | Sí | Determina el orden en el catálogo (usar el calendario) |
-| Precio / Inversión | Sí | Ej: "950 Bs. (750 Bs. lanzamiento hasta el 22 de mayo)" |
-| Fecha límite inscripción | No | Solo si hay precio de lanzamiento |
-| Link a Canva | No | URL del diseño con la info completa del curso |
-| Descripción breve | No | 1-2 líneas para la tarjeta del catálogo |
-| Ponentes / Instructores | No | Nombre y biografía de cada uno |
-| Contenido completo | No | Texto del curso (opcional si hay link de Canva) |
-| Borrador | No | Ocultar del sitio |
+    Editor["✏️ Editor CBHE"] -->|"Save &amp; Publish"| CMS
+    CMS -->|"git commit"| Repo
+    Repo -->|"push a main"| Actions
+    Actions -->|"build + deploy"| Pages
+    Pages -->|"cbhe.org.bo"| Visitante["🌐 Visitante"]
 
-### Empresas Afiliadas (Gestión)
+    Operator["👤 Tania / Alejandra"] -->|"INSERT"| DB
+    DB -->|"trigger"| Webhooks
+    Webhooks -->|"POST"| Edge
+    Edge -->|"upload QR"| Storage
+    Storage -->|"qr_url"| DB
 
-| Campo | Obligatorio | Descripción |
-|-------|-------------|-------------|
-| Nombre de la Empresa | Sí | Nombre completo |
-| Grupo Industrial | Sí | Uno de seis grupos (ver lista en el formulario) |
-| Sitio Web | No | URL del sitio de la empresa |
-| Correo de Contacto | No | Email |
-| Logo | No | Logo de la empresa |
-| Destacada en portada | No | Marcar para mostrar en la página principal |
-| Orden | No | Número menor = aparece primero. Empate = orden alfabético |
-| Borrador | No | Ocultar del sitio |
+    Visitante -->|"escanea QR"| Static
 
-**Grupos industriales:**
+    Astro -->|"build"| Static
+    Content -->|".md / .mdx"| Astro
 
-1. Exploración y explotación de hidrocarburos
-2. Servicios y suministros especializados en pozo
-3. Servicios y suministros especializados en superficie
-4. Industria, transporte y distribución de hidrocarburos y energía
-5. Servicios auxiliares
-6. Adherentes
+    classDef github fill:#87CEEB,stroke:#1565C0,stroke-width:2px,color:#0D47A1
+    classDef supabase fill:#90EE90,stroke:#2E7D32,stroke-width:2px,color:#1B5E20
+    classDef astro fill:#FFD54F,stroke:#F57F17,stroke-width:2px,color:#333
+    classDef person fill:#E6E6FA,stroke:#7B1FA2,stroke-width:2px,color:#4A148C
+    classDef database fill:#FFCCBC,stroke:#BF360C,stroke-width:2px,color:#333
+
+    class Repo,Actions,Pages,CMS github
+    class DB,Storage,Edge,Webhooks supabase
+    class Content,Astro,Static astro
+    class Editor,Operator,Visitante person
+    class DB,Storage database
+```
 
 ---
 
-## Markdown — formato de texto
+## Stack
 
-Los campos de contenido usan Markdown. Escriba estos símbolos para dar formato:
+| Capa | Herramienta | Nota |
+|------|-------------|------|
+| SSG | Astro 6.x | Static output, zero JS |
+| CSS | Tailwind v4 | `@tailwindcss/vite`, sin `@astrojs/tailwind` |
+| Content | Zod + Content Collections | `src/content.config.ts`, loader `glob()`, `z` de `astro/zod` |
+| CMS | Sveltia CMS | `public/admin/`, backend GitHub, `skip_ci: true` |
+| Deploy | GitHub Pages | Workflow `deploy.yml`, repo público |
+| Forms | Web3Forms | `WEB3FORMS_KEY` |
+| Icons | astro-icon | `material-symbols` (77 seleccionados) |
+| Fonts | Inter self-hosted | `@fontsource/inter`, Latin subset 400–800 |
+| Cert DB | Supabase Postgres | Tablas `capacitacion` y `sello`, RLS: `anon SELECT` + `service_role` CRUD |
+| Cert storage | Supabase Storage | Bucket `certificados-qr` público, filename `{codigo}.png` |
+| Auto-QR | Supabase Edge Function + DB Webhooks | `generate-qr` (Deno), trigger por INSERT en cada tabla |
 
-| Escriba | Resultado |
+---
+
+## Estructura del proyecto
+
+| Carpeta | Contenido |
 |---------|-----------|
-| `**negrita**` | **negrita** |
-| `*cursiva*` | *cursiva* |
-| `## Subtítulo` | Encabezado de sección |
-| `- item` | Lista con viñetas |
-| `1. item` | Lista numerada |
-| `[texto del enlace](https://url.com)` | Enlace |
+| `src/pages/` | Rutas del sitio — cada `.astro` es una página pública |
+| `src/components/` | Componentes reutilizables (Navbar, Footer, Cards, Form, etc.) |
+| `src/layouts/` | Layouts base (`Layout.astro`, `PageLayout.astro`) |
+| `src/content/` | Contenido del CMS — colecciones `articulos/`, `cursos/`, `empresas/`, `testimonios/` |
+| `src/content.config.ts` | Definición de colecciones y esquemas Zod |
+| `src/lib/` | Utilidades compartidas (cliente Supabase) |
+| `src/styles/` | Estilos globales (`global.css` con 50 tokens MD3) |
+| `public/admin/` | Sveltia CMS — panel de edición para el equipo CBHE |
+| `supabase/migrations/` | Migraciones SQL versionadas (001–005) |
+| `supabase/functions/` | Edge Functions Deno — `generate-qr/` |
+| `scripts/` | Scripts de utilidad (emisión batch, procesamiento de imágenes) |
+| `.github/workflows/` | GitHub Actions (`deploy.yml`, `issue-certificate.yml`, `update-data.yml`) |
 
 ---
 
-## Emitir certificados digitales
+## Build y deploy
 
-Certificados y Sellos se emiten desde Supabase Studio. El sistema genera automáticamente el código único, la fecha de creación y el código QR.
+```bash
+npm run build      # astro build → dist/
+npm run preview    # previsualizar el build
+```
 
-### Acceder a Supabase Studio
+El deploy es automático: cada push a `main` dispara `deploy.yml` que compila y publica en GitHub Pages.
 
-1. Ingrese a [https://supabase.com/dashboard](https://supabase.com/dashboard)
-2. Seleccione el proyecto CBHE
-3. En la barra lateral, vaya a **Table Editor**
+### Gotchas de deploy
 
-### Emitir un Certificado de Capacitación (Alejandra)
+- **Links en subpath**: Astro `base` no modifica `<a href>`. Todos los links internos van SIN `/` inicial (`href="quienes-somos"`) con `<base href>` en `Layout.astro`.
+- **`<base href>` con trailing slash**: sin la barra final, los paths relativos se resuelven mal.
+- **Runner saturado**: si GitHub Actions se queda en `Waiting for a hosted runner`, disparar manual: `gh workflow run deploy.yml --ref main`.
+- **Preview local con custom domain**: `Astro.site` apunta a producción y `astro preview` rompe los assets por ORB cross-origin. Workaround: cambiar `site` temporalmente a `http://localhost:4321`, rebuild, preview, restaurar.
 
-1. Abra la tabla **`capacitacion_input`**
-2. Haga clic en **Insert row**
-3. Complete los tres campos:
-   - **cursante_nombre**: nombre completo del cursante
-   - **nombre_capacitacion**: nombre del curso o certificación
-   - **fecha_emision**: fecha de emisión (usar el calendario)
-4. Haga clic en **Save**
+---
 
-El código (`CBHE-C-XXXXXXXXXX`) y el QR se generan automáticamente. Para ver el resultado completo, abra la tabla **`capacitacion`**.
+## Certificados — Sistema Dual
 
-### Emitir un Sello CBHE (Tania)
+El sistema de certificados tiene dos tablas independientes en Supabase:
 
-1. Abra la tabla **`sello_input`**
-2. Haga clic en **Insert row**
-3. Complete los dos campos:
-   - **empresa_nombre**: nombre de la empresa
-   - **fecha_emision**: fecha de emisión (usar el calendario)
-4. Haga clic en **Save**
+| Tabla | Prefijo | Campos clave | Audiencia |
+|-------|---------|-------------|-----------|
+| `capacitacion` | `CBHE-C-XXXXXXXXXX` | `cursante_nombre`, `nombre_capacitacion`, `fecha_emision` | Alejandra |
+| `sello` | `CBHE-S-XXXXXXXXXX` | `empresa_nombre`, `tipo_certificado`, `fecha_emision` | Tania |
 
-El código (`CBHE-S-XXXXXXXXXX`) y el QR se generan automáticamente. Para ver el resultado completo, abra la tabla **`sello`**.
+### Pipeline Auto-QR
 
-### Entregar el certificado al destinatario
-
-Una vez generado el QR, tiene dos formas de entregarlo:
-
-- Compartir la URL de verificación: `https://vincentiwadsworth.github.io/cbhe-web/certificados/?c=CBHE-C-XXXXXXXXXX` (Capacitación) o `https://vincentiwadsworth.github.io/cbhe-web/certificados/?c=CBHE-S-XXXXXXXXXX` (Sello)
-- Compartir la imagen del QR: abra la URL, haga clic derecho sobre la imagen del QR y seleccione **Guardar imagen como…**
+1. Operador inserta en `capacitacion_input` o `sello_input` (vistas simplificadas en Supabase Studio)
+2. Trigger `BEFORE INSERT` genera código único con prefijo correcto
+3. Trigger `pg_net` dispara la Edge Function `generate-qr` (Deno)
+4. Edge Function genera QR PNG con `qrcode`, lo sube a Storage bucket `certificados-qr`
+5. `UPDATE qr_url` en la fila para que la landing de verificación lo muestre
 
 ### Verificación pública
 
-Quien reciba el certificado puede verificarlo de dos formas:
+La landing `/certificados/?c=CODIGO` detecta el prefijo del código (`CBHE-C-` vs `CBHE-S-`), consulta la tabla correcta vía `anon` SELECT, y muestra los datos + QR.
 
-- Visitando la URL de verificación
-- Escaneando el código QR con la cámara del celular
+> **Operación diaria**: ver **[Guía de Certificados](./GUIA-CERTIFICADOS.md)** para emitir, verificar y resolver errores.
 
-La página muestra los datos del certificado y el código QR.
+### RLS
 
----
-
-## Problemas comunes
-
-| Problema | Solución |
-|----------|----------|
-| No puedo ingresar al panel | Su cuenta de GitHub necesita acceso al repositorio. Contacte al área de tecnología. |
-| Guardé con Save without Publishing y el sitio no cambió | Es correcto: es un borrador. Use **Save** para publicar. |
-| Guardé con Save and Publish y el sitio no cambia | El despliegue tarda 1-2 minutos. Si pasan 5 minutos sin cambios, contacte al área de tecnología. |
-| La imagen no se ve | Verifique que sea JPG, PNG o WebP y pese menos de 500 KB. |
-| El certificado no se generó | Verifique que la fecha de emisión esté en formato de calendario. Si persiste, contacte al área de tecnología. |
-| El código QR no aparece después de emitir | La generación es automática pero asíncrona. Espere 1-2 minutos. Si no aparece, contacte al área de tecnología. |
-| Inserté el certificado en la tabla equivocada | En **Table Editor**, abra la fila, copie los datos, bórrela y vuelva a insertar en la tabla correcta. |
-| Quiero editar los testimonios de la página principal | Los testimonios no se editan desde el panel. Contacte al área de tecnología. |
+- `anon`: SELECT en ambas tablas (verificación pública)
+- `service_role`: CRUD completo (batch, emergencias)
+- Las vistas `_input` ocultan columnas del sistema (`id`, `codigo`, `qr_url`, `created_at`) para operadores no técnicos
 
 ---
 
-## Glosario
+## CMS — Sveltia
 
-| Término | Qué significa |
-|---------|---------------|
-| CMS | Panel donde edita el contenido del sitio. |
-| Supabase Studio | Panel donde se gestionan los certificados digitales. |
-| GitHub | Plataforma donde está guardado el sitio. Su cuenta le da acceso al CMS. |
-| Save | Guarda y publica en el sitio en vivo. |
-| Save without Publishing | Guarda como borrador. El sitio no cambia. |
-| Markdown | Formato de texto simple para negrita, listas y enlaces. |
-| Código QR | Imagen que codifica la URL de verificación del certificado. Se genera automáticamente al insertar la fila. |
-| `CBHE-C-` | Prefijo de los códigos de Certificados de Capacitación. |
-| `CBHE-S-` | Prefijo de los códigos de Sello CBHE. |
-| Borrador | Contenido guardado pero oculto del sitio público. |
+El panel de edición está en `/admin/` (archivos estáticos en `public/admin/`). Backend: GitHub (`skip_ci: true` por defecto — guardar sin publicar).
+
+- **Save** = commit sin `[skip ci]` → no dispara deploy (guardar como borrador con cambios visibles solo para editores)
+- **Save and Publish** = commit sin `[skip ci]` → dispara deploy
+- Auth: GitHub personal access token (scope `repo`)
+
+> **Uso diario**: ver **[Guía de Editores](./GUIA-EDITORES.md)** para login, colecciones, flujo de publicación e imágenes.
 
 ---
 
-## Para desarrolladores
+## Variables de entorno
 
-Stack: Astro 6, Tailwind 4, Sveltia CMS, Supabase (verificación de certificados con QR automático), GitHub Pages.
+Archivo `.env` (gitignored):
+
+| Variable | Uso |
+|----------|-----|
+| `WEB3FORMS_KEY` | API key del formulario de contacto |
+| `VITE_SUPABASE_URL` | URL del proyecto Supabase |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Clave pública (anon) de Supabase |
+| `PUBLIC_VERIFICATION_URL` | URL base para codificar en los QR (default: `https://cbhe.org.bo`) |
+
+Secrets de GitHub (configurados en Actions):
+
+| Secret | Workflow |
+|--------|----------|
+| `WEB3FORMS_KEY` | `deploy.yml` |
+| `SUPABASE_URL` | `issue-certificate.yml` |
+| `SUPABASE_SERVICE_ROLE_KEY` | `issue-certificate.yml` |
+
+La Edge Function `generate-qr` accede a `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` vía `Deno.env.get()` (secrets del proyecto Supabase, no requiere configuración extra).
+
+---
+
+## Desarrollo
 
 ```bash
-npm ci
-npm run dev      # http://localhost:4321
-npm run build    # build de producción
-npm run preview  # preview del build
+npm run dev        # http://localhost:4321 — hot reload
+npm run build      # build de producción → dist/
+npm run preview    # preview del build estático
 ```
 
-Variables de entorno (`.env`): `WEB3FORMS_KEY`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `PUBLIC_VERIFICATION_URL`.
+### Convenciones
 
-Estructura: `src/content/` (colecciones: `articulos`, `cursos`, `empresas`, `testimonios`), `src/pages/`, `public/admin/` (Sveltia), `scripts/issue-certificate.mjs`, `supabase/migrations/`, `supabase/functions/generate-qr/` (Edge Function para auto-QR).
+- **Astro 6**: Content Collections con loader `glob()`, Zod desde `astro/zod`. Config en `src/content.config.ts`.
+- **Tailwind v4**: configuración en CSS con `@theme { --color-*: ... }`. Sin `tailwind.config.mjs`.
+- **Links internos**: siempre sin `/` inicial. Ej: `href="contacto"`, no `href="/contacto"`.
+- **Íconos**: `material-symbols` con guiones (ej: `material-symbols:qr-code-2`). La lista completa está en `astro.config.mjs`.
+- **Git**: conventional commits. Sin `Co-Authored-By`.
+- **Sveltia CMS**: las colecciones se definen en `public/admin/config.yml`.
+- **Supabase Edge Functions**: Deno, imports vía `https://esm.sh/...`. Deploy con MCP OAuth (tokens PAT `sbp_` no tienen scope `edge_functions:write`).
+
+### Gotchas técnicas
+
+| Problema | Razón | Fix |
+|----------|-------|-----|
+| Assets rotos en preview local | `Astro.site` apunta a prod, ORB bloquea cross-origin | Cambiar `site` en `astro.config.mjs` temporalmente |
+| `peer-checked:` no funciona en nietos | Tailwind `peer-*` solo afecta hermanos directos | Reestructurar el markup |
+| QR no aparece tras INSERT | Edge Function es asíncrona, tarda 1–2 min | Esperar o reintentar desde Dashboard → Webhooks → Logs → Retry |
+| `sello-cbhe` ya no existe | Renombrado a `sello` en migración 003 | Usar `public.sello` |
+
+---
+
+## Documentos relacionados
+
+- [Guía de Editores](./GUIA-EDITORES.md) — operación del CMS para el equipo CBHE
+- [Guía de Certificados](./GUIA-CERTIFICADOS.md) — emisión y verificación de certificados
+- [tour-del-proyecto.md](./tour-del-proyecto.md) — arquitectura interna detallada
+- [SPRINT-ENTREGA.md](./SPRINT-ENTREGA.md) — cambios del sprint actual y estado del proyecto
+- [AGENTS.md](./AGENTS.md) — convenciones completas del proyecto
