@@ -3,7 +3,7 @@ title: Decreto 5503 elimina el subsidio a los carburantes y activa un paquete de
 category: Análisis
 excerpt: La norma declara la emergencia nacional económica, libera el precio de los combustibles y propone un nuevo modelo basado en la libertad productiva y la atracción de capital extranjero.
 date: 19 Jun 2026
-image: ''
+image: /images/descarga (2).png
 featured: false
 ---
 
