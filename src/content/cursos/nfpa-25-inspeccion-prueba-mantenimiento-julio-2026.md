@@ -12,6 +12,7 @@ instructors:
   - name: Ing. Jose Anibal Castillo
     bio: Ingeniero Eléctrico y Mecánico con una maestría en Ingeniería de Protección contra Incendio de la Universidad de Maryland, Estados Unidos. Cuenta con experiencia internacional como Consultor de Códigos en NFPA, especializado en revisión técnica y traducción de normas como NFPA 13, NFPA 101 y NFPA 72. Ha ejecutado una gran cantidad de proyectos enfocados al sector industrial, comercial y residencial.
 draft: false
+featured: true
 ---
 
 Al término del curso el participante tendrá los conocimientos necesarios para saber cómo utilizar los diferentes protocolos de inspección y prueba para sistemas de protección contra incendios a base de agua de acuerdo con las recomendaciones de la normativa NFPA.

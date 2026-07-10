@@ -5,12 +5,52 @@ import Icon from "../components/Icon.astro";
 import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import PageLayout from "../layouts/PageLayout.astro";
-import { parseDateToTimestamp } from "../utils/date";
+import { parseDateToTimestamp, isPastDate } from "../utils/date";
 import { resolveImageUrl } from "../utils/images";
 
 const cursos = await getCollection("cursos", ({ data }) => !data.draft);
 
-cursos.sort((a: any, b: any) => parseDateToTimestamp(b.data.startDate) - parseDateToTimestamp(a.data.startDate));
+// Exclude past courses
+const activeCursos = cursos.filter((curso) => !isPastDate(curso.data.startDate));
+
+// Partition into featured and chronological
+const featuredCourses = activeCursos.filter((curso) => curso.data.featured);
+const chronologicalCourses = activeCursos.filter((curso) => !curso.data.featured);
+
+// Separate chronological courses into "Este mes" (July 2026) and "Próximas"
+const esteMesCursos = chronologicalCourses.filter((curso) => {
+  const ts = parseDateToTimestamp(curso.data.startDate);
+  if (ts === 0) return false;
+  const d = new Date(ts);
+  return d.getFullYear() === 2026 && d.getMonth() === 6;
+});
+
+const proximasCursos = chronologicalCourses.filter((curso) => {
+  const ts = parseDateToTimestamp(curso.data.startDate);
+  if (ts === 0) return false;
+  const d = new Date(ts);
+  return d.getFullYear() > 2026 || (d.getFullYear() === 2026 && d.getMonth() > 6);
+});
+
+// Sort ascending
+esteMesCursos.sort((a, b) => parseDateToTimestamp(a.data.startDate) - parseDateToTimestamp(b.data.startDate));
+proximasCursos.sort((a, b) => parseDateToTimestamp(a.data.startDate) - parseDateToTimestamp(b.data.startDate));
+
+const hasFeatured = featuredCourses.length > 0;
+const hasEsteMes = esteMesCursos.length > 0;
+const hasProximas = proximasCursos.length > 0;
+
+const featuredPy = (hasEsteMes || hasProximas)
+  ? "pt-12 sm:pt-16 md:pt-24 pb-6 sm:pb-8 md:pb-12"
+  : "py-12 sm:py-16 md:py-24";
+
+const esteMesPy = !hasFeatured
+  ? (hasProximas ? "pt-12 sm:pt-16 md:pt-24 pb-6 sm:pb-8 md:pb-12" : "py-12 sm:py-16 md:py-24")
+  : (hasProximas ? "py-6 sm:py-8 md:py-12" : "pt-6 sm:pt-8 md:pt-12 pb-12 sm:pb-16 md:pb-24");
+
+const proximasPy = (hasFeatured || hasEsteMes)
+  ? "pt-6 sm:pt-8 md:pt-12 pb-12 sm:pb-16 md:pb-24"
+  : "py-12 sm:py-16 md:py-24";
 ---
 
 <PageLayout
@@ -258,24 +298,59 @@ cursos.sort((a: any, b: any) => parseDateToTimestamp(b.data.startDate) - parseDa
   </style>
 
   <!-- Course Grid -->
-  <Section id="catalogo" bg="surface" scrollMargin>
-    <SectionHeading title="Próximas capacitaciones" description="Formación diseñada para los desafíos actuales del sector." />
-
-    <div id="cursos-grid" data-load-more="3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {cursos.map((curso) => (
-        <div data-load-more-item>
-          <CourseCard curso={curso} variant="default" />
+  <div id="catalogo" class="scroll-mt-24">
+    <!-- Cursos destacados -->
+    {hasFeatured && (
+      <Section bg="surface" py={featuredPy}>
+        <SectionHeading title="Cursos destacados" description="Programas recomendados y de alta especialización." />
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredCourses.map((curso) => (
+            <CourseCard curso={curso} variant="default" />
+          ))}
         </div>
-      ))}
-    </div>
+      </Section>
+    )}
 
-    <div data-load-more-wrapper class="mt-12 text-center">
-      <button data-load-more-btn class="bg-surface border border-outline-variant px-8 py-3 rounded-md font-medium text-on-surface hover:bg-surface-container-low hover:border-primary/30 transition-all min-h-[44px] inline-flex items-center gap-2">
-        <span data-load-more-text>Cargar más</span>
-        <Icon name="material-symbols:refresh" class="size-5" />
-      </button>
-    </div>
-  </Section>
+    <!-- Este mes -->
+    {hasEsteMes && (
+      <Section bg="surface" py={esteMesPy}>
+        <SectionHeading title="Este mes" description="Capacitaciones que inician durante este mes." />
+        <div data-load-more="3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {esteMesCursos.map((curso) => (
+            <div data-load-more-item>
+              <CourseCard curso={curso} variant="default" />
+            </div>
+          ))}
+        </div>
+        <div data-load-more-wrapper class="mt-12 text-center">
+          <button data-load-more-btn class="bg-surface border border-outline-variant px-8 py-3 rounded-md font-medium text-on-surface hover:bg-surface-container-low hover:border-primary/30 transition-all min-h-[44px] inline-flex items-center gap-2">
+            <span data-load-more-text>Cargar más</span>
+            <Icon name="material-symbols:refresh" class="size-5" />
+          </button>
+        </div>
+      </Section>
+    )}
+
+    <!-- Próximas capacitaciones -->
+    {hasProximas && (
+      <Section bg="surface" py={proximasPy}>
+        <SectionHeading title="Próximas capacitaciones" description="Planifique su desarrollo profesional con nuestros próximos cursos." />
+        <div data-load-more="3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {proximasCursos.map((curso) => (
+            <div data-load-more-item>
+              <CourseCard curso={curso} variant="default" />
+            </div>
+          ))}
+        </div>
+        <div data-load-more-wrapper class="mt-12 text-center">
+          <button data-load-more-btn class="bg-surface border border-outline-variant px-8 py-3 rounded-md font-medium text-on-surface hover:bg-surface-container-low hover:border-primary/30 transition-all min-h-[44px] inline-flex items-center gap-2">
+            <span data-load-more-text>Cargar más</span>
+            <Icon name="material-symbols:refresh" class="size-5" />
+          </button>
+        </div>
+      </Section>
+    )}
+  </div>
 
   <!-- CTA: Inscríbase ahora -->
   <section class="bg-inverse-surface py-16 sm:py-20 md:py-28 px-4 sm:px-6 md:px-8">

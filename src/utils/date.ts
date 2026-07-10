@@ -2,14 +2,33 @@
  * Mapas de meses español abreviados → número/mes ISO
  */
 const MESES_NUM: Record<string, number> = {
-  Ene: 0, Feb: 1, Mar: 2, Abr: 3, May: 4, Jun: 5,
-  Jul: 6, Ago: 7, Sep: 8, Oct: 9, Nov: 10, Dic: 11,
+  Ene: 0, Jan: 0,
+  Feb: 1,
+  Mar: 2,
+  Abr: 3, Apr: 3,
+  May: 4,
+  Jun: 5,
+  Jul: 6,
+  Ago: 7, Aug: 7,
+  Sep: 8,
+  Oct: 9,
+  Nov: 10,
+  Dic: 11, Dec: 11,
 };
 
 const MESES_ISO: Record<string, string> = {
-  Ene: "01", Feb: "02", Mar: "03", Abr: "04",
-  May: "05", Jun: "06", Jul: "07", Ago: "08",
-  Sep: "09", Oct: "10", Nov: "11", Dic: "12",
+  Ene: "01", Jan: "01",
+  Feb: "02",
+  Mar: "03",
+  Abr: "04", Apr: "04",
+  May: "05",
+  Jun: "06",
+  Jul: "07",
+  Ago: "08", Aug: "08",
+  Sep: "09",
+  Oct: "10",
+  Nov: "11",
+  Dic: "12", Dec: "12",
 };
 
 /**

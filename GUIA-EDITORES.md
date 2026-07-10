@@ -125,6 +125,7 @@ flowchart TD
 | Descripción breve | — | Texto | 1-2 líneas para la vista previa en el catálogo |
 | Ponentes / Instructores | — | Lista | Nombre y biografía de cada instructor |
 | Contenido completo | — | Markdown | Cuerpo del curso (opcional si el Canva cubre todo) |
+| Destacado | — | Switch | Activado = el curso se muestra en la sección de "Cursos destacados" al inicio y se excluye de las listas cronológicas |
 | Borrador | — | Switch | Activado = no aparece en el sitio |
 
 ### Artículos (Novedades)
@@ -136,7 +137,7 @@ flowchart TD
 | Extracto | ✅ | Texto | Resumen de 1-2 líneas que aparece en la lista de novedades |
 | Fecha | ✅ | Fecha | Fecha de publicación (formato: DD MMM YYYY) |
 | Imagen | — | Imagen | Imagen principal del artículo |
-| Destacado en portada | — | Switch | Activado = aparece en la sección de destacados del home |
+| Destacado en portada | — | Switch | Activado = aparece destacado al inicio de la página Novedades (se excluye de la grilla general) y en la sección del Home |
 | Contenido completo | ✅ | Markdown | Cuerpo del artículo |
 | Borrador | — | Switch | Activado = no aparece en el sitio |
 
@@ -154,6 +155,19 @@ flowchart TD
 | Borrador | — | Switch | Activado = no aparece en el sitio |
 
 > **Nota**: Los **Testimonios** no se editan desde Sveltia CMS — se gestionan directamente en los archivos del proyecto. Si necesita agregar o modificar un testimonio, coordínelo con Nicolás.
+
+### Comportamiento Automático de las Páginas (Web)
+
+Para facilitar la administración, el sitio web aplica reglas automáticas al compilarse (Astro SSG):
+
+#### Página de Capacitación (Cursos)
+- **Cursos pasados:** Se ocultan automáticamente si la fecha de inicio del curso es anterior a la fecha actual del día en que se compila el sitio.
+- **Cursos destacados:** Si un curso tiene activa la casilla **Destacado**, aparecerá en la sección `Cursos destacados` al inicio del catálogo de cursos (en una rejilla estándar) y será excluido de las listas cronológicas para evitar duplicados. Si no hay cursos destacados, la sección no se muestra.
+- **Este mes:** Lista cronológica (ascendente, del más cercano al más lejano) de los cursos activos que inician en el mes corriente. Si no hay cursos este mes, la sección se oculta automáticamente.
+- **Próximas capacitaciones:** Lista cronológica (ascendente) de los cursos activos que inician en meses futuros. Si no hay próximos cursos, la sección se oculta automáticamente.
+
+#### Página de Novedades (Noticias y Publicaciones)
+- **Artículo Destacado:** El artículo más reciente marcado como **Destacado en portada** aparecerá como un banner destacado de gran formato en la parte superior de la página de Novedades (y también en el carrusel de destacados de la página de inicio). Se excluye de la grilla de noticias general para evitar duplicados.
 
 ---
 

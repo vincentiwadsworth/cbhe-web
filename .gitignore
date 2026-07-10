@@ -27,5 +27,5 @@ pnpm-debug.log*
 .playwright-mcp/
 # Top-level PNG screenshots from Playwright sessions (root only — subdirs are fine)
 /*.png
-# Top-level skill-registry cache (regenerated automatically)
-/.atl/.skill-registry.cache.json
+# Skill registry and SDD artifacts (regenerated automatically)
+/.atl/

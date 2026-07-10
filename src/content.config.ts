@@ -20,6 +20,7 @@ const cursos = defineCollection({
         bio: z.string().optional(),
       })
     ).default([]),
+    featured: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
 });

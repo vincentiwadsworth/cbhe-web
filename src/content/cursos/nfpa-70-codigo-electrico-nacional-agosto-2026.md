@@ -3,7 +3,7 @@ title: "Curso NFPA 70: Código Eléctrico Nacional (NEC) — Edición 2023"
 category: "Curso"
 modality: "Virtual"
 image: "images/cursos/nfpa-70-codigo-electrico.webp"
-startDate: "18 Aug 2026"
+startDate: "18 Ago 2026"
 price: "9800 Bs."
 instructors:
   - name: "Ing. Fernando Escalante"

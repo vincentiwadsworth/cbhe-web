@@ -54,6 +54,13 @@ collections:
           - { name: bio, label: Biografía, widget: text, required: false }
       - { name: body, label: Contenido completo (opcional si hay Canva), widget: markdown, required: false }
       - {
+          name: featured,
+          label: Destacado,
+          widget: boolean,
+          default: false,
+          required: false,
+        }
+      - {
           name: draft,
           label: Borrador,
           widget: boolean,
