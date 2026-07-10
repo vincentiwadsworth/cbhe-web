@@ -34,9 +34,25 @@ collections:
           options: ["Virtual", "Presencial", "Híbrido"],
         }
       - { name: image, label: Imagen (opcional, si no hay Canva), widget: image, required: false }
-      - { name: startDate, label: "Fecha de inicio", widget: datetime, type: date, format: "DD MMM YYYY" }
+      - {
+          name: startDate,
+          label: "Fecha de inicio",
+          widget: datetime,
+          date_format: "DD/MM/YYYY",
+          time_format: false,
+          format: "DD MMM YYYY"
+        }
       - { name: price, label: Precio / Inversión, widget: string, hint: "Ej: 950 Bs. (750 Bs. lanzamiento hasta 22 de mayo)" }
-      - { name: registrationDeadline, label: Fecha límite inscripción, widget: string, required: false, hint: "Solo si hay precio de lanzamiento" }
+      - {
+          name: registrationDeadline,
+          label: "Fecha límite inscripción",
+          widget: datetime,
+          date_format: "DD/MM/YYYY",
+          time_format: false,
+          format: "DD/MM/YYYY",
+          required: false,
+          hint: "Solo si hay precio de lanzamiento"
+        }
       - { name: canvaLink, label: Link a Canva, widget: string, required: false, hint: "URL del diseño en Canva con toda la info del curso" }
       - {
           name: description,
@@ -89,7 +105,14 @@ collections:
             ],
         }
       - { name: excerpt, label: Extracto, widget: text }
-      - { name: date, label: Fecha, widget: datetime, type: date, format: "DD MMM YYYY" }
+      - {
+          name: date,
+          label: Fecha,
+          widget: datetime,
+          date_format: "DD/MM/YYYY",
+          time_format: false,
+          format: "DD MMM YYYY"
+        }
       - {
           name: image,
           label: Imagen,

@@ -3,7 +3,7 @@ title: 'Clases Maestras: Evaluación de Riesgos de Incendios'
 category: Curso
 modality: Virtual
 image: /images/17 DE AGOSTO AL 14 DE SEPTIEMBRE 2026.png
-startDate: 18 May 2026
+startDate: 12 Ago 2026
 price: $150 USD (Descuento del 10% por más de 3 personas)
 registrationDeadline: ''
 canvaLink: https://canva.link/vc7pphhkfo5d5m1

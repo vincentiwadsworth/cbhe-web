@@ -120,7 +120,7 @@ flowchart TD
 | Imagen | — | Imagen | Foto o banner del curso (opcional si hay link a Canva) |
 | Fecha de inicio | ✅ | Fecha | Cuándo empieza el curso (formato: DD MMM YYYY) |
 | Precio / Inversión | ✅ | Texto | Ej: "950 Bs. (750 Bs. lanzamiento hasta 22 de mayo)" |
-| Fecha límite inscripción | — | Texto | Solo si hay precio de lanzamiento con fecha de corte |
+| Fecha límite inscripción | — | Datetime (Calendario) | Selector de fecha. Solo si hay precio de lanzamiento con fecha de corte |
 | Link a Canva | — | URL | URL del diseño en Canva con toda la info del curso |
 | Descripción breve | — | Texto | 1-2 líneas para la vista previa en el catálogo |
 | Ponentes / Instructores | — | Lista | Nombre y biografía de cada instructor |
