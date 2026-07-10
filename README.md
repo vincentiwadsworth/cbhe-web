@@ -1,6 +1,6 @@
 # Sitio web institucional de la CBHE
 
-Este repositorio contiene el sitio web institucional de la Cámara Boliviana de Hidrocarburos y Energía, construido para que el equipo publique contenido, emita QR para sus certificados y permita al público verificarlos sin instalar nada. 
+Este repositorio contiene el sitio web institucional de la Cámara Boliviana de Hidrocarburos y Energía, construido para que el equipo publique contenido, emita QR para sus certificados y permita al público verificarlos desde cualquier dispositivo (sin instalar software adicional). 
 
 Esta web reemplaza al sitio anterior, actualizando la imagen institucional web de la CBHE y al mismo tiempo le da al equipo independencia operativa al equipo: quienes publican y emiten no necesitan conocimientos técnicos ni depender de un desarrollador para las tareas diarias. 
 
