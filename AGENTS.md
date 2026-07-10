@@ -86,11 +86,15 @@
 - **URL encoded in QR**: `PUBLIC_VERIFICATION_URL/certificados/?c={codigo}` (default `https://vincentiwadsworth.github.io/cbhe-web`).
 - **Mostrar en landing**: `src/pages/certificados.astro` debe renderizar `<img src={qr_url} />` cuando la fila consultada tiene `qr_url` no-NULL.
 
-### Input views (UX para no-técnicos)
-- `public.capacitacion_input` — expone `cursante_nombre, nombre_capacitacion, fecha_emision`. Oculta `id, codigo, qr_url, created_at`.
-- `public.sello_input` — expone `empresa_nombre, fecha_emision`. Oculta `id, codigo, qr_url, created_at, tipo_certificado`.
-- Views simples (una tabla, sin joins) son auto-updatable en PostgreSQL. INSERT directo desde Supabase Table Editor.
-- Supabase Studio ofrece modificar datos desde una view.
+### Input flow (UX para no-técnicos)
+- Los operadores insertan **directamente en las tablas base** (`capacitacion` o `sello`) desde Supabase Studio → Table Editor → Insert row.
+- Solo se completan los campos editables (`cursante_nombre`, `nombre_capacitacion`, `fecha_emision` para capacitación; `empresa_nombre`, `fecha_emision` para sello).
+- Los cuatro campos del sistema se **dejan en blanco** y se completan automáticamente al guardar:
+  - `id` → `gen_random_uuid()` (default de la tabla).
+  - `codigo` → trigger `BEFORE INSERT` con prefijo `CBHE-C-` o `CBHE-S-`.
+  - `created_at` → `now()` (default de la tabla).
+  - `qr_url` → Edge Function `generate-qr` vía trigger `pg_net` AFTER INSERT, tarda ~5 s.
+- **No usar views `*_input`**: Supabase Studio no ofrece acción de insert en views, solo en tablas. Las views creadas en la migration 003 fueron eliminadas en la migration 006.
 
 ### Verb convention (docs y código)
 - **Emitir**: acción humana. El operador emite un certificado INSERTando una fila en `capacitacion` o `sello` desde Supabase Studio. La emisión es manual.

@@ -183,7 +183,7 @@ El sistema de certificados tiene dos tablas independientes en Supabase, cada una
 | `created_at` | `timestamptz` | Timestamp de creación |
 
 **Operador**: Alejandra  
-**Vista simplificada**: `public.capacitacion_input` — expone `cursante_nombre`, `nombre_capacitacion`, `fecha_emision` y oculta columnas del sistema.
+**Input directo en tabla**: `public.capacitacion` — el operador completa solo `cursante_nombre`, `nombre_capacitacion`, `fecha_emision`. Los campos `id`, `codigo`, `created_at`, `qr_url` se completan automáticamente.
 
 #### `public.sello`
 
@@ -198,11 +198,11 @@ El sistema de certificados tiene dos tablas independientes en Supabase, cada una
 | `created_at` | `timestamptz` | Timestamp de creación |
 
 **Operador**: Tania  
-**Vista simplificada**: `public.sello_input` — expone `empresa_nombre`, `fecha_emision` y oculta columnas del sistema.
+**Input directo en tabla**: `public.sello` — el operador completa solo `empresa_nombre`, `fecha_emision`. Los campos `id`, `codigo`, `created_at`, `qr_url` se completan automáticamente.
 
 ### Pipeline Auto-QR
 
-1. El operador inserta una fila en `capacitacion_input` o `sello_input` desde Supabase Studio
+1. El operador inserta una fila en `capacitacion` o `sello` desde Supabase Studio (dejando en blanco `id`, `codigo`, `created_at`, `qr_url`, que se completan automáticamente)
 2. Un trigger `BEFORE INSERT` genera el código único con el prefijo correcto (`CBHE-C-` o `CBHE-S-`) usando `nanoid()`
 3. Un trigger `pg_net` (`net.http_post()`) dispara la Edge Function `generate-qr` con el payload `{ record, table }`
 4. La Edge Function (Deno) genera un PNG de 300px con `qrcode` (vía `esm.sh`), lo sube al bucket Storage `certificados-qr` (público), y ejecuta `UPDATE qr_url` en la fila correspondiente
