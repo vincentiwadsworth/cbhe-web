@@ -11,7 +11,7 @@ La CBHE es dueña del código, los datos y la infraestructura. El costo operativ
 | Funcionalidad | Quién la usa | Cómo funciona |
 |---|---|---|
 | Sitio institucional | Público general | Páginas estáticas con información institucional, directorio de empresas afiliadas, artículos, cursos, formulario de contacto |
-| CMS para editar contenido | Responsable de Comunicación, Responsable de Capacitación | Panel web Sveltia CMS: escribir, subir imágenes y publicar sin tocar código |
+| Edición de contenido | Responsable de Comunicación, Responsable de Capacitación | Sveltia CMS: Sistema de Gestión de Contenido (CMS) provee un panel que permite escribir, subir imágenes y publicar contenido en las categorías Cursos, Novedades y Empresas sin tocar código |
 | Sello CBHE | Responsable de Gestión | Emitir el sello desde Supabase, el QR se genera de forma automática y el público puede verificarlo escaneándolo |
 | Certificados de Capacitación | Responsable de Capacitación | Emitir el certificado desde Supabase, el QR se genera de forma automática y el público puede verificarlo escaneándolo |
 
