@@ -69,6 +69,14 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
               </p>
             </div>
 
+            <!-- Hidden: fecha_expiracion (shown dynamically when not NULL) -->
+            <div id="cert-expiracion" class="hidden">
+              <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Fecha de Expiración</p>
+              <p id="cert-expiracion-value" class="text-on-surface flex items-center gap-1.5">
+                <Icon name="material-symbols:schedule" class="size-4 text-on-surface-variant" />
+              </p>
+            </div>
+
             <!-- QR Code (shown dynamically when qr_url is non-NULL) -->
             <div id="cert-qr" class="hidden pt-4 border-t border-outline-variant/30">
               <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2 text-center">Código QR de Verificación</p>
@@ -212,13 +220,58 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
     }
 
     if (codigoEl) codigoEl.textContent = cert.codigo;
+
+    // Expiration: status + display
+    const expiracionEl = document.getElementById("cert-expiracion");
+    const expiracionValueEl = document.getElementById("cert-expiracion-value");
+    const hasExp = cert.fecha_expiracion != null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const expDate = hasExp ? new Date(cert.fecha_expiracion + "T00:00:00") : null;
+    const isVigente = !hasExp || expDate >= today;
+
+    if (expiracionValueEl && expiracionEl) {
+      if (hasExp) {
+        expiracionValueEl.textContent = formatDate(cert.fecha_expiracion);
+        expiracionEl.classList.remove("hidden");
+      } else {
+        expiracionEl.classList.add("hidden");
+      }
+    }
+
+    const headerEl = document.getElementById("cert-header");
+    const estadoIcon = document.getElementById("cert-estado-icon");
+    const estadoTitle = document.getElementById("cert-estado-title");
+    const estadoDesc = document.getElementById("cert-estado-desc");
+
+    if (isVigente) {
+      if (estadoIcon) {
+        estadoIcon.setAttribute("name", "material-symbols:verified");
+        estadoIcon.className = "size-8 shrink-0 text-success";
+      }
+      if (estadoTitle) estadoTitle.textContent = "Certificado Verificado";
+      if (estadoDesc) {
+        estadoDesc.textContent = hasExp
+          ? "Este certificado está vigente."
+          : "Este certificado es válido y está vigente.";
+      }
+      if (headerEl) headerEl.className = "px-6 py-4 flex items-center gap-3 bg-success/10";
+    } else {
+      if (estadoIcon) {
+        estadoIcon.setAttribute("name", "material-symbols:security");
+        estadoIcon.className = "size-8 shrink-0 text-error";
+      }
+      if (estadoTitle) estadoTitle.textContent = "Certificado Vencido";
+      if (estadoDesc) estadoDesc.textContent = "Este certificado expiró.";
+      if (headerEl) headerEl.className = "px-6 py-4 flex items-center gap-3 bg-error/10";
+    }
   }
 
   function getMapping(codigo) {
     if (codigo.startsWith("CBHE-C-")) {
       return {
         table: "capacitacion",
-        select: "cursante_nombre, nombre_capacitacion, fecha_emision, codigo, qr_url",
+        select: "cursante_nombre, nombre_capacitacion, fecha_emision, fecha_expiracion, codigo, qr_url",
         labels: { primary: "Cursante", secondary: "Capacitación" },
         fieldKeys: { primary: "cursante_nombre", secondary: "nombre_capacitacion" },
       };
@@ -226,7 +279,7 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
     if (codigo.startsWith("CBHE-S-")) {
       return {
         table: "sello",
-        select: "empresa_nombre, tipo_certificado, fecha_emision, codigo, qr_url",
+        select: "empresa_nombre, tipo_certificado, fecha_emision, fecha_expiracion, codigo, qr_url",
         labels: { primary: "Empresa", secondary: "Tipo de Certificado" },
         fieldKeys: { primary: "empresa_nombre", secondary: "tipo_certificado" },
       };
