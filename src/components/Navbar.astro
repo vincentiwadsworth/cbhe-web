@@ -25,7 +25,7 @@ const linkClass = (isActive: boolean) =>
     : "text-on-surface-variant hover:text-primary hover:underline hover:underline-offset-4 transition-colors";
 ---
 
-<nav id="main-nav" class="sticky top-0 z-50 bg-black/20 backdrop-blur-md transition-all duration-300">
+<nav id="main-nav" class="sticky top-0 z-50 bg-surface-bright/80 backdrop-blur-md transition-all duration-300">
   <!-- Skip to main content -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 rounded-md z-[60] bg-surface-bright text-on-surface px-4 py-2">
     Saltar al contenido principal
@@ -90,11 +90,11 @@ const linkClass = (isActive: boolean) =>
   if (nav) {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
-        nav.classList.add('bg-surface-bright/90', 'shadow-sm');
-        nav.classList.remove('bg-black/20');
+        nav.classList.add('bg-surface-bright/95', 'shadow-sm');
+        nav.classList.remove('bg-surface-bright/80');
       } else {
-        nav.classList.add('bg-black/20');
-        nav.classList.remove('bg-surface-bright/90', 'shadow-sm');
+        nav.classList.add('bg-surface-bright/80');
+        nav.classList.remove('bg-surface-bright/95', 'shadow-sm');
       }
     }, { passive: true });
   }

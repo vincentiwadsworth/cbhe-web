@@ -144,7 +144,7 @@ const actuar = [
     />
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {actuar.map((item) => (
-        <div class="group bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md transition-all duration-300">
+        <div class="group bg-surface rounded-lg p-6 md:p-8 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md transition-all duration-300">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-primary-container shrink-0 rounded-lg flex items-center justify-center">
               <Icon name={`material-symbols:${item.icon}`} class="text-on-primary-container size-5" />
@@ -164,10 +164,11 @@ const actuar = [
 
   <!-- CTA -->
   <CtaBanner
+    variant="dark"
     title="Conozca a quienes representamos"
     description="Casi un centenar de empresas organizadas en cinco grupos industriales. Explore el directorio completo de nuestras afiliadas."
   >
-    <a href="afiliadas" class="inline-flex items-center gap-2 bg-primary text-on-primary rounded-md px-8 py-4 font-semibold hover:bg-primary/90 hover:shadow-md transition-all min-h-[44px] spring-press">
+    <a href="afiliadas" class="inline-flex items-center gap-2 bg-inverse-on-surface text-inverse-surface rounded-md px-8 py-4 font-semibold hover:bg-surface-bright hover:shadow-md transition-all min-h-[44px] spring-press">
       Ver empresas afiliadas
       <Icon name="material-symbols:arrow-forward" class="size-5" />
     </a>
