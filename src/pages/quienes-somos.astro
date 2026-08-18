@@ -48,36 +48,59 @@ const actuar = [
   { letter: "R", icon: "account-balance", title: "Representar", desc: "Representar a la industria ante los diferentes ámbitos públicos y privados, defendiendo los intereses del sector energético." },
 ];
 
-const comite = [
+const directorio = [
   {
-    nombre: "Mariano Ferrari",
-    cargo: "Presidente",
-    empresa: "Repsol Bolivia S.A.",
-    iniciales: "MF",
+    grupo: "Upstream",
+    miembros: [
+      { cargo: "Presidente", empresa: "Repsol", nombre: "Mariano Ferrari" },
+      { cargo: "Vicepresidente", empresa: "TotalEnergies", nombre: "Sergio Giorgi" },
+      { cargo: "Director Titular", empresa: "Petrobras", nombre: "Diogo Mattoso Abreu" },
+      { cargo: "Director Alterno", empresa: "Matpetrol", nombre: "Javier Paz Soldán" },
+      { cargo: "Director Titular", empresa: "Shell", nombre: "Cristina Nuñez C." },
+      { cargo: "Director Alterno", empresa: "PAE", nombre: "Juan Dauria" },
+      { cargo: "Director Titular", empresa: "Vintage", nombre: "Jorge Martignoni" },
+    ],
   },
   {
-    nombre: "Sergio Mengoni",
-    cargo: "Vicepresidente",
-    empresa: "TotalEnergies E&P Bolivie",
-    iniciales: "SM",
+    grupo: "Servicios y Suministros Especializados en Pozo",
+    miembros: [
+      { cargo: "Secretario", empresa: "Halliburton", nombre: "Pablo Moreno" },
+      { cargo: "Director Titular", empresa: "SLB", nombre: "René Arze" },
+      { cargo: "Director Alterno", empresa: "Rigmaster", nombre: "Edson Vargas" },
+      { cargo: "Director Titular", empresa: "Petrolog", nombre: "Orlando Vaca" },
+      { cargo: "Director Alterno", empresa: "Continental", nombre: "Rodrigo Barrenechea" },
+    ],
   },
   {
-    nombre: "Diego Merchan",
-    cargo: "Tesorero",
-    empresa: "Confipetrol S.A.",
-    iniciales: "DM",
+    grupo: "Servicios y Suministros Especializados en Superficie",
+    miembros: [
+      { cargo: "Tesorero", empresa: "Confipetrol", nombre: "Diego Orlando Merchan Pico" },
+      { cargo: "Director Titular", empresa: "Bolpegas", nombre: "Ricardo Carrillo" },
+      { cargo: "Director Alterno", empresa: "Hoerbiger", nombre: "Samanta Salinas" },
+      { cargo: "Director Titular", empresa: "Intergas", nombre: "Melanie Zehl" },
+      { cargo: "Director Alterno", empresa: "Energy Advances", nombre: "Mauricio Montalvo Arancibia" },
+    ],
   },
   {
-    nombre: "Pablo Moreno",
-    cargo: "Secretario General",
-    empresa: "Halliburton Suc. Bolivia",
-    iniciales: "PM",
+    grupo: "Industria, Transporte y Distribución de Hidrocarburos",
+    miembros: [
+      { cargo: "Director Titular", empresa: "Prodimsa", nombre: "Luis Fernando Guardia" },
+    ],
   },
   {
-    nombre: "Iver von Borries",
-    cargo: "Director Ejecutivo",
-    empresa: "CBHE",
-    iniciales: "IB",
+    grupo: "Servicios Auxiliares",
+    miembros: [
+      { cargo: "Director Titular", empresa: "PPO Indacochea", nombre: "Pablo Ordoñez" },
+      { cargo: "Director Alterno", empresa: "Wayar & von Borries", nombre: "Iver von Borries" },
+      { cargo: "Director Titular", empresa: "Sudamericana", nombre: "Daniel Saucedo" },
+      { cargo: "Director Alterno", empresa: "Solaria", nombre: "Alejandro Lora" },
+    ],
+  },
+  {
+    grupo: "Cámara",
+    miembros: [
+      { cargo: "Director Ejecutivo", empresa: "CBHE", nombre: "Iver von Borries" },
+    ],
   },
 ];
 ---
@@ -140,22 +163,30 @@ const comite = [
     </div>
   </Section>
 
-  <!-- Comité Ejecutivo -->
+  <!-- Directorio -->
   <Section bg="surface">
     <SectionHeading
-      title="Comité Ejecutivo"
-      description="Nuestra Mesa Directiva para la gestión 2024-2026, elegida por la Asamblea General Ordinaria de Socios. Representan a las empresas líderes del sector energético boliviano."
+      title="Directorio"
+      description="Representantes de las empresas afiliadas ante el Directorio de la CBHE, organizados por grupo industrial. La Mesa Directiva y los directores titulares y alternos son elegidos por la Asamblea General de Socios."
     />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8">
-      {comite.map((miembro) => (
-        <article class="bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/20 hover:border-primary/30 hover:shadow-md transition-all duration-300 text-center group">
-          <!-- Avatar: iniciales como placeholder hasta tener fotos -->
-          <div class="w-24 h-24 rounded-full bg-primary-container flex items-center justify-center mx-auto mb-5 group-hover:scale-105 transition-transform duration-300">
-            <span class="text-on-primary-container font-headline font-bold text-2xl md:text-3xl">{miembro.iniciales}</span>
-          </div>
-          <h3 class="font-headline font-bold text-on-surface text-lg md:text-xl mb-1">{miembro.nombre}</h3>
-          <p class="text-primary font-headline font-semibold text-sm md:text-base mb-2">{miembro.cargo}</p>
-          <p class="text-on-surface-variant font-body text-xs md:text-sm leading-relaxed">{miembro.empresa}</p>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {directorio.map((g) => (
+        <article class:list={[
+          "bg-surface-container-low rounded-lg border border-outline-variant/20 overflow-hidden flex flex-col",
+          g.grupo === "Cámara" && "lg:col-span-2",
+        ]}>
+          <h3 class="font-headline font-bold text-on-surface text-base md:text-lg px-6 py-4 bg-surface-container border-b border-outline-variant/30">
+            {g.grupo}
+          </h3>
+          <ul class="divide-y divide-outline-variant/20">
+            {g.miembros.map((m) => (
+              <li class="px-6 py-4 grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-4 items-baseline hover:bg-surface-container transition-colors">
+                <span class="sm:col-span-3 text-primary font-headline font-semibold text-sm">{m.cargo}</span>
+                <span class="sm:col-span-5 font-headline font-bold text-on-surface">{m.nombre}</span>
+                <span class="sm:col-span-4 text-on-surface-variant text-xs font-semibold tracking-wider uppercase">{m.empresa}</span>
+              </li>
+            ))}
+          </ul>
         </article>
       ))}
     </div>
