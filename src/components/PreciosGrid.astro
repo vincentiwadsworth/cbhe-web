@@ -7,7 +7,7 @@ interface Commodity {
 
 interface PricesData {
   updated: string;
-  usd_bob: { buy: number; sell: number };
+  usd_bob: { official: number };
   commodities: {
     WTI: Commodity;
     BRENT: Commodity;
@@ -58,20 +58,11 @@ const items = [
       ))}
 
       <div class="p-4 flex flex-col items-center text-center">
-        <p class="text-inverse-on-surface/70 text-xs uppercase tracking-wide">USD/BOB BCB</p>
-        <div>
-          <p class="text-inverse-on-surface font-extrabold text-lg sm:text-xl lg:text-2xl tabular-nums tracking-tight">
-            {fmtPrice(usd_bob.buy)}
-            <span class="text-inverse-on-surface/70 text-xs">Compra</span>
-          </p>
-        </div>
-        <div class="border-t border-inverse-on-surface/20 my-2 w-full"></div>
-        <div>
-          <p class="text-inverse-on-surface font-extrabold text-lg sm:text-xl lg:text-2xl tabular-nums tracking-tight">
-            {fmtPrice(usd_bob.sell)}
-            <span class="text-inverse-on-surface/70 text-xs">Venta</span>
-          </p>
-        </div>
+        <p class="text-inverse-on-surface/70 text-xs uppercase tracking-wide">Dólar oficial BCB</p>
+        <p class="text-inverse-on-surface font-extrabold text-xl sm:text-2xl lg:text-3xl tabular-nums tracking-tight">
+          {fmtPrice(usd_bob.official)}
+        </p>
+        <p class="text-inverse-on-surface/70 text-xs sm:text-sm">Bs/USD</p>
       </div>
     </div>
 

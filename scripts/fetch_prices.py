@@ -2,13 +2,13 @@
 import json
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import httpx
 import yfinance as yf
 from bs4 import BeautifulSoup
 
-BCB_URL = "https://www.bcb.gob.bo/"
+BCB_URL = "https://www.bcb.gob.bo/librerias/indicadores/otras/ultimo.php"
 COMMODITIES = {
     "WTI": {"ticker": "CL=F", "unit": "USD/barril", "label": "WTI Crudo"},
     "BRENT": {"ticker": "BZ=F", "unit": "USD/barril", "label": "Brent Crudo"},
@@ -17,31 +17,23 @@ COMMODITIES = {
 }
 
 
+def parse_usd_official(html: str) -> float:
+    """Extract the official USD/BOB rate (TCO único) from BCB's ultimo.php page."""
+    soup = BeautifulSoup(html, "html.parser")
+    for div in soup.find_all("div", class_="bloque-titulo"):
+        if "Boliviano respecto al D" not in div.get_text():
+            continue
+        table = div.find_next("table")
+        for tr in table.find_all("tr"):
+            cells = [td.get_text(strip=True) for td in tr.find_all("td")]
+            if "USD" in cells:
+                return float(cells[-1].replace(",", "."))
+    raise ValueError(f"No se pudo parsear USD/BOB de {BCB_URL}")
+
+
 def fetch_usd_bob() -> dict[str, float]:
     text = httpx.get(BCB_URL, timeout=30).text
-    soup = BeautifulSoup(text, "html.parser")
-    body = soup.get_text()
-
-    buy = sell = None
-    lines = [ln.strip() for ln in body.splitlines() if ln.strip()]
-
-    in_referential = False
-    for i, line in enumerate(lines):
-        if "Valor referencial del d" in line:
-            in_referential = True
-            continue
-        if not in_referential:
-            continue
-        if line == "Compra" and i + 1 < len(lines):
-            buy = float(lines[i + 1].replace(",", "."))
-        elif line == "Venta" and i + 1 < len(lines):
-            sell = float(lines[i + 1].replace(",", "."))
-            break
-
-    if buy is None or sell is None:
-        raise ValueError(f"No se pudo parsear USD/BOB de {BCB_URL}. buy={buy} sell={sell}")
-
-    return {"buy": buy, "sell": sell}
+    return {"official": parse_usd_official(text)}
 
 
 def fetch_commodities() -> dict[str, dict]:
@@ -61,15 +53,24 @@ def main() -> None:
 
     try:
         usd_bob = fetch_usd_bob()
+        updated = datetime.now(timezone.utc).isoformat()
+        stale_since = None
     except Exception as exc:
         print(f"[BCB ERROR] {exc}", file=sys.stderr)
         try:
             with open(output_path, encoding="utf-8") as f:
                 prev = json.load(f)
             usd_bob = prev["usd_bob"]
-            print("[BCB] Using cached USD/BOB values", file=sys.stderr)
+            updated = prev.get("updated")
+            stale_since = prev.get("stale_since") or datetime.now(timezone.utc).isoformat()
+            print(f"[BCB] Using cached USD/BOB values (stale since {stale_since})", file=sys.stderr)
         except Exception:
             print("[BCB] No cached values — aborting", file=sys.stderr)
+            sys.exit(1)
+
+        stale_dt = datetime.fromisoformat(stale_since)
+        if datetime.now(timezone.utc) - stale_dt > timedelta(days=7):
+            print(f"[BCB ERROR] USD/BOB stale since {stale_since} (>7 days) — aborting", file=sys.stderr)
             sys.exit(1)
 
     try:
@@ -86,10 +87,12 @@ def main() -> None:
             sys.exit(1)
 
     data = {
-        "updated": datetime.now(timezone.utc).isoformat(),
+        "updated": updated,
         "usd_bob": usd_bob,
         "commodities": commodities,
     }
+    if stale_since:
+        data["stale_since"] = stale_since
 
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
