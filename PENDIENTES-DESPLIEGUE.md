@@ -165,7 +165,7 @@ Lo hace el soporte técnico (Nicolás). Se cambian dos valores en el archivo `as
 
 Haga estas comprobaciones antes de dar por terminada la migración:
 
-1. Navegue 3 o 4 páginas internas del sitio en `cbhe.org.bo` (por ejemplo, la portada, una página de servicios y una novedad) y confirme que cargan bien.
+1. Navegue 3 o 4 páginas internas del sitio en `cbhe.org.bo` (por ejemplo, la portada, un curso y una novedad) y confirme que cargan bien.
 2. Abra `https://cbhe.org.bo/admin/` y confirme que pide iniciar sesión con GitHub. Ese es el panel del CMS.
 3. Verifique un certificado QR real: escanee el QR de un certificado emitido o abra su URL de verificación, que tiene la forma `https://cbhe.org.bo/certificados/?c=CBHE-C-XXXX` (reemplace `XXXX` por el código real). Confirme que muestra los datos del certificado.
 4. Envíe y reciba otro mail de prueba hacia y desde una cuenta externa, igual que en el Paso 2.
