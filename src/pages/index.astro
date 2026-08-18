@@ -102,8 +102,8 @@ const gruposHome = [
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 w-full pb-16 sm:pb-18 md:pb-20 text-center">
       <h1 class="text-inverse-on-surface font-headline font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-snug mb-5 md:mb-6 tracking-tight max-w-4xl mx-auto">
-        <span class="block">Representamos a quienes producen el</span>
-        <span class="block"><span class="text-primary-fixed text-4xl sm:text-5xl md:text-6xl lg:text-7xl">99%</span></span>
+        <span class="block">Representamos a quienes producen</span>
+        <span class="block"><span class="text-primary-fixed text-4xl sm:text-5xl md:text-6xl lg:text-7xl">el 99%</span></span>
         <span class="block">del gas natural boliviano</span>
       </h1>
       <p class="text-inverse-on-surface/80 font-body text-base sm:text-lg md:text-xl mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed sm:leading-loose">
@@ -261,7 +261,7 @@ const gruposHome = [
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
       {gruposHome.map((group) => (
         <a href={`afiliadas#grupo-${groupSlugs[group.title]}`} class="block group">
-          <article class="glass-card rounded-lg border-t-4 border-primary-container hover:border-primary/30 hover:shadow-md hover:scale-[1.01] transition-all duration-300 h-full">
+          <article class="bg-surface-bright rounded-lg border border-outline-variant/30 hover:border-primary/30 hover:shadow-md hover:scale-[1.01] transition-all duration-300 h-full">
             <div class="p-6 md:p-8">
               <p class="font-headline font-extrabold text-4xl md:text-5xl text-primary mb-2 tracking-tight">{group.count}</p>
               <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">empresas</p>
@@ -352,7 +352,7 @@ const gruposHome = [
     <SectionHeading title="Novedades" description="Manténgase al día con las últimas noticias, eventos y análisis del sector energético boliviano." />
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {ultimosArticulos.map((articulo) => (
-        <article class="glass-card rounded-lg overflow-hidden hover:shadow-md hover:border-primary/30 transition-all duration-300 group">
+        <article class="bg-surface-bright rounded-lg overflow-hidden border border-outline-variant/30 hover:shadow-md hover:border-primary/30 transition-all duration-300 group">
           {articulo.data.image && (
             <div class="h-48 overflow-hidden">
               <img
@@ -384,7 +384,7 @@ const gruposHome = [
   </Section>
 
   <!-- Alianzas Estratégicas — Infinite Marquee Ribbon -->
-  <section class="bg-white py-12 sm:py-16 md:py-24 reveal">
+  <section class="bg-surface-bright py-12 sm:py-16 md:py-24 reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
       <style>
       /*
@@ -433,7 +433,7 @@ const gruposHome = [
         flex-shrink: 0;
         padding: 0.625rem 1rem;
         border-radius: 0.75rem;
-        background: rgba(255, 255, 255, 0.45);
+        background: color-mix(in srgb, var(--color-surface-bright) 65%, transparent);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         transition: filter 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
@@ -459,7 +459,7 @@ const gruposHome = [
       .alianzas-logo:nth-child(16) { animation-delay: 3.00s; }
 
       .alianzas-logo:hover {
-        background: rgba(255, 255, 255, 0.8);
+        background: var(--color-surface-bright);
         box-shadow: 0 4px 20px rgba(1, 64, 108, 0.12);
       }
       .alianzas-logo img {

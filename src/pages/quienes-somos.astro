@@ -62,8 +62,6 @@ const actuar = [
     label="Institucional"
     title="Representamos la fuerza impulsora del sector energético boliviano"
     subtitle="Desde 1986, la Cámara Boliviana de Hidrocarburos y Energía integra a las empresas que impulsan el desarrollo energético del país. Casi un centenar de afiliadas trabajan para garantizar un futuro sostenible para Bolivia."
-    pt="pt-20 sm:pt-24 md:pt-28"
-    pb="pb-16 sm:pb-20 md:pb-24"
     titleMaxW="max-w-3xl"
   />
 
@@ -75,7 +73,7 @@ const actuar = [
     />
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {historia.map((item) => (
-        <article class="bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/20 hover:border-primary/30 hover:shadow-md transition-all duration-300">
+        <article class="bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md transition-all duration-300">
           <span class="text-primary font-headline font-extrabold text-3xl md:text-4xl">{item.year}</span>
           <h3 class="font-headline font-bold text-on-surface text-lg md:text-xl mt-3 mb-3">{item.title}</h3>
           <p class="text-on-surface-variant font-body text-sm md:text-base leading-relaxed">{item.desc}</p>
@@ -87,7 +85,7 @@ const actuar = [
   <!-- Misión y Visión -->
   <Section bg="surface-container-low">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-      <div class="bg-surface p-8 md:p-12 rounded-lg hover:bg-surface-container-low transition-colors duration-300 border border-outline-variant/20 hover:border-primary/30 hover:shadow-md">
+      <div class="bg-surface p-8 md:p-12 rounded-lg hover:bg-surface-container-low transition-colors duration-300 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md">
         <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-8">
           <Icon name="material-symbols:flag" class="text-on-primary-container size-7" />
         </div>
@@ -97,7 +95,7 @@ const actuar = [
         </p>
       </div>
 
-      <div class="bg-surface p-8 md:p-12 rounded-lg hover:bg-surface-container-low transition-colors duration-300 border border-outline-variant/20 hover:border-primary/30 hover:shadow-md">
+      <div class="bg-surface p-8 md:p-12 rounded-lg hover:bg-surface-container-low transition-colors duration-300 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md">
         <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-8">
           <Icon name="material-symbols:visibility" class="text-on-primary-container size-7" />
         </div>
@@ -118,13 +116,13 @@ const actuar = [
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {directorioData.grupos.map((g) => (
         <article class:list={[
-          "bg-surface-container-low rounded-lg border border-outline-variant/20 overflow-hidden flex flex-col",
+          "bg-surface-container-low rounded-lg border border-outline-variant/30 overflow-hidden flex flex-col",
           g.grupo === "Cámara" && "lg:col-span-2",
         ]}>
           <h3 class="font-headline font-bold text-on-surface text-base md:text-lg px-6 py-4 bg-surface-container border-b border-outline-variant/30">
             {g.grupo}
           </h3>
-          <ul class="divide-y divide-outline-variant/20">
+          <ul class="divide-y divide-outline-variant/30">
             {g.miembros.map((m) => (
               <li class="px-6 py-4 grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-4 items-baseline hover:bg-surface-container transition-colors">
                 <span class="sm:col-span-3 text-primary font-headline font-semibold text-sm">{m.cargo}</span>
@@ -139,14 +137,14 @@ const actuar = [
   </Section>
 
   <!-- Filosofía ACTUAR -->
-  <Section bg="surface">
+  <Section bg="surface-container-low">
     <SectionHeading
       title="Nuestra filosofía: ACTUAR"
       description="Seis pilares que reflejan el accionar y el comportamiento de la institución en la dinámica de la industria energética. Cada letra representa un compromiso concreto con nuestros afiliados y con Bolivia."
     />
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {actuar.map((item) => (
-        <div class="group bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/20 hover:border-primary/30 hover:shadow-md transition-all duration-300">
+        <div class="group bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md transition-all duration-300">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 bg-primary-container shrink-0 rounded-lg flex items-center justify-center">
               <Icon name={`material-symbols:${item.icon}`} class="text-on-primary-container size-5" />

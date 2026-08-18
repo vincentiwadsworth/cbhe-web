@@ -327,12 +327,9 @@ h1, h2, h3, h4 {
   }
 }
 
-/* Destacada card — left accent border, no left radius */
+/* Destacada card — subtle primary tint instead of a side accent border */
 .card-destacada {
-  border-left-width: 4px;
-  border-left-color: var(--color-primary);
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  background-color: color-mix(in srgb, var(--color-primary-container) 25%, var(--color-surface));
 }
 
 /* A-Z letter button states */

@@ -74,8 +74,6 @@ const disabledLetters = new Set(
     label="Directorio"
     title="Nuestras afiliadas"
     subtitle={subtitleText}
-    pt="pt-20 sm:pt-24 md:pt-28"
-    pb="pb-24 sm:pb-28 md:pb-32"
     titleMaxW="max-w-3xl"
     subtitleSize="large"
   />
@@ -90,7 +88,7 @@ const disabledLetters = new Set(
       <details
         id={`grupo-${group.id}`}
         open
-        class="accordion-group scroll-mt-24 mb-4 group/detail border border-outline-variant/50 rounded-lg"
+        class="accordion-group scroll-mt-24 mb-4 group/detail border border-outline-variant/30 rounded-lg"
       >
         <summary class="list-none cursor-pointer flex items-center justify-between bg-surface-container-low px-6 py-4 min-h-[44px] hover:bg-surface-container transition-colors">
           <div class="flex items-center gap-3">
@@ -107,8 +105,8 @@ const disabledLetters = new Set(
                 data-letter={empresa.data.nombre.charAt(0).toUpperCase()}
                 style={`--card-index: ${index}`}
                 class:list={[
-                  "reveal-card bg-surface rounded-lg p-4 sm:p-6 border border-outline-variant/50 hover:shadow-md hover:border-primary/30 transition-all duration-300",
-                  empresa.data.destacada ? "card-destacada border-l-4 border-primary rounded-l-none" : "",
+                  "reveal-card bg-surface rounded-lg p-4 sm:p-6 border border-outline-variant/30 hover:shadow-md hover:border-primary/30 transition-all duration-300",
+                  empresa.data.destacada ? "card-destacada" : "",
                 ]}
               >
                 {empresa.data.destacada && (
