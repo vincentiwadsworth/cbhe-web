@@ -1,7 +1,7 @@
 # Plan de Modificaciones — Sitio Web CBHE
 
 > Fuente: solicitud del cliente (documento "cbhe web - modificación final.md" + DirectorioCBHE-NV.csv).
-> Fecha: 2026-08-18. Ejecutar tareas en orden T3 → T4 → T2 → T1 → T6. T5 bloqueada.
+> Fecha: 2026-08-18. Estado: T1, T2, T3, T4 y T6 completadas y pusheadas. T5 bloqueada (faltan PDFs del cliente). T7 pendiente de ejecución.
 
 ## Decisiones aprobadas por el cliente
 
@@ -157,6 +157,52 @@ CÁMARA;Director Ejecutivo;CBHE;Iver von Borries
   2. Qué requiere cambio de código: Portada (index.astro), Quiénes somos, textos estructurales de Afiliación/RSE/Contacto.
   3. Backups = Git: cada publicación es un commit versionado en GitHub; historial completo; revertir = restaurar commit anterior; GitHub es el backup remoto (estándar de la industria).
   4. Fase 2 opcional: exponer textos de Portada/Quiénes somos como colecciones Sveltia.
+
+## T7 — Editor CMS para datos que rotan
+
+Análisis de qué datos cambian en el tiempo y quién los cambia:
+- **Directorio** (quienes-somos): cambia cada gestión (~2 años) → exponer en CMS.
+- **Testimonios** (portada): colección ya existe en código pero es invisible en el CMS → exponer.
+- **prices.json** (Datos del Sector en portada): automatizado por GitHub Action (`update-data.yml`, 3x/día) → nada que hacer.
+- **Copy estructural** (hero, misión/visión, historia, pilares, descripciones de grupos, alianzas): no rota → fuera de alcance, se canaliza por soporte (documentado en GUIA-EDICION.md).
+
+### T7a — Testimonios en Sveltia (30 min)
+
+- Archivo: `public/admin/config.yml`. Agregar colección `testimonios` (folder `src/content/testimonios`, `create: true`) con campos EXACTOS del schema de `src/content.config.ts`: name (string), role (string), company (string), quote (text), highlight (string), image (image, opcional), draft (boolean, default false). Labels en español, mismo estilo que las colecciones existentes.
+- Sin cambios de código: la colección y su render (`TestimonialCarousel` en index.astro) ya existen.
+
+### T7b — Directorio en Sveltia (~2 h)
+
+- `data/directorio.json` (nuevo): migrar el array hardcodeado en T2 (23 cargos, 6 grupos) SIN cambios de datos. Estructura como objeto raíz (Sveltia lo requiere para files collections): `{ "grupos": [{ "grupo": "...", "miembros": [{ "cargo", "empresa", "nombre" }] }] }`.
+- `public/admin/config.yml`: colección "Directorio" tipo `files` → `data/directorio.json`, con widget `list` anidado (grupos → miembros). Labels en español.
+- `src/pages/quienes-somos.astro`: `import directorioData from "../../data/directorio.json"` y eliminar el array hardcodeado. Cero cambios de layout.
+- `GUIA-EDICION.md`: actualizar — testimonios y directorio pasan a la sección editable sin programar.
+- Verificación: build OK; `dist/quienes-somos/index.html` debe conservar los 22 nombres únicos y 6 grupos (comparar contra build baseline ANTES del cambio); YAML válido; GUIA sin em-dashes.
+
+## T8 — Remediación bugs latentes del CMS (post-auditoría)
+
+Auditoría de la cadena Sveltia → GitHub → build → deploy. Funcional probado: JSON→build→deploy OK (evidencia: bot de precios), Sveltia→deploy OK (decenas de commits "Update Curso/Artículo"). Bugs latentes encontrados:
+
+### T8a — `identifier_field` faltante (2 líneas)
+
+- `testimonios` usa `name` (no `title`): sin `identifier_field: name`, la creación de entradas nuevas genera filenames UUID ilegibles y listado CMS sin títulos (doc oficial Sveltia/Decap, issue #499).
+- `empresas` usa `nombre`: mismo bug latente, `identifier_field: nombre`.
+- Fix: agregar la línea a ambas colecciones en `public/admin/config.yml`.
+
+### T8b — Pinear versión de Sveltia
+
+- `public/admin/index.html` carga `@sveltia/cms` latest de unpkg → un release upstream malo rompe el admin sin cambio en el repo.
+- Fix: consultar versión vigente en el registry npm y pinearla (ej: `@sveltia/cms@0.XX.X/dist/sveltia-cms.js`).
+
+### T8c — Test E2E local simulando writes de Sveltia (sin tocar GitHub)
+
+1. Simular re-escritura de `data/directorio.json` con serialización estilo Sveltia (claves reordenadas + un dato de prueba modificado, ej. agregar "TEST" a un nombre) → `npx astro build` → verificar que `dist/quienes-somos/index.html` refleja el dato de prueba.
+2. Simular testimonio nuevo: crear `src/content/testimonios/test-e2e-simulacion.md` con frontmatter estilo Sveltia (name/role/company/quote/highlight, draft: false) → build → verificar que aparece en `dist/index.html`.
+3. Revertir ambas simulaciones (restaurar JSON original, borrar testimonio de prueba) → build final → verificar `dist` limpio (sin "TEST", sin "test-e2e").
+
+### Verificación T8
+
+- YAML válido, `identifier_field` presente en ambas colecciones, versión pineada resuelve (fetch HEAD del script), build final sin datos de prueba, HTML de quienes-somos byte-idéntico al estado pre-T8c.
 
 ## Verificación global (todas las tareas)
 
