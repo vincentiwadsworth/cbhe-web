@@ -154,7 +154,7 @@ flowchart TD
 | Orden | — | Número | Menor número = aparece primero. Si hay empate, orden alfabético |
 | Borrador | — | Switch | Activado = no aparece en el sitio |
 
-> **Nota**: Los **Testimonios** no se editan desde Sveltia CMS — se gestionan directamente en los archivos del proyecto. Si necesita agregar o modificar un testimonio, coordínelo con Nicolás.
+> **Nota**: Los **Testimonios** también se editan desde Sveltia CMS (colección "Testimonios de la Portada"). Aparecen en el carrusel de la página de inicio.
 
 ### Comportamiento Automático de las Páginas (Web)
 
@@ -198,7 +198,7 @@ Para facilitar la administración, el sitio web aplica reglas automáticas al co
 | La imagen no se ve en el sitio | La referencia en Markdown tiene una ruta incorrecta | Use siempre `/images/nombre-archivo.jpg` (con barra inicial) |
 | Guardé un artículo pero no aparece | El switch **Borrador** (`draft`) está activado | Desactive el switch y vuelva a publicar |
 | El curso no aparece en el catálogo | Filtro de borrador activo o `draft: true` | Verifique que `draft` esté en `false` y vuelva a publicar |
-| No encuentro la colección que busco | Solo se muestran colecciones configuradas en el CMS | Cursos, Artículos y Empresas están en Sveltia. Testimonios se editan a mano |
+| No encuentro la colección que busco | Solo se muestran colecciones configuradas en el CMS | Cursos, Artículos, Empresas, Testimonios y Directorio están en Sveltia |
 | El formulario de contacto no funciona | `WEB3FORMS_KEY` mal configurada | Avisarle a Nicolás — es una variable de entorno del build |
 
 ---

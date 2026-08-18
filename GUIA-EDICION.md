@@ -12,7 +12,7 @@ El sitio tiene un panel de edición llamado Sveltia CMS. Se abre en:
 
 Para entrar, presione el botón **Login with GitHub** y autorice con la cuenta de GitHub que le entregaron. La primera vez, el soporte técnico le crea la cuenta y le da un token de acceso personal. Ese token es su contraseña del panel. Si la sesión vence, vuelva a iniciar sesión; si no puede entrar, pida ayuda al soporte.
 
-Desde el panel se editan tres tipos de contenido. Cada tipo se llama **colección**: un grupo de contenido con la misma forma. Estas son las tres colecciones disponibles y lo que hace cada una.
+Desde el panel se editan cinco tipos de contenido. Cada tipo se llama **colección**: un grupo de contenido con la misma forma. Estas son las cinco colecciones disponibles y lo que hace cada una.
 
 ### Cursos
 
@@ -64,7 +64,31 @@ Aparecen en la página Empresas Afiliadas y en los logos de la portada.
 | Orden | Opcional | Número. Menor número, más arriba aparece. Si hay empate, se ordena alfabéticamente |
 | Borrador | Opcional | Interruptor. Activado, la empresa nunca aparece en el sitio |
 
-**Los testimonios de la portada no se editan desde el panel.** Se gestionan directamente en los archivos del proyecto. Si necesita agregar o modificar un testimonio, coordínelo con el soporte técnico.
+### Testimonios
+
+Aparecen en la portada, en la sección de testimonios que rota automáticamente.
+
+| Campo | ¿Obligatorio? | Para qué sirve |
+|-------|:-----------:|----------------|
+| Nombre de la persona | Sí | Nombre tal como se muestra en la tarjeta |
+| Cargo | Sí | Cargo en la empresa, por ejemplo Gerente General |
+| Empresa | Sí | Empresa de la persona |
+| Testimonio completo | Sí | Texto de dos a cuatro líneas que acompaña a la frase destacada |
+| Frase destacada | Sí | Frase corta que resalta en negrita dentro de la tarjeta |
+| Foto | Opcional | Foto de la persona. Si no hay, la tarjeta se muestra sin imagen |
+| Borrador | Opcional | Interruptor. Activado, el testimonio nunca aparece en el sitio |
+
+### Directorio
+
+Aparece en la página Quiénes somos, en la sección Directorio. Todo se edita desde una sola entrada: los grupos y, dentro de cada grupo, sus miembros.
+
+| Campo | ¿Obligatorio? | Para qué sirve |
+|-------|:-----------:|----------------|
+| Grupo | Sí | Nombre del grupo, por ejemplo Upstream o Servicios Auxiliares |
+| Miembros | Sí | Lista de cargos de ese grupo |
+| Cargo | Sí | Cargo en el Directorio, por ejemplo Presidente o Director Titular |
+| Nombre | Sí | Nombre completo de la persona |
+| Empresa | Sí | Empresa que representa en el Directorio |
 
 ---
 
@@ -99,12 +123,11 @@ El sitio aplica reglas automáticas al publicarse. Los cursos con fecha pasada s
 Estas partes del sitio no se editan desde el panel. Están escritas directamente en el código del proyecto y cualquier cambio requiere la intervención del soporte técnico:
 
 - **Portada**: la estructura general del inicio (banner, secciones, orden de bloques, textos de presentación).
-- **Quiénes somos**: la historia institucional, pilares y valores.
+- **Quiénes somos**: la historia institucional, pilares y valores. El Directorio se edita desde el panel (ver sección 1).
 - **Afiliación**: requisitos, proceso de aprobación, beneficios y grupos industriales.
 - **RSE**: contenidos de responsabilidad social empresarial.
 - **Contacto**: datos de oficina, formulario y textos de la página.
 - **Menú de navegación**: las páginas que aparecen en el menú superior y en el pie de página.
-- **Testimonios**: los testimonios de la portada (ver sección 1).
 - **Diseño general**: colores, tipografías, estilos visuales.
 
 Para cualquiera de estos cambios, contacte al soporte técnico (Nicolás) con una descripción de lo que necesita. El cambio se realiza en el código y se publica con el mismo proceso automático.
@@ -144,7 +167,7 @@ Existe la opción técnica de exponer los textos de la Portada y de Quiénes som
 | Término | Significado |
 |---------|-------------|
 | **Sveltia CMS** | El panel de edición del sitio. Se abre en cbhe.org.bo/admin/ |
-| **Colección** | Grupo de contenido del mismo tipo: Cursos, Artículos o Empresas Afiliadas |
+| **Colección** | Grupo de contenido del mismo tipo: Cursos, Artículos, Empresas Afiliadas, Testimonios o Directorio |
 | **Save** | Botón que guarda el cambio sin publicarlo |
 | **Save and Publish** | Botón que guarda y publica el cambio en el sitio |
 | **Borrador** | Interruptor que oculta un elemento del sitio, aunque se publique |

@@ -5,6 +5,7 @@ import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import SubpageHero from "../components/SubpageHero.astro";
 import PageLayout from "../layouts/PageLayout.astro";
+import directorioData from "../../data/directorio.json";
 
 const historia = [
   {
@@ -48,61 +49,6 @@ const actuar = [
   { letter: "R", icon: "account-balance", title: "Representar", desc: "Representar a la industria ante los diferentes ámbitos públicos y privados, defendiendo los intereses del sector energético." },
 ];
 
-const directorio = [
-  {
-    grupo: "Upstream",
-    miembros: [
-      { cargo: "Presidente", empresa: "Repsol", nombre: "Mariano Ferrari" },
-      { cargo: "Vicepresidente", empresa: "TotalEnergies", nombre: "Sergio Giorgi" },
-      { cargo: "Director Titular", empresa: "Petrobras", nombre: "Diogo Mattoso Abreu" },
-      { cargo: "Director Alterno", empresa: "Matpetrol", nombre: "Javier Paz Soldán" },
-      { cargo: "Director Titular", empresa: "Shell", nombre: "Cristina Nuñez C." },
-      { cargo: "Director Alterno", empresa: "PAE", nombre: "Juan Dauria" },
-      { cargo: "Director Titular", empresa: "Vintage", nombre: "Jorge Martignoni" },
-    ],
-  },
-  {
-    grupo: "Servicios y Suministros Especializados en Pozo",
-    miembros: [
-      { cargo: "Secretario", empresa: "Halliburton", nombre: "Pablo Moreno" },
-      { cargo: "Director Titular", empresa: "SLB", nombre: "René Arze" },
-      { cargo: "Director Alterno", empresa: "Rigmaster", nombre: "Edson Vargas" },
-      { cargo: "Director Titular", empresa: "Petrolog", nombre: "Orlando Vaca" },
-      { cargo: "Director Alterno", empresa: "Continental", nombre: "Rodrigo Barrenechea" },
-    ],
-  },
-  {
-    grupo: "Servicios y Suministros Especializados en Superficie",
-    miembros: [
-      { cargo: "Tesorero", empresa: "Confipetrol", nombre: "Diego Orlando Merchan Pico" },
-      { cargo: "Director Titular", empresa: "Bolpegas", nombre: "Ricardo Carrillo" },
-      { cargo: "Director Alterno", empresa: "Hoerbiger", nombre: "Samanta Salinas" },
-      { cargo: "Director Titular", empresa: "Intergas", nombre: "Melanie Zehl" },
-      { cargo: "Director Alterno", empresa: "Energy Advances", nombre: "Mauricio Montalvo Arancibia" },
-    ],
-  },
-  {
-    grupo: "Industria, Transporte y Distribución de Hidrocarburos",
-    miembros: [
-      { cargo: "Director Titular", empresa: "Prodimsa", nombre: "Luis Fernando Guardia" },
-    ],
-  },
-  {
-    grupo: "Servicios Auxiliares",
-    miembros: [
-      { cargo: "Director Titular", empresa: "PPO Indacochea", nombre: "Pablo Ordoñez" },
-      { cargo: "Director Alterno", empresa: "Wayar & von Borries", nombre: "Iver von Borries" },
-      { cargo: "Director Titular", empresa: "Sudamericana", nombre: "Daniel Saucedo" },
-      { cargo: "Director Alterno", empresa: "Solaria", nombre: "Alejandro Lora" },
-    ],
-  },
-  {
-    grupo: "Cámara",
-    miembros: [
-      { cargo: "Director Ejecutivo", empresa: "CBHE", nombre: "Iver von Borries" },
-    ],
-  },
-];
 ---
 
 
@@ -170,7 +116,7 @@ const directorio = [
       description="Representantes de las empresas afiliadas ante el Directorio de la CBHE, organizados por grupo industrial. La Mesa Directiva y los directores titulares y alternos son elegidos por la Asamblea General de Socios."
     />
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {directorio.map((g) => (
+      {directorioData.grupos.map((g) => (
         <article class:list={[
           "bg-surface-container-low rounded-lg border border-outline-variant/20 overflow-hidden flex flex-col",
           g.grupo === "Cámara" && "lg:col-span-2",

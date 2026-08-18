@@ -141,6 +141,7 @@ collections:
     folder: src/content/empresas
     create: true
     slug: "{{slug}}"
+    identifier_field: nombre
     fields:
       - { name: nombre, label: Nombre de la Empresa, widget: string }
       - { name: grupo, label: Grupo Industrial, widget: select, options: [{ label: "Exploración y explotación de hidrocarburos", value: "upstream" }, { label: "Servicios y suministros especializados en pozo", value: "pozo" }, { label: "Servicios y suministros especializados en superficie", value: "superficie" }, { label: "Industria, transporte y distribución de hidrocarburos y energía", value: "downstream" }, { label: "Servicios auxiliares", value: "auxiliares" }, { label: "Adherentes", value: "adherentes" }] }
@@ -150,3 +151,78 @@ collections:
       - { name: destacada, label: Destacada en portada, widget: boolean, default: false, required: false }
       - { name: orden, label: Orden, widget: number, default: 0, required: false, hint: "Menor número = primero. Si hay empate, orden alfabético." }
       - { name: draft, label: Borrador, widget: boolean, default: false, required: false }
+
+  - name: testimonios
+    label: Testimonios
+    label_singular: Testimonio
+    folder: src/content/testimonios
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { name: name, label: Nombre de la persona, widget: string }
+      - { name: role, label: Cargo, widget: string, hint: "Ej: Gerente General, Director de Operaciones" }
+      - { name: company, label: Empresa, widget: string }
+      - {
+          name: quote,
+          label: Testimonio completo,
+          widget: text,
+          hint: "Dos a cuatro líneas. Aparece en la portada, en la sección de testimonios",
+        }
+      - {
+          name: highlight,
+          label: Frase destacada,
+          widget: string,
+          hint: "Frase corta que resalta en negrita dentro de la tarjeta. Aparece en la portada",
+        }
+      - {
+          name: image,
+          label: Foto de la persona,
+          widget: image,
+          required: false,
+          hint: "Opcional. Si no hay foto, la tarjeta se muestra sin imagen",
+        }
+      - {
+          name: draft,
+          label: Borrador,
+          widget: boolean,
+          default: false,
+          required: false,
+        }
+
+  - name: directorio
+    label: Directorio
+    files:
+      - name: directorio
+        label: Directorio
+        file: data/directorio.json
+        fields:
+          - name: grupos
+            label: Grupos
+            widget: list
+            hint: "Un grupo por cada sección del Directorio"
+            fields:
+              - {
+                  name: grupo,
+                  label: Nombre del grupo,
+                  widget: string,
+                  hint: "Ej: Upstream, Servicios Auxiliares, Cámara",
+                }
+              - name: miembros
+                label: Miembros
+                widget: list
+                hint: "Un miembro por cada cargo del grupo"
+                fields:
+                  - {
+                      name: cargo,
+                      label: Cargo,
+                      widget: string,
+                      hint: "Ej: Presidente, Director Titular, Director Ejecutivo",
+                    }
+                  - { name: nombre, label: Nombre completo, widget: string }
+                  - {
+                      name: empresa,
+                      label: Empresa,
+                      widget: string,
+                      hint: "Empresa que representa en el Directorio",
+                    }
