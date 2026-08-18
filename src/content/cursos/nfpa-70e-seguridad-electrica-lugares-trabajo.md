@@ -11,7 +11,7 @@ description: ''
 instructors:
   - name: Ing. Patricio Llaneza
     bio: Instructor autorizado por NFPA. Instructor en seguridad eléctrica, administración y uso de equipos de protección personal (EPP). Miembro del Grupo Latinoamericano de Ingenieros en Seguridad Eléctrica de la NFPA 70E. Traductor y revisor técnico de la norma NFPA 70E en español. Consultor especialista en la implementación de normas nacionales e internacionales de seguridad eléctrica, especializado en Latinoamérica y los EE.UU.
-featured: false
+featured: true
 draft: false
 ---
 
