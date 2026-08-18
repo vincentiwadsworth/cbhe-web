@@ -6,7 +6,7 @@ image: /images/Curso y Examen de Inspectores de Soldadura (6).png
 startDate: 12 Dec 2026
 price: Consultar precios y procedimientos
 registrationDeadline: 06/11/2026
-canvaLink: https://canva.link/14hwjfj6cpgjzsr
+canvaLink: https://canva.link/vc7pphhkfo5d5m1
 description: ''
 instructors: []
 featured: false
