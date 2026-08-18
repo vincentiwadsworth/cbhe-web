@@ -3,5 +3,6 @@ Allow: /
 Disallow: /gracias
 Disallow: /admin
 Disallow: /certificados
+Disallow: /documentos-internos
 
 Sitemap: https://cbhe.org.bo/sitemap-index.xml

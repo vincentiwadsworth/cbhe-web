@@ -1,0 +1,85 @@
+---
+/**
+ * documentos-internos.astro — Página no listada de documentos institucionales.
+ *
+ * Privacidad por oscuridad: sin link en nav/footer, noindex, excluida del
+ * sitemap y de robots.txt. Acceso solo por URL compartida.
+ */
+import PageLayout from "../layouts/PageLayout.astro";
+import Section from "../components/Section.astro";
+import SubpageHero from "../components/SubpageHero.astro";
+import Icon from "../components/Icon.astro";
+
+const documentos = [
+  {
+    icon: "material-symbols:description",
+    title: "Estatuto de la CBHE",
+    desc: "Estatuto orgánico de la Cámara Boliviana de Hidrocarburos y Energía.",
+    href: "docs/estatuto.pdf",
+    download: "estatuto.pdf",
+  },
+  {
+    icon: "material-symbols:gavel",
+    title: "Código de Ética",
+    desc: "Normas de conducta y principios éticos que rigen la actividad de la CBHE y sus afiliadas.",
+    href: "docs/codigo-etica.pdf",
+    download: "codigo-etica.pdf",
+  },
+];
+---
+
+<PageLayout
+  title="Documentos internos"
+  description="Documentos institucionales de la CBHE."
+  noindex
+>
+  <SubpageHero
+    label="Institucional"
+    title="Documentos internos"
+    subtitle="Estatuto y Código de Ética de la CBHE."
+    pt="pt-20 sm:pt-24 md:pt-28"
+    pb="pb-16 sm:pb-20 md:pb-24"
+    titleMaxW="max-w-3xl"
+  />
+
+  <Section bg="surface">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl">
+      {documentos.map((doc) => (
+        <article class="bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/20 flex flex-col">
+          <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-6">
+            <Icon name={doc.icon} class="text-on-primary-container size-7" />
+          </div>
+          <h2 class="font-headline font-bold text-on-surface text-xl md:text-2xl mb-3">
+            {doc.title}
+          </h2>
+          <p class="text-on-surface-variant font-body text-sm md:text-base leading-relaxed mb-8 flex-1">
+            {doc.desc}
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a
+              href={doc.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-md font-semibold hover:bg-primary/90 hover:shadow-md transition-all min-h-[44px]"
+            >
+              <Icon name="material-symbols:open-in-new" class="size-5" />
+              Ver documento
+            </a>
+            <a
+              href={doc.href}
+              download={doc.download}
+              class="inline-flex items-center gap-2 bg-surface-container-high text-primary px-6 py-3 rounded-md font-semibold hover:bg-surface-container border border-outline-variant/20 transition-all min-h-[44px]"
+            >
+              <Icon name="material-symbols:arrow-downward" class="size-5" />
+              Descargar
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="mt-12 text-sm text-on-surface-variant max-w-2xl">
+      Enlace de acceso restringido. No comparta públicamente.
+    </p>
+  </Section>
+</PageLayout>
