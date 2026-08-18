@@ -4,7 +4,7 @@ category: Curso
 modality: Virtual
 image: /images/Arte Redes Cuadrado FPI (1).png
 startDate: 15 Sep 2026
-price: '0000'
+price: Consultar precios y procedimientos
 registrationDeadline: ''
 canvaLink: ''
 description: ''
