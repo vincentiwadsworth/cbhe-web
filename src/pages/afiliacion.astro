@@ -228,7 +228,7 @@ const beneficios = [
     <!-- Empresas nacionales -->
     <div class="mb-14">
       <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shrink-0">
           <Icon name="material-symbols:description" class="text-on-primary size-6" />
         </div>
         <h3 class="font-headline font-bold text-xl text-on-surface">Empresas nacionales</h3>
@@ -236,7 +236,7 @@ const beneficios = [
       <ol class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {docsNacionales.map((doc, i) => (
           <li class="bg-surface-container-low rounded-lg p-6 border border-outline-variant/30 flex gap-4 items-start h-full">
-            <span class="shrink-0 w-8 h-8 bg-primary-container rounded-md flex items-center justify-center text-on-primary font-bold text-sm mt-0.5">
+            <span class="shrink-0 w-8 h-8 bg-primary rounded-md flex items-center justify-center text-on-primary font-bold text-sm mt-0.5">
               {i + 1}
             </span>
             <p class="text-on-surface text-sm leading-relaxed">{doc}</p>
@@ -248,7 +248,7 @@ const beneficios = [
     <!-- Empresas extranjeras -->
     <div class="mb-14">
       <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shrink-0">
           <Icon name="material-symbols:language" class="text-on-primary size-6" />
         </div>
         <h3 class="font-headline font-bold text-xl text-on-surface">Empresas extranjeras</h3>
@@ -256,7 +256,7 @@ const beneficios = [
       <ol class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {docsExtranjeros.map((doc, i) => (
           <li class="bg-surface-container-low rounded-lg p-6 border border-outline-variant/30 flex gap-4 items-start h-full">
-            <span class="shrink-0 w-8 h-8 bg-primary-container rounded-md flex items-center justify-center text-on-primary font-bold text-sm mt-0.5">
+            <span class="shrink-0 w-8 h-8 bg-primary rounded-md flex items-center justify-center text-on-primary font-bold text-sm mt-0.5">
               {i + 1}
             </span>
             <div>
@@ -270,7 +270,7 @@ const beneficios = [
 
     <!-- Nota: consideraciones para empresas extranjeras -->
     <div class="bg-primary-container/15 rounded-lg border border-primary-container/40 p-6 flex items-start gap-4">
-      <div class="w-8 h-8 bg-primary-container rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0 mt-0.5">
         <Icon name="material-symbols:task-alt" class="text-on-primary size-5" />
       </div>
       <div>
@@ -293,7 +293,7 @@ const beneficios = [
       {pasosProceso.map((paso) => (
         <article class="bg-surface rounded-lg p-8 border border-outline-variant/30 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group flex flex-col items-start h-full">
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div class="w-14 h-14 bg-primary rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <Icon name={`material-symbols:${paso.icono}`} class="text-on-primary size-7" />
             </div>
             <span class="text-xs font-bold text-primary tracking-wider uppercase bg-primary-container/10 px-3 py-1 rounded-md">
@@ -315,7 +315,7 @@ const beneficios = [
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {gruposAfiliacion.map((grupo) => (
           <div class="bg-surface rounded-lg border border-outline-variant/30 p-4 flex items-center gap-3">
-            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shrink-0">
               <Icon name={`material-symbols:${grupo.icono}`} class="text-on-primary size-5" />
             </div>
             <p class="font-body font-medium text-on-surface text-sm leading-snug">{grupo.nombre}</p>
@@ -326,7 +326,7 @@ const beneficios = [
 
     <!-- Card de aportes -->
     <div class="bg-surface rounded-lg border border-outline-variant/30 p-6 flex items-start gap-4">
-      <div class="w-8 h-8 bg-primary-container rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+      <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0 mt-0.5">
         <Icon name="material-symbols:payments" class="text-on-primary size-5" />
       </div>
       <div>
@@ -348,7 +348,7 @@ const beneficios = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {beneficios.map((beneficio) => (
         <article class="bg-surface-container-low rounded-lg p-8 border border-outline-variant/30 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group flex flex-col items-start h-full">
-          <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+          <div class="w-14 h-14 bg-primary rounded-lg flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
             <Icon name={`material-symbols:${beneficio.icono}`} class="text-on-primary size-7" />
           </div>
           <h3 class="font-headline font-bold text-lg text-on-surface mb-3">{beneficio.titulo}</h3>
