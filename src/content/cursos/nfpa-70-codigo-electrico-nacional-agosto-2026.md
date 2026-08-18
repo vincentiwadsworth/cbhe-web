@@ -1,13 +1,17 @@
 ---
-title: "Curso NFPA 70: Código Eléctrico Nacional (NEC) — Edición 2023"
-category: "Curso"
-modality: "Virtual"
-image: "images/cursos/nfpa-70-codigo-electrico.webp"
-startDate: "18 Ago 2026"
-price: "9800 Bs."
+title: 'Curso NFPA 70: Código Eléctrico Nacional (NEC) — Edición 2023'
+category: Certificación
+modality: Virtual
+image: /images/Arte Redes Cuadrado FPI (3).png
+startDate: 18 Aug 2026
+price: Consultar precios y procedimientos
+registrationDeadline: ''
+canvaLink: ''
+description: ''
 instructors:
-  - name: "Ing. Fernando Escalante"
-    bio: "Licenciado en Ingeniería Eléctrica, Universidad de Costa Rica. Máster en Administración de Empresas con énfasis en Mercadeo. Director de Escalante Montoya Consultores. Instructor de NFPA para NFPA 70. 22 años de experiencia en posiciones clave en Schneider Electric en áreas como Cotizaciones, Ventas, Desarrollo de Negocios y Secure Power Division. Expresidente de la Junta Directiva del Colegio de Ingenieros Eléctricos Mecánicos e Industriales de Costa Rica."
+  - name: Ing. Fernando Escalante
+    bio: Licenciado en Ingeniería Eléctrica, Universidad de Costa Rica. Máster en Administración de Empresas con énfasis en Mercadeo. Director de Escalante Montoya Consultores. Instructor de NFPA para NFPA 70. 22 años de experiencia en posiciones clave en Schneider Electric en áreas como Cotizaciones, Ventas, Desarrollo de Negocios y Secure Power Division. Expresidente de la Junta Directiva del Colegio de Ingenieros Eléctricos Mecánicos e Industriales de Costa Rica.
+featured: false
 draft: false
 ---
 
@@ -32,6 +36,7 @@ Técnicos y profesionales que trabajan con sistemas eléctricos y que deben cono
 ## Temario
 
 ### Circuitos ramales
+
 - Introducción y cálculo de carga
 - Protección física
 - Ampacidad
@@ -40,6 +45,7 @@ Técnicos y profesionales que trabajan con sistemas eléctricos y que deben cono
 - Paneles de distribución
 
 ### Alimentadores y transformadores
+
 - Carga y dimensionamiento
 - Llenado de la canalización
 - Protección contra sobrecorriente
@@ -47,6 +53,7 @@ Técnicos y profesionales que trabajan con sistemas eléctricos y que deben cono
 - Sistemas derivados separados
 
 ### Equipo de acometida
+
 - Revisión de las cargas
 - Protección contra sobrecorriente
 - Requisitos de acceso y espacio
@@ -54,6 +61,7 @@ Técnicos y profesionales que trabajan con sistemas eléctricos y que deben cono
 - Puesta a tierra y unión / sistema de electrodos de puesta a tierra
 
 ### Motores
+
 - Protección y dimensionamiento
 - Reflexión y conclusión
 
