@@ -29,3 +29,6 @@ pnpm-debug.log*
 /*.png
 # Skill registry and SDD artifacts (regenerated automatically)
 /.atl/
+
+# Delivery PDFs package (generated, not committed)
+entrega/
