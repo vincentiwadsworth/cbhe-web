@@ -3,14 +3,15 @@ title: 'Curso NFPA 70E: Seguridad Eléctrica en Lugares de Trabajo (Edición 202
 category: Curso
 modality: Virtual
 image: /images/Arte Redes Cuadrado FPI (1).png
-startDate: 23 Jun 2026
-price: 8000 Bs.
+startDate: 15 Sep 2026
+price: '0000'
 registrationDeadline: ''
 canvaLink: ''
 description: ''
 instructors:
   - name: Ing. Patricio Llaneza
     bio: Instructor autorizado por NFPA. Instructor en seguridad eléctrica, administración y uso de equipos de protección personal (EPP). Miembro del Grupo Latinoamericano de Ingenieros en Seguridad Eléctrica de la NFPA 70E. Traductor y revisor técnico de la norma NFPA 70E en español. Consultor especialista en la implementación de normas nacionales e internacionales de seguridad eléctrica, especializado en Latinoamérica y los EE.UU.
+featured: false
 draft: false
 ---
 
@@ -72,7 +73,7 @@ Ingenieros eléctricos, gerentes de seguridad, electricistas, contratistas eléc
 
 ## Agenda
 
-- **Fechas**: 27, 28, 29 y 30 de abril de 2026
+- **Fechas**: 15, 16, 17 y 18 de septiembre de 2026
 - **Duración**: 16 horas (4 días, de martes a viernes)
 - **Horario**: 9:00 a 13:30 (Hora Bolivia)
 - **Modalidad**: Streaming en vivo (vía Zoom)
