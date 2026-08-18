@@ -3,51 +3,200 @@ import Icon from "../components/Icon.astro";
 import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import CtaBanner from "../components/CtaBanner.astro";
-import SubpageHero from "../components/SubpageHero.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 
-const requisitos = [
+const docsNacionales = [
+  "Carta de solicitud de afiliación dirigida al Sr. Enzo Michel, Director Ejecutivo de la CBHE.",
+  "Testimonio de Minuta de Constitución de la Sociedad, con modificaciones y/o enmiendas si las hubiera.",
+  "Testimonio de poder del representante legal, con modificaciones y/o enmiendas si las hubiera.",
+  "Matrícula de SEPREC actualizada a la fecha.",
+  "NIT (Número de Identificación Tributaria).",
+  "Estados Financieros auditados, con sello de contador y registrados en la SNII.",
+  "Padrón Municipal.",
+  "Formulario original de la solicitud de ingreso a la CBHE.",
+];
+
+const docsExtranjeros = [
   {
-    letra: "a",
-    icono: "description",
-    titulo: "Solicitud formal de ingreso",
+    titulo: "Certificado o Escritura de Constitución",
     descripcion:
-      "Presentar solicitud escrita de ingreso, demostrando documentalmente su calidad de empresa legalmente constituida o establecida en el país y que su actividad se encuentra relacionada con la industria de los hidrocarburos o la actividad energética.",
+      "copia legalizada o certificada, apostillada o legalizada, con traducción oficial al español.",
   },
   {
-    letra: "b",
+    titulo: "Estatutos Sociales vigentes o documento equivalente",
+    descripcion: "apostillados o legalizados, con traducción oficial al español.",
+  },
+  {
+    titulo: "Certificado de Vigencia o Existencia Legal",
+    descripcion:
+      "emitido por la autoridad competente, apostillado o legalizado, traducido oficialmente, con antigüedad no mayor a 90 días.",
+  },
+  {
+    titulo: "Poder o nombramiento del representante legal en Bolivia",
+    descripcion:
+      "con facultades expresas para actuar en territorio boliviano, apostillado o legalizado, traducido oficialmente.",
+  },
+  {
+    titulo: "Documento de identidad o pasaporte del representante legal",
+    descripcion: "copia vigente, con traducción oficial si está en otro idioma.",
+  },
+  {
+    titulo: "Carta de intención",
+    descripcion:
+      "nota formal en papel membretado, dirigida al Sr. Enzo Michel, Director Ejecutivo de la CBHE.",
+  },
+  {
+    titulo: "Certificado de domicilio o registro tributario en el país de origen",
+    descripcion: "apostillado o legalizado, con traducción oficial.",
+  },
+];
+
+const consideracionesExtranjeras = [
+  "Toda documentación extranjera debe apostillarse o legalizarse y acompañarse de traducción oficial al español.",
+  "Una vez en Bolivia, los documentos deben protocolizarse ante Notaría de Fe Pública.",
+  "La documentación puede presentarse en formato físico.",
+  "La CBHE puede requerir documentación complementaria para verificar autenticidad o vigencia.",
+];
+
+const pasosProceso = [
+  {
+    numero: "1",
     icono: "gavel",
-    titulo: "Adhesión al marco normativo",
+    titulo: "Revisión del área legal",
     descripcion:
-      "Conocer y someterse a las normas del presente Estatuto, a sus Reglamentos y a su Código de Ética de la CBHE.",
+      "El área legal revisa la solicitud y verifica que la documentación presentada esté completa y vigente.",
   },
   {
-    letra: "c",
-    icono: "fact-check",
-    titulo: "Cumplimiento legal y operativo",
-    descripcion:
-      "Estar inscrito en todos los registros que señala el ordenamiento jurídico boliviano y realizar actividades en el ámbito de la industria de los hidrocarburos y energía.",
-  },
-  {
-    letra: "d",
+    numero: "2",
     icono: "groups",
-    titulo: "Aprobación del directorio",
+    titulo: "Aprobación por el Directorio",
     descripcion:
-      "Ser aceptado y clasificado por al menos dos tercios (2/3) de los directores, cuya negativa no podrá ser injustificada.",
+      "El Directorio evalúa la solicitud y decide su incorporación con el voto favorable de al menos dos tercios (2/3) de sus miembros.",
   },
   {
-    letra: "e",
-    icono: "payments",
-    titulo: "Compromiso financiero",
+    numero: "3",
+    icono: "send",
+    titulo: "Notificación del grupo asignado",
     descripcion:
-      "Pagar la cuota de ingreso correspondiente, así como las cuotas ordinarias y extraordinarias que fije la institución.",
+      "La CBHE notifica a la empresa el grupo en el que queda clasificada y los pasos para completar su afiliación.",
+  },
+];
+
+const gruposAfiliacion = [
+  { icono: "oil-barrel", nombre: "Exploración y Explotación de Hidrocarburos" },
+  {
+    icono: "local-shipping",
+    nombre: "Industria, Transporte y Distribución de hidrocarburos y energía",
+  },
+  {
+    icono: "precision-manufacturing",
+    nombre: "Servicios y Suministros Especializados en Pozo",
+  },
+  {
+    icono: "engineering",
+    nombre: "Servicios y Suministros Especializados en Superficie",
+  },
+  { icono: "handyman", nombre: "Servicios Auxiliares" },
+];
+
+const beneficios = [
+  {
+    icono: "flag",
+    titulo: "Representación sectorial",
+    puntos: [
+      "Gestiones ante entidades públicas y privadas",
+      "Participación en comisiones sectoriales",
+      "Reuniones de Grupo",
+      "Charlas y reuniones interinstitucionales",
+    ],
+  },
+  {
+    icono: "gavel",
+    titulo: "Apoyo legal",
+    puntos: [
+      "Asesoramiento en trámites con instituciones públicas",
+      "Seguimiento de temas normativos",
+      "Participación en la elaboración de normas y estándares",
+    ],
+  },
+  {
+    icono: "description",
+    titulo: "Información exclusiva",
+    puntos: [
+      "Información y recursos exclusivos para asociados",
+      "Certificado de afiliación para licitaciones",
+      "Encuestas y estudios sectoriales",
+    ],
+  },
+  {
+    icono: "groups",
+    titulo: "Networking",
+    puntos: [
+      "Red especializada de contactos del sector",
+      "Actividades de confraternización",
+      "Reconocimientos y premiaciones",
+      "Actividades deportivas",
+    ],
+  },
+  {
+    icono: "school",
+    titulo: "Capacitación y eventos",
+    puntos: [
+      "Descuentos en cursos y eventos (+100 cursos)",
+      "Cursos in-company",
+      "Apoyo en la organización del Congreso Bolivia Gas & Energía",
+    ],
+  },
+  {
+    icono: "format-quote",
+    titulo: "Publicaciones",
+    puntos: [
+      "Cobertura de prensa",
+      "Artículos en publicaciones institucionales",
+      "Cifras y estadísticas del sector",
+    ],
+  },
+  {
+    icono: "mail",
+    titulo: "Virtual y mailings",
+    puntos: [
+      "Boletines informativos por correo",
+      "Servicio de correo masivo para comunicados al sector",
+    ],
+  },
+  {
+    icono: "apartment",
+    titulo: "Alianzas y membresías",
+    puntos: [
+      "Novedades de entidades aliadas",
+      "Eventos internacionales representando a Bolivia",
+      "Descuentos en eventos internacionales",
+    ],
+  },
+  {
+    icono: "desktop-windows",
+    titulo: "Infraestructura",
+    puntos: [
+      "Descuentos en alquiler de equipos y salones",
+      "Servicios de tele y videoconferencia",
+      "Área social para actividades",
+    ],
+  },
+  {
+    icono: "account-balance",
+    titulo: "Fundación social y Centro de Arbitraje",
+    puntos: [
+      "Iniciativas gremiales de beneficio social",
+      "Resolución especializada de conflictos",
+      "Soporte para gestiones sociales",
+    ],
   },
 ];
 ---
 
 <PageLayout
   title="Afiliación"
-  description="Requisitos para afiliarse a la Cámara Boliviana de Hidrocarburos y Energía. Conozca el proceso de ingreso y forme parte de la institución líder del sector energético."
+  description="Requisitos, proceso de aprobación y beneficios de afiliarse a la Cámara Boliviana de Hidrocarburos y Energía. Conozca la documentación necesaria para formar parte de la institución líder del sector energético."
   active="afiliacion"
 >
   <!-- Hero: unique dark variant, not SubpageHero -->
@@ -62,52 +211,152 @@ const requisitos = [
           Requisitos de afiliación
         </h1>
         <p class="text-inverse-on-surface/80 font-body text-base md:text-lg leading-relaxed max-w-2xl">
-          Para ser miembro Activo de la CBHE se requiere cumplir con los siguientes requisitos establecidos en nuestro Estatuto.
-          Conózcalos antes de iniciar su proceso de afiliación.
+          Conozca la documentación necesaria para afiliarse, el proceso de aprobación y los beneficios
+          de formar parte de la CBHE.
         </p>
       </div>
     </div>
   </header>
 
-  <!-- Requisitos -->
+  <!-- Documentación necesaria -->
   <Section bg="surface">
     <SectionHeading
-      title="Requisitos para ser miembro activo"
-      description="La CBHE exige el cumplimiento de cada uno de los siguientes puntos para garantizar la seriedad y el compromiso de sus empresas afiliadas con el sector energético boliviano."
+      title="Documentación necesaria"
+      description="Los documentos se entregan en fotocopia simple o de manera digital para su revisión y aprobación."
     />
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {requisitos.map((req) => (
-        <article class="bg-surface-container-low rounded-lg p-8 border border-outline-variant/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group flex flex-col items-start h-full">
-          <span class="text-xs font-bold text-primary mb-4 tracking-wider uppercase bg-primary-container/10 px-3 py-1 rounded-md">
-            Requisito {req.letra}
-          </span>
-          <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
-            <Icon name={`material-symbols:${req.icono}`} class="text-on-primary size-7" />
-          </div>
-          <h3 class="font-headline font-bold text-lg text-on-surface mb-3">
-            {req.titulo}
-          </h3>
-          <p class="text-on-surface-variant text-sm leading-relaxed">
-            {req.descripcion}
-          </p>
-        </article>
-      ))}
+
+    <!-- Empresas nacionales -->
+    <div class="mb-14">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+          <Icon name="material-symbols:description" class="text-on-primary size-6" />
+        </div>
+        <h3 class="font-headline font-bold text-xl text-on-surface">Empresas nacionales</h3>
+      </div>
+      <ol class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {docsNacionales.map((doc, i) => (
+          <li class="bg-surface-container-low rounded-lg p-6 border border-outline-variant/50 flex gap-4 items-start h-full">
+            <span class="shrink-0 w-8 h-8 bg-primary-container rounded-md flex items-center justify-center text-on-primary font-bold text-sm mt-0.5">
+              {i + 1}
+            </span>
+            <p class="text-on-surface text-sm leading-relaxed">{doc}</p>
+          </li>
+        ))}
+      </ol>
     </div>
 
-    <!-- Nota informativa -->
-    <div class="mt-12 bg-surface-container-low rounded-lg border-l-4 border-primary-container p-6 flex items-start gap-4">
+    <!-- Empresas extranjeras -->
+    <div class="mb-14">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+          <Icon name="material-symbols:language" class="text-on-primary size-6" />
+        </div>
+        <h3 class="font-headline font-bold text-xl text-on-surface">Empresas extranjeras</h3>
+      </div>
+      <ol class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {docsExtranjeros.map((doc, i) => (
+          <li class="bg-surface-container-low rounded-lg p-6 border border-outline-variant/50 flex gap-4 items-start h-full">
+            <span class="shrink-0 w-8 h-8 bg-primary-container rounded-md flex items-center justify-center text-on-primary font-bold text-sm mt-0.5">
+              {i + 1}
+            </span>
+            <div>
+              <p class="font-headline font-semibold text-on-surface text-sm mb-1">{doc.titulo}</p>
+              <p class="text-on-surface-variant text-sm leading-relaxed">{doc.descripcion}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <!-- Nota: consideraciones para empresas extranjeras -->
+    <div class="bg-surface-container-low rounded-lg border-l-4 border-primary-container p-6 flex items-start gap-4">
       <div class="w-8 h-8 bg-primary-container rounded-lg flex items-center justify-center shrink-0 mt-0.5">
         <Icon name="material-symbols:task-alt" class="text-on-primary size-5" />
       </div>
       <div>
-        <h4 class="font-headline font-bold text-on-surface mb-1">Proceso de revisión</h4>
+        <h4 class="font-headline font-bold text-on-surface mb-2">Consideraciones para empresas extranjeras</h4>
+        <ul class="text-on-surface-variant text-sm leading-relaxed space-y-2 list-disc pl-5">
+          {consideracionesExtranjeras.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Proceso de aprobación -->
+  <Section bg="surface-container-low">
+    <SectionHeading
+      title="Proceso de aprobación"
+      description="La CBHE evalúa cada solicitud de afiliación en tres etapas, desde la revisión documental hasta la notificación del grupo asignado."
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+      {pasosProceso.map((paso) => (
+        <article class="bg-surface rounded-lg p-8 border border-outline-variant/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group flex flex-col items-start h-full">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Icon name={`material-symbols:${paso.icono}`} class="text-on-primary size-7" />
+            </div>
+            <span class="text-xs font-bold text-primary tracking-wider uppercase bg-primary-container/10 px-3 py-1 rounded-md">
+              Paso {paso.numero}
+            </span>
+          </div>
+          <h3 class="font-headline font-bold text-lg text-on-surface mb-3">{paso.titulo}</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed">{paso.descripcion}</p>
+        </article>
+      ))}
+    </div>
+
+    <!-- Grupos de afiliación -->
+    <div class="mb-14">
+      <h3 class="font-headline font-bold text-xl text-on-surface mb-2">Grupos de afiliación</h3>
+      <p class="text-on-surface-variant text-sm leading-relaxed mb-6">
+        La categoría depende de la información presentada, la especialidad y el patrimonio de la empresa.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {gruposAfiliacion.map((grupo) => (
+          <div class="bg-surface rounded-lg border border-outline-variant/50 p-4 flex items-center gap-3">
+            <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+              <Icon name={`material-symbols:${grupo.icono}`} class="text-on-primary size-5" />
+            </div>
+            <p class="font-body font-medium text-on-surface text-sm leading-snug">{grupo.nombre}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Card de aportes -->
+    <div class="bg-surface rounded-lg border border-outline-variant/50 p-6 flex items-start gap-4">
+      <div class="w-8 h-8 bg-primary-container rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+        <Icon name="material-symbols:payments" class="text-on-primary size-5" />
+      </div>
+      <div>
+        <h4 class="font-headline font-bold text-on-surface mb-1">Aportes de inscripción y mensuales</h4>
         <p class="text-on-surface-variant text-sm leading-relaxed">
-          Una vez presentada la solicitud con la documentación completa, el Directorio evaluará
-          su incorporación en la sesión más próxima. La decisión requiere el voto favorable de al
-          menos dos tercios de los directores. Nuestro equipo de afiliaciones le acompañará durante
-          todo el proceso.
+          Los aportes de inscripción y mensuales varían según el grupo asignado y se informan
+          directamente a cada empresa durante el proceso. Contáctese con nuestro equipo para más detalle.
         </p>
       </div>
+    </div>
+  </Section>
+
+  <!-- Beneficios de la afiliación -->
+  <Section bg="surface">
+    <SectionHeading
+      title="Beneficios de la afiliación"
+      description="Las empresas afiliadas a la CBHE acceden a los siguientes beneficios."
+    />
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {beneficios.map((beneficio) => (
+        <article class="bg-surface-container-low rounded-lg p-8 border border-outline-variant/50 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group flex flex-col items-start h-full">
+          <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
+            <Icon name={`material-symbols:${beneficio.icono}`} class="text-on-primary size-7" />
+          </div>
+          <h3 class="font-headline font-bold text-lg text-on-surface mb-3">{beneficio.titulo}</h3>
+          <ul class="text-on-surface-variant text-sm leading-relaxed space-y-2 list-disc pl-5">
+            {beneficio.puntos.map((punto) => <li>{punto}</li>)}
+          </ul>
+        </article>
+      ))}
     </div>
   </Section>
 
