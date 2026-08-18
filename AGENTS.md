@@ -64,6 +64,7 @@
 - **gh CLI** disponible y autenticado como `vincentiwadsworth`. Issues, labels, secrets, PRs.
 - **Repositorio público** requerido para GitHub Pages en plan gratuito.
 - **Para reportar un side finding como "pre-existente"**, checkout el parent commit y re-verificar ahí — "también pasa en home" no alcanza. La barra: si vuelve a aparecer sin el cambio aplicado, era pre-existente; si no, fue introducido.
+- **Diseño frontend anti-slop** → load `design-taste-frontend` (skill global, Leonxlnx/taste-skill). También: `minimalist-ui`, `industrial-brutalist-ui`, `redesign-existing-projects`, `image-to-code`.
 
 ## Environment
 
