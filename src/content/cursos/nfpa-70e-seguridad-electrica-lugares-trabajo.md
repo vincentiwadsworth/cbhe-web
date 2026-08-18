@@ -1,8 +1,8 @@
 ---
 title: 'Curso NFPA 70E: Seguridad Eléctrica en Lugares de Trabajo (Edición 2024)'
-category: Curso
+category: Certificación
 modality: Virtual
-image: /images/Arte Redes Cuadrado FPI (1).png
+image: /images/Arte Redes Cuadrado FPI (4).png
 startDate: 15 Sep 2026
 price: Consultar precios y procedimientos
 registrationDeadline: ''
