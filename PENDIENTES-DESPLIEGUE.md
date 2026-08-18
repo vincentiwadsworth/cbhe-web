@@ -25,7 +25,7 @@
 2. **Paso 2**: cambiar los nameservers en nic.bo y probar el correo.
 3. **Paso 3**: apuntar la web a GitHub Pages en Cloudflare.
 4. **Paso 4**: activar el dominio en GitHub.
-5. **Paso 5**: ajuste final del código (lo hace Nicolás, sin acción de la CBHE).
+5. **Paso 5**: ajuste final del código (lo ejecuta la CBHE con los pasos de la sección 8).
 
 Cada paso termina con un punto de verificación (CHECKPOINT). No pase al siguiente paso hasta cumplirlo.
 
@@ -157,9 +157,21 @@ GitHub Pages solo entrega el sitio cuando el dominio está declarado en la confi
 
 ## 8. Paso 5: Ajuste final del código
 
-Lo hace el soporte técnico (Nicolás). Se cambian dos valores en el archivo `astro.config.mjs` del proyecto: `site` (la URL de producción) y `base` (el prefijo de las rutas), para que el sitio se sirva desde `https://cbhe.org.bo` sin el prefijo `/cbhe-web/`. Después se vuelve a desplegar y se verifica el build.
+Se cambian dos valores en el archivo `astro.config.mjs` del proyecto: `site` (la URL de producción) y `base` (el prefijo de las rutas), para que el sitio se sirva desde `https://cbhe.org.bo` sin el prefijo `/cbhe-web/`.
 
-**La CBHE no necesita hacer nada en este paso.** Solo confirmar cuando Nicolás avise que quedó publicado.
+Procedimiento:
+
+1. Entre a `github.com`, abra el repositorio del sitio (`cbhe-web`) y abra el archivo `astro.config.mjs`.
+2. Haga clic en el ícono de lápiz (editar) que aparece junto al nombre del archivo.
+3. Cambie la línea `site` de `"https://vincentiwadsworth.github.io"` a `"https://cbhe.org.bo"`.
+4. Cambie la línea `base` de `"/cbhe-web/"` a `"/"`.
+5. Haga clic en **Commit changes** y confirme el commit.
+6. El sitio se reconstruye solo con el proceso automático (GitHub Actions). Espere unos minutos y abra `https://cbhe.org.bo` para verificar.
+
+| Línea | Antes | Después |
+|---|---|---|
+| `site` | `"https://vincentiwadsworth.github.io"` | `"https://cbhe.org.bo"` |
+| `base` | `"/cbhe-web/"` | `"/"` |
 
 ## 9. Verificación final
 
@@ -184,23 +196,33 @@ Con eso, el dominio vuelve a usar la configuración de HostGator tal como estaba
 
 ### Correo: DKIM y DMARC
 
-Hoy el dominio no tiene registros DKIM ni DMARC. Sin ellos, los mails enviados desde la CBHE pueden caer en la carpeta de spam de los destinatarios. Para activarlos se usan los paneles de Microsoft 365 (Exchange Admin Center), no Cloudflare. Es un paso recomendado y conviene hacerlo con ayuda del soporte técnico.
+Hoy el dominio no tiene registros DKIM ni DMARC. Sin ellos, los mails enviados desde la CBHE pueden caer en la carpeta de spam de los destinatarios. Para activarlos, se usan los paneles de Microsoft 365 de la CBHE (Exchange Admin Center), no Cloudflare. Es un paso recomendado.
 
 ### Repositorio en la cuenta de GitHub de la CBHE
 
 El objetivo final es que el repositorio del sitio pertenezca a la CBHE y no a una cuenta personal.
 
-**Qué se necesita:** crear una cuenta gratuita en `github.com` con el correo institucional `cbhe@cbhe.org.bo`. El nombre de usuario puede ser `cbhe-org` o similar.
+**Qué se necesita:** una cuenta gratuita en `github.com` con el correo institucional `cbhe@cbhe.org.bo`. El nombre de usuario puede ser `cbhe-org` o similar.
 
-**Por qué:** GitHub Pages requiere que el repositorio sea público para el hosting gratuito. Mientras el repositorio esté en la cuenta personal de Nicolás, la CBHE no puede administrar accesos por sí misma. Transferido a la cuenta institucional, la CBHE decide quién tiene permisos de lectura, escritura o administración.
+**Por qué:** GitHub Pages requiere que el repositorio sea público para el hosting gratuito. Con el repositorio en la cuenta institucional, la CBHE decide quién tiene permisos de lectura, escritura o administración.
 
-**Cómo se hace (en la reunión de entrega):**
+**Cómo se hace:**
 
 1. Crear la cuenta en `github.com` con `cbhe@cbhe.org.bo`.
-2. Nicolás transfiere el repositorio `cbhe-web` a la nueva cuenta.
-3. Actualizar el backend del CMS con la nueva cuenta y generar un token nuevo de GitHub para que el CMS siga guardando los cambios.
-4. Verificar que GitHub Pages sigue funcionando después de la transferencia.
-5. La URL del repositorio cambia de `github.com/vincentiwadsworth/cbhe-web` a `github.com/cbhe-org/cbhe-web`.
+2. Transferir el repositorio: quien transfiere entra a `github.com`, abre el repositorio `cbhe-web` y va a **Settings** → **General** → **Danger Zone** → **Transfer ownership**. Indica el nuevo propietario (`cbhe-org`) y confirma la transferencia.
+3. Quien recibe acepta la transferencia desde el correo de invitación que llega a `cbhe@cbhe.org.bo`.
+4. Actualizar el backend del CMS con la nueva cuenta y generar un token nuevo de GitHub para que el CMS siga guardando los cambios (ver Guía de Editores, sección 1).
+5. Verificar que GitHub Pages sigue funcionando después de la transferencia.
+6. La URL del repositorio cambia de `github.com/vincentiwadsworth/cbhe-web` a `github.com/cbhe-org/cbhe-web`.
+
+### Cuenta Supabase de la CBHE
+
+La cuenta de Supabase que opera los certificados debe pasar a control de la CBHE. Hay dos formas de hacerlo:
+
+- Cambiar el correo del propietario de la cuenta a un correo institucional de la CBHE.
+- Invitar a un usuario institucional como owner (propietario) desde **Settings** de Supabase, para que la CBHE administre la cuenta con su propio acceso.
+
+Con el control de la cuenta, la CBHE decide quién accede a Supabase Studio y a los datos de los certificados.
 
 ## 12. Glosario breve
 
@@ -223,12 +245,5 @@ Una vez completados los pasos de esta guía:
 - El equipo de la CBHE operará el CMS y los certificados según las guías:
   - [Guía de Editores](./GUIA-EDITORES.md)
   - [Guía de Certificados](./GUIA-CERTIFICADOS.md)
-- Nicolás queda disponible como soporte técnico para:
-  - Cambios que requieran programación.
-  - Problemas con los certificados o el sitio.
-  - Actualizaciones de dependencias.
 
-## Contacto
-
-- **Nicolás**: desarrollador a cargo de la entrega técnica.
-- *(Completar con datos de contacto antes de la reunión de entrega)*
+La CBHE administra el sitio con las guías entregadas. Si en el futuro contrata soporte técnico externo, el equipo define a quién y con qué alcance.

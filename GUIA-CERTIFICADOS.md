@@ -1,4 +1,4 @@
-# Guía de Certificados — CBHE
+# Guía de Certificados de la CBHE
 
 > **Para**: Responsable de Gestión (Sello CBHE), Responsable de Capacitación
 > **Última revisión**: 9 de julio de 2026
@@ -84,7 +84,7 @@ flowchart TD
 
 ### Pasos
 
-1. **Abrir Supabase Studio** en el navegador. Nicolás le proporciona el acceso.
+1. **Abrir Supabase Studio** en el navegador: entre a `supabase.com/dashboard` e inicie sesión con el correo y la contraseña de la cuenta Supabase de la CBHE.
 2. Ir a **Table Editor** → seleccionar la tabla **`sello`** en el panel izquierdo.
 3. Hacer clic en **Insert row**.
 4. Completar **dos campos**:
@@ -129,7 +129,7 @@ flowchart TD
 
 ### Pasos
 
-1. **Abrir Supabase Studio** en el navegador. Nicolás le proporciona el acceso.
+1. **Abrir Supabase Studio** en el navegador: entre a `supabase.com/dashboard` e inicie sesión con el correo y la contraseña de la cuenta Supabase de la CBHE.
 2. Ir a **Table Editor** → seleccionar la tabla **`capacitacion`** en el panel izquierdo.
 3. Hacer clic en **Insert row**.
 4. Completar **tres campos**:
@@ -171,11 +171,11 @@ sequenceDiagram
   Note over Studio,DB: ⏱ ~2-5 segundos en total
 ```
 
-> **El QR se genera una sola vez al crear el registro (INSERT).** Si modifica datos después (nombre, fecha, curso), **el QR no cambia** — el código `CBHE-C-XXXXX` / `CBHE-S-XXXXX` y la URL de verificación permanecen iguales. El QR codifica la URL `cbhe.org.bo/certificados/?c=CBHE-C-XXXXX`, que depende solo del código único.
+> **El QR se genera una sola vez al crear el registro (INSERT).** Si modifica datos después (nombre, fecha, curso), **el QR no cambia**: el código `CBHE-C-XXXXX` / `CBHE-S-XXXXX` y la URL de verificación permanecen iguales. El QR codifica la URL `cbhe.org.bo/certificados/?c=CBHE-C-XXXXX`, que depende solo del código único.
 
 > **Importante**: después de guardar, **espere unos 5 segundos** y refresque la vista de la tabla. La columna `qr_url` debe mostrar un enlace. Si pasados 30 segundos sigue vacía, vea la [Sección 8](#8-procedimiento-ante-errores).
 
-> **El QR se genera una sola vez al crear el registro.** Si modifica los datos después de creado (nombre, fecha, curso), **el QR no cambia** — el código `CBHE-C-XXXXX` y la URL de verificación permanecen iguales. El QR codifica la URL `cbhe.org.bo/certificados/?c=CBHE-C-XXXXX`, que depende únicamente del código único del certificado, no de los datos que usted completa.
+> **El QR se genera una sola vez al crear el registro.** Si modifica los datos después de creado (nombre, fecha, curso), **el QR no cambia**: el código `CBHE-C-XXXXX` y la URL de verificación permanecen iguales. El QR codifica la URL `cbhe.org.bo/certificados/?c=CBHE-C-XXXXX`, que depende únicamente del código único del certificado, no de los datos que usted completa.
 
 ---
 
@@ -232,12 +232,12 @@ Reemplace `CBHE-C-Xg7Klm3NpQ` por el código real del certificado. El sistema de
 
 | Quién | Tabla | Qué puede hacer | Cómo accede |
 |---|---|---|---|
-| **Responsable de Gestión** | `sello` | Emitir sellos CBHE | Solicita a Nicolás, que opera Supabase Studio |
-| **Responsable de Capacitación** | `capacitacion` | Emitir certificados de capacitación | Solicita a Nicolás, que opera Supabase Studio |
-| **Nicolás** | `capacitacion` y `sello` | Crear, modificar y eliminar registros | Supabase Studio (acceso completo) |
+| **Responsable de Gestión** | `sello` | Emitir sellos CBHE | Supabase Studio |
+| **Responsable de Capacitación** | `capacitacion` | Emitir certificados de capacitación | Supabase Studio |
+| **Administración de la cuenta Supabase** | `capacitacion` y `sello` | Crear, modificar y eliminar registros | Supabase Studio (acceso completo) |
 | **Público** | `capacitacion` y `sello` | Verificar certificados (solo lectura) | Escaneando el QR o visitando la URL de verificación |
 
-> **Nota**: el acceso a Supabase Studio está gestionado por Nicolás. Si la Responsable de Gestión o la Responsable de Capacitación necesitan acceso directo en el futuro, se puede configurar.
+> **Nota**: las responsables que necesiten acceso directo lo solicitan a quien administra la cuenta Supabase de la CBHE.
 
 ---
 
@@ -245,12 +245,12 @@ Reemplace `CBHE-C-Xg7Klm3NpQ` por el código real del certificado. El sistema de
 
 | Error | Causa probable | Solución |
 |---|---|---|
-| `qr_url` aparece vacío después de guardar | La Edge Function no se ejecutó a tiempo o falló | **Espere 30 segundos** y refresque la tabla. Si sigue vacío, **genere un nuevo certificado**: cree otro registro con los mismos datos. El sistema asignará un código nuevo y generará el QR automáticamente. El registro sin QR queda como fallido — no se usa y no afecta nada. |
+| `qr_url` aparece vacío después de guardar | La Edge Function no se ejecutó a tiempo o falló | **Espere 30 segundos** y refresque la tabla. Si sigue vacío, **genere un nuevo certificado**: cree otro registro con los mismos datos. El sistema asignará un código nuevo y generará el QR automáticamente. El registro sin QR queda como fallido. No se usa y no afecta nada. |
 | Insertó un sello en la tabla equivocada (o viceversa) | Confusión entre las dos tablas al hacer Insert row | **No elimine el registro erróneo todavía.** Cree un nuevo registro en la tabla correcta (el código y el QR se generan solos). Luego elimine el registro equivocado: seleccione la fila y haga clic en **Delete**. Los códigos eliminados no se reutilizan, no hay riesgo de duplicados. |
-| El código generado tiene un formato incorrecto | Fallo del trigger de generación de código | **Genere un nuevo certificado** con los mismos datos (INSERT nuevo). El registro con código defectuoso puede eliminarse o dejarse — no afecta al sistema. |
+| El código generado tiene un formato incorrecto | Fallo del trigger de generación de código | **Genere un nuevo certificado** con los mismos datos (INSERT nuevo). El registro con código defectuoso puede eliminarse o dejarse. No afecta al sistema. |
 | "Certificado No Encontrado" al escanear el QR | Registro eliminado o código erróneo | Verifique en Supabase Studio que el registro existe en la tabla correspondiente. Si fue borrado por error, **genere un nuevo certificado** con los mismos datos. El código anterior deja de funcionar. |
-| La página de verificación muestra error | Servicio de Supabase caído o problema de conexión | Espere unos minutos y vuelva a intentar. Si el error persiste más de 15 minutos, contacte a Nicolás — es una falla del sistema, no un error de uso. |
-| No puede acceder a Supabase Studio | Credenciales vencidas o problema de autenticación | Contacte a Nicolás para restablecer el acceso. |
+| La página de verificación muestra error | Servicio de Supabase caído o problema de conexión | Espere unos minutos y vuelva a intentar. Si el error persiste más de 15 minutos, consulte el estado del servicio en `status.supabase.com`. Si muestra una incidencia, espere a que se resuelva. |
+| No puede acceder a Supabase Studio | Credenciales vencidas o problema de autenticación | Use **Forgot password** en la pantalla de inicio de sesión de Supabase para recuperar el acceso, o solicítelo a quien administra la cuenta Supabase de la CBHE. |
 
 ---
 
@@ -291,17 +291,18 @@ Cuando el certificado está listo (código generado + QR visible en `qr_url`):
 
 ---
 
-## Soporte técnico
+## Soporte
 
-Ante cualquier duda o problema con el sistema de certificados, contactar a:
+Ante cualquier duda o problema con el sistema de certificados:
 
-- **Nicolás** — administrador técnico del sistema
+- Consulte la [Sección 8](#8-procedimiento-ante-errores) (procedimiento ante errores) y la [Sección 9](#9-resguardo-de-datos) (resguardo de datos).
+- Si el problema persiste, contacte a quien administra la cuenta Supabase de la CBHE con una captura de pantalla del error.
 
 ---
 
 ## Documentos relacionados
 
-- [README](./README.md) — descripción general del proyecto y costo operativo
-- [Documentación Técnica](./DOCUMENTACION-TECNICA.md) — stack tecnológico, arquitectura, build y deploy (para developers)
-- [Guía para Editores del Sitio](./GUIA-EDITORES.md) — cómo gestionar el contenido del sitio web (artículos, cursos, empresas)
-- [Pendientes de Despliegue](./PENDIENTES-DESPLIEGUE.md) — checklist de handoff y tareas pendientes
+- [README](./README.md): descripción general del proyecto y costo operativo
+- [Documentación Técnica](./DOCUMENTACION-TECNICA.md): stack tecnológico, arquitectura, build y deploy (para developers)
+- [Guía para Editores del Sitio](./GUIA-EDITORES.md): cómo gestionar el contenido del sitio web (artículos, cursos, empresas)
+- [Pendientes de Despliegue](./PENDIENTES-DESPLIEGUE.md): checklist de handoff y tareas pendientes

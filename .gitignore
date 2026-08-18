@@ -29,3 +29,5 @@ pnpm-debug.log*
 /*.png
 # Skill registry and SDD artifacts (regenerated automatically)
 /.atl/
+# Credenciales de entrega: NUNCA commitear (repo público)
+/credenciales/

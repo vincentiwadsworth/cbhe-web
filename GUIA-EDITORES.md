@@ -16,8 +16,15 @@
 
 - **URL**: `https://cbhe.org.bo/admin/`
 - **Iniciar sesión**: botón _Login with GitHub_ → autorizar con su cuenta de GitHub.
-- **Primera vez**: Nicolás crea la cuenta de GitHub y da un **token de acceso personal**. Guárdelo en un lugar seguro (es su contraseña del CMS).
-- **¿No entra?**: revise que el token no haya expirado. Si expiró, pedirle uno nuevo a Nicolás.
+- **Primera vez**: cualquier persona que administre la cuenta GitHub de la CBHE puede generar un **token de acceso personal** con estos pasos:
+  1. Entre a `github.com` e inicie sesión con la cuenta GitHub de la CBHE.
+  2. Abra **Settings** desde el menú de su perfil, en la esquina superior derecha.
+  3. En el menú de la izquierda, vaya a **Developer settings** → **Personal access tokens** → **Tokens (classic)**.
+  4. Haga clic en **Generate new token**.
+  5. Marque el scope **repo**.
+  6. Haga clic en **Generate token** y copie el token. Solo se muestra una vez.
+- **Guarde el token** en un lugar seguro. Es su contraseña del CMS.
+- **¿No entra?**: revise que el token no haya expirado. Si expiró, genere otro con los pasos anteriores.
 - El CMS se llama **Sveltia**. Es el panel donde se escribe, edita y publica todo el contenido del sitio.
 
 ---
@@ -227,7 +234,7 @@ Estas partes del sitio no se editan desde el panel. Están escritas directamente
 - **Menú de navegación**: las páginas que aparecen en el menú superior y en el pie de página.
 - **Diseño general**: colores, tipografías, estilos visuales.
 
-Para cualquiera de estos cambios, contacte al soporte técnico (Nicolás) con una descripción de lo que necesita. El cambio se realiza en el código y se publica con el mismo proceso automático.
+Para cualquiera de estos cambios, abra un cambio con quien administra la cuenta GitHub de la CBHE y describa lo que necesita. El cambio se realiza en el código y se publica con el mismo proceso automático (commit → build → deploy).
 
 ---
 
@@ -239,7 +246,13 @@ Piense en el historial como un álbum numerado. La fotografía 1 es la primera v
 
 La consecuencia práctica para usted es simple: **si un cambio sale mal, se restaura la versión anterior**. No se pierde nada que estuviera publicado antes. Si publica un curso con un error o un artículo incompleto, se vuelve a la versión buena y el sitio queda como estaba.
 
-Restaurar una versión anterior no lo hace usted desde el panel. Lo hace el soporte técnico, con unos pocos clics, y el sitio vuelve a publicarse con el historial intacto.
+Para restaurar una versión anterior:
+
+1. Entre a `github.com`, abra el repositorio del sitio (`cbhe-web`) y abra el archivo que tiene el error.
+2. Haga clic en **History** (historial).
+3. Elija la versión correcta de la lista y ábrala.
+4. Use el botón de revertir o reemplazar para volver el archivo a esa versión y confirme el cambio (commit).
+5. El sitio se reconstruye solo con el proceso automático. Espere unos minutos y verifique en `cbhe.org.bo`.
 
 ---
 
@@ -257,14 +270,14 @@ Restaurar una versión anterior no lo hace usted desde el panel. Lo hace el sopo
 
 | Problema | Causa probable | Solución |
 |----------|---------------|----------|
-| No puedo entrar al CMS | Token de GitHub expirado o incorrecto | Pedirle un token nuevo a Nicolás (scope `repo`) |
-| El sitio no se actualiza después de publicar | El job de deploy está trabado en GitHub | Avisarle a Nicolás. Él puede disparar el deploy manualmente |
+| No puedo entrar al CMS | Token de GitHub expirado o incorrecto | Genere otro token con el procedimiento de la sección 1 (scope `repo`) |
+| El sitio no se actualiza después de publicar | El job de deploy está trabado en GitHub | Relance el deploy: pestaña **Actions** → workflow **Deploy to GitHub Pages** → botón **Run workflow** |
 | "Error al guardar" en Sveltia | Imagen demasiado grande (>2 MB) | Redimensione la imagen antes de subirla |
 | La imagen no se ve en el sitio | La referencia en Markdown tiene una ruta incorrecta | Use siempre `/images/nombre-archivo.jpg` (con barra inicial) |
 | Guardé un artículo pero no aparece | El switch **Borrador** (`draft`) está activado | Desactive el switch y vuelva a publicar |
 | El curso no aparece en el catálogo | Filtro de borrador activo o `draft: true` | Verifique que `draft` esté en `false` y vuelva a publicar |
 | No encuentro la colección que busco | Solo se muestran colecciones configuradas en el CMS | Cursos, Artículos, Empresas, Testimonios y Directorio están en Sveltia |
-| El formulario de contacto no funciona | `WEB3FORMS_KEY` mal configurada | Avisarle a Nicolás. Es una variable de entorno del build |
+| El formulario de contacto no funciona | `WEB3FORMS_KEY` mal configurada | Requiere ajustar una variable del build: quien administra el repositorio la configura en **Settings → Secrets and variables → Actions** |
 
 ---
 
@@ -295,11 +308,9 @@ Restaurar una versión anterior no lo hace usted desde el panel. Lo hace el sopo
 
 | Para qué | Quién | Cómo |
 |----------|-------|------|
-| No puedo entrar al CMS (token expirado) | Nicolás | WhatsApp o correo |
-| El sitio no se actualiza (deploy trabado) | Nicolás | WhatsApp o correo |
-| Tengo dudas sobre los campos de una colección | Nicolás | WhatsApp (vía rápida) |
-| Quiero emitir un certificado (Sello o Capacitación) | Ver [Guía de Certificados](./GUIA-CERTIFICADOS.md) | Guía paso a paso |
-| Error técnico que no sé resolver | Nicolás | Correo con captura de pantalla del error |
+| Problemas del CMS o del sitio (no entra al CMS, deploy trabado, error al guardar) | Quien administra la cuenta GitHub de la CBHE | Correo con captura de pantalla del error |
+| Dudas de contenido (campos de una colección, cómo publicar) | Esta guía | Secciones 3 a 6 |
+| Quiero emitir un certificado (Sello o Capacitación) | [Guía de Certificados](./GUIA-CERTIFICADOS.md) | Guía paso a paso |
 
 ---
 
