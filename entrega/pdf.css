@@ -1,0 +1,83 @@
+body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #111;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 20px;
+  color: #1a3a5c;
+  border-bottom: 2px solid #1a3a5c;
+  padding-bottom: 6px;
+}
+
+h2 {
+  font-size: 15px;
+  color: #1a3a5c;
+  margin-top: 18px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 13px;
+  color: #1a3a5c;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0;
+  page-break-inside: avoid;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background-color: #f0f4f8;
+  font-weight: 600;
+}
+
+pre {
+  background: #f6f8fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  page-break-inside: avoid;
+  font-size: 10px;
+}
+
+code {
+  font-family: Consolas, monospace;
+  background: #f6f8fa;
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+
+a {
+  color: #1a6dab;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  page-break-inside: avoid;
+}
+
+.mermaid {
+  page-break-inside: avoid;
+}
+
+ul, ol {
+  margin: 6px 0;
+  padding-left: 22px;
+}
+
+li {
+  margin: 2px 0;
+}
