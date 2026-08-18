@@ -2,13 +2,14 @@
 title: 'Examen de Certificación: Inspector de Soldadura CAWI/CWI - AWS'
 category: Certificación
 modality: Presencial
-image: /images/cursos/inspector-soldadura.webp
-startDate: 13 Jun 2026
+image: /images/Curso y Examen de Inspectores de Soldadura (6).png
+startDate: 12 Dec 2026
 price: Consultar precios y procedimientos
-registrationDeadline: ''
+registrationDeadline: 06/11/2026
 canvaLink: https://canva.link/14hwjfj6cpgjzsr
 description: ''
 instructors: []
+featured: false
 draft: false
 ---
 
