@@ -2,7 +2,7 @@
 nombre: YPFB ANDINA S.A.
 grupo: upstream
 website: www.ypfb-andina.com.bo
-email: ''
+email: info@ypfb-andina.com.bo
 logo: ''
 destacada: false
 orden: 0
