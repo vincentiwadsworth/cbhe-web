@@ -1,10 +1,11 @@
 ---
-nombre: "PRODIMSA"
+nombre: PETROLEO DESARROLLO E IMPORTACIONES S.A. - PRODIMSA
 grupo: downstream
+website: https://prodimsa.com
+email: prodimsa@prodimsa.com
+logo: ''
 destacada: false
 orden: 0
-website: "https://prodimsa.com"
-email: "prodimsa@prodimsa.com"
-description: "Empresa boliviana especializada en la comercialización de lubricantes y filtros industriales, representante oficial de YPF Lubricantes, Baldwin y Parker-Racor con presencia nacional."
 draft: false
+description: Empresa boliviana especializada en la comercialización de lubricantes y filtros industriales, representante oficial de YPF Lubricantes, Baldwin y Parker-Racor con presencia nacional.
 ---
