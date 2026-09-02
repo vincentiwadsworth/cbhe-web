@@ -1,12 +1,12 @@
 ---
-title: 'Programa Avanzado: Fundamentos para la Inspección de Incendios'
+title: 'Programa Avanzado: Diseño de Sistemas Contra Incendios'
 category: Curso
 modality: Virtual
-image: /images/WhatsApp Image 2026-06-19 at 10.02.32 AM.jpeg
-startDate: 24 Jun 2026
-price: $420 USD (Aplican descuentos por pago anticipado)
+image: /images/Diseño SCI - 2026.png
+startDate: 05 Oct 2026
+price: 'Consulte precio al WhatsApp: 79891193'
 registrationDeadline: ''
-canvaLink: https://canva.link/4i67331j3j5q2s6
+canvaLink: https://canva.link/9jsrwpcjy45llgl
 description: ''
 instructors:
   - name: Jaime A. Moncada, PE
@@ -21,18 +21,16 @@ instructors:
     bio: Ingeniero Civil, perfil Hidráulico - Ambiental, en la Universidad la República del Uruguay y Certificado Especialista Protección contra Incendios (CFPS antes llamado CEPI) por la NFPA. Es secretario en la Asociación Uruguaya en Protección Contra Incendios (AUPCI). Es un experto en la aplicación de la normativa NFPA y en las normas uruguayas de protección contra incendios, con extensa experiencia en el diseño, inspección y prueba de sistemas de supresión de incendios, con 12 años de experiencia laboral. Ha trabajado en proyectos industriales (incluyendo industria de petrolera, generación eléctrica, minera, y manufacturera) y en edificaciones comerciales. Es gerente de IFSC del Cono Sur (www.ifsc.us), basado en Montevideo, Uruguay.
   - name: Emmanuel Reyes, CFPS
     bio: Experto en la aplicación de la normativa NFPA y en la norma R-032, con extensa experiencia en el diseño, inspección y prueba de sistemas de supresión de incendios a base de agua, con casi 15 años de experiencia en protección contra incendio. Ingeniero mecánico graduado del Instituto Tecnológico de Santo Domingo, República Dominicana y Certificado Especialista Protección contra Incendios (CFPS) por la NFPA. Ha trabajado en proyectos industriales, de generación eléctrica y en edificaciones comerciales. Es subgerente de IFSC Dominicana, basado en Santo Domingo, RD.
+featured: true
 draft: false
 ---
 
-De acuerdo con la NFPA 1031, la Norma sobre Calificaciones Profesionales para Inspectores de Incendios, el inspector de incendios debe tener conocimiento sobre cinco normas base de la seguridad contra incendios:
+Este programa virtual está dirigido a profesionales con responsabilidad en instalación, diseño o en la revisión de sistemas contra incendios, así como en la inspección y mantenimiento de estos sistemas. También profesionales de compañías de seguros, autoridades competentes, firmas de ingeniería, instaladores de sistemas contra incendios y representantes de equipos contra incendios.
 
-- **NFPA 1** — Código de Prevención de Incendio
-- **NFPA 101** — el Código de Seguridad Humana
-- **NFPA 13** — Norma sobre Rociadores Automáticos
-- **NFPA 72**, Norma sobre sistemas de Alarma y Detección
-- **NFPA 25** — Norma de Inspección Prueba y Mantenimiento de Sistemas Contra Incendios
-
-Este programa puede ser la base de estudio para profesionales interesados en obtener la Certificación Como Inspector de Incendios por la NFPA.
+- 9 módulos virtuales
+- Clases 100% al vivo
+- 32 horas de capacitación
+- 6 horas por semana
 
 ## Metodología
 
@@ -48,7 +46,7 @@ Este programa puede ser la base de estudio para profesionales interesados en obt
 
 ## Agenda
 
-- **Fechas**: 17, 19, 24, 26, 31 de agosto y 2, 7, 9 y 14 de septiembre 2026
+- **Fechas**: 5, 7, 12, 14, 19, 21, 26 y 28 de octubre y 4 de noviembre de 2026.
 - **Horario**: 19:30 a 22:00 (Hora Bolivia GTM-4)
 
 ## Contacto
