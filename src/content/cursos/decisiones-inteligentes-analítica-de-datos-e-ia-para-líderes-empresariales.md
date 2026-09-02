@@ -2,8 +2,8 @@
 title: 'Decisiones Inteligentes: Analítica de Datos e IA para Líderes Empresariales'
 category: Curso
 modality: Virtual
-image: /images/Curso y Examen de Inspectores de Soldadura (5).png
-startDate: 05 Sep 2026
+image: /images/Decisiones Inteligente IA para líderes.png
+startDate: 12 Sep 2026
 price: Consultar precios y procedimientos
 registrationDeadline: ''
 canvaLink: https://canva.link/tmp5pnjouamxhjr
