@@ -1,26 +1,26 @@
 {
-  "updated": "2026-09-09T23:43:18.625944+00:00",
+  "updated": "2026-09-10T15:58:32.262293+00:00",
   "usd_bob": {
-    "official": 12.64
+    "official": 12.42
   },
   "commodities": {
     "WTI": {
-      "price": 97.14,
+      "price": 101.12,
       "unit": "USD/barril",
       "label": "WTI Crudo"
     },
     "BRENT": {
-      "price": 102.05,
+      "price": 106.53,
       "unit": "USD/barril",
       "label": "Brent Crudo"
     },
     "HENRY_HUB": {
-      "price": 2.807,
+      "price": 2.783,
       "unit": "USD/MMBtu",
       "label": "Henry Hub"
     },
     "TTF": {
-      "price": 78.965,
+      "price": 82.17,
       "unit": "EUR/MWh",
       "label": "TTF Gas Europeo"
     }
