@@ -47,3 +47,19 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/deploy-pages@v4
+
+  avisar_fallo:
+    needs: [build, deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Avisar fallo de deploy por email
+        run: |
+          curl -s -X POST https://api.web3forms.com/submit \
+            -H "Content-Type: application/json" \
+            -d '{
+            "access_key": "${{ secrets.WEB3FORMS_KEY }}",
+            "subject": "Fallo de deploy en la web CBHE",
+            "from_name": "Robot de deploy CBHE",
+            "message": "La publicación del sitio falló. Vea el detalle: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }'
