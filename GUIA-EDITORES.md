@@ -286,13 +286,13 @@ Para restaurar una versión anterior:
 
 El verificador de certificados usa una base de datos gratuita de Supabase. Si pasan 7 días sin actividad, Supabase la pausa y los QR dejan de verificar. Un ping automático diario la mantiene activa; no requiere ningún cuidado de su parte.
 
-Si llega alguno de estos correos a `cbhe@cbhe.org.bo`:
+Alertas del sistema y qué hacer ante cada una:
 
-| Correo | Qué significa | Qué hacer |
+| Alerta | Dónde aparece | Qué hacer |
 |---|---|---|
-| **Alerta: la base de datos CBHE no responde** | El ping diario falló | Entre a supabase.com con la cuenta de la CBHE y pulse **Restore project** |
-| **Fallo de deploy en la web CBHE** | Un contenido guardado rompió la publicación | Revise sus últimos cambios y la pestaña **Actions** (sección 10). No publique más hasta corregir |
-| Correo de Supabase con la palabra **pause** | La base está por pausarse o ya se pausó | **Restore project** en supabase.com |
+| Correo de Supabase con la palabra **pause** | `cbhe@cbhe.org.bo` (propietaria de la cuenta) | Entre a supabase.com con la cuenta de la CBHE y pulse **Restore project** |
+| Issue **"La base de datos CBHE no responde"** | Repositorio de GitHub | Igual que el caso anterior; cierre el issue al restaurar |
+| Issue **"Fallo de deploy: la web no se está actualizando"** | Repositorio de GitHub | Revise los últimos cambios guardados (sección 10); cierre el issue cuando el sitio vuelva a publicar |
 
 La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo` son administradoras. Restaurar una pausa no borra datos.
 

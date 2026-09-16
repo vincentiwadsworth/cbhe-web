@@ -52,14 +52,26 @@ jobs:
     needs: [build, deploy]
     if: failure()
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-      - name: Avisar fallo de deploy por email
+      - name: Abrir issue de fallo de deploy
         run: |
-          curl -s -X POST https://api.web3forms.com/submit \
-            -H "Content-Type: application/json" \
-            -d '{
-            "access_key": "${{ secrets.WEB3FORMS_KEY }}",
-            "subject": "Fallo de deploy en la web CBHE",
-            "from_name": "Robot de deploy CBHE",
-            "message": "La publicación del sitio falló. Vea el detalle: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            }'
+          existing=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/search/issues?q=repo:${{ github.repository }}+is:issue+is:open+label:%22fallo+de+sistema%22" \
+            | grep -o '"total_count": *[0-9]*' | grep -o '[0-9]*')
+          if [ "$existing" = "0" ]; then
+            curl -s -X POST \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues \
+              -d '{
+              "title": "Fallo de deploy: la web no se esta actualizando",
+              "body": "El deploy fallo en el commit ${{ github.sha }}. Mientras este issue este abierto, el sitio no publica cambios nuevos.\n\nDetalle tecnico: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\n\nCausa tipica: un contenido guardado desde el CMS con datos invalidos. Revise los ultimos cambios con la guia de editores, seccion 10. Cierre este issue cuando este corregido.",
+              "labels": ["fallo de sistema"]
+              }'
+            echo "Issue creado"
+          else
+            echo "Ya existe un issue abierto de fallo de sistema, no se duplica"
+          fi
