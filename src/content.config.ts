@@ -2,6 +2,16 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
+const urlOpcional = z.preprocess(
+  (val) => {
+    if (val === "" || val === null || val === undefined) return undefined;
+    const str = String(val).trim();
+    if (str === "") return undefined;
+    return /^[a-z]+:\/\//i.test(str) ? str : `https://${str}`;
+  },
+  z.string().url().optional()
+);
+
 const cursos = defineCollection({
   loader: glob({ base: "./src/content/cursos", pattern: "**/*.md" }),
   schema: z.object({
@@ -12,7 +22,7 @@ const cursos = defineCollection({
     startDate: z.string(),
     price: z.string(),
     registrationDeadline: z.string().optional(),
-    canvaLink: z.preprocess((val) => (val === "" ? undefined : val), z.string().url().optional()),
+    canvaLink: urlOpcional,
     description: z.string().optional(),
     instructors: z.array(
       z.object({
@@ -48,7 +58,7 @@ const empresas = defineCollection({
   schema: z.object({
     nombre: z.string(),
     grupo: z.enum(["upstream", "pozo", "superficie", "downstream", "auxiliares", "adherentes"]),
-    website: z.preprocess((val) => (val === "" ? undefined : val), z.string().url().optional()),
+    website: urlOpcional,
     email: z.preprocess((val) => (val === "" ? undefined : val), z.string().email().optional()),
     description: z.string().optional(),
     logo: z.string().optional(),
