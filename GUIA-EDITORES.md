@@ -1,12 +1,12 @@
 # Guía de Editores (CBHE)
 
 > **Para**: Responsable de Comunicación, Responsable de Capacitación, Responsable de Gestión  
-> **Última revisión**: 18 de agosto de 2026
+> **Última revisión**: 16 de septiembre de 2026
 
 ## Resumen rápido
 
 - Cómo entrar al CMS, escribir contenido y publicarlo en el sitio web de la CBHE.
-- Diferencia entre **Guardar** (borrador privado) y **Publicar** (visible en `cbhe.org.bo`).
+- Diferencia entre **Guardar** (borrador privado) y **Publicar** (visible en el sitio web público).
 - Cómo subir imágenes, qué formatos usar y cómo resolver problemas comunes.
 - Qué cambios requieren soporte técnico y cómo funcionan las copias de seguridad.
 
@@ -14,7 +14,8 @@
 
 ## 1. Acceso al CMS
 
-- **URL**: `https://cbhe.org.bo/admin/`
+- **URL**: `https://vincentiwadsworth.github.io/cbhe-web/admin/`
+- **Nota sobre el dominio**: `cbhe.org.bo` todavía no sirve el sitio (migración en curso). Cuando la migración esté completa, la dirección del CMS pasará a ser `https://cbhe.org.bo/admin/`.
 - **Iniciar sesión**: botón _Login with GitHub_ → autorizar con su cuenta de GitHub.
 - **Primera vez**: cualquier persona que administre la cuenta GitHub de la CBHE puede generar un **token de acceso personal** con estos pasos:
   1. Entre a `github.com` e inicie sesión con la cuenta GitHub de la CBHE.
@@ -41,7 +42,7 @@ flowchart TD
     Decision -->|💾 Save| Draft(📝 Borrador: visible solo en CMS)
     Decision -->|🚀 Save &amp; Publish| PublishCommit(📤 Commit sin [skip ci])
     PublishCommit --> Build(⚙️ GitHub Actions build)
-    Build --> Deploy(🌐 Deploy a cbhe.org.bo)
+    Build --> Deploy(🌐 Deploy a GitHub Pages)
     Deploy --> Live(✅ Visible en el sitio)
     Draft --> DraftNote(🔄 Editable, no aparece en el sitio)
 
@@ -67,20 +68,20 @@ sequenceDiagram
     participant GitHub as 📦 GitHub
     participant Actions as ⚙️ GitHub Actions
     participant Pages as 🌐 GitHub Pages
-    participant DNS as 🔗 cbhe.org.bo
+    participant Sitio as 🌐 Sitio público
 
     Editor->>Sveltia: Save &amp; Publish
     Sveltia->>GitHub: git commit (sin [skip ci])
     GitHub->>Actions: Dispara workflow deploy.yml
     Actions->>Actions: npm ci + npx astro build
     Actions->>Pages: Sube archivos a gh-pages
-    Pages->>DNS: Sitio actualizado
+    Pages->>Sitio: Sitio actualizado
 
-    Note over Editor,DNS: ⏱️ ~2-3 minutos en total
+    Note over Editor,Sitio: ⏱️ ~2-3 minutos en total
 ```
 
 - **Save** = commit con `[skip ci]` → el cambio queda en el CMS pero **no se publica**. Ideal para borradores.
-- **Save & Publish** = commit sin `[skip ci]` → dispara el build automático y en ~2-3 minutos el contenido está **visible en `cbhe.org.bo`**.
+- **Save & Publish** = commit sin `[skip ci]` → dispara el build automático y en ~2-3 minutos el contenido está **visible en el sitio público** (`https://vincentiwadsworth.github.io/cbhe-web/`).
 
 Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento nunca aparece en el sitio, ni siquiera cuando usa Save and Publish. Son dos controles distintos: Save decide si publica ahora; Borrador decide si el elemento existe en el sitio.
 
@@ -95,7 +96,7 @@ flowchart TD
     CheckFormat -->|❌ No| Convert(🔄 Convertir a JPG / PNG / WebP)
     Convert --> CheckSize
     CheckSize -->|✅ Sí| Upload(☁️ Subir desde Sveltia Media)
-    CheckSize -->|❌ No| Resize(🔧 Redimensionar: máx 2 MB, 1920 px ancho)
+    CheckSize -->|❌ No| Resize(🔧 Redimensionar: máx 2 MB, ideal menos de 500 KB)
     Resize --> Upload
     Upload --> Reference(🔗 Referenciar: ![](/images/archivo.jpg))
     Reference --> Done(✅ Listo)
@@ -113,7 +114,7 @@ flowchart TD
 ```
 
 - **Formatos**: JPG para fotos, PNG para logos (transparencia), WebP para mejor calidad con menor peso.
-- **Tamaño máximo**: 2 MB por imagen, 1920 píxeles de ancho. Si la imagen es más grande, Sveltia puede fallar al guardar.
+- **Tamaño**: máximo 2 MB por imagen, ideal menos de 500 KB. Ancho recomendado: 1920 píxeles. Si la imagen supera los 2 MB, Sveltia puede fallar al guardar.
 - **Dónde se guardan**: carpeta `public/images/`. Desde el contenido se referencian como `/images/nombre-archivo.jpg`.
 
 ---
@@ -252,7 +253,7 @@ Para restaurar una versión anterior:
 2. Haga clic en **History** (historial).
 3. Elija la versión correcta de la lista y ábrala.
 4. Use el botón de revertir o reemplazar para volver el archivo a esa versión y confirme el cambio (commit).
-5. El sitio se reconstruye solo con el proceso automático. Espere unos minutos y verifique en `cbhe.org.bo`.
+5. El sitio se reconstruye solo con el proceso automático. Espere unos minutos y verifique en `https://vincentiwadsworth.github.io/cbhe-web/`.
 
 ---
 
@@ -271,7 +272,7 @@ Para restaurar una versión anterior:
 | Problema | Causa probable | Solución |
 |----------|---------------|----------|
 | No puedo entrar al CMS | Token de GitHub expirado o incorrecto | Genere otro token con el procedimiento de la sección 1 (scope `repo`) |
-| El sitio no se actualiza después de publicar | El job de deploy está trabado en GitHub | Relance el deploy: pestaña **Actions** → workflow **Deploy to GitHub Pages** → botón **Run workflow** |
+| El sitio no se actualiza después de publicar | Run de deploy fallido o atascado en GitHub | Revise la pestaña **Actions** del repositorio en GitHub. Si el último run de **Deploy to GitHub Pages** está en rojo, el problema es un contenido inválido: no siga guardando cambios y reporte el error a soporte. Si está en amarillo o atascado hace varios minutos, relance el deploy: workflow **Deploy to GitHub Pages** → botón **Run workflow** |
 | "Error al guardar" en Sveltia | Imagen demasiado grande (>2 MB) | Redimensione la imagen antes de subirla |
 | La imagen no se ve en el sitio | La referencia en Markdown tiene una ruta incorrecta | Use siempre `/images/nombre-archivo.jpg` (con barra inicial) |
 | Guardé un artículo pero no aparece | El switch **Borrador** (`draft`) está activado | Desactive el switch y vuelva a publicar |
@@ -290,7 +291,7 @@ Para restaurar una versión anterior:
 | **Markdown** | Lenguaje simple para escribir texto con formato (negritas, títulos, links) sin necesidad de HTML |
 | **Colección** | Grupo de contenido del mismo tipo: Cursos, Artículos, Empresas, Testimonios o Directorio |
 | **Save / Guardar** | Guarda el cambio como borrador en GitHub, no se publica en el sitio |
-| **Save & Publish / Publicar** | Guarda y dispara el deploy automático, el cambio aparece en `cbhe.org.bo` |
+| **Save & Publish / Publicar** | Guarda y dispara el deploy automático, el cambio aparece en el sitio web |
 | **Borrador** | Interruptor que oculta un elemento del sitio aunque se publique |
 | **Versión** | Fotografía completa del sitio en un momento dado, guardada con su número |
 | **Deploy** | Proceso automático que construye el sitio y lo sube a internet |
