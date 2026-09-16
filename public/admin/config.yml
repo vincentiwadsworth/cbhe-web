@@ -53,7 +53,7 @@ collections:
           required: false,
           hint: "Solo si hay precio de lanzamiento"
         }
-      - { name: canvaLink, label: Link a Canva, widget: string, required: false, hint: "URL del diseño en Canva con toda la info del curso", pattern: ["^(https?://.+)?$", "Ingrese el enlace completo empezando con https://"] }
+      - { name: canvaLink, label: Link a Canva, widget: string, required: false, hint: "Enlace al diseño en Canva con toda la info del curso" }
       - {
           name: description,
           label: Descripción breve (para tarjeta),
@@ -145,7 +145,7 @@ collections:
     fields:
       - { name: nombre, label: Nombre de la Empresa, widget: string }
       - { name: grupo, label: Grupo Industrial, widget: select, options: [{ label: "Exploración y explotación de hidrocarburos", value: "upstream" }, { label: "Servicios y suministros especializados en pozo", value: "pozo" }, { label: "Servicios y suministros especializados en superficie", value: "superficie" }, { label: "Industria, transporte y distribución de hidrocarburos y energía", value: "downstream" }, { label: "Servicios auxiliares", value: "auxiliares" }, { label: "Adherentes", value: "adherentes" }] }
-      - { name: website, label: Sitio Web, widget: string, required: false, hint: "Copie la dirección completa desde el navegador, empezando con https://. Si escribe solo www.algo.com, el sistema la corrige automáticamente al publicar.", pattern: ["^(https?://.+)?$", "Ingrese la dirección completa empezando con https:// (ejemplo: https://www.empresa.com)"] }
+      - { name: website, label: Sitio Web, widget: string, required: false, hint: "Puede escribir la dirección como la tenga (con o sin https://); el sistema la completa automáticamente al publicar." }
       - { name: email, label: Correo de Contacto, widget: string, required: false }
       - { name: logo, label: Logo, widget: image, required: false }
       - { name: destacada, label: Destacada en portada, widget: boolean, default: false, required: false }
