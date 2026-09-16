@@ -1,0 +1,31 @@
+name: Supabase keepalive
+
+on:
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping a la base de datos (evita la pausa por inactividad)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
+            "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/capacitacion?select=id&limit=1" \
+            -H "apikey: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}")
+          echo "Respuesta HTTP: $code"
+          test "$code" = "200"
+
+      - name: Avisar por email si el ping fallo
+        if: failure()
+        run: |
+          curl -s -X POST https://api.web3forms.com/submit \
+            -H "Content-Type: application/json" \
+            -d '{
+            "access_key": "${{ secrets.WEB3FORMS_KEY }}",
+            "subject": "Alerta: la base de datos CBHE no responde",
+            "from_name": "Robot de mantenimiento CBHE",
+            "message": "El ping diario a Supabase fallo. Si esto se repite varios dias, el sistema de verificacion de certificados esta caido o por pausarse. Vea: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }'

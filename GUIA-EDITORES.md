@@ -282,7 +282,23 @@ Para restaurar una versión anterior:
 
 ---
 
-## 11. Glosario
+## 11. Mantenimiento: la base de datos de certificados
+
+El verificador de certificados usa una base de datos gratuita de Supabase. Si pasan 7 días sin actividad, Supabase la pausa y los QR dejan de verificar. Un ping automático diario la mantiene activa; no requiere ningún cuidado de su parte.
+
+Si llega alguno de estos correos a `cbhe@cbhe.org.bo`:
+
+| Correo | Qué significa | Qué hacer |
+|---|---|---|
+| **Alerta: la base de datos CBHE no responde** | El ping diario falló | Entre a supabase.com con la cuenta de la CBHE y pulse **Restore project** |
+| **Fallo de deploy en la web CBHE** | Un contenido guardado rompió la publicación | Revise sus últimos cambios y la pestaña **Actions** (sección 10). No publique más hasta corregir |
+| Correo de Supabase con la palabra **pause** | La base está por pausarse o ya se pausó | **Restore project** en supabase.com |
+
+La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo` son administradoras. Restaurar una pausa no borra datos.
+
+---
+
+## 12. Glosario
 
 | Término | Significado |
 |---------|-------------|
@@ -305,7 +321,7 @@ Para restaurar una versión anterior:
 
 ---
 
-## 12. Contacto
+## 13. Contacto
 
 | Para qué | Quién | Cómo |
 |----------|-------|------|

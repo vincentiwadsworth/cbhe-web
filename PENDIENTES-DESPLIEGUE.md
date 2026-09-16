@@ -215,15 +215,6 @@ El objetivo final es que el repositorio del sitio pertenezca a la CBHE y no a un
 5. Verificar que GitHub Pages sigue funcionando después de la transferencia.
 6. La URL del repositorio cambia de `github.com/vincentiwadsworth/cbhe-web` a `github.com/cbhe-org/cbhe-web`.
 
-### Cuenta Supabase de la CBHE
-
-La cuenta de Supabase que opera los certificados debe pasar a control de la CBHE. Hay dos formas de hacerlo:
-
-- Cambiar el correo del propietario de la cuenta a un correo institucional de la CBHE.
-- Invitar a un usuario institucional como owner (propietario) desde **Settings** de Supabase, para que la CBHE administre la cuenta con su propio acceso.
-
-Con el control de la cuenta, la CBHE decide quién accede a Supabase Studio y a los datos de los certificados.
-
 ## 12. Glosario breve
 
 - **DNS (Sistema de Nombres de Dominio)**: la guía telefónica de internet. Traduce el nombre `cbhe.org.bo` a las direcciones numéricas donde están el sitio y el correo.
