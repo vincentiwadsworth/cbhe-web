@@ -22,7 +22,7 @@ draft: false
 
 ## **¡REFUERCE SUS CONOMIENTOS, CONSTRUYA CONFIANZA Y CONVIERTASE EN UN INSPECTOR DE SOLDADURA CERTIFICADO!**
 
-## **¿**Quiénes pueden participar?
+## **Dirigido a**
 
 Cualquier persona interesada en convertirse en inspector de soldadura certificado por AWS y cumpla con los requisitos de elegibilidad para el examen establecidos en AWS QC1 y AWS B5.1.
 
