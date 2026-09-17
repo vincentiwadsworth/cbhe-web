@@ -4,6 +4,7 @@ import Icon from "../../components/Icon.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { parseDateToISO } from "../../utils/date";
 import { resolveImageUrl } from "../../utils/images";
+import bannerData from "../../../data/banner.json";
 
 export async function getStaticPaths() {
   const articulos = await getCollection("articulos", ({ data }) => !data.draft);
@@ -19,6 +20,11 @@ if (!articulo) return Astro.redirect("/404");
 const { Content } = await render(articulo);
 
 const isoDate = parseDateToISO(articulo.data.date);
+
+const bannerHref = bannerData.link
+  ? bannerData.link.startsWith("http") ? bannerData.link : `https://${bannerData.link}`
+  : "";
+const bannerVisible = Boolean(bannerData.activo && bannerData.imagen);
 ---
 
 <PageLayout
@@ -85,6 +91,18 @@ const isoDate = parseDateToISO(articulo.data.date);
   ">
     <Content />
   </article>
+
+  {bannerVisible && (
+    <div class="mt-10">
+      {bannerHref ? (
+        <a href={bannerHref} target="_blank" rel="noopener noreferrer" class="block rounded-xl overflow-hidden">
+          <img src={resolveImageUrl(bannerData.imagen)} alt={bannerData.alt || "Banner publicitario"} width="1600" height="200" class="w-full h-auto" loading="lazy" />
+        </a>
+      ) : (
+        <img src={resolveImageUrl(bannerData.imagen)} alt={bannerData.alt || "Banner publicitario"} width="1600" height="200" class="w-full h-auto rounded-xl" loading="lazy" />
+      )}
+    </div>
+  )}
 
   <!-- Back link -->
   <div class="mt-16 pt-8 border-t border-outline-variant/30">

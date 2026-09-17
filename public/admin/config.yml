@@ -192,8 +192,7 @@ collections:
 
   - name: directorio
     label: Directorio
-    files:
-      - name: directorio
+    files:      - name: directorio
         label: Directorio
         file: data/directorio.json
         fields:
@@ -226,3 +225,41 @@ collections:
                       widget: string,
                       hint: "Empresa que representa en el Directorio",
                     }
+
+  - name: banner
+    label: Banner publicitario
+    files:
+      - name: banner
+        label: Banner
+        file: data/banner.json
+        fields:
+          - {
+              name: activo,
+              label: Banner activo,
+              widget: boolean,
+              default: true,
+              required: false,
+              hint: "Desactívelo para ocultar el banner sin borrar la imagen",
+            }
+          - {
+              name: imagen,
+              label: Imagen del banner,
+              widget: image,
+              required: false,
+              choose_url: false,
+              hint: "Medida recomendada: 1600 x 200 píxeles, máximo 150 KB. Se muestra al final de cada artículo",
+            }
+          - {
+              name: link,
+              label: Enlace del banner,
+              widget: string,
+              required: false,
+              hint: "Dirección web a la que llega quien hace clic en el banner",
+            }
+          - {
+              name: alt,
+              label: Texto alternativo,
+              widget: string,
+              required: false,
+              hint: "Descripción corta de la imagen para lectores de pantalla",
+            }

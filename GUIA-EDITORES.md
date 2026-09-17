@@ -32,55 +32,15 @@
 
 ## 2. Cómo funciona
 
-```mermaid
-flowchart TD
-    Start(🏠 Acceder a Sveltia CMS) --> Login(🔑 Iniciar sesión con GitHub)
-    Login --> SelectCollection(📂 Seleccionar colección)
-    SelectCollection --> CreateNew(➕ Crear nuevo contenido)
-    CreateNew --> Write(✏️ Escribir contenido en Markdown)
-    Write --> Decision{🤔 ¿Guardar o publicar?}
-    Decision -->|💾 Save| Draft(📝 Borrador: visible solo en CMS)
-    Decision -->|🚀 Save &amp; Publish| PublishCommit(📤 Commit sin [skip ci])
-    PublishCommit --> Build(⚙️ GitHub Actions build)
-    Build --> Deploy(🌐 Deploy a GitHub Pages)
-    Deploy --> Live(✅ Visible en el sitio)
-    Draft --> DraftNote(🔄 Editable, no aparece en el sitio)
-
-    classDef primary fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
-    classDef secondary fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
-    classDef decision fill:#FFD700,stroke:#333,stroke-width:2px,color:black
-    classDef terminal fill:#F5F5F5,stroke:#333,stroke-width:2px,color:black
-
-    class Start,Deploy primary
-    class Login,SelectCollection,CreateNew,Write,PublishCommit,Build secondary
-    class Decision decision
-    class Draft,DraftNote,Live terminal
-```
+1. Entre al CMS con su token de GitHub (sección 1).
+2. Elija la colección (Cursos, Artículos, Empresas, Testimonios, Directorio o Banner publicitario).
+3. Escriba o edite el contenido y use **Save & Publish**: en 2 o 3 minutos el cambio está visible en el sitio.
 
 ---
 
 ## 3. Publicar contenido
 
-```mermaid
-sequenceDiagram
-    participant Editor as ✏️ Editor
-    participant Sveltia as 🖥️ Sveltia CMS
-    participant GitHub as 📦 GitHub
-    participant Actions as ⚙️ GitHub Actions
-    participant Pages as 🌐 GitHub Pages
-    participant Sitio as 🌐 Sitio público
-
-    Editor->>Sveltia: Save &amp; Publish
-    Sveltia->>GitHub: git commit (sin [skip ci])
-    GitHub->>Actions: Dispara workflow deploy.yml
-    Actions->>Actions: npm ci + npx astro build
-    Actions->>Pages: Sube archivos a gh-pages
-    Pages->>Sitio: Sitio actualizado
-
-    Note over Editor,Sitio: ⏱️ ~2-3 minutos en total
-```
-
-- **Save** = commit con `[skip ci]` → el cambio queda en el CMS pero **no se publica**. Ideal para borradores.
+- **Save** = commit con `[skip ci]` → el cambio queda en el CMS pero **no se publica**. Ideal para seguir editando.
 - **Save & Publish** = commit sin `[skip ci]` → dispara el build automático y en ~2-3 minutos el contenido está **visible en el sitio público** (`https://vincentiwadsworth.github.io/cbhe-web/`).
 
 Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento nunca aparece en el sitio, ni siquiera cuando usa Save and Publish. Son dos controles distintos: Save decide si publica ahora; Borrador decide si el elemento existe en el sitio.
@@ -88,30 +48,6 @@ Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté 
 ---
 
 ## 4. Trabajar con imágenes
-
-```mermaid
-flowchart TD
-    Start(📷 Seleccionar imagen) --> CheckFormat{📐 ¿Formato correcto?}
-    CheckFormat -->|✅ Sí| CheckSize{📏 ¿Tamaño adecuado?}
-    CheckFormat -->|❌ No| Convert(🔄 Convertir a JPG / PNG / WebP)
-    Convert --> CheckSize
-    CheckSize -->|✅ Sí| Upload(☁️ Subir desde Sveltia Media)
-    CheckSize -->|❌ No| Resize(🔧 Redimensionar: máx 2 MB, ideal menos de 500 KB)
-    Resize --> Upload
-    Upload --> Reference(🔗 Referenciar: ![](/images/archivo.jpg))
-    Reference --> Done(✅ Listo)
-
-    classDef primary fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
-    classDef secondary fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
-    classDef decision fill:#FFD700,stroke:#333,stroke-width:2px,color:black
-    classDef error fill:#FFB6C1,stroke:#DC143C,stroke-width:2px,color:black
-    classDef terminal fill:#F5F5F5,stroke:#333,stroke-width:2px,color:black
-
-    class Start,Upload primary
-    class Convert,Resize,Reference secondary
-    class CheckFormat,CheckSize decision
-    class Done terminal
-```
 
 - **Formatos**: JPG para fotos, PNG para logos (transparencia), WebP para mejor calidad con menor peso.
 - **Tamaño**: máximo 2 MB por imagen, ideal menos de 500 KB. Ancho recomendado: 1920 píxeles. Si la imagen supera los 2 MB, Sveltia puede fallar al guardar.
@@ -190,6 +126,19 @@ Aparece en la página Quiénes somos, en la sección Directorio. Todo se edita d
 | Cargo | ✅ | Texto | Cargo en el Directorio, por ejemplo Presidente o Director Titular |
 | Nombre | ✅ | Texto | Nombre completo de la persona |
 | Empresa | ✅ | Texto | Empresa que representa en el Directorio |
+
+### Banner publicitario
+
+Un solo banner que se muestra al final de todos los artículos. Se administra desde una entrada única.
+
+| Campo | Obligatorio | Tipo | Qué significa |
+|-------|:-----------:|------|---------------|
+| Banner activo | — | Interruptor | Desactívelo para ocultar el banner sin borrar la imagen |
+| Imagen del banner | ✅ | Imagen | Medida recomendada: 1600 x 200 píxeles, máximo 150 KB |
+| Enlace del banner | — | Texto | Dirección web a la que llega quien hace clic |
+| Texto alternativo | — | Texto | Descripción corta de la imagen para lectores de pantalla |
+
+Sin imagen cargada no se muestra nada, aunque el banner esté activo.
 
 ### Comportamiento Automático de las Páginas (Web)
 
