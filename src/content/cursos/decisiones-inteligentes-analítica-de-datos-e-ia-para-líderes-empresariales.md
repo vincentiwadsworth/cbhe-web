@@ -2,10 +2,10 @@
 title: 'Decisiones Inteligentes: Analítica de Datos e IA para Líderes Empresariales'
 category: Curso
 modality: Virtual
-image: /images/Decisiones Inteligente IA para líderes.png
-startDate: 12 Sep 2026
+image: /images/Decisiones Inteligentes - Datos e IA para Líderes.png
+startDate: 03 Oct 2026
 price: Consultar precios y procedimientos
-registrationDeadline: ''
+registrationDeadline: 30/09/2026
 canvaLink: https://canva.link/tmp5pnjouamxhjr
 description: Un programa de formación ejecutiva en en liderazgo basado en datos e inteligencia artificial, diseñado para líderes que quieren tomar mejores decisiones. Durante 3 semanas, los participantes desarrollan competencias reales para interpretar información,  utilizar herramientas de IA generativa para descubrir patrones, generar análisis y dashboards inteligentes, evaluar escenarios de negocio y diseñar agentes de IA personalizados para apoyar la toma de decisiones.
 instructors:
