@@ -1,29 +1,39 @@
 ---
-title: 'Clases Maestras: Evaluación de Riesgos de Incendios'
+title: 'Programa en línea: Diseño hidráulico para sistemas contra incendios'
 category: Curso
 modality: Virtual
-image: /images/17 DE AGOSTO AL 14 DE SEPTIEMBRE 2026.png
-startDate: 12 Ago 2026
-price: $150 USD (Descuento del 10% por más de 3 personas)
-registrationDeadline: ''
-canvaLink: https://canva.link/vc7pphhkfo5d5m1
-description: ''
+image: /images/Post nueva fecha.png
+startDate: 09 Nov 2026
+price: Consulta precios y descuentos al Whatsapp 79891193
+registrationDeadline: 30/10/2026
+canvaLink: https://canva.link/130rnklx7el78hx
+description: |-
+  Si esta listo para aprender y profundizar sobre el proceso de diseño hidráulico de sistemas contra incendios, este curso es el que necesita.
+
+  En nuestro programa, descubra desde las principales propiedades hidráulicas del agua, los tipos de sistema, sus limitaciones, el paso a paso requerido para el desarrollo de un cálculo hidráulico, hasta los procedimientos para los cálculos hidráulicos computacionales.
+
+  Todo lo que puedes necesitar para realizar cálculos hidráulicos.
+
+   - 4 sesiones virtuales
+   - Clases 100% al vivo
+   - 12 horas de capacitación al vivo y 4 asincrónicas
+   - 6 horas por semana
 instructors:
-  - name: Jaime A. Moncada, PE
-    bio: Reconocido experto en ingeniería de protección contra incendios con 35 años de experiencia, con énfasis en la problemática de proyectos en Latinoamérica. Graduado en ingeniería de protección contra incendios y poseedor de una maestría en gerencia de tecnología, ambos de la Univ. de Maryland. Obtuvo una licencia para ejercer ingeniería de la protección contra incendios (PE) en EE.UU. Exvicepresidente de la Junta Directiva de la SFPE, expresidente fundador de la Sección Latinoamericana de la NFPA y coeditor de la 5ª Edición del Manual de Protección contra Incendios de la NFPA. Ha publicado más de 200 artículos en revistas especializadas en seguridad y ha presentado en más de 100 conferencias. Director de IFSC (www.ifsc.us), basado en Washington DC.
-  - name: Jorge Vera, CFPS
-    bio: Ingeniero graduado en la Universidad Garcilaso de la Vega en Lima, Perú y Certificado Especialista Protección contra Incendios (CFPS) por la NFPA. Experto en investigación de incendios y en la aplicación de la NFPA 10, siendo instructor de esa norma para la NFPA. Con más de 20 años de experiencia, tiene extenso conocimiento en el análisis de riesgos de incendios en diversos tipos de ocupaciones. Ha sido Vicecomandante General del Cuerpo de Bomberos del Perú, y actualmente es gerente de IFSC del Perú, basado en Lima.
+  - name: Agustín Canavese, CFPS
+    bio: |-
+      Ingeniero Industrial Mecánico, Universidad de la República, Montevideo, Uruguay.
+      ​Experto en ingeniería de protección contra incendios con 10 años de experiencia, con énfasis en el diseño de sistemas de rociadores automáticos, sistemas en base a agua, espuma y gases limpios, diseño de sistemas de detección y alarma y auditoria de diversos tipos de instalaciones, desde comerciales a industriales.
+      ​Técnico Registrado ante la Dirección Nacional de Bomberos (DNB), miembro de la Society of Fire Protection Engineers (SFPE), y de la National Fire Protection Association (NFPA). Él es subgerente de IFSC del Cono Sur (www.ifsc.us), basado en Montevideo, Uruguay.
+featured: false
 draft: false
 ---
 
-Esta serie de clases maestras está diseñada para brindar una comprensión práctica y estructurada sobre la investigación de incendios, el origen del fuego y la identificación de causas. A través de metodologías reconocidas internacionalmente y el análisis de casos reales, los participantes podrán entender el comportamiento del fuego y fortalecer su criterio técnico.
+## Agenda
 
-## Características
-
-- 3 sesiones virtuales
-- Clases 100% al vivo
-- 6 horas de formación
-- Expertos CFPS internacionales
+- 📅 Fecha: 9, 11, 16 y 18 de noviembre 2026
+🕗 Horario: Lunes y Miércoles de 19:30 a 22:00 (Hora Bolivia GTM-4)
+🕗Carga Horaria: 16 horas (12 horas al vivo + 4 horas de trabajo asincrónico)
+💻📱 Modalidad: Esta capacitación la realizamos de forma virtual mediante TEAMS
 
 ## Metodología
 
@@ -31,27 +41,50 @@ Esta serie de clases maestras está diseñada para brindar una comprensión prá
 - Presentaciones diseñadas profesionalmente y dirigidas por ingenieros de incendios experimentados, acompañadas con videos y otras ayudas visuales con la posibilidad de desarrollar sus preguntas en vivo
 - Para repasar sus conocimientos, las grabaciones de cada sesión están disponibles durante la duración del programa
 
-## Agenda
-
-- **Fechas**: 18, 20 y 25 de mayo de 2026
-- **Horario**: 19:30 a 22:30 (Hora Bolivia GTM-4)
-
 ## Certificación
 
 A los participantes que cumplan con al menos el 80% de asistencia a las clases se les emitirá una constancia de participación en formato digital, otorgada por el **Fire Protection Institute (FPI)**.
 
-## Clase 3: Utilizando el Árbol de Conceptos sobre Seguridad Contra Incendios
+## CONTENIDO
 
-Esta Clase Maestra presenta el **Árbol de Conceptos de Seguridad Contra Incendios** el cual proporciona una estructura general para analizar el impacto potencial de las estrategias de seguridad contra incendios que se pudieran instalar en una instalación o en un riesgo en especial.
+**SESION 1: Conceptos de hidráulica aplicada**
 
-Esta metodología cualitativa de análisis de riesgos puede identificar algunas y áreas de redundancia en las estrategias de protección contra incendios y en general es una ayuda para tomar decisiones de seguridad contra incendios.
+- Abordaje y revisión de las principales propiedades hidráulicas del agua.
+- Conceptos de presión.
+- Flujo de agua a través de orificios.
+- El Factor K en dispositivos de descarga.
+- Flujo de agua a través de tuberías.
+- Ecuación de Darcy-Weisbach.
+- Utilización de la fórmula de Hazen-Williams.
+- Factor C en tuberías.
 
-- El Árbol de Conceptos y la NFPA 550
-- La estructura del Árbol de Conceptos
-- Cómo se evalúa un proyecto y el procedimiento de utilización del Árbol de Conceptos
-- Limitaciones y equivalencias
-- Dónde y cuándo se debe utilizar la NFPA 551
-- Su utilidad para el análisis del Riesgo de Incendios
+**SESION 2: Conceptos para cálculos hidráulicos**
+
+- Perdida de carga en accesorios.
+- Factor K equivalente.
+- Balanceo Hidráulico.
+- Tipos de sistemas – árbol, anillo y malla - y sus limitaciones.
+- Pasos requeridos para el desarrollo de un cálculo hidráulico.
+- Determinación del área de operación para el cálculo hidráulico.
+
+**SESION 3: Práctica de cálculos hidráulicos manuales**
+
+- Diseños por tablas y sus limitaciones.
+- Métodos de presión total y presión de velocidad.
+- Aplicabilidad en sistemas tipo árbol.
+- Pasos requeridos para el desarrollo de un cálculo hidráulico.
+- Ejemplo de cálculo hidráulico manual de un sistema de rociadores.
+- Ejemplo de cálculo hidráulico manual de un sistema de mangueras.
+
+**SESIÓN 4: Procedimiento para los Cálculos Hidráulicos Computacionales**
+
+- Complejidad en los cálculos para sistemas tipo anillo y malla.
+- Diseños por cálculo hidráulico y sus limitaciones.
+- Procedimiento computacional en la interacción del diseño por anillo.
+- Pasos requeridos para el desarrollo de un cálculo hidráulico.
+- Datos de entrada e interpretación de resultados.
+- Ejemplo de cálculo hidráulico computacional de un sistema de rociadores.
+- Criterios adicionales en sistemas de espuma y aspersión.
 
 ## Contacto
 
