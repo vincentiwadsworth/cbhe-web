@@ -1,5 +1,5 @@
 ---
-title: 'Decisiones Inteligentes: Analítica de Datos e IA para Líderes Empresariales'
+title: 'Decisiones Inteligentes: Analítica de Datos e IA para Líderes'
 category: Curso
 modality: Virtual
 image: /images/Decisiones Inteligentes - Datos e IA para Líderes.png
