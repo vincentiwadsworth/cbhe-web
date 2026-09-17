@@ -60,28 +60,6 @@ El código se genera **solo** al guardar el registro. Usted no necesita escribir
 
 ## 3. Emitir un Sello CBHE
 
-```mermaid
-flowchart TD
-  Start([🏢 Inicio]) --> Login[Abrir Supabase Studio]
-  Login -->   TableEditor[Table Editor → sello]
-  TableEditor --> Insert[Insert row]
-  Insert --> FillFields["Completar:<br/>empresa_nombre<br/>fecha_emision"]
-  FillFields --> Skip["Dejar en blanco:<br/>id, codigo,<br/>created_at, qr_url"]
-  Skip --> Save[Guardar]
-  Save --> AutoCode["🔧 Código CBHE-S-XXXXX<br/>generado automático"]
-  AutoCode --> Wait["⏳ Esperar ~5 segundos"]
-  Wait --> QRReady["✅ QR generado en qr_url"]
-  QRReady --> Done([🎉 Sello listo])
-
-  classDef primary fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
-  classDef secondary fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
-  classDef terminal fill:#F5F5F5,stroke:#333,stroke-width:2px,color:black
-
-  class Start,Done terminal
-  class Login,TableEditor,Insert,Save secondary
-  class FillFields,Skip,AutoCode,Wait,QRReady primary
-```
-
 ### Pasos
 
 1. **Abrir Supabase Studio** en el navegador: entre a `supabase.com/dashboard` e inicie sesión con el correo y la contraseña de la cuenta Supabase de la CBHE.
@@ -104,28 +82,6 @@ flowchart TD
 ---
 
 ## 4. Emitir un Certificado de Capacitación
-
-```mermaid
-flowchart TD
-  Start([👤 Inicio]) --> Login[Abrir Supabase Studio]
-  Login -->   TableEditor[Table Editor → capacitacion]
-  TableEditor --> Insert[Insert row]
-  Insert --> FillFields["Completar:<br/>cursante_nombre<br/>nombre_capacitacion<br/>fecha_emision"]
-  FillFields --> Skip["Dejar en blanco:<br/>id, codigo,<br/>created_at, qr_url"]
-  Skip --> Save[Guardar]
-  Save --> AutoCode["🔧 Código CBHE-C-XXXXX<br/>generado automático"]
-  AutoCode --> Wait["⏳ Esperar ~5 segundos"]
-  Wait --> QRReady["✅ QR generado en qr_url"]
-  QRReady --> Done([🎉 Certificado listo])
-
-  classDef primary fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
-  classDef secondary fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
-  classDef terminal fill:#F5F5F5,stroke:#333,stroke-width:2px,color:black
-
-  class Start,Done terminal
-  class Login,TableEditor,Insert,Save secondary
-  class FillFields,Skip,AutoCode,Wait,QRReady primary
-```
 
 ### Pasos
 
@@ -151,25 +107,7 @@ flowchart TD
 
 ## 5. El QR se genera solo
 
-No necesita hacer nada adicional. Cuando guarda un registro, el sistema dispara automáticamente esta secuencia:
-
-```mermaid
-sequenceDiagram
-  participant Studio as Supabase Studio
-  participant DB as PostgreSQL
-  participant Webhook as pg_net Webhook
-  participant Edge as Edge Function<br/>(generate-qr)
-  participant Storage as Storage<br/>(certificados-qr)
-
-  Studio->>DB: INSERT INTO capacitacion / sello
-  DB->>Webhook: Trigger: después de INSERT
-  Webhook->>Edge: POST { record, table }
-  Edge->>Edge: Generar QR (librería qrcode)
-  Edge->>Storage: upload({codigo}.png)
-  Storage-->>Edge: publicUrl
-  Edge->>DB: UPDATE SET qr_url = publicUrl
-  Note over Studio,DB: ⏱ ~2-5 segundos en total
-```
+No necesita hacer nada adicional. Cuando guarda un registro, el sistema dispara automáticamente esta secuencia: la base de datos avisa a la función `generate-qr` mediante un webhook interno, la función genera la imagen del QR y la guarda en el almacenamiento de certificados, y finalmente escribe el enlace de la imagen en la columna `qr_url` del registro. El proceso completo toma entre 2 y 5 segundos.
 
 > **El QR se genera una sola vez al crear el registro (INSERT).** Si modifica datos después (nombre, fecha, curso), **el QR no cambia**: el código `CBHE-C-XXXXX` / `CBHE-S-XXXXX` y la URL de verificación permanecen iguales. El QR codifica la URL `cbhe.org.bo/certificados/?c=CBHE-C-XXXXX`, que depende solo del código único.
 
@@ -181,34 +119,7 @@ sequenceDiagram
 
 ## 6. Verificar un certificado
 
-Cualquier persona con el código QR puede verificar la autenticidad escaneándolo con su teléfono:
-
-```mermaid
-flowchart TD
-  Start([📱 Escanea el código QR]) --> URL["Navega a<br/>cbhe.org.bo/certificados/?c=CODIGO"]
-  URL --> Detect{¿Prefijo del código?}
-  Detect -->|"CBHE-C-"| QueryC[Consultar tabla<br/>capacitacion]
-  Detect -->|"CBHE-S-"| QueryS[Consultar tabla<br/>sello]
-  Detect -->|Otro| NotFound["❌ Certificado<br/>No Encontrado"]
-  QueryC --> FoundC["Mostrar: cursante,<br/>capacitación, fecha"]
-  QueryS --> FoundS["Mostrar: empresa,<br/>tipo, fecha"]
-  FoundC --> QRShow[Si tiene QR:<br/>mostrar imagen]
-  FoundS --> QRShow
-  QRShow --> Verified([✅ Verificado])
-  NotFound --> Retry["Verificar el código<br/>e intentar de nuevo"]
-
-  classDef primary fill:#90EE90,stroke:#333,stroke-width:2px,color:darkgreen
-  classDef secondary fill:#87CEEB,stroke:#333,stroke-width:2px,color:darkblue
-  classDef decision fill:#FFD700,stroke:#333,stroke-width:2px,color:black
-  classDef error fill:#FFB6C1,stroke:#DC143C,stroke-width:2px,color:black
-  classDef terminal fill:#F5F5F5,stroke:#333,stroke-width:2px,color:black
-
-  class Start,URL secondary
-  class Detect decision
-  class QueryC,QueryS,FoundC,FoundS,QRShow primary
-  class NotFound error
-  class Verified,Retry terminal
-```
+Cualquier persona con el código QR puede verificar la autenticidad escaneándolo con su teléfono.
 
 ### URL pública de verificación
 

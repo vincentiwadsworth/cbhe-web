@@ -7,7 +7,7 @@
 | SSG | Astro 6.x | Static output, zero JS |
 | CSS | Tailwind v4 | `@tailwindcss/vite` plugin, NO `@astrojs/tailwind` |
 | Content | Zod + Content Collections | `src/content.config.ts`, `glob()` loader, `z` from `astro/zod` |
-| CMS | Sveltia CMS | `public/admin/`, backend `github`, `skip_ci: true` |
+| CMS | Sveltia CMS | `public/admin/`, backend `github`, `skip_ci: false` (Save publica por defecto; `draft` es el borrador real) |
 | Deploy | GitHub Pages | Workflow-based (`deploy.yml`), repo público |
 | Forms | Web3Forms | `WEB3FORMS_KEY` env var |
 | Icons | astro-icon | `material-symbols` (33 selected), hyphens not underscores |
@@ -59,8 +59,7 @@
 ## Workflow Rules
 
 - **NUNCA cerrar un issue sin build + verificación previa.** Orden: escribir → `npx astro build` → inspeccionar output → si funciona, commit + push → cerrar issue.
-- **Sprint activo**: ver [`SPRINT-ENTREGA.md`](./SPRINT-ENTREGA.md) para el scope actual (entrega del proyecto). Trabajar con SDD.
-- **Skills instalados deben usarse proactivamente.** `web-design-guidelines` y `ui-ux-pro-max` como checklist en cada cambio visual. `astro` skill dice "Always consult docs.astro.build".
+- **Skills instalados deben usarse proactivamente.** `web-design-guidelines` y `ui-ux-pro-max` como checklist en cada cambio visual. `astro` skill dice "Always consult docs.astro.build". **Antes de tocar documentación: cargar `stop-slop` + `documentation-writer`.**
 - **gh CLI** disponible y autenticado como `vincentiwadsworth`. Issues, labels, secrets, PRs.
 - **Repositorio público** requerido para GitHub Pages en plan gratuito.
 - **Para reportar un side finding como "pre-existente"**, checkout el parent commit y re-verificar ahí — "también pasa en home" no alcanza. La barra: si vuelve a aparecer sin el cambio aplicado, era pre-existente; si no, fue introducido.
@@ -75,8 +74,8 @@
 ## Certificates System
 
 ### Tables (post-Change-B)
-- `public.capacitacion` — `id uuid PK`, `codigo text UNIQUE` (prefijo `CBHE-C-`), `cursante_nombre text`, `nombre_capacitacion text NULL`, `fecha_emision date`, `qr_url text NULL`, `created_at timestamptz`.
-- `public.sello` — `id uuid PK`, `codigo text UNIQUE` (prefijo `CBHE-S-`), `empresa_nombre text`, `tipo_certificado text default 'Sello CBHE'`, `fecha_emision date`, `qr_url text NULL`, `created_at timestamptz`.
+- `public.capacitacion` — `id uuid PK`, `codigo text UNIQUE` (prefijo `CBHE-C-`), `cursante_nombre text`, `nombre_capacitacion text NULL`, `fecha_emision date`, `fecha_expiracion date NULL`, `qr_url text NULL`, `created_at timestamptz`.
+- `public.sello` — `id uuid PK`, `codigo text UNIQUE` (prefijo `CBHE-S-`), `empresa_nombre text`, `tipo_certificado text default 'Sello CBHE'`, `fecha_emision date`, `fecha_expiracion date NULL`, `qr_url text NULL`, `created_at timestamptz`.
 - RLS: `anon SELECT` en ambas (verificación pública), `service_role` full CRUD. Sin scope por owner.
 - Prefijo del código determina tabla: `CBHE-C-*` → `capacitacion`, `CBHE-S-*` → `sello`.
 
@@ -107,7 +106,7 @@
 - 50 tokens MD3 en `src/styles/global.css` (nombres como `primary-container`, `on-surface-variant`).
 - Tailwind genera `bg-*`, `text-*`, `border-*` para todos los `--color-*`.
 - Inter Latin 400-800 como única familia tipográfica.
-- 33 íconos Material Symbols pre-cargados en `astro.config.mjs`.
+- 59 íconos Material Symbols pre-cargados en `astro.config.mjs`.
 
 ## GitHub Pages Deploy Gotchas
 

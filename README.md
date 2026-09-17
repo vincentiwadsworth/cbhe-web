@@ -17,50 +17,10 @@ La CBHE es dueña del código, los datos y la infraestructura. El costo operativ
 
 ## Arquitectura
 
-```mermaid
-graph LR
-    subgraph Publico["🔍 Lo que ve el público"]
-        Sitio["🌐 cbhe.org.bo"]
-        Verificacion["📱 Verificación<br/>de certificados"]
-        Visitante["👤 Visitante"]
-    end
-
-    subgraph CBHE["🏢 Lo que opera la CBHE"]
-        Editor["✏️ Editor<br/>CMS"]
-        ResponsableGestion["📋 Responsable<br/>de Gestión"]
-        ResponsableCapacitacion["🎓 Responsable<br/>de Capacitación"]
-        Sveltia["📝 Panel Sveltia"]
-        Emitir["📜 Emitir<br/>certificado"]
-    end
-
-    subgraph Servicios["⚙️ Servicios externos"]
-        GitHub["🌍 GitHub Pages"]
-        SupabaseDB[("🗄️ Supabase<br/>base de datos")]
-        QRAuto["⚡ Generación<br/>automática de QR"]
-    end
-
-    Editor -->|"publica contenido"| Sveltia
-    Sveltia -->|"dispara deploy"| GitHub
-    GitHub -->|"sirve el sitio"| Sitio
-    Sitio --> Visitante
-
-    ResponsableGestion -->|"emite Sello CBHE"| Emitir
-    ResponsableCapacitacion -->|"emite Certificado"| Emitir
-    Emitir -->|"guarda datos"| SupabaseDB
-    SupabaseDB -->|"dispara"| QRAuto
-    QRAuto -->|"guarda QR"| SupabaseDB
-
-    Visitante -->|"escanea QR"| Verificacion
-    Verificacion -->|"consulta"| SupabaseDB
-
-    classDef publico fill:#D4E6F1,stroke:#1A5276,stroke-width:2px,color:#0D3B66
-    classDef cbhe fill:#FDEBD0,stroke:#7E5109,stroke-width:2px,color:#4A2C00
-    classDef servicio fill:#D5F5E3,stroke:#145A32,stroke-width:2px,color:#0B3D1F
-
-    class Sitio,Verificacion,Visitante publico
-    class Editor,ResponsableGestion,ResponsableCapacitacion,Sveltia,Emitir cbhe
-    class GitHub,SupabaseDB,QRAuto servicio
-```
+- **Público**: visita `cbhe.org.bo`, un sitio estático servido por GitHub Pages, y verifica certificados escaneando el QR. La página de verificación consulta la base de datos en el momento y muestra los datos oficiales.
+- **Edición de contenido**: la Responsable de Comunicación publica desde el panel Sveltia CMS. Cada guardado crea un commit que dispara el deploy automático del sitio.
+- **Emisión de certificados**: la Responsable de Gestión y la Responsable de Capacitación emiten certificados insertando un registro en Supabase. El QR se genera de forma automática y queda asociado al certificado.
+- **Servicios externos**: GitHub Pages aloja el sitio sin costo. Supabase provee la base de datos, el almacenamiento de los QR y la función que los genera.
 
 ## Costo operativo
 

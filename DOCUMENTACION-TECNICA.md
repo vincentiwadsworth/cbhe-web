@@ -13,7 +13,7 @@
 | SSG | Astro 6.x | Static output, zero JS |
 | CSS | Tailwind v4 | `@tailwindcss/vite`, sin `@astrojs/tailwind` |
 | Content | Zod + Content Collections | `src/content.config.ts`, loader `glob()`, `z` de `astro/zod` |
-| CMS | Sveltia CMS | `public/admin/`, backend GitHub, `skip_ci: true` |
+| CMS | Sveltia CMS | `public/admin/`, backend GitHub, `skip_ci: false` |
 | Deploy | GitHub Pages | Workflow `deploy.yml`, repo público |
 | Forms | Web3Forms | `WEB3FORMS_KEY` |
 | Icons | astro-icon | `material-symbols` (59 seleccionados), guiones no underscores |
@@ -60,10 +60,10 @@ VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
 | `src/utils/` | Funciones de utilidad |
 | `public/admin/` | Sveltia CMS — `index.html` + `config.yml`, panel de edición para el equipo CBHE |
 | `public/images/` | Imágenes estáticas del sitio |
-| `supabase/migrations/` | Migraciones SQL versionadas (001–005) |
+| `supabase/migrations/` | Migraciones SQL versionadas (001–007) |
 | `supabase/functions/` | Edge Functions Deno — `generate-qr/` |
 | `scripts/` | Scripts CLI de utilidad (emisión batch, procesamiento de imágenes) |
-| `.github/workflows/` | GitHub Actions (`deploy.yml`, `issue-certificate.yml`, `update-data.yml`) |
+| `.github/workflows/` | GitHub Actions (`deploy.yml`, `issue-certificate.yml`, `update-data.yml`, `supabase-keepalive.yml`) |
 | `openspec/` | Spec-driven development: `changes/`, `specs/`, `config.yaml` |
 | `data/` | Datos estáticos (ej. `prices.json` para el widget de precios) |
 
@@ -104,63 +104,10 @@ El dominio `cbhe.org.bo` está configurado en el repositorio (Settings → Pages
 | Runner saturado | GitHub Actions se queda en `Waiting for a hosted runner` | Disparar manual: `gh workflow run deploy.yml --ref main` |
 | Links rotos en subpath | Astro `base` no modifica `<a href>` | Todos los links internos van sin `/` inicial (`href="quienes-somos"`) con `<base href={URL_CON_TRAILING_SLASH}>` en `Layout.astro` |
 
----
+### Monitoreo
 
-## Arquitectura del sistema
-
-```mermaid
-graph TB
-    subgraph GitHub["GitHub"]
-        Repo["Repo<br/>vincentiwadsworth/cbhe-web"]
-        Actions["GitHub Actions<br/>deploy.yml"]
-        Pages["GitHub Pages<br/>Hosting estático"]
-        CMS["Sveltia CMS<br/>public/admin/"]
-    end
-
-    subgraph Supabase["Supabase"]
-        DB[("PostgreSQL<br/>capacitacion · sello")]
-        Webhooks["DB Webhooks<br/>pg_net triggers"]
-        Edge["Edge Function<br/>generate-qr (Deno)"]
-        Storage[("Storage<br/>certificados-qr")]
-    end
-
-    subgraph Astro["Astro SSG — Build Pipeline"]
-        Content["Content Collections<br/>glob() loader · Zod"]
-        AstroBuild["astro build<br/>@tailwindcss/vite"]
-        Dist["dist/<br/>HTML · CSS estático"]
-    end
-
-    Editor["Editor CBHE<br/>Comunicación"] -->|"Save &amp; Publish"| CMS
-    CMS -->|"commit (sin [skip ci])"| Repo
-    Repo -->|"push a main"| Actions
-    Actions -->|"npm ci → astro build"| Pages
-    Pages -->|"cbhe.org.bo"| Visitante["Visitante"]
-
-    Operator["Operador<br/>Tania / Alejandra"] -->|"INSERT"| DB
-    DB -->|"pg_net trigger"| Webhooks
-    Webhooks -->|"POST"| Edge
-    Edge -->|"upload PNG"| Storage
-    Edge -->|"UPDATE qr_url"| DB
-
-    Content --> AstroBuild
-    AstroBuild --> Dist
-    Actions -.->|"usa"| Dist
-
-    Visitante -->|"escanea QR"| Pages
-    Pages -->|"GET /certificados/?c=CODE"| DB
-
-    classDef github fill:#87CEEB,stroke:#1565C0,stroke-width:2px,color:#0D47A1
-    classDef supabase fill:#90EE90,stroke:#2E7D32,stroke-width:2px,color:#1B5E20
-    classDef astro fill:#FFD54F,stroke:#F57F17,stroke-width:2px,color:#333
-    classDef person fill:#E6E6FA,stroke:#7B1FA2,stroke-width:2px,color:#4A148C
-    classDef database fill:#FFCCBC,stroke:#BF360C,stroke-width:2px,color:#333
-
-    class Repo,Actions,Pages,CMS github
-    class DB,Storage,Edge,Webhooks supabase
-    class Content,AstroBuild,Dist astro
-    class Editor,Operator,Visitante person
-    class DB,Storage database
-```
+- `supabase-keepalive.yml` ejecuta un ping diario (cron `23 3 * * *`) a la API REST con la clave publishable del proyecto, para evitar la pausa por inactividad del free tier de Supabase.
+- Si falla el deploy (`deploy.yml`) o el ping diario (`supabase-keepalive.yml`), el workflow abre un issue en el repositorio con el label `fallo de sistema`, sin duplicar issues ya abiertos.
 
 ---
 
@@ -238,6 +185,8 @@ Si la fila tiene `qr_url` no-NULL, se renderiza `<img src={qr_url} />` junto a l
 | `003_split_certificados.sql` | Rename `sello-cbhe` → `sello`, triggers con prefijos `CBHE-C-`/`CBHE-S-`, GRANTs, cleanup de funciones huerfanas |
 | `004_anon_select_policies.sql` | Políticas `anon SELECT` explícitas para ambas tablas |
 | `005_add_qr_url.sql` | Columna `qr_url` en ambas tablas |
+| `006_drop_input_views.sql` | Elimina las views `*_input` (Supabase Studio no permite insertar en views) |
+| `007_add_fecha_expiracion.sql` | Columna `fecha_expiracion date NULL` en ambas tablas |
 
 > **Operación diaria**: ver **[Guía de Certificados](./GUIA-CERTIFICADOS.md)** para emitir, verificar y resolver errores.
 
@@ -260,8 +209,7 @@ backend:
 ```
 
 - **Auth**: GitHub personal access token con scope `repo`. Sin OAuth proxy.
-- **Save**: commit con `[skip ci]` → no dispara deploy (borrador)
-- **Save and Publish**: commit sin `[skip ci]` → dispara deploy
+- `skip_ci: false`: tanto **Save** como **Save and Publish** crean commits sin `[skip ci]`, por lo que ambos disparan el deploy. Para que un contenido no aparezca en el sitio se usa el campo `draft` (interruptor Borrador del CMS), que el build filtra.
 - **Media**: `public/images/` → ruta pública `/images/`
 
 ### Colecciones
@@ -276,6 +224,8 @@ backend:
 Cada colección se define en dos lugares que deben mantenerse sincronizados:
 1. `public/admin/config.yml` — interfaz del CMS (widgets, labels, hints)
 2. `src/content.config.ts` — validación Zod (tipos, defaults, opcionales)
+
+El helper `urlOpcional` (definido en `src/content.config.ts`) normaliza las URLs de `canvaLink` y `website`: si el valor no tiene protocolo, se le antepone `https://` automáticamente.
 
 > **Uso diario**: ver **[Guía de Editores](./GUIA-EDITORES.md)** para login, colecciones, flujo de publicación e imágenes.
 
@@ -374,7 +324,7 @@ La Edge Function `generate-qr` accede a estos vía `Deno.env.get()` — son secr
 | **`<base href>` y paths root-relative** | Un path con `/` inicial reemplaza el path del base URL, no lo extiende. Ej: `<base href="/cbhe-web/">` + `href="/contacto"` → el navegador va a `/contacto`, no a `/cbhe-web/contacto` | Links siempre sin `/` inicial: `href="contacto"` |
 | **`peer-checked:` no funciona en nietos** | Tailwind `peer-*` solo afecta hermanos directos del elemento `.peer`, no nietos | Reestructurar el markup para que el target sea hermano directo |
 | **`BASE_URL` no tiene trailing slash** | `import.meta.env.BASE_URL` en Astro devuelve `/cbhe-web` sin barra final | Agregar manualmente: `` `${import.meta.env.BASE_URL}/gracias` `` |
-| **Sveltia `skip_ci`** | El CMS configura `skip_ci: false` en `config.yml` pero el comportamiento real depende de si el usuario usa Save vs Save & Publish | No modificar el `skip_ci` en `config.yml` — el flujo de dos botones es intencional |
+| **Sveltia `skip_ci`** | `config.yml` usa `skip_ci: false`: cada commit del CMS (Save o Save and Publish) dispara deploy | Para retener contenido sin publicarlo, usar el campo `draft`; no tocar `skip_ci` |
 | **Preview local con custom domain** | `Astro.site` apunta a producción, `astro preview` en localhost pide assets cross-origin → ORB los bloquea → página sin CSS | Cambiar `site` a `http://localhost:4321`, rebuild, preview, restaurar. No intentar route interception en Playwright |
 | **Runner de GitHub Actions saturado** | El job `deploy` puede quedarse en `Waiting for a hosted runner` por saturación de la plataforma | `gh workflow run deploy.yml --ref main` (disparo manual se procesa aunque los auto-triggers estén trabados) |
 | **QR tarda en aparecer** | La Edge Function es asíncrona — el QR no se genera instantáneamente al insertar | Esperar 1-2 segundos. Si `qr_url` sigue NULL, reintentar desde Dashboard → Database → Webhooks → Logs → Retry |
@@ -390,7 +340,5 @@ La Edge Function `generate-qr` accede a estos vía `Deno.env.get()` — son secr
 - [README](./README.md) — resumen del proyecto, guías de operación y enlaces para el equipo CBHE
 - [Guía de Editores](./GUIA-EDITORES.md) — operación del CMS para el equipo CBHE
 - [Guía de Certificados](./GUIA-CERTIFICADOS.md) — emisión y verificación de certificados
-- [Sobre el Proyecto](./SOBRE-EL-PROYECTO.md) — resumen ejecutivo, costos, DNS y entrega para directores
-- [SPRINT-ENTREGA.md](./SPRINT-ENTREGA.md) — cambios del sprint activo y estado del proyecto
 - [tour-del-proyecto.md](./tour-del-proyecto.md) — recorrido guiado de la arquitectura interna
 - [AGENTS.md](./AGENTS.md) — convenciones completas para agentes y CI/CD

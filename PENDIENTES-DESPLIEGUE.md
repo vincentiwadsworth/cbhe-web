@@ -234,6 +234,8 @@ Una vez completados los pasos de esta guía:
 
 - El sitio estará disponible en `cbhe.org.bo`.
 - Actualice la URL de los certificados nuevos: entre a `supabase.com` con la cuenta de la CBHE, abra el proyecto → **Settings** → **Edge Functions** → **Secrets**, y cambie `PUBLIC_VERIFICATION_URL` de `https://vincentiwadsworth.github.io/cbhe-web` a `https://cbhe.org.bo`. Con eso, los QR emitidos a partir de ese momento apuntan al dominio final. Los QR ya impresos siguen funcionando: la dirección anterior redirige automáticamente a `cbhe.org.bo`.
+- Actualice la dirección del CMS en las guías: en `public/admin/guia.html` (línea con `vincentiwadsworth.github.io/cbhe-web/`) y en `GUIA-EDITORES.md` (secciones 1 y 3), reemplace la dirección por `https://cbhe.org.bo/admin/`.
+- Verifique el banner publicitario y el chatbot cargando un artículo cualquiera de `cbhe.org.bo/novedades`.
 - El equipo de la CBHE operará el CMS y los certificados según las guías:
   - [Guía de Editores](./GUIA-EDITORES.md)
   - [Guía de Certificados](./GUIA-CERTIFICADOS.md)
