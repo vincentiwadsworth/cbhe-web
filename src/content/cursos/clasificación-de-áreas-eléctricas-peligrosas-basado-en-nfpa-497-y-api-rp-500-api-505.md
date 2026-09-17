@@ -6,7 +6,7 @@ image: /images/Curso de clasificación de áreas (4).png
 startDate: 05 Oct 2026
 price: Consulta al Whatsapp 79891193
 registrationDeadline: 30/09/2026
-canvaLink: ''
+canvaLink: https://canva.link/j294ggycbrxh7q6
 description: En las industrias petrolera, química y de procesos, la seguridad eléctrica en áreas clasificadas es un pilar fundamental para la protección de las personas, los equipos y la continuidad operativa. Este curso especializado te brinda las herramientas necesarias para comprender y aplicar las prácticas recomendadas por las normas API RP 500/505 y NFPA 497, enfocadas en la clasificación de áreas peligrosas por presencia de gases, vapores y líquidos inflamables. A través de sesiones en vivo, análisis de casos reales y ejercicios prácticos, adquirirás conocimientos clave para identificar, evaluar y clasificar zonas con riesgo eléctrico, fortaleciendo la seguridad industrial y el cumplimiento normativo en instalaciones.
 instructors:
   - name: Ing. Walter Sarmiento
