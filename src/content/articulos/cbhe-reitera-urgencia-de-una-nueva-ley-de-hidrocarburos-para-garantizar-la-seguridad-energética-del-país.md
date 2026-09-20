@@ -3,7 +3,7 @@ title: CBHE reitera urgencia de una nueva Ley de Hidrocarburos para garantizar l
 category: Noticias
 excerpt: ENERGÍA. La entidad considera urgente construir consensos para aprobar una nueva Ley de Hidrocarburos, recuperar competitividad y atraer inversiones que permitan reactivar la exploración y garantizar el abastecimiento energético en los próximos años.
 date: 20 Jun 2026
-image: ''
+image: /images/Iver Von Borries Economy.jpg
 featured: false
 draft: false
 ---
@@ -37,7 +37,5 @@ El director ejecutivo de la CBHE señaló que uno de los principales desafíos e
 En ese sentido, explicó que la falta de inversiones ha tenido un impacto directo sobre la reposición de reservas. “No ha habido reposición de reservas porque no ha habido inversión, porque no hay seguridad jurídica y porque los números no cierran”, sostuvo.
 
 Para la CBHE, recuperar la competitividad no implica únicamente revisar aspectos económicos del sector, sino también reconstruir la confianza y generar señales claras de estabilidad para quienes estén dispuestos a invertir en el país, por lo que la seguridad jurídica es esencial.
-
-![IverNE](/images/IverNE.jpg)
 
 Les compartimos el link del programa: [https://www.youtube.com/live/yHIhFpFpDUM?si=95eW_a3F4Cmt-ccx](https://www.youtube.com/live/yHIhFpFpDUM?si=95eW_a3F4Cmt-ccx)
