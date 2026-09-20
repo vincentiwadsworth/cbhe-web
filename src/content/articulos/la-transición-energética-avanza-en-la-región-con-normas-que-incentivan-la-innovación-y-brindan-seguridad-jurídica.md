@@ -2,7 +2,7 @@
 title: La transición energética avanza en la región con normas que incentivan la innovación y brindan seguridad jurídica
 category: Noticias
 excerpt: Especialistas de Estados Unidos y Brasil explicaron cómo los cambios regulatorios están impulsando nuevos proyectos vinculados a combustibles sostenibles. Mientras tanto, Bolivia enfrenta el desafío de recuperar las condiciones necesarias para atraer inversiones y reactivar su sector hidrocarburífero.
-date: 19 Jun 2026
+date: 15 Jun 2026
 image: /images/descarga (2).png
 featured: false
 draft: false
