@@ -2,7 +2,7 @@
 title: CBHE cumple 40 años con el compromiso de acompañar la reactivación del sector e impulsar la diversificación energética
 category: Noticias
 excerpt: ENERGÍA. La institución acompañó cuatro décadas de transformaciones de la industria y de crecimiento de su aporte a la economía boliviana. En un escenario marcado por la caída de la producción y los ingresos, reitera la necesidad de aprobar un nuevo marco normativo que permita recuperar competitividad, atraer inversiones y garantizar el abastecimiento energético.
-date: 20 Jul 2026
+date: 20 Aug 2026
 image: /images/Incahuasi planta.jpg
 featured: true
 draft: false
@@ -35,7 +35,6 @@ Además, considera positivo que el proyecto de Ley de Inversiones, que ya está 
 En este escenario, la Cámara ratifica su disposición a colaborar con los organismos de Gobierno en diferentes ámbitos para buscar las mejores alternativas para el desarrollo del sector, el cual requiere capital, tecnología y conocimiento.
 
 ![El desarrollo de la industria hidrocarburífera ha incluido la incorporación de los máximos estándares ambientales y de seguridad. Este es el flare de la Planta Margarita, operada por Repsol Bolivia.](/images/Margarita%20f.jpg)
-
 
 **La urgente reactivación**
 La recuperación de la exploración y la reposición de reservas son urgentes, pues junto con aumentar la producción de gas, recuperar ingresos y divisas, permitirán garantizar el abastecimiento interno y aprovechar su infraestructura. Bolivia tiene potencial geológico, experiencia técnica y una posición estratégica para atender la demanda de gas del creciente mercado de Brasil, pero esas ventajas requieren inversiones sostenidas para convertirse en nuevas reservas y producción.
