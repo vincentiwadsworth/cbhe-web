@@ -240,7 +240,6 @@ collections:
               widget: boolean,
               default: true,
               required: false,
-              hint: "Desactívelo para ocultar el banner sin borrar la imagen",
             }
           - {
               name: imagen,
@@ -248,19 +247,18 @@ collections:
               widget: image,
               required: false,
               choose_url: false,
-              hint: "Medida recomendada: 1600 x 200 píxeles, máximo 150 KB. Se muestra al final de cada artículo",
+              hint: "1600 x 200 píxeles, máximo 150 KB",
             }
           - {
               name: link,
               label: Enlace del banner,
               widget: string,
               required: false,
-              hint: "Dirección web a la que llega quien hace clic en el banner",
             }
           - {
               name: alt,
               label: Texto alternativo,
               widget: string,
               required: false,
-              hint: "Descripción corta de la imagen para lectores de pantalla",
+              hint: "Descripción para lectores de pantalla",
             }

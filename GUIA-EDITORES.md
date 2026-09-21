@@ -129,16 +129,16 @@ Aparece en la página Quiénes somos, en la sección Directorio. Todo se edita d
 
 ### Banner publicitario
 
-Un solo banner que se muestra al final de todos los artículos. Se administra desde una entrada única.
+Se muestra al final de cada artículo.
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
-| Banner activo | — | Interruptor | Desactívelo para ocultar el banner sin borrar la imagen |
-| Imagen del banner | ✅ | Imagen | Medida recomendada: 1600 x 200 píxeles, máximo 150 KB |
-| Enlace del banner | — | Texto | Dirección web a la que llega quien hace clic |
-| Texto alternativo | — | Texto | Descripción corta de la imagen para lectores de pantalla |
+| Banner activo | No | Switch | Desactivado = el banner no se muestra |
+| Imagen del banner | ✅ | Imagen | 1600 x 200 píxeles, máximo 150 KB |
+| Enlace del banner | No | Texto | Dirección web a la que lleva el banner |
+| Texto alternativo | No | Texto | Descripción para lectores de pantalla |
 
-Sin imagen cargada no se muestra nada, aunque el banner esté activo.
+Sin imagen no se muestra nada.
 
 ### Comportamiento Automático de las Páginas (Web)
 
