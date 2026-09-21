@@ -1,10 +1,11 @@
 ---
 title: CBHE y Aqualitos suscriben convenio para impulsar la cooperación y el desarrollo de proyectos sostenibles en el sector energético
-category: "Noticias"
+category: Noticias
 excerpt: A través de un memorándum de entendimiento, comprometieron el intercambio de capacidades técnicas y conocimientos.
-date: 06 Ene 2026
-image: https://cbhe.org.bo/media/k2/items/cache/fa176086e3905a7aae487916932a736e_XL.jpg
+date: 06 Jan 2026
+image: /images/aqualitos.jpg
 featured: true
+draft: false
 ---
 
 La Cámara Boliviana de Hidrocarburos y Energía (CBHE) y Aqualitos suscribieron un acuerdo con el objetivo de promover el desarrollo de iniciativas alineadas con el crecimiento sostenible de la industria energética en Bolivia, a través del trabajo conjunto y el intercambio de capacidades técnicas.
