@@ -8,14 +8,11 @@ Two surgical changes to `src/layouts/Layout.astro`. No new files, no new depende
 
 ### Decision: Keep existing observer structure
 
-**Choice**: Fix the existing MutationObserver handler rather than rewriting as a polling-based or custom widget approach
-**Alternatives considered**: Polling `textContent` on interval (wasteful), custom widget using `AIClient` (high effort)
-**Rationale**: The observer is already there and working for initial bubble detection. Only the streaming path is broken. Two targeted fixes avoid touching the SDK, the markup, or the widget initialization.
+**Choice**: Fix the existing MutationObserver handler rather than rewriting as a polling-based or custom widget approach **Alternatives considered**: Polling `textContent` on interval (wasteful), custom widget using `AIClient` (high effort) **Rationale**: The observer is already there and working for initial bubble detection. Only the streaming path is broken. Two targeted fixes avoid touching the SDK, the markup, or the widget initialization.
 
 ### Decision: Idempotent span, not re-create
 
-**Choice**: If `<span.sgq-msg-normalized>` already exists, update `innerHTML` and remove stray text nodes instead of destroying and rebuilding
-**Rationale**: The SDK adds a new raw text node after each chunk. If we destroy the span and re-create it, we lose the reference and the observer fires again unnecessarily. Updating in-place is cheaper and avoids a reflow cascade.
+**Choice**: If `<span.sgq-msg-normalized>` already exists, update `innerHTML` and remove stray text nodes instead of destroying and rebuilding **Rationale**: The SDK adds a new raw text node after each chunk. If we destroy the span and re-create it, we lose the reference and the observer fires again unnecessarily. Updating in-place is cheaper and avoids a reflow cascade.
 
 ## Data Flow
 

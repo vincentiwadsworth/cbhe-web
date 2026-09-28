@@ -1,15 +1,7 @@
 # Migración del dominio cbhe.org.bo
 
-> **Última revisión**: 18 de agosto de 2026
->
-> Esta guía explica, paso a paso, cómo trasladar el dominio `cbhe.org.bo` al sitio
-> nuevo (Astro, alojado en GitHub Pages), mantener el correo electrónico
-> funcionando y cancelar el hosting viejo (HostGator) sin perder nada.
->
-> Está escrita para el personal administrativo de la CBHE, sin conocimientos
-> técnicos. Cada término técnico se explica la primera vez que aparece y al
-> final hay un glosario. Los valores de DNS de esta guía provienen de una
-> consulta real al dominio, capturada el día de la revisión. Cópielos exactos.
+> **Última revisión**: 18 de agosto de 2026 Esta guía explica, paso a paso, cómo trasladar el dominio `cbhe.org.bo` al sitio nuevo (Astro, alojado en GitHub Pages), mantener el correo electrónico funcionando y cancelar el hosting viejo (HostGator) sin perder nada.
+> Está escrita para el personal administrativo de la CBHE, sin conocimientos técnicos. Cada término técnico se explica la primera vez que aparece y al final hay un glosario. Los valores de DNS de esta guía provienen de una consulta real al dominio, capturada el día de la revisión. Cópielos exactos.
 
 ## 1. Objetivo y panorama
 

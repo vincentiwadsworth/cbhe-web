@@ -1,8 +1,6 @@
 # Sprint Status — Entrega CBHE
 
-**Sprint**: `sprint-entrega`
-**Branch base**: `feat/custom-domain`
-**Última actualización**: 2026-07-06
+**Sprint**: `sprint-entrega` **Branch base**: `feat/custom-domain` **Última actualización**: 2026-07-06
 
 ## Resumen
 

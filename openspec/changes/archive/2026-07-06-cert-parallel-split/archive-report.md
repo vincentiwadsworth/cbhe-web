@@ -1,8 +1,6 @@
 # SDD Archive Report — cert-parallel-split
 
-**Archived**: 2026-07-06
-**Status**: Complete (with explicit stale-checkbox reconciliation)
-**Mode**: OpenSpec (filesystem)
+**Archived**: 2026-07-06 **Status**: Complete (with explicit stale-checkbox reconciliation) **Mode**: OpenSpec (filesystem)
 
 ---
 

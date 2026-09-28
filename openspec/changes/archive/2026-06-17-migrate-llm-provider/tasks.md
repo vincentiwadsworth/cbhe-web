@@ -11,10 +11,7 @@
 | Delivery strategy | auto-forecast |
 | Chain strategy | stacked-to-main |
 
-Decision needed before apply: No
-Chained PRs recommended: No
-Chain strategy: stacked-to-main
-400-line budget risk: Low
+Decision needed before apply: No Chained PRs recommended: No Chain strategy: stacked-to-main 400-line budget risk: Low
 
 ### Suggested Work Units
 

@@ -14,10 +14,7 @@
 | Delivery strategy | single-pr |
 | Chain strategy | size-exception |
 
-Decision needed before apply: No
-Chained PRs recommended: No
-Chain strategy: size-exception
-400-line budget risk: Low
+Decision needed before apply: No Chained PRs recommended: No Chain strategy: size-exception 400-line budget risk: Low
 
 ## Task 1: Modify LISTAS Instruction in System Prompt
 
@@ -35,9 +32,7 @@ Chain strategy: size-exception
 "LISTAS: Cuando listes 2+ items, usá • al inicio de cada línea. Ejemplo:\n• Item uno\n• Item dos\nNo uses - ni * ni # para listas. Numeración (1. 2.) solo para pasos o secuencias ordenadas.",
 ```
 
-**Lines changed**: 1 (replaced string literal)
-**Reviewable**: Yes — single rule replacement, clear diff
-**Verification**: Prompt loaded with new LISTAS rule on bot init
+**Lines changed**: 1 (replaced string literal) **Reviewable**: Yes — single rule replacement, clear diff **Verification**: Prompt loaded with new LISTAS rule on bot init
 
 ---
 

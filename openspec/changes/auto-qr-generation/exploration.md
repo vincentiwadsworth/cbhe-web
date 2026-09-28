@@ -1,9 +1,6 @@
 # Exploration: Auto-QR Generation Pipeline
 
-**Change**: `auto-qr-generation`
-**Sprint Deferred Tasks**: D3 (pipeline) + D6 (render QR en landing)
-**Branch**: `feat/custom-domain`
-**Date**: 2026-07-06
+**Change**: `auto-qr-generation` **Sprint Deferred Tasks**: D3 (pipeline) + D6 (render QR en landing) **Branch**: `feat/custom-domain` **Date**: 2026-07-06
 
 ---
 
@@ -137,11 +134,7 @@ AGENTS.md ya documenta el comportamiento esperado.
 ### 8. AGENTS.md — Cross-check
 
 La sección "Auto-QR pipeline" (líneas 81-86) ya documenta la arquitectura completa:
-> - Storage bucket: `certificados-qr` (público), filename `{codigo}.png`
-> - Edge Function: `supabase/functions/generate-qr/index.ts` (Deno). Genera PNG con `qrcode` (vía esm.sh), sube al bucket, `UPDATE {tabla} SET qr_url = publicUrl WHERE id = record.id`
-> - DB Webhooks: INSERT en `capacitacion` e INSERT en `sello` → ambos invocan `generate-qr`
-> - URL encoded: `PUBLIC_VERIFICATION_URL/certificados/?c={codigo}`
-> - Mostrar en landing: `<img src={qr_url}>` cuando `qr_url` no-NULL
+> - Storage bucket: `certificados-qr` (público), filename `{codigo}.png` - Edge Function: `supabase/functions/generate-qr/index.ts` (Deno). Genera PNG con `qrcode` (vía esm.sh), sube al bucket, `UPDATE {tabla} SET qr_url = publicUrl WHERE id = record.id` - DB Webhooks: INSERT en `capacitacion` e INSERT en `sello` → ambos invocan `generate-qr` - URL encoded: `PUBLIC_VERIFICATION_URL/certificados/?c={codigo}` - Mostrar en landing: `<img src={qr_url}>` cuando `qr_url` no-NULL
 
 La sección "Supabase Edge Functions (Deno, no Node)" (líneas 46-51) documenta gotchas:
 - Imports via `https://esm.sh/...`

@@ -53,9 +53,7 @@ MD3 palette with ~50 tokens. Key tokens for verification UI:
 - Will need: `npm install @supabase/supabase-js`, create Supabase project, add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to `.env` and GitHub Secrets.
 
 ### Dependencies (package.json)
-Current deps: astro, tailwindcss, @tailwindcss/vite, @tailwindcss/typography, astro-icon, @iconify-json/material-symbols, @fontsource/inter, @astrojs/sitemap, @astrojs/check, typescript
-DevDeps: sharp
-NO QR library, NO PDF library, NO Supabase client.
+Current deps: astro, tailwindcss, @tailwindcss/vite, @tailwindcss/typography, astro-icon, @iconify-json/material-symbols, @fontsource/inter, @astrojs/sitemap, @astrojs/check, typescript DevDeps: sharp NO QR library, NO PDF library, NO Supabase client.
 
 ### Icon Availability
 `qr-code-2` is ALREADY included in the astro-icon Material Symbols set (line 70 of astro.config.mjs). Also `verified`, `security`, `check-circle`, `task-alt` are available.

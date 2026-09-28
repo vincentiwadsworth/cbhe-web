@@ -1,8 +1,6 @@
 ## Verification Report
 
-**Change**: migrate-llm-provider
-**Version**: N/A (no spec version change — zero-delta confirmation)
-**Mode**: Standard (Strict TDD: false, no test runner)
+**Change**: migrate-llm-provider **Version**: N/A (no spec version change — zero-delta confirmation) **Mode**: Standard (Strict TDD: false, no test runner)
 
 ### Completeness
 
@@ -36,8 +34,7 @@ generating static routes — 28 routes ✓
 
 Note: One CSS warning (pre-existing — `::details-content > *` pseudo-element combinator in accordion styles) is unrelated to this change.
 
-**Tests**: ➖ No test runner configured (`openspec/config.yaml` — no test runner exists)
-**Coverage**: ➖ Not available
+**Tests**: ➖ No test runner configured (`openspec/config.yaml` — no test runner exists) **Coverage**: ➖ Not available
 
 ### Spec Compliance Matrix
 

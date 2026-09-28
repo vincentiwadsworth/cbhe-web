@@ -11,10 +11,7 @@
 | Delivery strategy | single-pr |
 | Chain strategy | pending |
 
-Decision needed before apply: No
-Chained PRs recommended: No
-Chain strategy: pending
-400-line budget risk: Low
+Decision needed before apply: No Chained PRs recommended: No Chain strategy: pending 400-line budget risk: Low
 
 ## Summary
 

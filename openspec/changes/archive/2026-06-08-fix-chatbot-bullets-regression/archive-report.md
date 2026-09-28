@@ -1,8 +1,6 @@
 # Archive Report: fix-chatbot-bullets-regression
 
-**Archived**: 2026-06-08
-**Commit**: 4bf8f27
-**Mode**: Hybrid (openspec/ + Engram)
+**Archived**: 2026-06-08 **Commit**: 4bf8f27 **Mode**: Hybrid (openspec/ + Engram)
 
 ## Summary
 
@@ -19,8 +17,7 @@ All 4 implementation tasks complete. No unchecked tasks in the persisted tasks a
 
 ## Spec Sync
 
-**Main spec**: `openspec/specs/chatbot-message-rendering/spec.md`
-**Delta spec**: `openspec/changes/archive/2026-06-08-fix-chatbot-bullets-regression/spec.md`
+**Main spec**: `openspec/specs/chatbot-message-rendering/spec.md` **Delta spec**: `openspec/changes/archive/2026-06-08-fix-chatbot-bullets-regression/spec.md`
 
 | Domain | Action | Details |
 |--------|--------|---------|

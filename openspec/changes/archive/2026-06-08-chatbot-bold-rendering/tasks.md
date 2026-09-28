@@ -10,10 +10,7 @@
 | Suggested split | Single PR |
 | Delivery strategy | single-pr |
 
-Decision needed before apply: No
-Chained PRs recommended: No
-Chain strategy: size-exception
-400-line budget risk: Low
+Decision needed before apply: No Chained PRs recommended: No Chain strategy: size-exception 400-line budget risk: Low
 
 ## Phase 1: Fix MutationObserver Blind Spot
 

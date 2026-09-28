@@ -1,8 +1,6 @@
 # SDD Archive Report — courses-detail-pages
 
-**Archived**: 2026-05-25
-**Status**: Complete
-**Mode**: Hybrid (Engram + OpenSpec filesystem)
+**Archived**: 2026-05-25 **Status**: Complete **Mode**: Hybrid (Engram + OpenSpec filesystem)
 
 ---
 

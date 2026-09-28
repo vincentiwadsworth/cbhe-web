@@ -2,10 +2,7 @@
 
 ## Purpose
 
-A single public landing at `/certificados/` verifies a code, detects its type by
-prefix, queries the correct owner-scoped table, and renders minimal verified
-data. No authentication, no expiry, no status — only basic identifying fields
-plus a single "Verificado" state.
+A single public landing at `/certificados/` verifies a code, detects its type by prefix, queries the correct owner-scoped table, and renders minimal verified data. No authentication, no expiry, no status — only basic identifying fields plus a single "Verificado" state.
 
 ---
 
@@ -13,8 +10,7 @@ plus a single "Verificado" state.
 
 ### Requirement: Landing reads the code from the URL
 
-The page MUST read the certificate code from the `c` query parameter. Absence
-or empty value MUST show a ready-to-search state, not an error.
+The page MUST read the certificate code from the `c` query parameter. Absence or empty value MUST show a ready-to-search state, not an error.
 
 #### Scenario: Code present in URL
 
@@ -30,8 +26,7 @@ or empty value MUST show a ready-to-search state, not an error.
 
 ### Requirement: Prefix selects the target table
 
-The page MUST route the query to one table only based on the code prefix. The
-`CBHE-` segment is case-sensitive.
+The page MUST route the query to one table only based on the code prefix. The `CBHE-` segment is case-sensitive.
 
 | Prefix | Table | Labels |
 |--------|-------|--------|
@@ -61,8 +56,7 @@ The page MUST route the query to one table only based on the code prefix. The
 
 ### Requirement: Page shows only basic verified data
 
-The page MUST render the mapped identifying fields plus a single "Verificado"
-state. It MUST NOT display `fecha_vencimiento` or any `estado` — both removed.
+The page MUST render the mapped identifying fields plus a single "Verificado" state. It MUST NOT display `fecha_vencimiento` or any `estado` — both removed.
 `fecha_emision` MAY appear.
 
 #### Scenario: Capacitación row renders minimal fields
@@ -81,9 +75,7 @@ state. It MUST NOT display `fecha_vencimiento` or any `estado` — both removed.
 
 ### Requirement: Missing or invalid code shows the not-found state
 
-Any condition yielding no row MUST produce a single "Certificado No Encontrado"
-state. The page MUST NOT disclose which table was queried or whether the prefix
-was recognized.
+Any condition yielding no row MUST produce a single "Certificado No Encontrado" state. The page MUST NOT disclose which table was queried or whether the prefix was recognized.
 
 #### Scenario: Invalid or malformed code returns not found
 
@@ -94,9 +86,7 @@ was recognized.
 
 ### Requirement: Page works without auth and ships static
 
-The flow MUST complete for any visitor using only the `anon` key — no login
-required. The page MUST pass `npx astro build`; queries run client-side with the
-publishable/anon key and no secret keys may reach the browser.
+The flow MUST complete for any visitor using only the `anon` key — no login required. The page MUST pass `npx astro build`; queries run client-side with the publishable/anon key and no secret keys may reach the browser.
 
 #### Scenario: Anonymous visitor verifies a code
 

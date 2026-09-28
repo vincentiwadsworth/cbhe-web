@@ -31,9 +31,7 @@ draft: false
 ## Agenda
 
 - 📅 Fecha: 9, 11, 16 y 18 de noviembre 2026
-🕗 Horario: Lunes y Miércoles de 19:30 a 22:00 (Hora Bolivia GTM-4)
-🕗Carga Horaria: 16 horas (12 horas al vivo + 4 horas de trabajo asincrónico)
-💻📱 Modalidad: Esta capacitación la realizamos de forma virtual mediante TEAMS
+🕗 Horario: Lunes y Miércoles de 19:30 a 22:00 (Hora Bolivia GTM-4) 🕗Carga Horaria: 16 horas (12 horas al vivo + 4 horas de trabajo asincrónico) 💻📱 Modalidad: Esta capacitación la realizamos de forma virtual mediante TEAMS
 
 ## Metodología
 

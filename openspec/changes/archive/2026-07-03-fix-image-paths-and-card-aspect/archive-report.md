@@ -1,8 +1,6 @@
 # SDD Archive Report — fix-image-paths-and-card-aspect
 
-**Archived**: 2026-07-03
-**Status**: Complete
-**Mode**: OpenSpec (filesystem)
+**Archived**: 2026-07-03 **Status**: Complete **Mode**: OpenSpec (filesystem)
 
 ---
 

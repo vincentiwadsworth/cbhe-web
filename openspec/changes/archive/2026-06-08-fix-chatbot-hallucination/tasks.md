@@ -2,9 +2,7 @@
 
 > Estimated total changes: ~15 lines in `src/layouts/Layout.astro` (single file).
 > Review budget: Low (single file, ~15 lines, single PR).
-> Decision needed before apply: No
-> Chained PRs recommended: No
-> 400-line budget risk: Low
+> Decision needed before apply: No Chained PRs recommended: No 400-line budget risk: Low
 
 ## Task 1: Remove Repregunta Rule from REGLAS [x]
 
@@ -22,9 +20,7 @@
 "No hagas preguntas de seguimiento ('¿te gustaría saber más?', '¿te interesa alguna categoría?') cuando el tema está fuera de tu alcance. Respondé solo la pregunta del usuario y terminá. Si el usuario quiere más información, él/ella va a preguntar.",
 ```
 
-**Lines changed**: 1 (replaced)
-**Reviewable**: Yes — single rule replacement, clear intent
-**Test**: Ask "¿Cómo me afilio?" → bot should refuse without follow-up
+**Lines changed**: 1 (replaced) **Reviewable**: Yes — single rule replacement, clear intent **Test**: Ask "¿Cómo me afilio?" → bot should refuse without follow-up
 
 ---
 
@@ -44,9 +40,7 @@
 "NUNCA inventes información. Si no tenés datos sobre un tema específico en la 'Fuente de verdad', no inventes listas, beneficios, procesos ni ningún hecho. Informá que no tenés esa información y sugerí contactar a cbhe@cbhe.org.bo.",
 ```
 
-**Lines changed**: 1 (replaced)
-**Reviewable**: Yes — single rule replacement, scope clearly expanded
-**Test**: Ask "¿Cuáles son los beneficios de afiliarse?" → bot refuses with email redirect
+**Lines changed**: 1 (replaced) **Reviewable**: Yes — single rule replacement, scope clearly expanded **Test**: Ask "¿Cuáles son los beneficios de afiliarse?" → bot refuses with email redirect
 
 ---
 
@@ -64,9 +58,7 @@
 "Si el usuario responde 'sí' a una pregunta tuya, no asumas que quiere más información. Tomalo como confirmación de que leyó tu respuesta y terminá ahí.",
 ```
 
-**Lines changed**: 2 (added)
-**Reviewable**: Yes — two new rules, self-contained
-**Test**: 
+**Lines changed**: 2 (added) **Reviewable**: Yes — two new rules, self-contained **Test**:
 - Ask in Spanish → verify response has no English words
 - Reply "sí" to a question → verify bot ends conversation
 
@@ -97,9 +89,7 @@ suggestedQuestions: [
 ],
 ```
 
-**Lines changed**: 4 (modified)
-**Reviewable**: Yes — UX text change, aligns welcome with actual capabilities
-**Test**: Bot loads → welcome message doesn't mention affiliation
+**Lines changed**: 4 (modified) **Reviewable**: Yes — UX text change, aligns welcome with actual capabilities **Test**: Bot loads → welcome message doesn't mention affiliation
 
 ---
 
@@ -113,5 +103,4 @@ suggestedQuestions: [
 - [x] `dist/` output inspected for Layout.astro changes reflected in HTML
 - [ ] Manual: deploy preview and test scenarios from spec (post-commit)
 
-**Lines changed**: 0 (verification only)
-**Reviewable**: Yes — build pass is binary pass/fail
+**Lines changed**: 0 (verification only) **Reviewable**: Yes — build pass is binary pass/fail

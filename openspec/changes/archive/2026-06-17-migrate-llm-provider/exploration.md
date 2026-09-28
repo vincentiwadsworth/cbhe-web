@@ -19,10 +19,7 @@ import("https://esm.sh/multi-ai-sdk").then(function (mod) {
     // ...
 ```
 
-**Env var**: `GROQ_KEY` in `.env` (line 5 of `.env.example`)
-**SDK**: `multi-ai-sdk` v2.0.0 via esm.sh CDN
-**Model**: `llama-3.3-70b-versatile` (Llama 3.3 70B on Groq)
-**Provider name**: `"groq"` (one of 17 supported by multi-ai-sdk's `ProviderName` type)
+**Env var**: `GROQ_KEY` in `.env` (line 5 of `.env.example`) **SDK**: `multi-ai-sdk` v2.0.0 via esm.sh CDN **Model**: `llama-3.3-70b-versatile` (Llama 3.3 70B on Groq) **Provider name**: `"groq"` (one of 17 supported by multi-ai-sdk's `ProviderName` type)
 
 ### Current Groq pricing (as of June 2026)
 

@@ -1,8 +1,6 @@
 ## Verification Report
 
-**Change**: courses-detail-pages
-**Version**: N/A
-**Mode**: Standard (Strict TDD: false — static SSG site, no test runner)
+**Change**: courses-detail-pages **Version**: N/A **Mode**: Standard (Strict TDD: false — static SSG site, no test runner)
 
 ### Completeness
 | Metric | Value |
@@ -76,9 +74,7 @@ npx astro build → 27 pages built in 5.78s, zero errors
 - Spot-checked 5 courses: evaluacion-riesgos-incendios, programacion-python-ingenieros, nfpa-70-codigo-electrico-nacional-agosto-2026, inspector-soldadura-cawi-cwi-aws, nfpa-70e-seguridad-electrica-lugares-trabajo
 
 ### Issues Found
-**CRITICAL**: None
-**WARNING**: None
-**SUGGESTION**:
+**CRITICAL**: None **WARNING**: None **SUGGESTION**:
 - CourseFAQ renders a `<section>` wrapper AND uses `aria-labelledby="faq-heading"` on its own section, which is then wrapped again by the page's `<section aria-labelledby="faq-heading">` — redundant double-nesting. Semantically valid but could be simplified.
 - Social proof stats (1.233 cursos, 15.275 profesionales) are hardcoded in [slug].astro. As the catalog grows these will become inaccurate — consider deriving from collection count at build time.
 

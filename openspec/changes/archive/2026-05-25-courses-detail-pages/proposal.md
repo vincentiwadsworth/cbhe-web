@@ -1,9 +1,6 @@
 # Proposal: Courses Detail Pages + Card Improvements
 
-**Change name**: `courses-detail-pages`
-**Status**: proposed
-**Date**: 2026-05-25
-**Topic key**: `sdd/courses-detail-pages/proposal`
+**Change name**: `courses-detail-pages` **Status**: proposed **Date**: 2026-05-25 **Topic key**: `sdd/courses-detail-pages/proposal`
 
 ---
 

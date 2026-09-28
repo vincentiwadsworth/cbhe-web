@@ -40,10 +40,7 @@ Al finalizar el curso, el participante estará capacitado para aplicar las prác
 
 ## Agenda
 
-📅 **Fecha:** 5 al 9 de octubre de 2026
-🕗**Carga Horaria:** 15 horas
-🕗 **Horario:** Lunes a viernes de 19:00 a 22:00 (Hora Bolivia GTM-4)
-💻📱 **Modalidad:** Esta capacitación la realizamos de forma virtual mediante TEAMS.
+📅 **Fecha:** 5 al 9 de octubre de 2026 🕗**Carga Horaria:** 15 horas 🕗 **Horario:** Lunes a viernes de 19:00 a 22:00 (Hora Bolivia GTM-4) 💻📱 **Modalidad:** Esta capacitación la realizamos de forma virtual mediante TEAMS.
 
 ## Contenido
 

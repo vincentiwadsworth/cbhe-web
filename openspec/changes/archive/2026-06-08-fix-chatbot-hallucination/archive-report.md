@@ -1,8 +1,6 @@
 # Archive Report: fix-chatbot-hallucination
 
-**Archived**: 2026-06-08
-**Commit**: 315aef4 (local, not pushed)
-**Mode**: Hybrid (openspec/ + Engram)
+**Archived**: 2026-06-08 **Commit**: 315aef4 (local, not pushed) **Mode**: Hybrid (openspec/ + Engram)
 
 ## Summary
 
@@ -20,8 +18,7 @@ Completed SDD change to fix chatbot hallucination by modifying system prompt gua
 
 ## Spec Sync
 
-**Main spec**: `openspec/specs/chatbot-message-rendering/spec.md`
-**Delta spec**: `openspec/changes/archive/2026-06-08-fix-chatbot-hallucination/spec.md`
+**Main spec**: `openspec/specs/chatbot-message-rendering/spec.md` **Delta spec**: `openspec/changes/archive/2026-06-08-fix-chatbot-hallucination/spec.md`
 
 | Domain | Action | Details |
 |--------|--------|---------|

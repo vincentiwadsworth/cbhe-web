@@ -11,10 +11,7 @@
 | Delivery strategy | auto-forecast |
 | Chain strategy | pending |
 
-Decision needed before apply: No
-Chained PRs recommended: No
-Chain strategy: pending
-500-line budget risk: Low
+Decision needed before apply: No Chained PRs recommended: No Chain strategy: pending 500-line budget risk: Low
 
 ## Phase 1: Image Preparation
 

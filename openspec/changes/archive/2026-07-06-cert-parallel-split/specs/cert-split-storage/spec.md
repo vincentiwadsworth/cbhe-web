@@ -2,11 +2,7 @@
 
 ## Purpose
 
-Replace the single `certificados` table with two tables — `capacitacion` (used
-by Alejandra for Capacitación) and `sello` (used by Tania for Sello CBHE) —
-with RLS configured for public verification reads and unrestricted
-`service_role` access. Per-owner access is managed outside this change via
-Supabase Studio. Migration `003_split_certificados.sql` is authoritative.
+Replace the single `certificados` table with two tables — `capacitacion` (used by Alejandra for Capacitación) and `sello` (used by Tania for Sello CBHE) — with RLS configured for public verification reads and unrestricted `service_role` access. Per-owner access is managed outside this change via Supabase Studio. Migration `003_split_certificados.sql` is authoritative.
 
 ---
 
@@ -14,9 +10,7 @@ Supabase Studio. Migration `003_split_certificados.sql` is authoritative.
 
 ### Requirement: Two independent certificate tables exist
 
-The system MUST persist certificates in two separate tables: `capacitacion` and
-`sello`. The legacy `certificados` table MUST NOT be used; the migration MUST
-defensively drop it if present.
+The system MUST persist certificates in two separate tables: `capacitacion` and `sello`. The legacy `certificados` table MUST NOT be used; the migration MUST defensively drop it if present.
 
 #### Scenario: Migration applied to a fresh database
 
@@ -33,9 +27,7 @@ defensively drop it if present.
 
 ### Requirement: Certificate code is unique per table
 
-Each table MUST enforce uniqueness of its `codigo` independently. The same code
-MAY coexist in both tables; the guarantee MUST NOT depend on the prefix
-convention.
+Each table MUST enforce uniqueness of its `codigo` independently. The same code MAY coexist in both tables; the guarantee MUST NOT depend on the prefix convention.
 
 #### Scenario: Duplicate code in same table is rejected
 
@@ -62,8 +54,7 @@ Anonymous writes MUST be denied.
 
 ### Requirement: service_role bypasses RLS
 
-`service_role` MUST perform any CRUD on both tables regardless of policies,
-supporting batch and emergency emission via GH Actions and admin tooling.
+`service_role` MUST perform any CRUD on both tables regardless of policies, supporting batch and emergency emission via GH Actions and admin tooling.
 
 #### Scenario: service_role writes across both tables
 
@@ -73,9 +64,7 @@ supporting batch and emergency emission via GH Actions and admin tooling.
 
 ### Requirement: Migration matches the live schema
 
-Migration `003_split_certificados.sql` MUST exist and, applied to a fresh
-database, produce tables whose columns, constraints, and policies match the live
-database.
+Migration `003_split_certificados.sql` MUST exist and, applied to a fresh database, produce tables whose columns, constraints, and policies match the live database.
 
 #### Scenario: Fresh-database schema matches live
 

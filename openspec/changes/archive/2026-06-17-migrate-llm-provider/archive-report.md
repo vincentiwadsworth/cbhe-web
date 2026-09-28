@@ -1,7 +1,6 @@
 # Archive Report: migrate-llm-provider
 
-**Archived**: 2026-06-17
-**Change**: migrate-llm-provider — Migrate LLM Provider from Groq to DeepSeek V4 Flash
+**Archived**: 2026-06-17 **Change**: migrate-llm-provider — Migrate LLM Provider from Groq to DeepSeek V4 Flash
 
 ## Archive Summary
 
@@ -26,9 +25,7 @@ All 4 tasks confirmed `[x]` in archived tasks.md. No stale unchecked tasks.
 
 ## Verify Report Status
 
-**Verdict**: PASS WITH WARNINGS
-**CRITICAL issues**: None
-**Warning**: Guard condition rename (`if (groqKey)` → `if (deepseekKey)`) was a necessary corrective fix not in the original design diffs. No spec impact.
+**Verdict**: PASS WITH WARNINGS **CRITICAL issues**: None **Warning**: Guard condition rename (`if (groqKey)` → `if (deepseekKey)`) was a necessary corrective fix not in the original design diffs. No spec impact.
 
 ## Archive Contents
 

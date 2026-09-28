@@ -1,7 +1,6 @@
 # Guía de Certificados de la CBHE
 
-> **Para**: Responsable de Gestión (Sello CBHE), Responsable de Capacitación
-> **Última revisión**: 9 de julio de 2026
+> **Para**: Responsable de Gestión (Sello CBHE), Responsable de Capacitación **Última revisión**: 9 de julio de 2026
 
 ---
 
