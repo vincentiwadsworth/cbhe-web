@@ -31,3 +31,6 @@ pnpm-debug.log*
 /.atl/
 # Credenciales de entrega: NUNCA commitear (repo público)
 /credenciales/
+# Skills de agentes: solo local, no van al repo
+/.agents/skills/
+/.opencode/skills/
