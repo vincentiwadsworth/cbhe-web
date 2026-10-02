@@ -76,6 +76,16 @@ const historia = {
         "La Ley de Hidrocarburos 3058, promulgada en 2005, y la nacionalización decretada el 1 de mayo de 2006 marcaron uno de los momentos más complejos de la historia de la Cámara.",
         "El Decreto Supremo 28701 Héroes del Chaco cambió la relación entre el Estado, YPFB y las compañías privadas. Las empresas que permanecieron en Bolivia debieron adecuarse a nuevos contratos, suscritos en 2007, bajo un modelo con mayor participación estatal.",
         "Esto marcó la decisión de formular un Plan Estratégico Institucional con un enfoque más propositivo y una relación más activa con el Gobierno y la sociedad, que se tradujo en el acrónimo ACTUAR.",
+        {
+          lista: [
+            "A: Agrupar activamente a sus asociados.",
+            "C: Comunicar e informar a los públicos de interés.",
+            "T: Tecnificar y capacitar al sector.",
+            "U: Unificar criterios bajo principios comerciales y éticos.",
+            "A: Alentar programas de higiene, salud, seguridad, medioambiente y responsabilidad social empresarial.",
+            "R: Representar a la industria en diferentes ámbitos.",
+          ],
+        },
         "Con este planteamiento, la institución amplió su trabajo más allá de la representación gremial y colocó mayor énfasis en el conocimiento, la formación, la prevención y el relacionamiento con la sociedad.",
       ],
     },
@@ -127,15 +137,6 @@ const historia = {
   ],
 };
 
-const actuar = [
-  { letter: "A", icon: "groups", title: "Agrupar", desc: "Reunir activamente a las empresas de toda la cadena de valor del sector energético bajo una representación institucional sólida." },
-  { letter: "C", icon: "chat", title: "Comunicar", desc: "Difundir información técnica, económica y sectorial de forma transparente y efectiva a los diferentes públicos de interés." },
-  { letter: "T", icon: "school", title: "Tecnificar", desc: "Impulsar la formación continua, la capacitación especializada y la certificación del talento humano del sector." },
-  { letter: "U", icon: "gavel", title: "Unificar", desc: "Promover criterios comunes bajo principios comerciales y éticos que fortalezcan la industria y sus estándares." },
-  { letter: "A", icon: "security", title: "Alentar", desc: "Fomentar programas de salud, seguridad industrial, medioambiente y responsabilidad social empresarial." },
-  { letter: "R", icon: "account-balance", title: "Representar", desc: "Representar a la industria ante los diferentes ámbitos públicos y privados, defendiendo los intereses del sector energético." },
-];
-
 ---
 
 
@@ -163,13 +164,18 @@ const actuar = [
       prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-4
       prose-p:text-on-surface-variant prose-p:leading-relaxed prose-p:mb-5
       prose-strong:text-on-surface prose-strong:font-semibold
+      prose-ul:text-on-surface-variant prose-li:marker:text-primary prose-li:my-1
       prose-img:rounded-lg prose-img:my-0
     ">
       {historia.intro.map((parrafo) => <p>{parrafo}</p>)}
       {historia.secciones.map((seccion) => (
         <Fragment>
           <h3>{seccion.titulo}</h3>
-          {seccion.parrafos.map((parrafo) => <p>{parrafo}</p>)}
+          {seccion.parrafos.map((bloque) =>
+            typeof bloque === "string"
+              ? <p>{bloque}</p>
+              : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
+          )}
           {seccion.foto && (
             <figure class="my-8">
               <img
@@ -235,32 +241,6 @@ const actuar = [
             ))}
           </ul>
         </article>
-      ))}
-    </div>
-  </Section>
-
-  <!-- Filosofía ACTUAR -->
-  <Section bg="surface-container-low">
-    <SectionHeading
-      title="Nuestra filosofía: ACTUAR"
-      description="Seis pilares que reflejan el accionar y el comportamiento de la institución en la dinámica de la industria energética. Cada letra representa un compromiso concreto con nuestros afiliados y con Bolivia."
-    />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-      {actuar.map((item) => (
-        <div class="group bg-surface rounded-lg p-6 md:p-8 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md transition-all duration-300">
-          <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-primary-container shrink-0 rounded-lg flex items-center justify-center">
-              <Icon name={`material-symbols:${item.icon}`} class="text-on-primary-container size-5" />
-            </div>
-            <div class="min-w-0">
-              <div class="flex items-baseline gap-2 mb-1">
-                <span class="text-primary font-headline font-extrabold text-xl">{item.letter}</span>
-                <h3 class="font-headline font-bold text-on-surface text-base md:text-lg">{item.title}</h3>
-              </div>
-              <p class="text-on-surface-variant font-body text-sm md:text-base leading-relaxed">{item.desc}</p>
-            </div>
-          </div>
-        </div>
       ))}
     </div>
   </Section>
