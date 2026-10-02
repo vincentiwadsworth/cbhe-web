@@ -5,40 +5,127 @@ import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import SubpageHero from "../components/SubpageHero.astro";
 import PageLayout from "../layouts/PageLayout.astro";
+import { resolveImageUrl } from "../utils/images";
 import directorioData from "../../data/directorio.json";
 
-const historia = [
-  {
-    year: "1986",
-    title: "El origen",
-    desc: "Quince empresas del sector de hidrocarburos fundan la Cámara Nacional de Hidrocarburos en Santa Cruz de la Sierra. Dos años después obtiene su personería jurídica mediante Resolución Suprema N° 203117, consolidándose como institución legalmente reconocida por el Estado boliviano.",
-  },
-  {
-    year: "1994",
-    title: "Crecimiento",
-    desc: "Se incorporan todas las compañías con actividad en las diferentes fases de la industria petrolera. Se aprueba la primera clasificación por grupos y la institución adopta el nombre de Cámara Boliviana de Hidrocarburos, reflejando su alcance nacional.",
-  },
-  {
-    year: "2001",
-    title: "Modernización",
-    desc: "La Cámara reorganiza su estructura en cuatro grupos industriales para responder al crecimiento del sector y a las inversiones realizadas en el país. Se readecúa el Estatuto Orgánico a la nueva realidad energética boliviana.",
-  },
-  {
-    year: "2003",
-    title: "Excelencia",
-    desc: "La CBHE se convierte en la primera institución del sector hidrocarburífero boliviano en implementar un sistema de gestión de calidad ISO 9001, marcando un estándar de excelencia en sus servicios a los afiliados y al público.",
-  },
-  {
-    year: "2007",
-    title: "Compromiso social",
-    desc: "Nace Fundesoc, la Fundación Boliviana para el Desarrollo Social, como brazo de responsabilidad social empresarial de la CBHE. Ese mismo año se define la filosofía ACTUAR, los seis pilares que guían el accionar institucional hasta hoy.",
-  },
-  {
-    year: "2010",
-    title: "Consolidación",
-    desc: "La Cámara Boliviana de Hidrocarburos incorpora el sector Energía a su denominación y misión, transformándose en la CBHE que conocemos. Hoy reúne a casi un centenar de empresas organizadas en cinco grupos que cubren toda la cadena de valor energética.",
-  },
-];
+const historia = {
+  lead: "CBHE: cuatro décadas acompañando la transformación del sector energético boliviano",
+  intro: [
+    "La Cámara Boliviana de Hidrocarburos y Energía (CBHE) nació el 20 de agosto de 1986, en Santa Cruz de la Sierra, por iniciativa de 15 empresas que prestaban servicios y suministraban materiales y equipos a la industria petrolera. Cuarenta años después, reúne a compañías de diferentes eslabones de la cadena energética y busca ser un actor central en el proceso de diversificación energética, en el marco de la transición.",
+    "Su historia acompañó las principales transformaciones del sector: la apertura a la inversión privada, el crecimiento de las reservas y exportaciones, la construcción del gasoducto Bolivia-Brasil, la nacionalización de 2006, la bonanza gasífera, la posterior disminución de la producción y la incorporación de la transición y la seguridad energética a la agenda nacional.",
+    "En ese recorrido, la institución también amplió su representación a toda la cadena hidrocarburífera e incorporó a la energía dentro de su identidad. Junto con la representación empresarial, desarrolló servicios de información, capacitación, certificación, tecnología, comunicación, seguridad, salud, medioambiente y relacionamiento internacional.",
+    "La evolución de su nombre resume parte de su historia: nació como Cámara Nacional de Hidrocarburos, pasó a ser Cámara Boliviana de Hidrocarburos y, desde 2010-2011, se denomina Cámara Boliviana de Hidrocarburos y Energía.",
+  ],
+  secciones: [
+    {
+      titulo: "1986: la unión de 15 empresas",
+      parrafos: [
+        "La Cámara fue creada como una institución de derecho privado, sin fines de lucro, con patrimonio propio y autonomía de gestión económica y financiera. Sus objetivos iniciales eran reunir a las compañías vinculadas con los hidrocarburos, representarlas colectivamente ante organismos públicos y privados y promover el desarrollo de la industria y de sus empresas asociadas.",
+        "Uno de sus primeros desafíos fue consolidar una representación empresarial que permitiera canalizar las necesidades de los proveedores y las compañías de servicios ante Yacimientos Petrolíferos Fiscales Bolivianos (YPFB) y las diferentes reparticiones del Estado.",
+        "El 12 de enero de 1988 obtuvo el reconocimiento de su personalidad jurídica y la aprobación de su Estatuto Orgánico y Reglamento mediante la Resolución Suprema 203117. A partir de entonces, la institución quedó bajo la conducción de un directorio elegido en Asamblea General Ordinaria de Socios.",
+      ],
+      foto: { src: "/images/historia/segundo-directorio.jpg", alt: "Segundo directorio de la CBHE en sus primeros años" },
+    },
+    {
+      titulo: "Los primeros desafíos",
+      parrafos: [
+        "En sus primeros años, una parte importante del trabajo de la Cámara estuvo relacionada con las obligaciones económicas que YPFB mantenía con las empresas de servicios y suministros. A través de los años fue desarrollando diferentes servicios para facilitar la actividad de sus afiliadas, como, por ejemplo, las gestiones ante el sistema aduanero.",
+        "En 1992 creó el Comité de Salud, destinado a colaborar con las empresas asociadas en asuntos vinculados con la seguridad social y normativa laboral y sanitaria, entre otros.",
+        "La primera gran transformación institucional se produjo en 1994. La Cámara decidió incorporar a las compañías que trabajaban en las diferentes fases de la industria petrolera y dejó de representar únicamente a proveedores de equipos, materiales y servicios.",
+        "Una Asamblea General Ordinaria reformó el Estatuto Orgánico y organizó a las empresas en tres grupos: compañías de operación petrolera, compañías de servicios y provisión de bienes, y compañías de comercialización y transporte de derivados.",
+        "Este proceso coincidió con la apertura del sector a nuevos operadores, el proceso de capitalización, el aumento de las inversiones y el desarrollo de proyectos orientados a convertir a Bolivia en un importante proveedor regional de gas natural.",
+        "La CBHE identifica entre sus logros históricos su participación en la apertura de mercados y las gestiones relacionadas con la construcción del gasoducto Bolivia-Brasil. La puesta en marcha de esta infraestructura abrió un nuevo ciclo para la industria y fortaleció el papel del gas dentro de la economía nacional.",
+      ],
+    },
+    {
+      titulo: "Una nueva identidad nacional",
+      parrafos: [
+        "Durante la gestión 1997-1998, la Cámara Nacional de Hidrocarburos adoptó el nombre de Cámara Boliviana de Hidrocarburos (CBH). El cambio reflejaba su expansión institucional y el hecho de que ya reunía a compañías de diferentes etapas de la industria. Para entonces, el sector experimentaba un crecimiento de las inversiones, la exploración y las reservas, además de la consolidación del mercado brasileño.",
+        "En sus primeros años, la organización funcionó en oficinas alquiladas. Para acompañar su crecimiento, adquirió un terreno en la radial 17 ½, cerca del sexto anillo de Santa Cruz de la Sierra, donde fue inaugurada su actual sede en la gestión 2000-2001.",
+      ],
+      foto: { src: "/images/historia/primera-sede.jpg", alt: "Primera sede de la CBHE" },
+    },
+    {
+      titulo: "2001: una nueva estructura",
+      parrafos: [
+        "El ingreso de nuevos actores, el crecimiento de las inversiones y el desarrollo de las reservas hicieron necesaria otra modificación del Estatuto Orgánico. Las afiliadas fueron reorganizadas en cuatro grupos: exploración y explotación de hidrocarburos; industria, transporte y distribución de hidrocarburos y energía; servicios y suministros especializados; y servicios auxiliares.",
+        "La expansión también se reflejó en el número de afiliados. De las 15 empresas fundadoras, la organización pasó a reunir a 101 compañías en 2006.",
+        "En la actualidad, la Cámara organiza a sus afiliados en cinco grupos. La categoría de servicios especializados fue dividida entre actividades de superficie y de pozo.",
+        "La producción de información especializada se convirtió en otra de las funciones de la Cámara. Desde sus primeras etapas desarrolló publicaciones y servicios destinados a mantener informadas a las empresas y facilitar la comprensión de una industria altamente técnica y regulada, como la revista Petróleo & Gas, además de publicaciones especializadas como el Manual Básico de los Hidrocarburos o el libro Introducción a la Industria de los Hidrocarburos.",
+      ],
+    },
+    {
+      titulo: "Ética, tecnología y calidad",
+      parrafos: [
+        "La modernización institucional también se tradujo en nuevas normas y herramientas internas.",
+        "Durante la gestión 2003-2004 se elaboró y aprobó un Código de Ética y se estableció un reglamento electoral. En julio de 2003, la institución comenzó a implementar el Sistema de Gestión de Calidad ISO 9001:2000. La certificación internacional fue obtenida en 2004 como parte de una estrategia para ordenar sus procesos, elevar la eficiencia y mejorar los servicios ofrecidos.",
+        "En la gestión 2003-2004 se desarrolló Merconet, una plataforma de comercio electrónico dirigida a las empresas de la industria.",
+      ],
+    },
+    {
+      titulo: "Relacionamiento internacional",
+      parrafos: [
+        "La organización también buscó vincular a la industria boliviana con espacios técnicos y empresariales internacionales. Los diferentes congresos internacionales que organizó marcaron hitos en la industria hidrocarburífera del país.",
+        "Además, concretó su incorporación a la International Gas Union durante la gestión 2003-2004, el relacionamiento con el Congreso Mundial del Petróleo, su ingreso a la American Welding Society en 2012 y los convenios y actividades con organizaciones como la National Fire Protection Association y el National Safety Council.",
+        "Esta vinculación permitió incorporar programas de formación, certificaciones y debates sobre las tendencias de la industria mundial.",
+      ],
+    },
+    {
+      titulo: "2006: la nacionalización transforma el sector",
+      parrafos: [
+        "La Ley de Hidrocarburos 3058, promulgada en 2005, y la nacionalización decretada el 1 de mayo de 2006 marcaron uno de los momentos más complejos de la historia de la Cámara.",
+        "El Decreto Supremo 28701 Héroes del Chaco cambió la relación entre el Estado, YPFB y las compañías privadas. Las empresas que permanecieron en Bolivia debieron adecuarse a nuevos contratos, suscritos en 2007, bajo un modelo con mayor participación estatal.",
+        "Esto marcó la decisión de formular un Plan Estratégico Institucional con un enfoque más propositivo y una relación más activa con el Gobierno y la sociedad, que se tradujo en el acrónimo ACTUAR.",
+        "Con este planteamiento, la institución amplió su trabajo más allá de la representación gremial y colocó mayor énfasis en el conocimiento, la formación, la prevención y el relacionamiento con la sociedad.",
+      ],
+    },
+    {
+      titulo: "Bolivia Gas & Energía",
+      parrafos: [
+        "En 2008 nació el Congreso Internacional Bolivia Gas & Energía, concebido como un espacio para analizar las perspectivas del sector. El encuentro permitió debatir sobre mercados regionales, inversiones, exploración, producción, normativa, tecnología, integración energética y tendencias internacionales.",
+        "En 2018, el Congreso alcanzó su décima edición. Desde 2012 fue acompañado por Expoenergía, ampliando el análisis y la exposición hacia otros componentes del sector energético.",
+      ],
+      foto: { src: "/images/historia/congresos.jpg", alt: "Congresos internacionales organizados por la CBHE" },
+    },
+    {
+      titulo: "La capacitación como eje permanente",
+      parrafos: [
+        "Durante la gestión 2008-2009 se consolidó una Plataforma de Productos y Servicios enfocada en la formación, capacitación y certificación de personas. A partir de ella se desarrollaron las áreas de cursos, programas, publicaciones y eventos.",
+        "En la gestión 2012-2013 se crearon el Centro de Capacitación y Entrenamiento Técnico (Cencet) y el Centro de Arbitraje Energético (CEAR). Además, se impulsaron el Sello Empresa Líder Certificada CBHE, un Centro de Investigación y Desarrollo y un Centro de Conciliación y Arbitraje.",
+      ],
+    },
+    {
+      titulo: "Los hidrocarburos dan paso a la energía",
+      parrafos: [
+        "La segunda gran transformación de su identidad ocurrió durante la gestión 2010-2011, cuando la Cámara incorporó formalmente al sector energético y adoptó su actual denominación: Cámara Boliviana de Hidrocarburos y Energía.",
+        "La modificación anticipó una agenda que posteriormente incluiría electricidad, eficiencia energética, energías renovables, seguridad energética, nuevas tecnologías y transición energética.",
+        "El cambio de nombre no significó abandonar los hidrocarburos, sino reconocer que el petróleo y el gas formaban parte de un sistema energético más amplio y que las empresas comenzaban a diversificar sus actividades.",
+      ],
+      foto: { src: "/images/historia/equipo-25-anos.jpg", alt: "Equipo de trabajo de la CBHE a 25 años de su fundación" },
+    },
+    {
+      titulo: "Seguridad, salud y responsabilidad social",
+      parrafos: [
+        "Los programas de seguridad y salud adquirieron mayor presencia dentro de la oferta institucional. La responsabilidad social también fue incorporada progresivamente a sus líneas de trabajo. Entre sus iniciativas figura la creación de la Fundación Solidaridad, que inicialmente buscaba contribuir a que Santa Cruz de la Sierra contara con infraestructura adecuada para un servicio eficiente de bomberos.",
+        "La pandemia de covid-19 encontró a la CBHE en una industria que ya mostraba señales de agotamiento del ciclo gasífero. La emergencia sanitaria afectó las operaciones, la movilidad, la actividad económica, los espacios presenciales de formación y las posibilidades de relacionamiento empresarial.",
+      ],
+    },
+    {
+      titulo: "Del auge exportador a la preocupación por el abastecimiento",
+      parrafos: [
+        "En 2014, Bolivia alcanzó una producción de alrededor de 60 millones de metros cúbicos diarios de gas natural. Este volumen fue posible gracias a las inversiones realizadas en los años anteriores y al desarrollo de campos como Margarita-Huacaya e Incahuasi. Según datos difundidos por la CBHE, este ciclo permitió generar ingresos superiores a los 6.000 millones de dólares.",
+        "Una década después, el escenario había cambiado sustancialmente. En 2025, la producción rondaba los 25 millones de metros cúbicos diarios como resultado de la declinación natural de los campos, la falta de nuevos descubrimientos de gran escala, la reducción de las inversiones exploratorias y la ausencia de proyectos capaces de reponer las reservas.",
+        "Esta realidad modificó también las prioridades de la Cámara. Durante el auge gasífero, una parte importante de la discusión sectorial estuvo vinculada con el crecimiento de las exportaciones y la apertura de nuevos mercados. Con la disminución de la producción, la seguridad energética y el abastecimiento interno pasaron a ocupar un lugar central.",
+        "De esta manera, la institución pasó de acompañar una industria que generaba importantes excedentes de exportación a alertar sobre el riesgo de que Bolivia tuviera que importar gas para cubrir sus propias necesidades.",
+        "Hoy la reactivación es la prioridad de la CBHE como representante de las empresas que trabajan en la cadena de hidrocarburos, con la premisa de que recuperar la producción permitiría aumentar los ingresos del país y la disponibilidad de divisas, atender el crecimiento de la demanda interna, sostener las exportaciones y elevar los volúmenes de hidrocarburos líquidos asociados al gas, contribuyendo a la seguridad energética nacional.",
+        "Bolivia tiene un potencial geológico importante, infraestructura instalada en las zonas productoras tradicionales y mercados crecientes, especialmente en Brasil. Sin embargo, estas ventajas no pueden aprovecharse sin capital de riesgo, tecnología y reglas claras que otorguen viabilidad económica a los proyectos.",
+        "Esto reafirma su rol como representante de las empresas e interlocutora técnica ante el Estado, en un proceso donde es esencial concretar una nueva Ley de Hidrocarburos que genere condiciones para atraer inversiones y lograr que el país recupere su competitividad frente a otros países de la región.",
+        "Hoy la agenda de la CBHE está marcada por la urgencia de recuperar la producción de hidrocarburos para garantizar el abastecimiento y el compromiso de contribuir al proceso de transición hacia una matriz energética más diversificada y sostenible.",
+      ],
+      foto: { src: "/images/historia/grandes-proyectos.jpg", alt: "Grandes proyectos del sector energético boliviano" },
+    },
+  ],
+};
 
 const actuar = [
   { letter: "A", icon: "groups", title: "Agrupar", desc: "Reunir activamente a las empresas de toda la cadena de valor del sector energético bajo una representación institucional sólida." },
@@ -69,15 +156,31 @@ const actuar = [
   <Section bg="surface">
     <SectionHeading
       title="Nuestra historia"
-      description="Cuatro décadas de evolución al servicio del sector energético boliviano. Desde una iniciativa de 15 empresas hasta la institución referente que es hoy."
+      description={historia.lead}
     />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-      {historia.map((item) => (
-        <article class="bg-surface-container-low rounded-lg p-6 md:p-8 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md transition-all duration-300">
-          <span class="text-primary font-headline font-extrabold text-3xl md:text-4xl">{item.year}</span>
-          <h3 class="font-headline font-bold text-on-surface text-lg md:text-xl mt-3 mb-3">{item.title}</h3>
-          <p class="text-on-surface-variant font-body text-sm md:text-base leading-relaxed">{item.desc}</p>
-        </article>
+    <div class="prose prose-lg max-w-3xl mx-auto
+      prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
+      prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-4
+      prose-p:text-on-surface-variant prose-p:leading-relaxed prose-p:mb-5
+      prose-strong:text-on-surface prose-strong:font-semibold
+      prose-img:rounded-lg prose-img:my-0
+    ">
+      {historia.intro.map((parrafo) => <p>{parrafo}</p>)}
+      {historia.secciones.map((seccion) => (
+        <Fragment>
+          <h3>{seccion.titulo}</h3>
+          {seccion.parrafos.map((parrafo) => <p>{parrafo}</p>)}
+          {seccion.foto && (
+            <figure class="my-8">
+              <img
+                src={resolveImageUrl(seccion.foto.src)}
+                alt={seccion.foto.alt}
+                class="w-full h-auto rounded-lg"
+                loading="lazy"
+              />
+            </figure>
+          )}
+        </Fragment>
       ))}
     </div>
   </Section>
