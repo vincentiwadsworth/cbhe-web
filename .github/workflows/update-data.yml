@@ -17,9 +17,9 @@ jobs:
     outputs:
       changed: ${{ steps.commit.outputs.changes_detected }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
@@ -31,7 +31,7 @@ jobs:
 
       - name: Commit updated data
         id: commit
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: update financial data"
           file_pattern: data/prices.json
