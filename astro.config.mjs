@@ -8,6 +8,9 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://vincentiwadsworth.github.io",
   base: "/cbhe-web/",
+  // Astro 7 defaults to compressHTML: 'jsx', which strips whitespace between
+  // inline elements (icon+text buttons breaks). Keep the v6 HTML-aware behavior.
+  compressHTML: true,
   integrations: [
     sitemap({
       filter: (page) =>
