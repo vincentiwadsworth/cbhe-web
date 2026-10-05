@@ -110,7 +110,7 @@ const gruposHome = [
         Integramos energías con liderazgo e innovación desde 1986.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-        <a href="quienes-somos" class="bg-inverse-on-surface text-inverse-surface rounded-md px-6 sm:px-8 py-3.5 sm:py-4 font-semibold hover:bg-surface-bright hover:shadow-md transition-all min-h-[44px] spring-press">
+        <a href="quienes-somos" class="bg-inverse-on-surface text-inverse-surface rounded-md px-6 sm:px-8 py-3.5 sm:py-4 font-semibold hover:bg-inverse-on-surface/90 hover:shadow-md transition-all min-h-[44px] spring-press">
           Conózcanos
         </a>
         <a href="novedades" class="border-2 border-white/50 bg-white/5 text-inverse-on-surface rounded-md px-6 sm:px-8 py-3.5 sm:py-4 font-semibold hover:bg-inverse-on-surface/10 transition-all min-h-[44px] spring-press">
@@ -384,7 +384,7 @@ const gruposHome = [
   </Section>
 
   <!-- Alianzas Estratégicas — Infinite Marquee Ribbon -->
-  <section class="bg-white py-12 sm:py-16 md:py-24 reveal">
+  <section class="bg-surface-container-low py-12 sm:py-16 md:py-24 reveal">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
       <style>
       /*
@@ -433,7 +433,7 @@ const gruposHome = [
         flex-shrink: 0;
         padding: 0.625rem 1rem;
         border-radius: 0.75rem;
-        background: rgba(255, 255, 255, 0.45);
+        background: var(--color-surface);
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         transition: filter 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
@@ -459,8 +459,8 @@ const gruposHome = [
       .alianzas-logo:nth-child(16) { animation-delay: 3.00s; }
 
       .alianzas-logo:hover {
-        background: rgba(255, 255, 255, 0.8);
-        box-shadow: 0 4px 20px rgba(1, 64, 108, 0.12);
+        background: var(--color-surface-bright);
+        box-shadow: var(--shadow-md);
       }
       .alianzas-logo img {
         height: 2rem;
@@ -470,8 +470,14 @@ const gruposHome = [
         filter: grayscale(1);
         transition: filter 0.3s ease;
       }
+      :global(.dark) .alianzas-logo img {
+        filter: grayscale(1) brightness(2) opacity(0.85);
+      }
       .alianzas-logo:hover img {
         filter: grayscale(0);
+      }
+      :global(.dark) .alianzas-logo:hover img {
+        filter: grayscale(0) brightness(2);
       }
       @media (min-width: 768px) {
         .alianzas-logo { padding: 0.75rem 1.25rem; }

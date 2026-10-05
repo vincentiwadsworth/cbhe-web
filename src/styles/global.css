@@ -214,6 +214,14 @@
 }
 
 /*
+ * Institutional logo (dark wordmark on transparent) over dark surfaces —
+ * invert to a white silhouette so it stays legible in dark mode.
+ */
+.dark .logo-claro {
+  filter: brightness(0) invert(1);
+}
+
+/*
  * Theme transition helper — only applied AFTER initial load to prevent
  * color flash on page navigation. The Layout.astro inline script adds
  * this class after a 100ms delay.
