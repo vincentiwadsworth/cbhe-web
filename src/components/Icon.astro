@@ -4,15 +4,17 @@ import { Icon as AstroIcon } from "astro-icon/components";
 export interface Props {
   name: string;
   class?: string;
+  id?: string;
   /** Set to false only if the icon conveys semantic meaning (rare) */
   decorative?: boolean;
 }
 
-const { name, class: className, decorative = true } = Astro.props;
+const { name, class: className, id, decorative = true } = Astro.props;
 ---
 
 <AstroIcon
   name={name}
   class={className}
+  id={id}
   aria-hidden={decorative ? "true" : undefined}
 />
