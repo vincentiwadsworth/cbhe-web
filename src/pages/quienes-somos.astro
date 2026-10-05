@@ -1,7 +1,7 @@
 ---
-import { Image } from "astro:assets";
 import Icon from "../components/Icon.astro";
 import CtaBanner from "../components/CtaBanner.astro";
+import HistoriaCronologia from "../components/HistoriaCronologia.astro";
 import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import SubpageHero from "../components/SubpageHero.astro";
@@ -23,6 +23,7 @@ const historia = {
   ],
   secciones: [
     {
+      id: "fundacion-1986",
       titulo: "1986: la unión de 15 empresas",
       parrafos: [
         "La Cámara fue creada como una institución de derecho privado, sin fines de lucro, con patrimonio propio y autonomía de gestión económica y financiera. Sus objetivos iniciales eran reunir a las compañías vinculadas con los hidrocarburos, representarlas colectivamente ante organismos públicos y privados y promover el desarrollo de la industria y de sus empresas asociadas.",
@@ -32,6 +33,7 @@ const historia = {
       foto: { src: segundoDirectorio, alt: "Segundo directorio de la CBHE en sus primeros años" },
     },
     {
+      id: "primeros-desafios",
       titulo: "Los primeros desafíos",
       parrafos: [
         "En sus primeros años, una parte importante del trabajo de la Cámara estuvo relacionada con las obligaciones económicas que YPFB mantenía con las empresas de servicios y suministros. A través de los años fue desarrollando diferentes servicios para facilitar la actividad de sus afiliadas, como, por ejemplo, las gestiones ante el sistema aduanero.",
@@ -43,6 +45,7 @@ const historia = {
       ],
     },
     {
+      id: "nueva-identidad-nacional",
       titulo: "Una nueva identidad nacional",
       parrafos: [
         "Durante la gestión 1997-1998, la Cámara Nacional de Hidrocarburos adoptó el nombre de Cámara Boliviana de Hidrocarburos (CBH). El cambio reflejaba su expansión institucional y el hecho de que ya reunía a compañías de diferentes etapas de la industria. Para entonces, el sector experimentaba un crecimiento de las inversiones, la exploración y las reservas, además de la consolidación del mercado brasileño.",
@@ -51,6 +54,7 @@ const historia = {
       foto: { src: primeraSede, alt: "Primera sede de la CBHE" },
     },
     {
+      id: "estructura-2001",
       titulo: "2001: una nueva estructura",
       parrafos: [
         "El ingreso de nuevos actores, el crecimiento de las inversiones y el desarrollo de las reservas hicieron necesaria otra modificación del Estatuto Orgánico. Las afiliadas fueron reorganizadas en cuatro grupos: exploración y explotación de hidrocarburos; industria, transporte y distribución de hidrocarburos y energía; servicios y suministros especializados; y servicios auxiliares.",
@@ -60,6 +64,7 @@ const historia = {
       ],
     },
     {
+      id: "etica-tecnologia-calidad",
       titulo: "Ética, tecnología y calidad",
       parrafos: [
         "La modernización institucional también se tradujo en nuevas normas y herramientas internas.",
@@ -68,6 +73,7 @@ const historia = {
       ],
     },
     {
+      id: "relacionamiento-internacional",
       titulo: "Relacionamiento internacional",
       parrafos: [
         "La organización también buscó vincular a la industria boliviana con espacios técnicos y empresariales internacionales. Los diferentes congresos internacionales que organizó marcaron hitos en la industria hidrocarburífera del país.",
@@ -76,11 +82,12 @@ const historia = {
       ],
     },
     {
+      id: "nacionalizacion-2006",
       titulo: "2006: la nacionalización transforma el sector",
       parrafos: [
         "La Ley de Hidrocarburos 3058, promulgada en 2005, y la nacionalización decretada el 1 de mayo de 2006 marcaron uno de los momentos más complejos de la historia de la Cámara.",
         "El Decreto Supremo 28701 Héroes del Chaco cambió la relación entre el Estado, YPFB y las compañías privadas. Las empresas que permanecieron en Bolivia debieron adecuarse a nuevos contratos, suscritos en 2007, bajo un modelo con mayor participación estatal.",
-        "Esto marcó la decisión de formular un Plan Estratégico Institucional con un enfoque más propositivo y una relación más activa con el Gobierno y la sociedad, que se tradujo en el acrónimo ACTUAR.",
+        "Esto marcó la decisión de formular un Plan Estratégico Institucional con un enfoque más propositivo y una relación más activa con el Gobierno y la sociedad, que se tradujo en el acrónimo ACTUAR:",
         {
           lista: [
             "A: Agrupar activamente a sus asociados.",
@@ -95,6 +102,7 @@ const historia = {
       ],
     },
     {
+      id: "bolivia-gas-energia",
       titulo: "Bolivia Gas & Energía",
       parrafos: [
         "En 2008 nació el Congreso Internacional Bolivia Gas & Energía, concebido como un espacio para analizar las perspectivas del sector. El encuentro permitió debatir sobre mercados regionales, inversiones, exploración, producción, normativa, tecnología, integración energética y tendencias internacionales.",
@@ -103,6 +111,7 @@ const historia = {
       foto: { src: congresos, alt: "Congresos internacionales organizados por la CBHE" },
     },
     {
+      id: "capacitacion-eje-permanente",
       titulo: "La capacitación como eje permanente",
       parrafos: [
         "Durante la gestión 2008-2009 se consolidó una Plataforma de Productos y Servicios enfocada en la formación, capacitación y certificación de personas. A partir de ella se desarrollaron las áreas de cursos, programas, publicaciones y eventos.",
@@ -110,6 +119,7 @@ const historia = {
       ],
     },
     {
+      id: "hidrocarburos-a-energia",
       titulo: "Los hidrocarburos dan paso a la energía",
       parrafos: [
         "La segunda gran transformación de su identidad ocurrió durante la gestión 2010-2011, cuando la Cámara incorporó formalmente al sector energético y adoptó su actual denominación: Cámara Boliviana de Hidrocarburos y Energía.",
@@ -119,6 +129,7 @@ const historia = {
       foto: { src: equipo25Anos, alt: "Equipo de trabajo de la CBHE a 25 años de su fundación" },
     },
     {
+      id: "seguridad-salud-responsabilidad-social",
       titulo: "Seguridad, salud y responsabilidad social",
       parrafos: [
         "Los programas de seguridad y salud adquirieron mayor presencia dentro de la oferta institucional. La responsabilidad social también fue incorporada progresivamente a sus líneas de trabajo. Entre sus iniciativas figura la creación de la Fundación Solidaridad, que inicialmente buscaba contribuir a que Santa Cruz de la Sierra contara con infraestructura adecuada para un servicio eficiente de bomberos.",
@@ -126,6 +137,7 @@ const historia = {
       ],
     },
     {
+      id: "auge-y-abastecimiento",
       titulo: "Del auge exportador a la preocupación por el abastecimiento",
       parrafos: [
         "En 2014, Bolivia alcanzó una producción de alrededor de 60 millones de metros cúbicos diarios de gas natural. Este volumen fue posible gracias a las inversiones realizadas en los años anteriores y al desarrollo de campos como Margarita-Huacaya e Incahuasi. Según datos difundidos por la CBHE, este ciclo permitió generar ingresos superiores a los 6.000 millones de dólares.",
@@ -154,50 +166,16 @@ const historia = {
   <SubpageHero
     label="Institucional"
     title="Representamos la fuerza impulsora del sector energético boliviano"
-    subtitle="Desde 1986, la Cámara Boliviana de Hidrocarburos y Energía integra a las empresas que impulsan el desarrollo energético del país. Casi un centenar de afiliadas trabajan para garantizar un futuro sostenible para Bolivia."
+    subtitle="Desde 1986, la Cámara Boliviana de Hidrocarburos y Energía integra a las empresas que impulsan el desarrollo energético del país."
     titleMaxW="max-w-3xl"
   />
 
   <!-- Historia -->
-  <Section bg="surface" maxWidth="max-w-prose">
-    <SectionHeading
-      title="Nuestra historia"
-      description={historia.lead}
-    />
-    <div class="prose prose-lg
-      prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
-      prose-h3:text-2xl prose-h3:mt-14 prose-h3:mb-5
-      prose-p:text-on-surface-variant prose-p:leading-relaxed prose-p:mb-5
-      prose-strong:text-on-surface prose-strong:font-semibold
-      prose-ul:text-on-surface-variant prose-li:marker:text-primary prose-li:my-1
-      prose-img:rounded-lg prose-img:my-0
-    ">
-      {historia.intro.map((parrafo) => <p>{parrafo}</p>)}
-      {historia.secciones.map((seccion) => (
-        <Fragment>
-          <h3>{seccion.titulo}</h3>
-          {seccion.parrafos.map((bloque) =>
-            typeof bloque === "string"
-              ? <p>{bloque}</p>
-              : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
-          )}
-          {seccion.foto && (
-            <figure class="my-8">
-              <Image
-                src={seccion.foto.src}
-                alt={seccion.foto.alt}
-                format="webp"
-                layout="constrained"
-                sizes="(min-width: 768px) 608px, 100vw"
-                class="w-full h-auto rounded-lg"
-                loading="lazy"
-              />
-            </figure>
-          )}
-        </Fragment>
-      ))}
-    </div>
-  </Section>
+  <HistoriaCronologia
+    lead={historia.lead}
+    intro={historia.intro}
+    secciones={historia.secciones}
+  />
 
   <!-- Misión y Visión -->
   <Section bg="surface-container-low">
