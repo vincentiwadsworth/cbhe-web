@@ -4,13 +4,13 @@
 
 | Capa | Herramienta | Nota |
 |---|---|---|
-| SSG | Astro 6.x | Static output, zero JS |
+| SSG | Astro 7.x | Static output, zero JS; `compressHTML: true` (ver Gotchas) |
 | CSS | Tailwind v4 | `@tailwindcss/vite` plugin, NO `@astrojs/tailwind` |
 | Content | Zod + Content Collections | `src/content.config.ts`, `glob()` loader, `z` from `astro/zod` |
 | CMS | Sveltia CMS | `public/admin/`, backend `github`, `skip_ci: false` (Save publica por defecto; `draft` es el borrador real) |
 | Deploy | GitHub Pages | Workflow-based (`deploy.yml`), repo público |
 | Forms | Web3Forms | `WEB3FORMS_KEY` env var |
-| Icons | astro-icon | `material-symbols` (33 selected), hyphens not underscores |
+| Icons | astro-icon | `material-symbols` (59 selected), hyphens not underscores |
 | Fonts | Inter self-hosted | `@fontsource/inter/latin-*.css`, Latin subset only |
 | Cert DB | Supabase Postgres | Tablas `capacitacion` y `sello`, RLS con `anon SELECT` + `service_role` CRUD |
 | Cert storage | Supabase Storage | Bucket `certificados-qr` (público), filename `{codigo}.png` |
@@ -23,7 +23,7 @@
 - `<base href>` NO funciona con paths root-relative (`/algo`). Un path con `/` inicial REEMPLAZA el path del base URL, no lo extiende.
 - **Solución**: todos los links internos SIN `/` inicial (`href="quienes-somos"`) + `<base href={URL_ABSOLUTA_CON_TRAILING_SLASH}>` en Layout.astro.
 
-### Astro 6 Content Collections
+### Astro Content Collections
 - Config en `src/content.config.ts` (no `src/content/config.ts`).
 - `import { z } from "astro/zod"` — NO usar `astro:content` para Zod.
 - Loader obligatorio: `import { glob } from "astro/loaders"`.
