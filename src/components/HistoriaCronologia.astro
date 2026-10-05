@@ -5,7 +5,6 @@ import Section from "./Section.astro";
 import SectionHeading from "./SectionHeading.astro";
 
 export interface Props {
-  lead: string;
   intro: string[];
   secciones: Array<{
     id: string;
@@ -15,7 +14,7 @@ export interface Props {
   }>;
 }
 
-const { lead, intro, secciones } = Astro.props;
+const { intro, secciones } = Astro.props;
 
 const proseClasses = `prose prose-lg
   prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
@@ -50,7 +49,6 @@ const proseClasses = `prose prose-lg
     </nav>
 
     <article class:list={["min-w-0 max-w-[41rem]", proseClasses]}>
-      <p class="text-lg md:text-xl text-on-surface leading-relaxed">{lead}</p>
       {intro.map((parrafo) => <p>{parrafo}</p>)}
       {secciones.map((seccion) => (
         <details open class="historia-seccion">
