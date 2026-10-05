@@ -1,11 +1,16 @@
 ---
+import { Image } from "astro:assets";
 import Icon from "../components/Icon.astro";
 import CtaBanner from "../components/CtaBanner.astro";
 import Section from "../components/Section.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import SubpageHero from "../components/SubpageHero.astro";
 import PageLayout from "../layouts/PageLayout.astro";
-import { resolveImageUrl } from "../utils/images";
+import segundoDirectorio from "../assets/historia/segundo-directorio.jpg";
+import primeraSede from "../assets/historia/primera-sede.jpg";
+import congresos from "../assets/historia/congresos.jpg";
+import equipo25Anos from "../assets/historia/equipo-25-anos.jpg";
+import grandesProyectos from "../assets/historia/grandes-proyectos.jpg";
 import directorioData from "../../data/directorio.json";
 
 const historia = {
@@ -24,7 +29,7 @@ const historia = {
         "Uno de sus primeros desafíos fue consolidar una representación empresarial que permitiera canalizar las necesidades de los proveedores y las compañías de servicios ante Yacimientos Petrolíferos Fiscales Bolivianos (YPFB) y las diferentes reparticiones del Estado.",
         "El 12 de enero de 1988 obtuvo el reconocimiento de su personalidad jurídica y la aprobación de su Estatuto Orgánico y Reglamento mediante la Resolución Suprema 203117. A partir de entonces, la institución quedó bajo la conducción de un directorio elegido en Asamblea General Ordinaria de Socios.",
       ],
-      foto: { src: "/images/historia/segundo-directorio.jpg", alt: "Segundo directorio de la CBHE en sus primeros años" },
+      foto: { src: segundoDirectorio, alt: "Segundo directorio de la CBHE en sus primeros años" },
     },
     {
       titulo: "Los primeros desafíos",
@@ -43,7 +48,7 @@ const historia = {
         "Durante la gestión 1997-1998, la Cámara Nacional de Hidrocarburos adoptó el nombre de Cámara Boliviana de Hidrocarburos (CBH). El cambio reflejaba su expansión institucional y el hecho de que ya reunía a compañías de diferentes etapas de la industria. Para entonces, el sector experimentaba un crecimiento de las inversiones, la exploración y las reservas, además de la consolidación del mercado brasileño.",
         "En sus primeros años, la organización funcionó en oficinas alquiladas. Para acompañar su crecimiento, adquirió un terreno en la radial 17 ½, cerca del sexto anillo de Santa Cruz de la Sierra, donde fue inaugurada su actual sede en la gestión 2000-2001.",
       ],
-      foto: { src: "/images/historia/primera-sede.jpg", alt: "Primera sede de la CBHE" },
+      foto: { src: primeraSede, alt: "Primera sede de la CBHE" },
     },
     {
       titulo: "2001: una nueva estructura",
@@ -95,7 +100,7 @@ const historia = {
         "En 2008 nació el Congreso Internacional Bolivia Gas & Energía, concebido como un espacio para analizar las perspectivas del sector. El encuentro permitió debatir sobre mercados regionales, inversiones, exploración, producción, normativa, tecnología, integración energética y tendencias internacionales.",
         "En 2018, el Congreso alcanzó su décima edición. Desde 2012 fue acompañado por Expoenergía, ampliando el análisis y la exposición hacia otros componentes del sector energético.",
       ],
-      foto: { src: "/images/historia/congresos.jpg", alt: "Congresos internacionales organizados por la CBHE" },
+      foto: { src: congresos, alt: "Congresos internacionales organizados por la CBHE" },
     },
     {
       titulo: "La capacitación como eje permanente",
@@ -111,7 +116,7 @@ const historia = {
         "La modificación anticipó una agenda que posteriormente incluiría electricidad, eficiencia energética, energías renovables, seguridad energética, nuevas tecnologías y transición energética.",
         "El cambio de nombre no significó abandonar los hidrocarburos, sino reconocer que el petróleo y el gas formaban parte de un sistema energético más amplio y que las empresas comenzaban a diversificar sus actividades.",
       ],
-      foto: { src: "/images/historia/equipo-25-anos.jpg", alt: "Equipo de trabajo de la CBHE a 25 años de su fundación" },
+      foto: { src: equipo25Anos, alt: "Equipo de trabajo de la CBHE a 25 años de su fundación" },
     },
     {
       titulo: "Seguridad, salud y responsabilidad social",
@@ -132,7 +137,7 @@ const historia = {
         "Esto reafirma su rol como representante de las empresas e interlocutora técnica ante el Estado, en un proceso donde es esencial concretar una nueva Ley de Hidrocarburos que genere condiciones para atraer inversiones y lograr que el país recupere su competitividad frente a otros países de la región.",
         "Hoy la agenda de la CBHE está marcada por la urgencia de recuperar la producción de hidrocarburos para garantizar el abastecimiento y el compromiso de contribuir al proceso de transición hacia una matriz energética más diversificada y sostenible.",
       ],
-      foto: { src: "/images/historia/grandes-proyectos.jpg", alt: "Grandes proyectos del sector energético boliviano" },
+      foto: { src: grandesProyectos, alt: "Grandes proyectos del sector energético boliviano" },
     },
   ],
 };
@@ -154,14 +159,14 @@ const historia = {
   />
 
   <!-- Historia -->
-  <Section bg="surface">
+  <Section bg="surface" maxWidth="max-w-prose">
     <SectionHeading
       title="Nuestra historia"
       description={historia.lead}
     />
-    <div class="prose prose-lg max-w-3xl mx-auto
+    <div class="prose prose-lg
       prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
-      prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-4
+      prose-h3:text-2xl prose-h3:mt-14 prose-h3:mb-5
       prose-p:text-on-surface-variant prose-p:leading-relaxed prose-p:mb-5
       prose-strong:text-on-surface prose-strong:font-semibold
       prose-ul:text-on-surface-variant prose-li:marker:text-primary prose-li:my-1
@@ -178,9 +183,12 @@ const historia = {
           )}
           {seccion.foto && (
             <figure class="my-8">
-              <img
-                src={resolveImageUrl(seccion.foto.src)}
+              <Image
+                src={seccion.foto.src}
                 alt={seccion.foto.alt}
+                format="webp"
+                layout="constrained"
+                sizes="(min-width: 768px) 608px, 100vw"
                 class="w-full h-auto rounded-lg"
                 loading="lazy"
               />
