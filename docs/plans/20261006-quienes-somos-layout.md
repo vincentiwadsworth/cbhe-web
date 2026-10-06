@@ -62,8 +62,8 @@ Gate visual con `auditor-visual` (desktop y mobile).
 - [x] `npx astro build` (37 páginas, 0 errores) y `npx astro check` limpio.
 - [x] `revisor-diff`: 0 bloqueantes; 3 hallazgos menores corregidos.
 - [x] Capturas propias (1280 y 375): Misión/Visión, Historia con placas, Directorio, standfirst.
-- [ ] Comentar #25, #15 y #38.
-- [ ] Tema oscuro: NO verificado (el script de captura no emula `prefers-color-scheme`).
+- [x] Comentar #25, #15 y #38.
+- [x] Tema oscuro: verificado en las tres secciones (1280 y 375).
 
 ## Verificación (resultado)
 
@@ -71,7 +71,12 @@ Build verde, `astro check` 0 errores / 0 warnings.
 Revisor de diff: 0 bloqueantes.
 Corregidos del review: (1) `sm:grid-cols-12` por viewport dentro de tarjetas angostas desbordaba "Vicepresidente" → fila pasada a layout flexible; (2) `sizes` de las figuras subprovisionaba en tablet; (3) `auto-fit` con `minmax(320px,1fr)` podía desbordar a 320px → `minmax(min(320px,100%),1fr)`.
 Capturas (1280 y 375): Misión/Visión sin restos de card, hairline visible; Historia con la placa en la tercera columna y standfirst 21px visiblemente mayor al cuerpo; Directorio con la franja Cámara compacta y sin desbordes; sin scroll horizontal a 375.
+Tema oscuro: capturado con `--color-scheme dark` en `#mision-vision`, `#historia` y `#directorio` (1280 y 375): fondos oscuros, texto legible, hairline visible, sin defectos nuevos.
 Nota: para poder capturar localmente hubo que apuntar `site` a `http://localhost:4321` temporalmente (el `<base href>` a producción bloqueaba el CSS) y se restauró al terminar.
+
+## Herramienta (fuera del repo)
+
+Se extendió `~/.config/opencode/scripts/audit_captures.py` con flags de Playwright que no estaban expuestos (`--color-scheme`, `--format`, `--quality`, `--dpr`, `--full-page`, `--selector` con `--nth`/`--all`, `--scroll`, `--wait-for`, `--js-off`, `--device`, `--mask`, `--reduced-motion`, etc.), y se ajustaron las reglas globales de verificación visual para que el agente primario capture y lea con criterio (auditor opcional) y pueda usar capturas eficientes. Playwright actualizado a 1.63.
 
 ## Lo que NO se hace
 
