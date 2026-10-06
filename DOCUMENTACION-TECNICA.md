@@ -242,8 +242,6 @@ El helper `urlOpcional` (definido en `src/content.config.ts`) normaliza las URLs
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Clave pública de Supabase (formato `sb_publishable_xxx`) |
 | `SUPABASE_SECRET_KEY` | Clave `service_role` — solo para scripts server-side y GitHub Actions (nunca se expone al cliente) |
 | `PUBLIC_VERIFICATION_URL` | URL base codificada en los QR (default: `https://cbhe.org.bo`) |
-| `GROQ_KEY` | API key de Groq (chatbot, referencia legacy) |
-| `DEEPSEEK_API_KEY` | API key de DeepSeek (chatbot) |
 
 ### Secrets de GitHub Actions
 
@@ -257,13 +255,15 @@ El helper `urlOpcional` (definido en `src/content.config.ts`) normaliza las URLs
 
 ### Secrets de Supabase (Edge Function)
 
-La Edge Function `generate-qr` accede a estos vía `Deno.env.get()` — son secrets del proyecto Supabase, se configuran una vez con `supabase secrets set` y no requieren configuración adicional:
+Las Edge Functions `generate-qr` y `asistente` acceden a estos vía `Deno.env.get()` — son secrets del proyecto Supabase, se configuran una vez con `supabase secrets set` y no requieren configuración adicional:
 
 | Variable | Uso |
 |---|---|
 | `SUPABASE_URL` | URL del proyecto (para inicializar el cliente `supabase-js`) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Clave `service_role` (para UPDATE en las tablas) |
 | `PUBLIC_VERIFICATION_URL` | URL base para codificar en el QR |
+| `DEEPSEEK_API_KEY` | API key de DeepSeek usada por la Edge Function `asistente` (proxy server-side del chatbot; nunca se expone al cliente) |
+| `DEEPSEEK_MODELO` | (Opcional) modelo de DeepSeek; default `deepseek-v4-flash` |
 
 ---
 

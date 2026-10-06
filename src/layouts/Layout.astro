@@ -36,7 +36,11 @@ const baseHref = import.meta.env.BASE_URL === '/'
   ? import.meta.env.SITE
   : `${import.meta.env.SITE}${import.meta.env.BASE_URL}/`;
 
-const deepseekKey = import.meta.env.DEEPSEEK_API_KEY ?? "";
+// El asistente llama a una Edge Function de Supabase que guarda la clave de
+// DeepSeek server-side. Ninguna clave de IA se expone al navegador.
+const chatEndpoint = import.meta.env.VITE_SUPABASE_URL
+  ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/asistente`
+  : "";
 
 // Build company knowledge base for the chatbot
 const grupoLabels: Record<string, string> = {
@@ -269,29 +273,13 @@ if (currentPath) {
     <CursorGlow />
     <slot />
 
-    <!-- AI Chatbot (multi-ai-sdk) -->
-    <script is:inline define:vars={{ deepseekKey, chatbotContext }}>
-      if (deepseekKey) {
-        import("https://esm.sh/multi-ai-sdk").then(function (mod) {
-          mod.embedChat({
-            provider: "deepseek",
-            apiKey: deepseekKey,
+    <!-- Asistente virtual CBHE — proxy server-side: la clave de DeepSeek vive en
+         la Edge Function de Supabase (secret) y nunca llega al navegador. -->
+    <script is:inline define:vars={{ chatbotContext, chatEndpoint }}>
+      (function () {
+        if (!chatEndpoint || !chatbotContext) return;
 
-            assistantName: "CBHE",
-            assistantAvatar: "⚡",
-            title: "CBHE",
-            subtitle: "Asistente virtual",
-            welcomeMessage: "¡Hola! Pregúnteme sobre las empresas afiliadas o las capacitaciones de la CBHE.",
-            suggestedQuestions: [
-              "¿Qué empresas son afiliadas?",
-              "¿Qué capacitaciones ofrecen?",
-            ],
-
-            model: "deepseek-v4-flash",
-            maxTokens: 1024,
-            temperature: 0.7,
-
-            systemPrompt: [
+        const systemPrompt = [
               "Es el asistente virtual de la CBHE (Cámara Boliviana de Hidrocarburos y Energía). Responda en español, de forma profesional pero cercana.",
               "",
               "REGLAS:",
@@ -322,53 +310,217 @@ if (currentPath) {
               "",
               "Fuente de verdad:\n",
               chatbotContext,
-            ].join("\n"),
+        ].join("\n");
 
-            position: "bottom-right",
-            theme: {
-              primaryColor: "#01406c",
-              fontFamily: "Inter, system-ui, sans-serif",
-              fontSize: 14,
-              borderRadius: 20,
-              width: 380,
-              messagesHeight: 360,
-              darkMode: false,
-            },
-            customCss: `
-              .sgq-msg {
-                white-space: pre-wrap;
-                line-height: 1.55;
-                padding: 11px 14px;
+        const ESTILOS = `
+          #cbhe-chat * { box-sizing: border-box; }
+          #cbhe-chat-btn { position: fixed; bottom: 24px; right: 24px; z-index: 99998; width: 58px; height: 58px; border-radius: 50%; background: #01406c; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.28); display: flex; align-items: center; justify-content: center; transition: transform .2s ease; }
+          #cbhe-chat-btn:hover { transform: scale(1.09); }
+          #cbhe-chat-btn svg { width: 26px; height: 26px; fill: #fff; }
+          #cbhe-chat-btn .icono-cerrar { display: none; font-size: 26px; color: #fff; line-height: 1; font-family: system-ui, sans-serif; }
+          #cbhe-chat.abierto #cbhe-chat-btn .icono-chat { display: none; }
+          #cbhe-chat.abierto #cbhe-chat-btn .icono-cerrar { display: block; }
+          #cbhe-chat-panel { position: fixed; bottom: 94px; right: 24px; z-index: 99999; width: 380px; max-width: calc(100vw - 32px); background: #fff; border-radius: 20px; box-shadow: 0 8px 40px rgba(0,0,0,.18); display: flex; flex-direction: column; overflow: hidden; transform-origin: bottom right; transition: opacity .22s ease, transform .22s ease; }
+          #cbhe-chat-panel.oculto { opacity: 0; transform: scale(.9) translateY(12px); pointer-events: none; }
+          #cbhe-chat-cabecera { background: #01406c; color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+          #cbhe-chat-cabecera .avatar { font-size: 22px; line-height: 1; }
+          #cbhe-chat-cabecera .info { flex: 1; min-width: 0; }
+          #cbhe-chat-cabecera .nombre { font-weight: 700; font-size: 15px; font-family: Outfit, system-ui, sans-serif; }
+          #cbhe-chat-cabecera .sub { font-size: 12px; color: rgba(255,255,255,.72); margin-top: 1px; }
+          #cbhe-chat-cerrar { background: rgba(255,255,255,.18); border: none; color: #fff; cursor: pointer; border-radius: 6px; padding: 4px 8px; font-size: 14px; line-height: 1; }
+          #cbhe-chat-cerrar:hover { background: rgba(255,255,255,.32); }
+          #cbhe-chat-mensajes { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; max-height: 360px; min-height: 120px; font-family: "DM Sans", system-ui, sans-serif; }
+          .cbhe-fila { display: flex; align-items: flex-end; gap: 7px; }
+          .cbhe-fila.user { flex-direction: row-reverse; }
+          .cbhe-avatar { font-size: 18px; line-height: 1; margin-bottom: 2px; }
+          .cbhe-burbuja { max-width: 78%; padding: 9px 13px; border-radius: 12px; font-size: 14px; line-height: 1.55; word-break: break-word; }
+          .cbhe-burbuja.user { background: #01406c; color: #fff; border-bottom-right-radius: 3px; }
+          .cbhe-burbuja.assistant { background: #f1f5f9; color: #1e293b; border-bottom-left-radius: 3px; white-space: pre-wrap; }
+          .cbhe-burbuja.assistant strong { font-weight: 700; color: #01406c; }
+          .cbhe-burbuja.assistant a { color: #01406c; text-decoration: underline; word-break: break-all; }
+          .cbhe-escribiendo { display: flex; gap: 4px; align-items: center; padding: 10px 13px; background: #f1f5f9; border-radius: 12px; border-bottom-left-radius: 3px; width: fit-content; }
+          .cbhe-escribiendo span { width: 7px; height: 7px; border-radius: 50%; background: #94a3b8; animation: cbhe-bounce .9s infinite; }
+          .cbhe-escribiendo span:nth-child(2) { animation-delay: .18s; }
+          .cbhe-escribiendo span:nth-child(3) { animation-delay: .36s; }
+          @keyframes cbhe-bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+          #cbhe-chat-pie { padding: 10px 12px; border-top: 1px solid #e2e8f0; display: flex; gap: 8px; align-items: center; background: #fff; }
+          #cbhe-chat-texto { flex: 1; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 9px 12px; font-size: 14px; outline: none; color: #1e293b; font-family: "DM Sans", system-ui, sans-serif; }
+          #cbhe-chat-texto:focus { border-color: #01406c; }
+          #cbhe-chat-enviar { background: #01406c; color: #fff; border: none; border-radius: 10px; width: 38px; height: 38px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+          #cbhe-chat-enviar:hover { opacity: .88; }
+          #cbhe-chat-enviar:disabled { opacity: .4; cursor: not-allowed; }
+        `;
+        const estilo = document.createElement("style");
+        estilo.textContent = ESTILOS;
+        document.head.appendChild(estilo);
+
+        const raiz = document.createElement("div");
+        raiz.id = "cbhe-chat";
+        raiz.innerHTML = [
+          '<button id="cbhe-chat-btn" type="button" aria-label="Abrir asistente" aria-expanded="false">',
+          '<svg class="icono-chat" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>',
+          '<span class="icono-cerrar" aria-hidden="true">\u00D7</span>',
+          "</button>",
+          '<div id="cbhe-chat-panel" class="oculto" role="dialog" aria-label="Asistente virtual CBHE">',
+          '<div id="cbhe-chat-cabecera">',
+          '<div class="avatar" aria-hidden="true">\u26A1</div>',
+          '<div class="info"><div class="nombre">CBHE</div><div class="sub">Asistente virtual</div></div>',
+          '<button id="cbhe-chat-cerrar" type="button" aria-label="Cerrar asistente">\u00D7</button>',
+          "</div>",
+          '<div id="cbhe-chat-mensajes" role="log" aria-live="polite"></div>',
+          '<div id="cbhe-chat-pie">',
+          '<input id="cbhe-chat-texto" type="text" placeholder="Escriba su mensaje\u2026" autocomplete="off" aria-label="Mensaje" />',
+          '<button id="cbhe-chat-enviar" type="button" aria-label="Enviar mensaje">\u2191</button>',
+          "</div>",
+          "</div>",
+        ].join("");
+        document.body.appendChild(raiz);
+
+        const boton = document.getElementById("cbhe-chat-btn");
+        const panel = document.getElementById("cbhe-chat-panel");
+        const botonCerrar = document.getElementById("cbhe-chat-cerrar");
+        const lista = document.getElementById("cbhe-chat-mensajes");
+        const entrada = document.getElementById("cbhe-chat-texto");
+        const botonEnviar = document.getElementById("cbhe-chat-enviar");
+
+        const historial = [{ role: "system", content: systemPrompt }];
+        let ocupado = false;
+        let controlador = null;
+
+        function desplazar() {
+          lista.scrollTop = lista.scrollHeight;
+        }
+
+        function formatear(texto) {
+          return formatBold(formatUrls(escapeHtmlPreservingNewlines(normalizeAssistantText(texto))));
+        }
+
+        function agregarBurbuja(rol, texto) {
+          const fila = document.createElement("div");
+          fila.className = "cbhe-fila " + rol;
+          if (rol === "assistant") {
+            const avatar = document.createElement("div");
+            avatar.className = "cbhe-avatar";
+            avatar.textContent = "\u26A1";
+            fila.appendChild(avatar);
+          }
+          const burbuja = document.createElement("div");
+          burbuja.className = "cbhe-burbuja " + rol;
+          if (rol === "assistant") burbuja.innerHTML = formatear(texto);
+          else burbuja.textContent = texto;
+          fila.appendChild(burbuja);
+          lista.appendChild(fila);
+          desplazar();
+          return burbuja;
+        }
+
+        function burbujaEscribiendo() {
+          const fila = document.createElement("div");
+          fila.className = "cbhe-fila assistant";
+          const avatar = document.createElement("div");
+          avatar.className = "cbhe-avatar";
+          avatar.textContent = "\u26A1";
+          const puntos = document.createElement("div");
+          puntos.className = "cbhe-escribiendo";
+          puntos.innerHTML = "<span></span><span></span><span></span>";
+          fila.appendChild(avatar);
+          fila.appendChild(puntos);
+          lista.appendChild(fila);
+          desplazar();
+          return fila;
+        }
+
+        function alternar() {
+          const abierto = raiz.classList.toggle("abierto");
+          panel.classList.toggle("oculto", !abierto);
+          boton.setAttribute("aria-expanded", String(abierto));
+          if (abierto) entrada.focus();
+        }
+
+        boton.addEventListener("click", alternar);
+        botonCerrar.addEventListener("click", alternar);
+
+        async function enviarMensaje() {
+          const texto = entrada.value.trim();
+          if (!texto || ocupado) return;
+          entrada.value = "";
+          ocupado = true;
+          botonEnviar.disabled = true;
+          agregarBurbuja("user", texto);
+          historial.push({ role: "user", content: texto });
+          const escribiendo = burbujaEscribiendo();
+          let acumulado = "";
+          let burbujaIA = null;
+          try {
+            controlador = new AbortController();
+            const respuesta = await fetch(chatEndpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ messages: historial, maxTokens: 1024, temperature: 0.7 }),
+              signal: controlador.signal,
+            });
+            if (!respuesta.ok || !respuesta.body) {
+              throw new Error("El asistente no está disponible en este momento.");
+            }
+            escribiendo.remove();
+            burbujaIA = agregarBurbuja("assistant", "");
+            const lector = respuesta.body.getReader();
+            const decodificador = new TextDecoder("utf-8");
+            let buffer = "";
+            for (;;) {
+              const { done, value } = await lector.read();
+              if (done) break;
+              buffer += decodificador.decode(value, { stream: true });
+              const lineas = buffer.split("\n");
+              buffer = lineas.pop() || "";
+              for (const linea of lineas) {
+                const limpia = linea.trim();
+                if (!limpia || limpia.indexOf("data:") !== 0) continue;
+                const dato = limpia.slice(5).trim();
+                if (!dato || dato === "[DONE]") continue;
+                try {
+                  const trozo = JSON.parse(dato).choices?.[0]?.delta?.content || "";
+                  if (trozo) {
+                    acumulado += trozo;
+                    burbujaIA.innerHTML = formatear(acumulado);
+                    desplazar();
+                  }
+                } catch {
+                  // chunk incompleto: se completa en la próxima vuelta
+                }
               }
-              .sgq-msg.assistant {
-                max-width: 85%;
-              }
-              a.sgq-link {
-                color: #01406c;
-                text-decoration: underline;
-                word-break: break-all;
-              }
-              .sgq-msg strong {
-                font-weight: 700;
-                color: #01406c;
-              }
-            `,
-            controls: {
-              modelSwitcher: false,
-              temperatureControl: false,
-              maxTokensControl: false,
-              showTokenUsage: false,
-              allowClear: true,
-              allowCopy: true,
-              allowExport: false,
-            },
-          });
+            }
+            if (acumulado) {
+              historial.push({ role: "assistant", content: acumulado });
+            } else if (burbujaIA) {
+              burbujaIA.innerHTML = formatear("No obtuve respuesta. Intente de nuevo.");
+            }
+          } catch (err) {
+            if (escribiendo.isConnected) escribiendo.remove();
+            const mensaje = err && err.message ? err.message : "Ocurrió un error.";
+            if (burbujaIA) burbujaIA.innerHTML = formatear("\u26A0\uFE0F " + mensaje);
+            else agregarBurbuja("assistant", "\u26A0\uFE0F " + mensaje);
+          } finally {
+            controlador = null;
+            ocupado = false;
+            botonEnviar.disabled = false;
+            entrada.focus();
+          }
+        }
+
+        botonEnviar.addEventListener("click", enviarMensaje);
+        entrada.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            enviarMensaje();
+          }
         });
 
-        // Post-process chatbot output: strip residual markdown that leaks through
-        // (the widget uses textContent so it can't render formatting, but the LLM
-        // still emits * / ** / ` / - markers occasionally).
-        // We observe #sgq-messages and normalize any new assistant bubble.
+        agregarBurbuja("assistant", "¡Hola! Pregúnteme sobre las empresas afiliadas o las capacitaciones de la CBHE.");
+
+        // Normaliza el texto del asistente y lo convierte a HTML seguro.
+        // La salida del modelo se renderiza con innerHTML, así que primero se
+        // escapa y luego se aplican negritas, URLs y viñetas de forma controlada.
         function normalizeAssistantText(raw) {
           if (!raw) return raw;
           return raw
@@ -410,54 +562,6 @@ if (currentPath) {
           );
         }
 
-        function postProcessBubble(bubble) {
-          // Collect raw text from the SDK's live text node(s). We look at direct
-          // children only (no recursion) because the SDK writes a single text node
-          // as a direct child of the bubble, before .sgq-copy-btn.
-          let raw = "";
-          const existingSpan = bubble.querySelector(".sgq-msg-normalized");
-          for (const child of bubble.childNodes) {
-            if (child.nodeType === 3) raw += child.nodeValue;
-          }
-          if (!raw && !existingSpan) return;
-          if (existingSpan && raw === existingSpan.dataset.lastRaw) return;
-
-          if (existingSpan) {
-            // Update existing span in-place (no re-create) to avoid reflow cascade
-            existingSpan.dataset.lastRaw = raw;
-            existingSpan.innerHTML = formatBold(formatUrls(escapeHtmlPreservingNewlines(normalizeAssistantText(raw))));
-            // Remove stray raw text nodes added by SDK post-formatting
-            for (const child of bubble.childNodes) {
-              if (child.nodeType === 3) bubble.removeChild(child);
-            }
-            return;
-          }
-
-          // First-time processing: build the wrapper span
-          const copyBtn = bubble.querySelector(".sgq-copy-btn");
-          const normalized = normalizeAssistantText(raw);
-          // Order matters: escape → bold (uses * as anchor) → URLs (already-safe)
-          const html = formatBold(formatUrls(escapeHtmlPreservingNewlines(normalized)));
-
-          // Remove ALL existing children except copyBtn
-          const children = Array.from(bubble.childNodes);
-          for (const child of children) {
-            if (child !== copyBtn) bubble.removeChild(child);
-          }
-
-          // Build a wrapper span with the normalized HTML
-          const wrapper = document.createElement("span");
-          wrapper.className = "sgq-msg-normalized";
-          wrapper.innerHTML = html;
-
-          // Insert wrapper as first child (or before copyBtn if it exists)
-          if (copyBtn) {
-            bubble.insertBefore(wrapper, copyBtn);
-          } else {
-            bubble.appendChild(wrapper);
-          }
-        }
-
         function escapeHtmlPreservingNewlines(s) {
           return s
             .replace(/&/g, "&amp;")
@@ -468,57 +572,7 @@ if (currentPath) {
             .replace(/\n/g, "<br>");
         }
 
-        // Wait for #sgq-messages to appear, then observe
-        function attachObserver() {
-          const messagesEl = document.getElementById("sgq-messages");
-          if (!messagesEl) {
-            setTimeout(attachObserver, 100);
-            return;
-          }
-          const observer = new MutationObserver((mutations) => {
-            for (const m of mutations) {
-              if (m.type === "childList") {
-                m.addedNodes.forEach((node) => {
-                  if (node.nodeType === 1) {
-                    // Newly added assistant bubble (or row containing it)
-                    const bubbles = node.classList?.contains("sgq-msg")
-                      ? [node]
-                      : node.querySelectorAll?.(".sgq-msg") || [];
-                    bubbles.forEach((b) => {
-                      if (b.classList.contains("assistant")) {
-                        // Defer to allow streaming text nodes to be inserted
-                        setTimeout(() => postProcessBubble(b), 50);
-                      }
-                    });
-                  } else if (node.nodeType === 3) {
-                    // Streaming: SDK removes old text node and inserts a new one
-                    // (characterData does not fire; we catch it here via childList)
-                    const bubble = node.parentElement?.closest(".sgq-msg");
-                    if (bubble?.classList.contains("assistant")) {
-                      clearTimeout(bubble._normTimer);
-                      bubble._normTimer = setTimeout(() => postProcessBubble(bubble), 200);
-                    }
-                  }
-                });
-              } else if (m.type === "characterData") {
-                // Streaming: text node inside a bubble mutated
-                const bubble = m.target.parentElement?.closest(".sgq-msg");
-                if (bubble && bubble.classList.contains("assistant")) {
-                  // Debounce: wait for the stream chunk to finish before re-processing
-                  clearTimeout(bubble._normTimer);
-                  bubble._normTimer = setTimeout(() => postProcessBubble(bubble), 200);
-                }
-              }
-            }
-          });
-          observer.observe(messagesEl, {
-            childList: true,
-            subtree: true,
-            characterData: true,
-          });
-        }
-        attachObserver();
-      }
+      })();
     </script>
   </body>
 </html>
