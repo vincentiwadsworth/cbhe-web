@@ -8,14 +8,12 @@ export interface Props {
   capitulos: Array<{
     id: string;
     rangoAnios: string;
-    respiradero: {
-      fotos: Array<{ src: ImageMetadata; alt: string }>;
-      cita: string;
-    };
+    cita: string;
     secciones: Array<{
       id: string;
       titulo: string;
       parrafos: Array<string | { lista: string[] }>;
+      foto?: { src: ImageMetadata; alt: string };
     }>;
   }>;
 }
@@ -87,39 +85,44 @@ const [standfirst, ...restoIntro] = intro;
                 {cap.rangoAnios}
               </h2>
 
-              <div class:list={["historia-cap-prose max-w-[41rem] xl:max-w-[38rem]", proseClasses]}>
-                {cap.secciones.map((seccion) => (
-                  <details open class="historia-seccion">
-                    <summary>
-                      <h3 id={seccion.id} class="scroll-mt-24" data-historia-seccion>
-                        {seccion.titulo}
-                      </h3>
-                    </summary>
-                    {seccion.parrafos.map((bloque) =>
-                      typeof bloque === "string"
-                        ? <p>{bloque}</p>
-                        : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
+              {cap.secciones.map((seccion) => (
+                <details open class="historia-seccion">
+                  <summary>
+                    <h3
+                      id={seccion.id}
+                      class="scroll-mt-24 font-headline font-bold text-on-surface text-xl sm:text-2xl"
+                      data-historia-seccion
+                    >
+                      {seccion.titulo}
+                    </h3>
+                  </summary>
+                  <div class="xl:grid xl:grid-cols-[minmax(0,38rem)_minmax(0,1fr)] xl:gap-12">
+                    <div class:list={["min-w-0 max-w-[41rem]", proseClasses]}>
+                      {seccion.parrafos.map((bloque) =>
+                        typeof bloque === "string"
+                          ? <p>{bloque}</p>
+                          : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
+                      )}
+                    </div>
+                    {seccion.foto && (
+                      <figure class="mt-8 xl:mt-1 xl:sticky xl:top-24 xl:self-start">
+                        <Image
+                          src={seccion.foto.src}
+                          alt={seccion.foto.alt}
+                          format="webp"
+                          layout="constrained"
+                          sizes="(min-width: 1280px) 288px, (min-width: 768px) 656px, 100vw"
+                          class="w-full h-auto rounded-lg"
+                          loading="lazy"
+                        />
+                      </figure>
                     )}
-                  </details>
-                ))}
-              </div>
-
-              {cap.respiradero.fotos.map((foto) => (
-                <figure class="historia-respiradero">
-                  <Image
-                    src={foto.src}
-                    alt={foto.alt}
-                    format="webp"
-                    layout="full-width"
-                    sizes="(min-width: 1280px) 944px, (min-width: 1024px) 672px, 100vw"
-                    class="w-full h-auto rounded-lg"
-                    loading="lazy"
-                  />
-                </figure>
+                  </div>
+                </details>
               ))}
 
               <blockquote class="historia-pull">
-                <p>{cap.respiradero.cita}</p>
+                <p>{cap.cita}</p>
               </blockquote>
             </div>
           </section>
@@ -179,18 +182,6 @@ const [standfirst, ...restoIntro] = intro;
     z-index: 1;
   }
 
-  @media (min-width: 64rem) {
-    .historia-capitulo::before {
-      margin-left: -9.5rem;
-    }
-  }
-
-  @media (min-width: 80rem) {
-    .historia-capitulo::before {
-      margin-left: -8.5rem;
-    }
-  }
-
   .historia-seccion {
     margin-top: 2rem;
   }
@@ -230,12 +221,8 @@ const [standfirst, ...restoIntro] = intro;
     transform: rotate(180deg);
   }
 
-  .historia-respiradero {
-    margin: 2rem 0;
-  }
-
   .historia-pull {
-    margin: 2rem 0 0;
+    margin: 2.5rem 0 0;
     max-width: 38rem;
     padding-left: 1.5rem;
     font-family: var(--font-family-headline);
@@ -257,11 +244,20 @@ const [standfirst, ...restoIntro] = intro;
   }
 
   @media (min-width: 64rem) {
+    .historia-capitulo::before {
+      margin-left: -9.5rem;
+    }
     .historia-seccion > summary {
       pointer-events: none;
     }
     .historia-seccion > summary::after {
       display: none;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .historia-capitulo::before {
+      margin-left: -8.5rem;
     }
   }
 </style>

@@ -29,6 +29,7 @@ const historia = {
         "Uno de sus primeros desafíos fue consolidar una representación empresarial que permitiera canalizar las necesidades de los proveedores y las compañías de servicios ante Yacimientos Petrolíferos Fiscales Bolivianos (YPFB) y las diferentes reparticiones del Estado.",
         "El 12 de enero de 1988 obtuvo el reconocimiento de su personalidad jurídica y la aprobación de su Estatuto Orgánico y Reglamento mediante la Resolución Suprema 203117. A partir de entonces, la institución quedó bajo la conducción de un directorio elegido en Asamblea General Ordinaria de Socios.",
       ],
+      foto: { src: segundoDirectorio, alt: "Segundo directorio de la CBHE en sus primeros años" },
     },
     {
       id: "primeros-desafios",
@@ -49,6 +50,7 @@ const historia = {
         "Durante la gestión 1997-1998, la Cámara Nacional de Hidrocarburos adoptó el nombre de Cámara Boliviana de Hidrocarburos (CBH). El cambio reflejaba su expansión institucional y el hecho de que ya reunía a compañías de diferentes etapas de la industria. Para entonces, el sector experimentaba un crecimiento de las inversiones, la exploración y las reservas, además de la consolidación del mercado brasileño.",
         "En sus primeros años, la organización funcionó en oficinas alquiladas. Para acompañar su crecimiento, adquirió un terreno en la radial 17 ½, cerca del sexto anillo de Santa Cruz de la Sierra, donde fue inaugurada su actual sede en la gestión 2000-2001.",
       ],
+      foto: { src: primeraSede, alt: "Primera sede de la CBHE" },
     },
     {
       id: "estructura-2001",
@@ -105,6 +107,7 @@ const historia = {
         "En 2008 nació el Congreso Internacional Bolivia Gas & Energía, concebido como un espacio para analizar las perspectivas del sector. El encuentro permitió debatir sobre mercados regionales, inversiones, exploración, producción, normativa, tecnología, integración energética y tendencias internacionales.",
         "En 2018, el Congreso alcanzó su décima edición. Desde 2012 fue acompañado por Expoenergía, ampliando el análisis y la exposición hacia otros componentes del sector energético.",
       ],
+      foto: { src: congresos, alt: "Congresos internacionales organizados por la CBHE" },
     },
     {
       id: "capacitacion-eje-permanente",
@@ -122,6 +125,7 @@ const historia = {
         "La modificación anticipó una agenda que posteriormente incluiría electricidad, eficiencia energética, energías renovables, seguridad energética, nuevas tecnologías y transición energética.",
         "El cambio de nombre no significó abandonar los hidrocarburos, sino reconocer que el petróleo y el gas formaban parte de un sistema energético más amplio y que las empresas comenzaban a diversificar sus actividades.",
       ],
+      foto: { src: equipo25Anos, alt: "Equipo de trabajo de la CBHE a 25 años de su fundación" },
     },
     {
       id: "seguridad-salud-responsabilidad-social",
@@ -144,6 +148,7 @@ const historia = {
         "Esto reafirma su rol como representante de las empresas e interlocutora técnica ante el Estado, en un proceso donde es esencial concretar una nueva Ley de Hidrocarburos que genere condiciones para atraer inversiones y lograr que el país recupere su competitividad frente a otros países de la región.",
         "Hoy la agenda de la CBHE está marcada por la urgencia de recuperar la producción de hidrocarburos para garantizar el abastecimiento y el compromiso de contribuir al proceso de transición hacia una matriz energética más diversificada y sostenible.",
       ],
+      foto: { src: grandesProyectos, alt: "Grandes proyectos del sector energético boliviano" },
     },
   ],
 };
@@ -153,42 +158,27 @@ const camaraDirectorio = directorioData.grupos.find((g) => g.grupo === "Cámara"
 
 const capitulos = [
   {
-    id: "cap-1986-1993",
+    id: "cap-1986-1994",
     rangoAnios: "1986 – 1994",
-    respiradero: {
-      fotos: [{ src: segundoDirectorio, alt: "Segundo directorio de la CBHE en sus primeros años" }],
-      cita: "La Cámara fue creada como una institución de derecho privado, sin fines de lucro, con patrimonio propio y autonomía de gestión económica y financiera.",
-    },
+    cita: "La Cámara fue creada como una institución de derecho privado, sin fines de lucro, con patrimonio propio y autonomía de gestión económica y financiera.",
     secciones: historia.secciones.slice(0, 2),
   },
   {
-    id: "cap-1994-2005",
+    id: "cap-1994-2012",
     rangoAnios: "1994 – 2012",
-    respiradero: {
-      fotos: [{ src: primeraSede, alt: "Primera sede de la CBHE" }],
-      cita: "El cambio reflejaba su expansión institucional y el hecho de que ya reunía a compañías de diferentes etapas de la industria.",
-    },
+    cita: "El cambio reflejaba su expansión institucional y el hecho de que ya reunía a compañías de diferentes etapas de la industria.",
     secciones: historia.secciones.slice(2, 6),
   },
   {
-    id: "cap-2006-2013",
+    id: "cap-2005-2018",
     rangoAnios: "2005 – 2018",
-    respiradero: {
-      fotos: [
-        { src: congresos, alt: "Congresos internacionales organizados por la CBHE" },
-        { src: equipo25Anos, alt: "Equipo de trabajo de la CBHE a 25 años de su fundación" },
-      ],
-      cita: "La segunda gran transformación de su identidad ocurrió durante la gestión 2010-2011, cuando la Cámara incorporó formalmente al sector energético y adoptó su actual denominación: Cámara Boliviana de Hidrocarburos y Energía.",
-    },
+    cita: "La segunda gran transformación de su identidad ocurrió durante la gestión 2010-2011, cuando la Cámara incorporó formalmente al sector energético y adoptó su actual denominación: Cámara Boliviana de Hidrocarburos y Energía.",
     secciones: historia.secciones.slice(6, 10),
   },
   {
     id: "cap-2014-hoy",
     rangoAnios: "2014 – hoy",
-    respiradero: {
-      fotos: [{ src: grandesProyectos, alt: "Grandes proyectos del sector energético boliviano" }],
-      cita: "Una década después, el escenario había cambiado sustancialmente.",
-    },
+    cita: "Una década después, el escenario había cambiado sustancialmente.",
     secciones: historia.secciones.slice(10, 12),
   },
 ];

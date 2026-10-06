@@ -85,8 +85,12 @@ Se extendió `~/.config/opencode/scripts/audit_captures.py` con flags de Playwri
 
 Agrupación en 4 capítulos: I `1986 – 1994` (sec 1-2), II `1994 – 2012` (sec 3-6), III `2005 – 2018` (sec 7-10), IV `2014 – hoy` (sec 11-12).
 Bandas full-bleed por capítulo (alternan `surface` / `surface-container-low`): pseudo `left:50%; width:100vw` + `overflow-x:clip` en la sección, con corrección de offset `-(nav+gap)/2` (`-9.5rem` en lg, `-8.5rem` en xl) porque la columna de contenido no está centrada.
-Respiraderos: una foto de las 5 existentes por capítulo (cap III dos, por sus dos hitos) al ancho de la columna de contenido, + un pull-quote verbatim.
-El riel sticky pasó a agrupar los 12 anchors bajo los 4 capítulos.
+Fotos: las 5 existentes van **junto a su sección**, en la columna derecha con `sticky` a xl (288px) y inline bajo la sección por debajo de xl. Un pull-quote verbatim por capítulo.
+El riel sticky agrupa los 12 anchors bajo los 4 capítulos.
+
+Corrección tras la primera entrega de A+B: el `h3` de cada sección había quedado sin color explícito, así que el plugin `prose` le aplicaba `--tw-prose-headings` (casi negro) y en modo oscuro el título de sección desaparecía.
+Se restauraron las clases `font-headline font-bold text-on-surface text-xl sm:text-2xl` en el `h3`.
+También se revirtió la distribución de fotos a nivel capítulo (dejaba capítulos con 2 y otros con 0) a foto por sección.
 
 ## Lo que NO se hace
 
