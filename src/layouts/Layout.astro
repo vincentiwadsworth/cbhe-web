@@ -375,6 +375,39 @@ if (currentPath) {
                 font-weight: 700;
                 color: #01406c;
               }
+              /* Dark mode: el widget sigue el tema del sitio (clase .dark en <html>). */
+              html.dark #sgq-panel,
+              html.dark #sgq-footer {
+                background: #1a1c1e;
+              }
+              html.dark #sgq-footer {
+                border-top-color: #44474c;
+              }
+              html.dark .sgq-msg.assistant,
+              html.dark .sgq-typing {
+                background: #202224;
+                color: #e4e2e3;
+              }
+              html.dark .sgq-typing span {
+                background: #c4c6cc;
+              }
+              html.dark .sgq-chip {
+                background: #202224;
+                color: #e4e2e3;
+                border-color: #44474c;
+              }
+              html.dark #sgq-input {
+                background: #16181a;
+                color: #e4e2e3;
+                border-color: #44474c;
+              }
+              html.dark #sgq-input::placeholder {
+                color: #c4c6cc;
+              }
+              html.dark a.sgq-link,
+              html.dark .sgq-msg strong {
+                color: #82afe1;
+              }
             `,
             controls: {
               modelSwitcher: false,
