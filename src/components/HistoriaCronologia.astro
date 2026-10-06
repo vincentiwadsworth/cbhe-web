@@ -17,19 +17,20 @@ export interface Props {
 const { intro, secciones } = Astro.props;
 
 const proseClasses = `prose prose-lg
-  prose-headings:font-headline prose-headings:text-on-surface prose-headings:font-bold
-  prose-h3:text-2xl prose-h3:mt-14 prose-h3:mb-5
   prose-p:text-on-surface-variant prose-p:leading-relaxed prose-p:mb-5
   prose-strong:text-on-surface prose-strong:font-semibold
   prose-ul:text-on-surface-variant prose-li:marker:text-primary prose-li:my-1
-  prose-a:text-primary prose-a:underline hover:prose-a:text-primary/80
-  prose-img:rounded-lg prose-img:my-0`;
+  prose-a:text-primary prose-a:underline hover:prose-a:text-primary/80`;
+
+const [standfirst, ...restoIntro] = intro;
 ---
 
-  <Section bg="surface" id="historia" scrollMargin>
+  <Section bg="surface" id="historia" scrollMargin py="py-14 sm:py-20 md:py-28">
   <SectionHeading title="Nuestra historia" />
 
-  <div class="lg:grid lg:grid-cols-[16rem_minmax(0,41rem)] lg:gap-12 xl:gap-16">
+  <div
+    class="lg:grid lg:grid-cols-[16rem_minmax(0,41rem)] lg:gap-12 xl:grid-cols-[14rem_1fr] xl:gap-12"
+  >
     <nav
       aria-label="Índice de la historia"
       class="hidden lg:block lg:sticky lg:top-24 lg:self-start"
@@ -49,33 +50,45 @@ const proseClasses = `prose prose-lg
       </ul>
     </nav>
 
-    <article class:list={["min-w-0 max-w-[41rem]", proseClasses]}>
-      {intro.map((parrafo) => <p>{parrafo}</p>)}
+    <article class="min-w-0 max-w-[41rem] xl:max-w-none">
+      <div class:list={["max-w-[41rem] xl:max-w-[38rem]", proseClasses]}>
+        <p class="historia-standfirst">{standfirst}</p>
+        {restoIntro.map((parrafo) => <p>{parrafo}</p>)}
+      </div>
+
       {secciones.map((seccion) => (
         <details open class="historia-seccion">
           <summary>
-            <h3 id={seccion.id} class="scroll-mt-24" data-historia-seccion>
+            <h3
+              id={seccion.id}
+              class="scroll-mt-24 font-headline font-bold text-on-surface text-xl sm:text-2xl"
+              data-historia-seccion
+            >
               {seccion.titulo}
             </h3>
           </summary>
-          {seccion.parrafos.map((bloque) =>
-            typeof bloque === "string"
-              ? <p>{bloque}</p>
-              : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
-          )}
-          {seccion.foto && (
-            <figure class="my-8 lg:sticky lg:top-24">
-              <Image
-                src={seccion.foto.src}
-                alt={seccion.foto.alt}
-                format="webp"
-                layout="constrained"
-                sizes="(min-width: 768px) 608px, 100vw"
-                class="w-full h-auto rounded-lg"
-                loading="lazy"
-              />
-            </figure>
-          )}
+          <div class="xl:grid xl:grid-cols-[minmax(0,38rem)_minmax(0,1fr)] xl:gap-12">
+            <div class:list={["min-w-0 max-w-[41rem]", proseClasses]}>
+              {seccion.parrafos.map((bloque) =>
+                typeof bloque === "string"
+                  ? <p>{bloque}</p>
+                  : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
+              )}
+            </div>
+            {seccion.foto && (
+              <figure class="mt-8 xl:mt-1 xl:sticky xl:top-24 xl:self-start">
+                <Image
+                  src={seccion.foto.src}
+                  alt={seccion.foto.alt}
+                  format="webp"
+                  layout="constrained"
+                  sizes="(min-width: 1280px) 288px, (min-width: 768px) 656px, 100vw"
+                  class="w-full h-auto rounded-lg"
+                  loading="lazy"
+                />
+              </figure>
+            )}
+          </div>
         </details>
       ))}
     </article>
@@ -99,8 +112,14 @@ const proseClasses = `prose prose-lg
 </script>
 
 <style>
+  .historia-standfirst {
+    font-size: 1.3125rem;
+    line-height: 1.5;
+    color: var(--color-on-surface);
+  }
+
   .historia-seccion {
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
 
   .historia-seccion > summary {
@@ -141,6 +160,7 @@ const proseClasses = `prose prose-lg
   .indice-link[aria-current="true"] {
     color: var(--color-primary);
     border-color: var(--color-primary);
+    font-weight: 600;
   }
 
   @media (min-width: 64rem) {
