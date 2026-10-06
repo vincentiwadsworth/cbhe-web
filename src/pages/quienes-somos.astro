@@ -153,6 +153,32 @@ const historia = {
   ],
 };
 
+const gruposDirectorio = directorioData.grupos.filter((g) => g.grupo !== "Cámara");
+const camaraDirectorio = directorioData.grupos.find((g) => g.grupo === "Cámara");
+
+const capitulos = [
+  {
+    id: "cap-1986-1994",
+    rangoAnios: "1986 – 1994",
+    secciones: historia.secciones.slice(0, 2),
+  },
+  {
+    id: "cap-1994-2012",
+    rangoAnios: "1994 – 2012",
+    secciones: historia.secciones.slice(2, 6),
+  },
+  {
+    id: "cap-2005-2018",
+    rangoAnios: "2005 – 2018",
+    secciones: historia.secciones.slice(6, 10),
+  },
+  {
+    id: "cap-2014-hoy",
+    rangoAnios: "2014 – hoy",
+    secciones: historia.secciones.slice(10, 12),
+  },
+];
+
 ---
 
 
@@ -172,28 +198,28 @@ const historia = {
   <!-- Historia -->
   <HistoriaCronologia
     intro={historia.intro}
-    secciones={historia.secciones}
+    capitulos={capitulos}
   />
 
   <!-- Misión y Visión -->
-  <Section bg="surface-container-low">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-      <div class="bg-surface p-8 md:p-12 rounded-lg hover:bg-surface-container-low transition-colors duration-300 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md">
-        <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-8">
-          <Icon name="material-symbols:flag" class="text-on-primary-container size-7" />
+  <Section bg="surface-container-low" py="py-10 sm:py-14 md:py-20" id="mision-vision">
+    <div class="lg:grid lg:grid-cols-[3fr_2fr] lg:gap-12 xl:gap-16">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <Icon name="material-symbols:flag" class="text-primary size-6 shrink-0" />
+          <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface">Nuestra misión</h2>
         </div>
-        <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface mb-5">Nuestra misión</h2>
-        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg">
+        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg max-w-[62ch]">
           Promover el desarrollo eficiente, competitivo y sostenible del sector de hidrocarburos y energía en Bolivia. Representamos y defendemos los intereses de nuestros afiliados a través de la excelencia técnica, el diálogo constructivo y la proposición de políticas públicas basadas en el rigor científico y económico.
         </p>
       </div>
 
-      <div class="bg-surface p-8 md:p-12 rounded-lg hover:bg-surface-container-low transition-colors duration-300 border border-outline-variant/30 hover:border-primary/30 hover:shadow-md">
-        <div class="w-14 h-14 bg-primary-container rounded-lg flex items-center justify-center mb-8">
-          <Icon name="material-symbols:visibility" class="text-on-primary-container size-7" />
+      <div class="mt-10 lg:mt-0 lg:border-l lg:border-outline-variant/40 lg:pl-12 xl:pl-16">
+        <div class="flex items-center gap-3 mb-4">
+          <Icon name="material-symbols:visibility" class="text-primary size-6 shrink-0" />
+          <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface">Nuestra visión</h2>
         </div>
-        <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface mb-5">Nuestra visión</h2>
-        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg">
+        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg max-w-[62ch]">
           Ser el referente institucional indiscutible del sector energético boliviano a nivel nacional e internacional. Aspiramos a liderar la transición hacia una matriz energética moderna, consolidando a Bolivia como un actor clave mediante la innovación tecnológica y las mejores prácticas operativas globales.
         </p>
       </div>
@@ -201,26 +227,40 @@ const historia = {
   </Section>
 
   <!-- Directorio -->
-  <Section bg="surface">
+  <Section bg="surface" py="py-14 sm:py-20 md:py-28" id="directorio">
     <SectionHeading
       title="Directorio"
-      description="Representantes de las empresas afiliadas ante el Directorio de la CBHE, organizados por grupo industrial. La Mesa Directiva y los directores titulares y alternos son elegidos por la Asamblea General de Socios."
+      description="Representantes de las empresas afiliadas ante el Directorio, organizados por grupo industrial. Elegidos por la Asamblea General de Socios."
     />
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {directorioData.grupos.map((g) => (
-        <article class:list={[
-          "bg-surface-container-low rounded-lg border border-outline-variant/30 overflow-hidden flex flex-col",
-          g.grupo === "Cámara" && "lg:col-span-2",
-        ]}>
+
+    {camaraDirectorio && camaraDirectorio.miembros.length > 0 && (
+      <div class="mb-6 rounded-lg border border-outline-variant/30 bg-surface-container-low px-6 py-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <span class="text-xs font-semibold tracking-wider uppercase text-on-surface-variant shrink-0">Cámara</span>
+        <ul class="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-x-6 sm:gap-y-1">
+          {camaraDirectorio.miembros.map((m) => (
+            <li class="font-headline text-on-surface">
+              <span class="font-bold">{m.nombre}</span>
+              <span class="text-primary font-semibold text-sm ml-2">{m.cargo}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-6 items-start">
+      {gruposDirectorio.map((g) => (
+        <article class="bg-surface-container-low rounded-lg border border-outline-variant/30 overflow-hidden flex flex-col">
           <h3 class="font-headline font-bold text-on-surface text-base md:text-lg px-6 py-4 bg-surface-container border-b border-outline-variant/30">
             {g.grupo}
           </h3>
           <ul class="divide-y divide-outline-variant/30">
             {g.miembros.map((m) => (
-              <li class="px-6 py-4 grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-4 items-baseline hover:bg-surface-container transition-colors">
-                <span class="sm:col-span-3 text-primary font-headline font-semibold text-sm">{m.cargo}</span>
-                <span class="sm:col-span-5 font-headline font-bold text-on-surface">{m.nombre}</span>
-                <span class="sm:col-span-4 text-on-surface-variant text-xs font-semibold tracking-wider uppercase">{m.empresa}</span>
+              <li class="px-6 py-3.5 hover:bg-surface-container transition-colors">
+                <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                  <span class="font-headline font-bold text-on-surface">{m.nombre}</span>
+                  <span class="font-headline font-semibold text-sm text-primary">{m.cargo}</span>
+                </div>
+                <div class="mt-1 text-xs font-semibold tracking-wider uppercase text-on-surface-variant">{m.empresa}</div>
               </li>
             ))}
           </ul>
