@@ -8,7 +8,6 @@ export interface Props {
   capitulos: Array<{
     id: string;
     rangoAnios: string;
-    cita: string;
     secciones: Array<{
       id: string;
       titulo: string;
@@ -27,13 +26,25 @@ const proseClasses = `prose prose-lg
   prose-a:text-primary prose-a:underline hover:prose-a:text-primary/80`;
 
 const [standfirst, ...restoIntro] = intro;
+
+const fotos: Array<{ src: ImageMetadata; alt: string }> = [];
+for (const cap of capitulos) for (const s of cap.secciones) if (s.foto) fotos.push(s.foto);
+
+const railDe: Record<string, number> = {};
+let railActual = 0;
+for (const cap of capitulos) {
+  for (const s of cap.secciones) {
+    if (s.foto) railActual = fotos.indexOf(s.foto);
+    railDe[s.id] = railActual;
+  }
+}
 ---
 
 <section id="historia" class="relative overflow-x-clip scroll-mt-24 bg-surface py-14 sm:py-20 md:py-28">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
     <SectionHeading title="Nuestra historia" />
 
-    <div class="lg:grid lg:grid-cols-[16rem_1fr] lg:gap-12 xl:grid-cols-[14rem_1fr] xl:gap-12">
+    <div class="lg:grid lg:grid-cols-[16rem_1fr] lg:gap-12 xl:grid-cols-[14rem_minmax(0,38rem)_minmax(0,1fr)] xl:gap-12">
       <nav
         aria-label="Índice de la historia"
         class="relative z-20 hidden lg:block lg:sticky lg:top-24 lg:self-start"
@@ -92,42 +103,57 @@ const [standfirst, ...restoIntro] = intro;
                       id={seccion.id}
                       class="scroll-mt-24 font-headline font-bold text-on-surface text-xl sm:text-2xl"
                       data-historia-seccion
+                      data-rail={railDe[seccion.id]}
                     >
                       {seccion.titulo}
                     </h3>
                   </summary>
-                  <div class="xl:grid xl:grid-cols-[minmax(0,38rem)_minmax(0,1fr)] xl:gap-12">
-                    <div class:list={["min-w-0 max-w-[41rem]", proseClasses]}>
-                      {seccion.parrafos.map((bloque) =>
-                        typeof bloque === "string"
-                          ? <p>{bloque}</p>
-                          : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
-                      )}
-                    </div>
-                    {seccion.foto && (
-                      <figure class="mt-8 xl:mt-1 xl:sticky xl:top-24 xl:self-start">
-                        <Image
-                          src={seccion.foto.src}
-                          alt={seccion.foto.alt}
-                          format="webp"
-                          layout="constrained"
-                          sizes="(min-width: 1280px) 288px, (min-width: 768px) 656px, 100vw"
-                          class="w-full h-auto rounded-lg"
-                          loading="lazy"
-                        />
-                      </figure>
+
+                  {seccion.foto && (
+                    <figure class="mb-6 xl:hidden">
+                      <Image
+                        src={seccion.foto.src}
+                        alt={seccion.foto.alt}
+                        format="webp"
+                        layout="constrained"
+                        sizes="(min-width: 768px) 656px, 100vw"
+                        class="w-full h-auto rounded-lg"
+                        loading="lazy"
+                      />
+                    </figure>
+                  )}
+
+                  <div class:list={["min-w-0 max-w-[41rem] xl:max-w-[38rem]", proseClasses]}>
+                    {seccion.parrafos.map((bloque) =>
+                      typeof bloque === "string"
+                        ? <p>{bloque}</p>
+                        : <ul>{bloque.lista.map((item) => <li>{item}</li>)}</ul>
                     )}
                   </div>
                 </details>
               ))}
-
-              <blockquote class="historia-pull">
-                <p>{cap.cita}</p>
-              </blockquote>
             </div>
           </section>
         ))}
       </article>
+
+      <aside
+        class="hidden xl:block xl:sticky xl:top-24 xl:self-start"
+        aria-label="Imágenes de la historia"
+      >
+        {fotos.map((foto, i) => (
+          <Image
+            src={foto.src}
+            alt={foto.alt}
+            format="webp"
+            layout="constrained"
+            sizes="288px"
+            class={i === 0 ? "w-full h-auto rounded-lg" : "hidden w-full h-auto rounded-lg"}
+            data-rail-img={i}
+            loading={i === 0 ? "eager" : "lazy"}
+          />
+        ))}
+      </aside>
     </div>
   </div>
 </section>
@@ -161,8 +187,7 @@ const [standfirst, ...restoIntro] = intro;
   }
 
   /* Banda de capítulo a sangre: se centra en el viewport y cubre los 100vw.
-     El offset negativo compensa que la columna de contenido no está centrada
-     (el riel del índice ocupa el ancho nav+gap a la izquierda). */
+     El offset negativo compensa que la columna de contenido no está centrada. */
   .historia-capitulo::before {
     content: "";
     position: absolute;
@@ -221,22 +246,6 @@ const [standfirst, ...restoIntro] = intro;
     transform: rotate(180deg);
   }
 
-  .historia-pull {
-    margin: 2.5rem 0 0;
-    max-width: 38rem;
-    padding-left: 1.5rem;
-    font-family: var(--font-family-headline);
-    font-size: clamp(1.375rem, 3vw, 1.875rem);
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--color-primary);
-    text-wrap: balance;
-  }
-
-  .historia-pull p {
-    margin: 0;
-  }
-
   .indice-link[aria-current="true"] {
     color: var(--color-primary);
     border-color: var(--color-primary);
@@ -257,7 +266,7 @@ const [standfirst, ...restoIntro] = intro;
 
   @media (min-width: 80rem) {
     .historia-capitulo::before {
-      margin-left: -8.5rem;
+      margin-left: 2rem;
     }
   }
 </style>
@@ -269,8 +278,18 @@ const [standfirst, ...restoIntro] = intro;
   const secciones = Array.from(
     document.querySelectorAll<HTMLElement>("[data-historia-seccion]"),
   );
+  const railImgs = Array.from(
+    document.querySelectorAll<HTMLImageElement>("[data-rail-img]"),
+  );
 
-  if (links.length > 0 && secciones.length > 0) {
+  function mostrarRail(n: number) {
+    for (const img of railImgs) {
+      if (Number(img.dataset.railImg) === n) img.classList.remove("hidden");
+      else img.classList.add("hidden");
+    }
+  }
+
+  if (secciones.length > 0) {
     const porId = new Map<string, HTMLAnchorElement>();
     for (const link of links) {
       const id = link.getAttribute("href")?.replace("#", "");
@@ -293,5 +312,31 @@ const [standfirst, ...restoIntro] = intro;
     );
 
     for (const seccion of secciones) observer.observe(seccion);
+
+    // Foto activa del rail: determinista por posición de scroll (la última sección
+    // cuyo título pasó la línea de referencia define la foto). En secciones sin
+    // foto el índice se hereda, así la foto nunca desaparece.
+    let pendiente = false;
+    function actualizarRail() {
+      pendiente = false;
+      const linea = window.innerHeight * 0.35;
+      let n = 0;
+      for (const s of secciones) {
+        if (s.getBoundingClientRect().top <= linea && s.dataset.rail !== undefined) {
+          n = Number(s.dataset.rail);
+        }
+      }
+      mostrarRail(n);
+    }
+    function alScroll() {
+      if (!pendiente) {
+        pendiente = true;
+        requestAnimationFrame(actualizarRail);
+      }
+    }
+    window.addEventListener("scroll", alScroll, { passive: true });
+    window.addEventListener("resize", alScroll, { passive: true });
+    window.addEventListener("load", actualizarRail);
+    actualizarRail();
   }
 </script>
