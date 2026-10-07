@@ -2,10 +2,10 @@
 title: 'Curso de preparación: Inspector de Soldadura CAWI/CWI - AWS'
 category: Curso
 modality: Virtual
-image: /images/Curso y Examen de Inspectores de Soldadura (7).png
-startDate: 07 Oct 2026
+image: /images/Curso de Inspectores de Soldadura.png
+startDate: 19 Oct 2026
 price: Consulta precios al WhatsApp 79891193
-registrationDeadline: 30/09/2026
+registrationDeadline: 12/10/2026
 canvaLink: https://canva.link/sbmgnc5z0ecrg4c
 description: |-
   La Cámara Boliviana de Hidrocarburos y Energía, en su rol de Agente Internacional de la American Welding Society (AWS) para Bolivia, se complace en ofrecer el entrenamiento para la certificación de inspectores de soldadura.
@@ -28,14 +28,14 @@ Cualquier persona interesada en convertirse en inspector de soldadura certificad
 
 ## Metodología
 
-- **Parte A**: **Fundamentos.** Clases al vivo mediante TEAMS a realizarse en clases de 3 horas por 7 clases. (21 horas) del 7 al 21 de octubre.
-- **Parte B:** 9 horas al vivo mediante TEAMS (3 clases de 3 horas del 26 al 30 de octubre) y 8 horas práctica, un sábado de 8:00 a 16:00 (31 de octubre).
-- **Parte C:** Aplicación del Código. Clases al vivo mediante TEAMS a realizarse en bloques de 3 horas por 3 clases. (9 horas del 4 al 9 de noviembre).
-- Semana final de examenes de simulacro - 16 al 21 de noviembre.
+- **Parte A**: **Fundamentos.** Clases al vivo mediante TEAMS a realizarse en clases de 3 horas por 7 clases. (21 horas) 19 de octubre al 4 de noviembre.
+- **Parte B:** 9 horas al vivo mediante TEAMS (3 clases de 3 horas del 6, 9 y 11 de noviembre) y 8 horas práctica, un sábado de 8:00 a 16:00 (14 de noviembre).
+- **Parte C:** Aplicación del Código. Clases al vivo mediante TEAMS a realizarse en bloques de 3 horas por 3 clases. (9 horas del 16 al 20 noviembre).
+- Semana final de exámenes de simulacro - 23 al 27 de noviembre.
 
 ## Agenda
 
-- **Fechas**: 7 de octubre al 9 de noviembre de 2026
+- **Fechas**: 19 de octubre al 27 de noviembre de 2026
 - **Horario**: Clases Virtuales de 3 horas los lunes, miércoles y viernes de 19:00 a 22:00 - Práctica Presencial un sábado de 8:00 a 16:0
 
 ## Contacto
