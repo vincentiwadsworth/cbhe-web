@@ -6,7 +6,6 @@
  * When bgImage is provided, the image is rendered at low opacity (default 0.12)
  * as a subtle texture overlay — no gradient overlays.
  *
- * @prop label           - Uppercase label above the title (e.g. "Institucional"). Omit to hide.
  * @prop title           - Main heading (h1). Required.
  * @prop subtitle        - Descriptive paragraph under the title. Omit to hide.
  * @prop bgImage         - Background image path (rendered at bgImageOpacity). Omit for solid colour.
@@ -22,7 +21,6 @@
  * @slot default         - Extra content rendered after the subtitle (CTAs, badges, etc.).
  */
 export interface Props {
-  label?: string;
   title: string;
   subtitle?: string;
   bgImage?: string;
@@ -36,7 +34,6 @@ export interface Props {
 }
 
 const {
-  label,
   title,
   subtitle,
   bgImage,
@@ -56,13 +53,11 @@ const subtitleSizeClass = subtitleSize === "large"
 const styles = {
   primary: {
     bg: "bg-inverse-surface",
-    labelColor: "text-primary-fixed-dim",
     titleColor: "text-inverse-on-surface",
     subtitleColor: "text-inverse-on-surface/80",
   },
   dark: {
     bg: "bg-inverse-surface",
-    labelColor: "text-primary-fixed-dim",
     titleColor: "text-inverse-on-surface",
     subtitleColor: "text-inverse-on-surface/80",
   },
@@ -79,12 +74,7 @@ const pbClass = pb ?? "pb-16 sm:pb-20 md:pb-24";
     </div>
   )}
   <div class="max-w-7xl mx-auto relative z-10">
-    {label && (
-      <span class:list={["font-bold tracking-widest uppercase text-sm block", styles.labelColor]}>
-        {label}
-      </span>
-    )}
-    <h1 class:list={["text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold leading-tight tracking-tight mt-4", titleMaxW, styles.titleColor]}>
+    <h1 class:list={["text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold leading-tight tracking-tight", titleMaxW, styles.titleColor]}>
       {title}
     </h1>
     {subtitle && (
