@@ -24,7 +24,7 @@ instructors:
       Ingeniero Industrial Mecánico, Universidad de la República, Montevideo, Uruguay.
       ​Experto en ingeniería de protección contra incendios con 10 años de experiencia, con énfasis en el diseño de sistemas de rociadores automáticos, sistemas en base a agua, espuma y gases limpios, diseño de sistemas de detección y alarma y auditoria de diversos tipos de instalaciones, desde comerciales a industriales.
       ​Técnico Registrado ante la Dirección Nacional de Bomberos (DNB), miembro de la Society of Fire Protection Engineers (SFPE), y de la National Fire Protection Association (NFPA). Él es subgerente de IFSC del Cono Sur (www.ifsc.us), basado en Montevideo, Uruguay.
-featured: false
+featured: true
 draft: false
 ---
 
