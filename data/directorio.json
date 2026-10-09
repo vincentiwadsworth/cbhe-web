@@ -28,8 +28,7 @@
         { "cargo": "Tesorero", "empresa": "Confipetrol", "nombre": "Diego Orlando Merchan Pico" },
         { "cargo": "Director Titular", "empresa": "Bolpegas", "nombre": "Ricardo Carrillo" },
         { "cargo": "Director Alterno", "empresa": "Hoerbiger", "nombre": "Samanta Salinas" },
-        { "cargo": "Director Titular", "empresa": "Intergas", "nombre": "Melanie Zehl" },
-        { "cargo": "Director Alterno", "empresa": "Energy Advances", "nombre": "Mauricio Montalvo Arancibia" }
+        { "cargo": "Director Titular", "empresa": "Intergas", "nombre": "Melanie Zehl" }
       ]
     },
     {
@@ -42,9 +41,7 @@
       "grupo": "Servicios Auxiliares",
       "miembros": [
         { "cargo": "Director Titular", "empresa": "PPO Indacochea", "nombre": "Pablo Ordoñez" },
-        { "cargo": "Director Alterno", "empresa": "Wayar & von Borries", "nombre": "Iver von Borries" },
-        { "cargo": "Director Titular", "empresa": "Sudamericana", "nombre": "Daniel Saucedo" },
-        { "cargo": "Director Alterno", "empresa": "Solaria", "nombre": "Alejandro Lora" }
+        { "cargo": "Director Titular", "empresa": "Sudamericana", "nombre": "Daniel Saucedo" }
       ]
     },
     {
