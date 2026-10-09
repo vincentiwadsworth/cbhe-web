@@ -2,7 +2,7 @@
 title: 'Programa en línea: Diseño hidráulico para sistemas contra incendios'
 category: Curso
 modality: Virtual
-image: /images/Post nueva fecha.png
+image: /images/Arte Diseño Hidraulico redes.png
 startDate: 09 Nov 2026
 price: Consulta precios y descuentos al Whatsapp 79891193
 registrationDeadline: 30/10/2026
