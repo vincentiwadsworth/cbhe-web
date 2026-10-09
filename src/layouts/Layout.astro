@@ -137,8 +137,10 @@ const canonicalUrl = Astro.url.href;
 
 // Open Graph: absolute URLs for images (required by social platforms)
 const ogImageUrl = new URL(image || 'og-default.png', baseHref).href;
-// Square fallback for WhatsApp — WhatsApp usa el último og:image tag y prefiere 1:1
-const ogImageSquareUrl = new URL('og-default-square.png', baseHref).href;
+// Un parámetro de imagen para og:image:alt — describe la tarjeta por defecto o la página
+const ogImageAlt = image
+  ? `${title} | CBHE`
+  : 'CBHE — Cámara Boliviana de Hidrocarburos y Energía';
 
 // Breadcrumb: infer from currentPath segments
 const breadcrumbSegments: { name: string; href: string }[] = [];
@@ -174,6 +176,7 @@ if (currentPath) {
     <link rel="canonical" href={canonicalUrl} />
     <base href={baseHref} />
     <!-- Favicon stack -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="icon" href="favicon-cbhe.svg" type="image/svg+xml" />
     <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="favicon-16x16.png" type="image/png" sizes="16x16" />
@@ -190,10 +193,7 @@ if (currentPath) {
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <!-- Square fallback: WhatsApp usa el último og:image y prefiere 1:1 -->
-    <meta property="og:image" content={ogImageSquareUrl} />
-    <meta property="og:image:width" content="800" />
-    <meta property="og:image:height" content="800" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="CBHE" />
     <meta property="og:locale" content="es_BO" />
@@ -203,6 +203,7 @@ if (currentPath) {
     <meta name="twitter:title" content={`${title} | CBHE`} />
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <title>{title} | CBHE</title>
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
