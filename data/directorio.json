@@ -1,10 +1,17 @@
 {
+  "comiteEjecutivo": [
+    { "cargo": "Presidente", "empresa": "Repsol", "nombre": "Mariano Ferrari" },
+    { "cargo": "Vicepresidente", "empresa": "TotalEnergies", "nombre": "Sergio Giorgi" },
+    { "cargo": "Secretario", "empresa": "Halliburton", "nombre": "Pablo Moreno" },
+    { "cargo": "Tesorero", "empresa": "Confipetrol", "nombre": "Diego Orlando Merchan Pico" },
+    { "cargo": "Director Ejecutivo", "empresa": "CBHE", "nombre": "Iver von Borries" }
+  ],
   "grupos": [
     {
       "grupo": "Upstream",
       "miembros": [
-        { "cargo": "Presidente", "empresa": "Repsol", "nombre": "Mariano Ferrari" },
-        { "cargo": "Vicepresidente", "empresa": "TotalEnergies", "nombre": "Sergio Giorgi" },
+        { "cargo": "Director Titular", "empresa": "Repsol", "nombre": "Mariano Ferrari" },
+        { "cargo": "Director Titular", "empresa": "TotalEnergies", "nombre": "Sergio Giorgi" },
         { "cargo": "Director Titular", "empresa": "Petrobras", "nombre": "Diogo Mattoso Abreu" },
         { "cargo": "Director Alterno", "empresa": "Matpetrol", "nombre": "Javier Paz Soldán" },
         { "cargo": "Director Titular", "empresa": "Shell", "nombre": "Cristina Nuñez C." },
@@ -15,7 +22,7 @@
     {
       "grupo": "Servicios y Suministros Especializados en Pozo",
       "miembros": [
-        { "cargo": "Secretario", "empresa": "Halliburton", "nombre": "Pablo Moreno" },
+        { "cargo": "Director Titular", "empresa": "Halliburton", "nombre": "Pablo Moreno" },
         { "cargo": "Director Titular", "empresa": "SLB", "nombre": "René Arze" },
         { "cargo": "Director Alterno", "empresa": "Rigmaster", "nombre": "Edson Vargas" },
         { "cargo": "Director Titular", "empresa": "Petrolog", "nombre": "Orlando Vaca" },
@@ -25,7 +32,7 @@
     {
       "grupo": "Servicios y Suministros Especializados en Superficie",
       "miembros": [
-        { "cargo": "Tesorero", "empresa": "Confipetrol", "nombre": "Diego Orlando Merchan Pico" },
+        { "cargo": "Director Titular", "empresa": "Confipetrol", "nombre": "Diego Orlando Merchan Pico" },
         { "cargo": "Director Titular", "empresa": "Bolpegas", "nombre": "Ricardo Carrillo" },
         { "cargo": "Director Alterno", "empresa": "Hoerbiger", "nombre": "Samanta Salinas" },
         { "cargo": "Director Titular", "empresa": "Intergas", "nombre": "Melanie Zehl" }
@@ -42,12 +49,6 @@
       "miembros": [
         { "cargo": "Director Titular", "empresa": "PPO Indacochea", "nombre": "Pablo Ordoñez" },
         { "cargo": "Director Titular", "empresa": "Sudamericana", "nombre": "Daniel Saucedo" }
-      ]
-    },
-    {
-      "grupo": "Cámara",
-      "miembros": [
-        { "cargo": "Director Ejecutivo", "empresa": "CBHE", "nombre": "Iver von Borries" }
       ]
     }
   ]

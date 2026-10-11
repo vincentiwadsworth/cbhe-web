@@ -197,6 +197,24 @@ collections:
         label: Directorio
         file: data/directorio.json
         fields:
+          - name: comiteEjecutivo
+            label: Comité Ejecutivo
+            widget: list
+            hint: "Un miembro por cada cargo del Comité Ejecutivo"
+            fields:
+              - {
+                  name: cargo,
+                  label: Cargo,
+                  widget: string,
+                  hint: "Ej: Presidente, Vicepresidente, Secretario, Tesorero, Director Ejecutivo",
+                }
+              - { name: nombre, label: Nombre completo, widget: string }
+              - {
+                  name: empresa,
+                  label: Empresa,
+                  widget: string,
+                  hint: "Empresa que representa en el Comité Ejecutivo",
+                }
           - name: grupos
             label: Grupos
             widget: list
