@@ -210,7 +210,7 @@ const capitulos = [
         {comiteEjecutivo.map((m) => (
           <div>
             <div class="text-xs font-semibold tracking-wider uppercase text-primary-fixed-dim">{m.cargo}</div>
-            <div class="font-headline font-bold text-inverse-on-surface mt-1">{m.nombre}</div>
+            <div class="font-headline font-bold text-inverse-on-surface mt-1 [text-wrap:balance]">{m.nombre}</div>
             <div class="text-sm text-inverse-on-surface/70 mt-0.5">{m.empresa}</div>
           </div>
         ))}
@@ -229,7 +229,7 @@ const capitulos = [
             {g.miembros.map((m) => (
               <li class="px-6 py-3.5 border-b border-outline-variant/30 hover:bg-surface-container transition-colors">
                 <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
-                  <span class="font-headline font-bold text-on-surface">{m.nombre}</span>
+                  <span class="font-headline font-bold text-on-surface [text-wrap:balance]">{m.nombre}</span>
                   <span class="font-headline font-semibold text-sm text-primary">{m.cargo}</span>
                 </div>
                 <div class="mt-1 text-xs font-semibold tracking-wider uppercase text-on-surface-variant">{m.empresa}</div>
