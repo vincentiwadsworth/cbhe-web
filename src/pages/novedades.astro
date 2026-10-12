@@ -48,7 +48,7 @@ const ARTICULO_ICONOS: Record<string, string> = {
             </div>
           )}
           <div class="p-8 md:w-1/2 flex flex-col justify-center">
-            <span class="text-xs font-semibold text-primary uppercase tracking-wider font-label mb-4">
+            <span class="text-xs font-semibold text-primary uppercase tracking-wider mb-4">
               {featured.data.category}
             </span>
             <a href={`novedades/${featured.id}`} class="block">
@@ -86,7 +86,7 @@ const ARTICULO_ICONOS: Record<string, string> = {
                 <Icon name={ARTICULO_ICONOS[articulo.data.category]} class="size-12 text-primary/40" />
               </div>
             )}
-            <span class="text-caption font-semibold text-on-surface-variant uppercase tracking-wider mb-3">
+            <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-3">
               {articulo.data.category}
             </span>
             <a href={`novedades/${articulo.id}`} class="block">

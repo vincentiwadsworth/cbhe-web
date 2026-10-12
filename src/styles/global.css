@@ -82,11 +82,6 @@
   /* ===== Typography ===== */
   --font-family-headline: "Inter", sans-serif;
   --font-family-body: "Inter", sans-serif;
-  --font-family-label: "Inter", sans-serif;
-  --text-caption: 0.75rem;
-  --text-caption--line-height: 1rem;
-  --text-body-sm: 0.875rem;
-  --text-body-sm--line-height: 1.25rem;
 
   /* ===== Border radius (8px scale — warm, institutional) ===== */
   --radius-sm: 0.25rem;
@@ -272,11 +267,6 @@ h1, h2, h3, h4 {
   }
   .spring-press:active:not(:disabled) {
     transform: scale(0.95);
-  }
-
-  /* Interactive cards — subtle press without spring */
-  .card-press:active {
-    transform: scale(0.98);
   }
 
   /* Glassmorphism card — semi-transparent with backdrop blur.
