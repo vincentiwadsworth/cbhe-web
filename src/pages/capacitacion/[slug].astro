@@ -135,7 +135,7 @@ const hasBody = Boolean(curso.body && curso.body.trim());
     <h2 id="quick-facts-heading" class="sr-only">Datos del curso</h2>
 
     <div
-      class="flex overflow-x-auto gap-3 pb-1 snap-x snap-mandatory scrollbar-none
+      class="flex overflow-x-auto gap-3 pb-1 snap-x snap-mandatory scrollbar-hide
                  sm:flex-wrap sm:overflow-visible sm:snap-none sm:gap-4"
     >
       <!-- Date -->
@@ -358,17 +358,3 @@ const hasBody = Boolean(curso.body && curso.body.trim());
   <!-- ================================================================== -->
   <CourseCTA canvaLink={curso.data.canvaLink} />
 </PageLayout>
-
-<!-- ================================================================== -->
-<!--  Component-scoped styles — detail page overrides                      -->
-<!-- ================================================================== -->
-<style>
-  /* Hide scrollbar on Quick Facts bar (mobile) while keeping functionality */
-  .scrollbar-none {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-none::-webkit-scrollbar {
-    display: none;
-  }
-</style>
