@@ -63,6 +63,8 @@
 - **gh CLI** disponible y autenticado como `vincentiwadsworth`. Issues, labels, secrets, PRs.
 - **Repositorio público** requerido para GitHub Pages en plan gratuito.
 - **Para reportar un side finding como "pre-existente"**, checkout el parent commit y re-verificar ahí — "también pasa en home" no alcanza. La barra: si vuelve a aparecer sin el cambio aplicado, era pre-existente; si no, fue introducido.
+- **Equivalencia de refactor:** antes de afirmar que un bloque es reemplazable por un componente existente, leé el componente real y compará clases; si difiere en escala (`text-2xl` vs `text-2xl md:text-3xl`), spacing (`mb-4` vs `mb-8 md:mb-12`) o estructura (wrapper/`<p>`), no es equivalente y el issue se reformula con el diff citado.
+- **Evidencia en issues:** todo issue se escribe con el comando + salida que prueban el problema (o la cita `archivo:línea` si es de diseño); nunca se abre un issue desde el texto de un subagente sin confirmarlo con `grep`/`read` propio.
 - **Diseño frontend anti-slop** → load `design-taste-frontend` (skill global, Leonxlnx/taste-skill). También: `minimalist-ui`, `industrial-brutalist-ui`, `redesign-existing-projects`, `image-to-code`.
 
 ## Environment
