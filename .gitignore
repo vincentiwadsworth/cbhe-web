@@ -33,4 +33,3 @@ pnpm-debug.log*
 /credenciales/
 # Skills de agentes: solo local, no van al repo
 /.agents/skills/
-/.opencode/skills/
