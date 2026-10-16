@@ -2,7 +2,7 @@
 title: Caraparicito recupera su patrimonio y lo convierte en una experiencia de turismo comunitario con el apoyo de TotalEnergies
 category: Noticias
 excerpt: CULTURA. La Casa de Encuentro Tenta Ñovaiti Piakatu Renda, ubicada en Caraparicito, resguarda piezas arqueológicas de 4.000 años de antigüedad y es el punto de partida de una ruta que también recupera tejidos, gastronomía, música y danza guaraníes.
-date: 16 Oct 2026
+date: 22 Oct 2026
 image: /images/caraparicito 5.jpg
 featured: true
 draft: false
