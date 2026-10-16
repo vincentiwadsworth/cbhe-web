@@ -5,7 +5,7 @@ excerpt: CULTURA. La Casa de Encuentro Tenta Ñovaiti Piakatu Renda, ubicada en 
 date: 22 Oct 2026
 image: /images/caraparicito 5.jpg
 featured: true
-draft: false
+draft: true
 ---
 
 Un cementerio prehispánico excavado en 2014, durante la construcción de la Planta Incahuasi, permitió reconstruir una historia de casi 4.000 años. Una década después del hallazgo fortuito, parte de los objetos recuperados permanece bajo custodia de la TCO Alto Parapetí y dentro de un espacio creado para conservarlos y para compartir su significado.
