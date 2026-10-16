@@ -4,7 +4,7 @@ category: Noticias
 excerpt: CAPACITACIÓN. El primer programa de entrenamiento incluyó 56 horas de formación especializada, con sesiones virtuales, talleres y actividades prácticas. La preparación busca desarrollar competencias técnicas y apoyar el camino hacia certificaciones internacionales.
 date: 20 Oct 2026
 image: /images/Capacitación CBHE.jpg
-featured: false
+featured: true
 draft: false
 ---
 
