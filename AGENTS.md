@@ -7,7 +7,7 @@
 | SSG | Astro 7.x | Static output, zero JS; `compressHTML: true` (ver Gotchas) |
 | CSS | Tailwind v4 | `@tailwindcss/vite` plugin, NO `@astrojs/tailwind` |
 | Content | Zod + Content Collections | `src/content.config.ts`, `glob()` loader, `z` from `astro/zod` |
-| CMS | Sveltia CMS | `public/admin/`, backend `github`, `skip_ci: false` (Save publica por defecto; `draft` es el borrador real) |
+| CMS | Sveltia CMS | `public/admin/`, backend `github`, `skip_ci: false` (Publish publica por defecto; `draft` es el borrador real) |
 | Deploy | GitHub Pages | Workflow-based (`deploy.yml`), repo público |
 | Forms | Web3Forms | `WEB3FORMS_KEY` env var |
 | Icons | astro-icon | `material-symbols` (59 selected), hyphens not underscores |
@@ -30,7 +30,7 @@
 - `getCollection("name", ({ data }) => !data.draft)` para filtrar borradores.
 
 ### Sveltia CMS
-- `Save` = commit sin `[skip ci]` → dispara deploy (publica).
+- `Publish` = commit sin `[skip ci]` → dispara deploy (publica).
 - `Save without Publishing` = commit con `[skip ci]` → no dispara deploy.
 - Auth: GitHub personal access token (scope `repo`), sin OAuth proxy.
 

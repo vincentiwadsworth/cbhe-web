@@ -34,16 +34,16 @@
 
 1. Entre al CMS con su token de GitHub (sección 1).
 2. Elija la colección (Cursos, Artículos, Empresas, Testimonios, Directorio o Banner publicitario).
-3. Escriba o edite el contenido y use **Save**: en 2 o 3 minutos el cambio está visible en el sitio.
+3. Escriba o edite el contenido y use **Publish**: en 2 o 3 minutos el cambio está visible en el sitio.
 
 ---
 
 ## 3. Publicar contenido
 
-- **Save** publica el cambio. En 2 o 3 minutos el contenido está visible en el sitio (`https://vincentiwadsworth.github.io/cbhe-web/`).
-- **Save without Publishing** guarda el cambio sin publicarlo. Úselo para seguir editando y publicar más tarde con Save.
+- **Publish** publica el cambio. En 2 o 3 minutos el contenido está visible en el sitio (`https://vincentiwadsworth.github.io/cbhe-web/`).
+- **Save without Publishing** guarda el cambio sin publicarlo. Úselo para seguir editando y publicar más tarde con Publish.
 
-Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento no aparece en el sitio. Para retirar del sitio algo ya publicado, active Borrador y guarde con Save.
+Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento no aparece en el sitio. Para retirar del sitio algo ya publicado, active Borrador y guarde con Publish.
 
 ---
 
@@ -210,7 +210,7 @@ Para restaurar una versión anterior:
 
 1. **Redacte y revise antes de publicar.** Escriba el contenido, guárdelo con Save without Publishing y revíselo con calma. Pida una segunda lectura a un colega cuando sea un texto importante.
 2. **Verifique datos y fechas.** Un curso mal fechado o un precio equivocado generan consultas que se evitan con una revisión de dos minutos.
-3. **Publique con Save** cuando el contenido esté listo.
+3. **Publique con Publish** cuando el contenido esté listo.
 4. **Espere uno o dos minutos** y revise el resultado en el sitio real, no en el panel. Confirme que el curso aparece en el catálogo, que el artículo se ve completo y que las imágenes cargan.
 5. **Si algo salió mal**, no publique otra corrección apurada. Avise al soporte técnico: restaura la versión anterior o corrige el error en el código.
 
@@ -255,7 +255,7 @@ La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y 
 | **Sveltia** | El CMS (Content Management System), el panel donde se edita el contenido del sitio |
 | **Markdown** | Lenguaje simple para escribir texto con formato (negritas, títulos, links) sin necesidad de HTML |
 | **Colección** | Grupo de contenido del mismo tipo: Cursos, Artículos, Empresas, Testimonios o Directorio |
-| **Save** | Guarda y publica el cambio; en 2 o 3 minutos aparece en el sitio |
+| **Publish** | Publica el cambio; en 2 o 3 minutos aparece en el sitio |
 | **Save without Publishing** | Guarda el cambio sin publicarlo, para seguir editando |
 | **Borrador** | Interruptor que oculta un elemento del sitio aunque se publique |
 | **Versión** | Fotografía completa del sitio en un momento dado, guardada con su número |
