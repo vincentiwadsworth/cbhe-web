@@ -194,6 +194,37 @@ const capitulos = [
     titleMaxW="max-w-3xl"
   />
 
+  <!-- Historia -->
+  <HistoriaCronologia
+    intro={historia.intro}
+    capitulos={capitulos}
+  />
+
+  <!-- Misión y Visión -->
+  <Section bg="surface-container-low" py="py-10 sm:py-14 md:py-20" id="mision-vision">
+    <div class="lg:grid lg:grid-cols-[3fr_2fr] lg:gap-12 xl:gap-16">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <Icon name="material-symbols:flag" class="text-primary size-6 shrink-0" />
+          <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface">Nuestra misión</h2>
+        </div>
+        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg max-w-[62ch]">
+          Promover el desarrollo eficiente, competitivo y sostenible del sector de hidrocarburos y energía en Bolivia. Representamos y defendemos los intereses de nuestros afiliados a través de la excelencia técnica, el diálogo constructivo y la proposición de políticas públicas basadas en el rigor científico y económico.
+        </p>
+      </div>
+
+      <div class="mt-10 lg:mt-0 lg:border-l lg:border-outline-variant/40 lg:pl-12 xl:pl-16">
+        <div class="flex items-center gap-3 mb-4">
+          <Icon name="material-symbols:visibility" class="text-primary size-6 shrink-0" />
+          <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface">Nuestra visión</h2>
+        </div>
+        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg max-w-[62ch]">
+          Ser el referente institucional indiscutible del sector energético boliviano a nivel nacional e internacional. Aspiramos a liderar la transición hacia una matriz energética moderna, consolidando a Bolivia como un actor clave mediante la innovación tecnológica y las mejores prácticas operativas globales.
+        </p>
+      </div>
+    </div>
+  </Section>
+
   <!-- Directorio -->
   <Section bg="surface" py="py-14 sm:py-20 md:py-28" id="directorio">
     <SectionHeading
@@ -238,37 +269,6 @@ const capitulos = [
           </ul>
         </article>
       ))}
-    </div>
-  </Section>
-
-  <!-- Historia -->
-  <HistoriaCronologia
-    intro={historia.intro}
-    capitulos={capitulos}
-  />
-
-  <!-- Misión y Visión -->
-  <Section bg="surface-container-low" py="py-10 sm:py-14 md:py-20" id="mision-vision">
-    <div class="lg:grid lg:grid-cols-[3fr_2fr] lg:gap-12 xl:gap-16">
-      <div>
-        <div class="flex items-center gap-3 mb-4">
-          <Icon name="material-symbols:flag" class="text-primary size-6 shrink-0" />
-          <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface">Nuestra misión</h2>
-        </div>
-        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg max-w-[62ch]">
-          Promover el desarrollo eficiente, competitivo y sostenible del sector de hidrocarburos y energía en Bolivia. Representamos y defendemos los intereses de nuestros afiliados a través de la excelencia técnica, el diálogo constructivo y la proposición de políticas públicas basadas en el rigor científico y económico.
-        </p>
-      </div>
-
-      <div class="mt-10 lg:mt-0 lg:border-l lg:border-outline-variant/40 lg:pl-12 xl:pl-16">
-        <div class="flex items-center gap-3 mb-4">
-          <Icon name="material-symbols:visibility" class="text-primary size-6 shrink-0" />
-          <h2 class="text-2xl md:text-3xl font-headline font-bold text-on-surface">Nuestra visión</h2>
-        </div>
-        <p class="font-body text-on-surface-variant leading-relaxed text-base md:text-lg max-w-[62ch]">
-          Ser el referente institucional indiscutible del sector energético boliviano a nivel nacional e internacional. Aspiramos a liderar la transición hacia una matriz energética moderna, consolidando a Bolivia como un actor clave mediante la innovación tecnológica y las mejores prácticas operativas globales.
-        </p>
-      </div>
     </div>
   </Section>
 
