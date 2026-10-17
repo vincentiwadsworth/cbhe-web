@@ -9,7 +9,7 @@ import PageLayout from "../layouts/PageLayout.astro";
 import PreciosGrid from "../components/PreciosGrid.astro";
 import TestimonialCarousel from "../components/TestimonialCarousel.astro";
 import preciosData from "../../data/prices.json";
-import { parseDateToTimestamp } from "../utils/date";
+import { parseDateToTimestamp, formatDateToEs } from "../utils/date";
 import { resolveImageUrl } from "../utils/images";
 
 const articulos = await getCollection("articulos", ({ data }) => !data.draft);
@@ -368,7 +368,7 @@ const gruposHome = [
             <h3 class="font-headline font-bold text-xl text-on-surface mb-3 line-clamp-2">{articulo.data.title}</h3>
             <p class="text-sm text-on-surface-variant mb-4 line-clamp-3">{articulo.data.excerpt}</p>
             <div class="mt-auto flex items-center justify-between w-full">
-              <span class="text-xs text-on-surface-variant">{articulo.data.date}</span>
+              <span class="text-xs text-on-surface-variant">{formatDateToEs(articulo.data.date)}</span>
               <a href={`novedades/${articulo.id}`} class="text-sm font-semibold text-primary hover:text-on-primary-container transition-colors">Leer más</a>
             </div>
           </div>

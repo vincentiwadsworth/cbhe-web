@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Icon from "../../components/Icon.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
-import { parseDateToISO } from "../../utils/date";
+import { parseDateToISO, formatDateToEs } from "../../utils/date";
 import { resolveImageUrl } from "../../utils/images";
 import bannerData from "../../../data/banner.json";
 
@@ -53,7 +53,7 @@ const bannerVisible = Boolean(bannerData.activo && bannerData.imagen);
     </span>
     <span class="flex items-center gap-1.5 text-sm text-on-surface-variant">
       <Icon name="material-symbols:calendar-today" class="size-4" />
-      {articulo.data.date}
+      {formatDateToEs(articulo.data.date)}
     </span>
   </div>
 

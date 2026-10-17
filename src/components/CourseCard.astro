@@ -1,6 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 import { resolveImageUrl } from "../utils/images";
+import { formatDateToEs } from "../utils/date";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -153,7 +154,7 @@ const hasImage = Boolean(data.image);
       <div class="space-y-3 mt-auto pt-6 border-t border-surface-container-high">
         <div class="flex items-center gap-3 text-sm text-on-surface-variant">
           <Icon name="material-symbols:calendar-today" class="text-outline size-5" />
-          <span>{data.startDate}</span>
+          <span>{formatDateToEs(data.startDate)}</span>
         </div>
         {data.price && (
           <div class="flex items-center gap-3 text-sm text-on-surface-variant">

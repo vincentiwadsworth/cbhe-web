@@ -6,6 +6,7 @@ import CourseInstructor from "../../components/CourseInstructor.astro";
 import CourseCTA from "../../components/CourseCTA.astro";
 import RelatedCourses from "../../components/RelatedCourses.astro";
 import { resolveImageUrl } from "../../utils/images";
+import { formatDateToEs } from "../../utils/date";
 
 export async function getStaticPaths() {
   const cursos = await getCollection("cursos", ({ data }) => !data.draft);
@@ -150,7 +151,7 @@ const hasBody = Boolean(curso.body && curso.body.trim());
           <p class="text-xs font-semibold text-on-surface uppercase tracking-wider mb-0.5">
             Fecha de inicio
           </p>
-          <p class="text-sm text-on-surface-variant">{curso.data.startDate}</p>
+          <p class="text-sm text-on-surface-variant">{formatDateToEs(curso.data.startDate)}</p>
         </div>
       </div>
 
@@ -218,7 +219,7 @@ const hasBody = Boolean(curso.body && curso.body.trim());
               Inscripción hasta
             </p>
             <p class="text-sm text-on-surface-variant">
-              {curso.data.registrationDeadline}
+              {formatDateToEs(curso.data.registrationDeadline)}
             </p>
           </div>
         </div>

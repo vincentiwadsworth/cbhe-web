@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import CursorGlow from "../components/CursorGlow.astro";
 import { getCollection } from "astro:content";
-import { isPastDate } from "../utils/date";
+import { isPastDate, formatDateToEs } from "../utils/date";
 
 export interface Props {
   title: string;
@@ -74,7 +74,7 @@ const todosCursos = (await getCollection("cursos", ({ data }) => !data.draft))
 const cursosContext = todosCursos.length > 0
   ? "Capacitaciones de la CBHE:\n\n" + todosCursos.map((c) => {
       const parts = [`- ${c.data.title} (${c.data.category}, ${c.data.modality})`];
-      parts.push(`  Inicio: ${c.data.startDate}`);
+      parts.push(`  Inicio: ${formatDateToEs(c.data.startDate)}`);
       parts.push(`  Precio: ${c.data.price}`);
       if (c.data.description) parts.push(`  ${c.data.description.slice(0, 150)}`);
       return parts.join("\n");
