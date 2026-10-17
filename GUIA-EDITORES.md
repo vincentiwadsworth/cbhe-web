@@ -6,7 +6,7 @@
 ## Resumen rápido
 
 - Cómo entrar al CMS, escribir contenido y publicarlo en el sitio web de la CBHE.
-- Diferencia entre **Guardar** (borrador privado) y **Publicar** (visible en el sitio web público).
+- Diferencia entre guardar un cambio sin publicarlo y publicarlo.
 - Cómo subir imágenes, qué formatos usar y cómo resolver problemas comunes.
 - Qué cambios requieren soporte técnico y cómo funcionan las copias de seguridad.
 
@@ -34,16 +34,16 @@
 
 1. Entre al CMS con su token de GitHub (sección 1).
 2. Elija la colección (Cursos, Artículos, Empresas, Testimonios, Directorio o Banner publicitario).
-3. Escriba o edite el contenido y use **Save & Publish**: en 2 o 3 minutos el cambio está visible en el sitio.
+3. Escriba o edite el contenido y use **Save**: en 2 o 3 minutos el cambio está visible en el sitio.
 
 ---
 
 ## 3. Publicar contenido
 
-- **Save** = commit con `[skip ci]` → el cambio queda en el CMS pero **no se publica**. Ideal para seguir editando.
-- **Save & Publish** = commit sin `[skip ci]` → dispara el build automático y en ~2-3 minutos el contenido está **visible en el sitio público** (`https://vincentiwadsworth.github.io/cbhe-web/`).
+- **Save** publica el cambio. En 2 o 3 minutos el contenido está visible en el sitio (`https://vincentiwadsworth.github.io/cbhe-web/`).
+- **Save without Publishing** guarda el cambio sin publicarlo. Úselo para seguir editando y publicar más tarde con Save.
 
-Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento nunca aparece en el sitio, ni siquiera cuando usa Save and Publish. Son dos controles distintos: Save decide si publica ahora; Borrador decide si el elemento existe en el sitio.
+Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento no aparece en el sitio. Para retirar del sitio algo ya publicado, active Borrador y guarde con Save.
 
 ---
 
@@ -84,7 +84,7 @@ Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté 
 | Extracto | ✅ | Texto | Resumen de 1-2 líneas que aparece en la lista de novedades |
 | Fecha | ✅ | Fecha | Fecha de publicación (formato: DD MMM YYYY) |
 | Imagen | No | Imagen | Imagen principal del artículo |
-| Destacado en portada | No | Switch | Activado = aparece destacado al inicio de la página Novedades (se excluye de la grilla general) y en la sección del Home |
+| Destacado en portada | No | Switch | Activado = aparece como banner destacado al inicio de la página Novedades |
 | Contenido completo | ✅ | Markdown | Cuerpo del artículo |
 | Borrador | No | Switch | Activado = no aparece en el sitio |
 
@@ -151,7 +151,7 @@ Para facilitar la administración, el sitio web aplica reglas automáticas al co
 - **Próximas capacitaciones:** Lista cronológica (ascendente) de los cursos activos que inician en meses futuros. Si no hay próximos cursos, la sección se oculta automáticamente.
 
 #### Página de Novedades (Noticias y Publicaciones)
-- **Artículo Destacado:** El artículo más reciente marcado como **Destacado en portada** aparecerá como un banner destacado de gran formato en la parte superior de la página de Novedades (y también en el carrusel de destacados de la página de inicio). Se excluye de la grilla de noticias general para evitar duplicados.
+- **Artículo Destacado:** El artículo más reciente marcado como **Destacado en portada** aparece como un banner de gran formato en la parte superior de la página de Novedades. El resto de los artículos, destacados o no, se listan debajo del más nuevo al más viejo.
 
 ---
 
@@ -208,9 +208,9 @@ Para restaurar una versión anterior:
 
 ## 9. Flujo de trabajo recomendado
 
-1. **Redacte y revise antes de publicar.** Escriba el contenido, guárdelo con Save y revíselo con calma. Pida una segunda lectura a un colega cuando sea un texto importante.
+1. **Redacte y revise antes de publicar.** Escriba el contenido, guárdelo con Save without Publishing y revíselo con calma. Pida una segunda lectura a un colega cuando sea un texto importante.
 2. **Verifique datos y fechas.** Un curso mal fechado o un precio equivocado generan consultas que se evitan con una revisión de dos minutos.
-3. **Publique con Save and Publish** cuando el contenido esté listo.
+3. **Publique con Save** cuando el contenido esté listo.
 4. **Espere uno o dos minutos** y revise el resultado en el sitio real, no en el panel. Confirme que el curso aparece en el catálogo, que el artículo se ve completo y que las imágenes cargan.
 5. **Si algo salió mal**, no publique otra corrección apurada. Avise al soporte técnico: restaura la versión anterior o corrige el error en el código.
 
@@ -255,8 +255,8 @@ La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y 
 | **Sveltia** | El CMS (Content Management System), el panel donde se edita el contenido del sitio |
 | **Markdown** | Lenguaje simple para escribir texto con formato (negritas, títulos, links) sin necesidad de HTML |
 | **Colección** | Grupo de contenido del mismo tipo: Cursos, Artículos, Empresas, Testimonios o Directorio |
-| **Save / Guardar** | Guarda el cambio como borrador en GitHub, no se publica en el sitio |
-| **Save & Publish / Publicar** | Guarda y dispara el deploy automático, el cambio aparece en el sitio web |
+| **Save** | Guarda y publica el cambio; en 2 o 3 minutos aparece en el sitio |
+| **Save without Publishing** | Guarda el cambio sin publicarlo, para seguir editando |
 | **Borrador** | Interruptor que oculta un elemento del sitio aunque se publique |
 | **Versión** | Fotografía completa del sitio en un momento dado, guardada con su número |
 | **Deploy** | Proceso automático que construye el sitio y lo sube a internet |
@@ -265,7 +265,7 @@ La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y 
 | **RSE** | Responsabilidad Social Empresarial |
 | **Sello CBHE** | Certificación que la CBHE otorga a empresas socialmente responsables |
 | **Upstream / Downstream** | Segmentos de la industria: exploración/producción vs. transporte/distribución |
-| **`[skip ci]`** | Etiqueta en un commit que le dice a GitHub "no hagas deploy". Save la incluye; Save & Publish no |
+| **`[skip ci]`** | Etiqueta en un commit que le dice a GitHub "no hagas deploy". La agrega Save without Publishing |
 | **DNS** | Sistema que traduce nombres de dominio (cbhe.org.bo) a direcciones de internet. Como la guía telefónica de la web: sin DNS, un dominio no lleva a ningún lado. Se configura en nic.bo |
 
 ---

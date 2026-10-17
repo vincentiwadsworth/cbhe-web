@@ -209,7 +209,7 @@ backend:
 ```
 
 - **Auth**: GitHub personal access token con scope `repo`. Sin OAuth proxy.
-- `skip_ci: false`: tanto **Save** como **Save and Publish** crean commits sin `[skip ci]`, por lo que ambos disparan el deploy. Para que un contenido no aparezca en el sitio se usa el campo `draft` (interruptor Borrador del CMS), que el build filtra.
+- `skip_ci: false`: **Save** publica (commit sin `[skip ci]`). La opción **Save without Publishing** agrega `[skip ci]` y no dispara deploy. Para ocultar un contenido ya publicado se activa el campo `draft` y se guarda con Save.
 - **Media**: `public/images/` → ruta pública `/images/`
 
 ### Colecciones
@@ -324,7 +324,7 @@ Las Edge Functions `generate-qr` y `asistente` acceden a estos vía `Deno.env.ge
 | **`<base href>` y paths root-relative** | Un path con `/` inicial reemplaza el path del base URL, no lo extiende. Ej: `<base href="/cbhe-web/">` + `href="/contacto"` → el navegador va a `/contacto`, no a `/cbhe-web/contacto` | Links siempre sin `/` inicial: `href="contacto"` |
 | **`peer-checked:` no funciona en nietos** | Tailwind `peer-*` solo afecta hermanos directos del elemento `.peer`, no nietos | Reestructurar el markup para que el target sea hermano directo |
 | **`BASE_URL` no tiene trailing slash** | `import.meta.env.BASE_URL` en Astro devuelve `/cbhe-web` sin barra final | Agregar manualmente: `` `${import.meta.env.BASE_URL}/gracias` `` |
-| **Sveltia `skip_ci`** | `config.yml` usa `skip_ci: false`: cada commit del CMS (Save o Save and Publish) dispara deploy | Para retener contenido sin publicarlo, usar el campo `draft`; no tocar `skip_ci` |
+| **Sveltia `skip_ci`** | `config.yml` usa `skip_ci: false`: **Save** publica; **Save without Publishing** no | Para ocultar contenido, usar el campo `draft`; no tocar `skip_ci` |
 | **Preview local con custom domain** | `Astro.site` apunta a producción, `astro preview` en localhost pide assets cross-origin → ORB los bloquea → página sin CSS | Cambiar `site` a `http://localhost:4321`, rebuild, preview, restaurar. No intentar route interception en Playwright |
 | **Runner de GitHub Actions saturado** | El job `deploy` puede quedarse en `Waiting for a hosted runner` por saturación de la plataforma | `gh workflow run deploy.yml --ref main` (disparo manual se procesa aunque los auto-triggers estén trabados) |
 | **QR tarda en aparecer** | La Edge Function es asíncrona — el QR no se genera instantáneamente al insertar | Esperar 1-2 segundos. Si `qr_url` sigue NULL, reintentar desde Dashboard → Database → Webhooks → Logs → Retry |

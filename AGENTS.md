@@ -30,8 +30,8 @@
 - `getCollection("name", ({ data }) => !data.draft)` para filtrar borradores.
 
 ### Sveltia CMS
-- `Save` = commit con `[skip ci]` → no dispara deploy.
-- `Save and Publish` = commit sin `[skip ci]` → dispara deploy.
+- `Save` = commit sin `[skip ci]` → dispara deploy (publica).
+- `Save without Publishing` = commit con `[skip ci]` → no dispara deploy.
 - Auth: GitHub personal access token (scope `repo`), sin OAuth proxy.
 
 ### Web3Forms redirect
