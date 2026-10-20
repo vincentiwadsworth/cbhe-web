@@ -22,6 +22,8 @@ La capacitación estuvo a cargo de **Oliver Añez y Verónica Jaldín**, quienes
 
 ![La capacitación se realizó de manera virtual y presencial, con el objetivo de lograr una formación integral.](/images/Capacitaci%C3%B3n%20virtual.jpg)
 
+El próximo curso para inspectores de soldadura se iniciará el 26 de octubre. Los interesados pueden acceder a más información y al registro a través del siguiente link: [https://forms.cloud.microsoft/pages/responsepage.aspx?id=wN_PbUGitUyyyI24Nnvu1tPcc9YJW2RIgsb8xgZ1o_hUMkJONVBSVDczRDE0REIzMEZKWVEyNjhGSC4u&route=shorturl](https://forms.cloud.microsoft/pages/responsepage.aspx?id=wN_PbUGitUyyyI24Nnvu1tPcc9YJW2RIgsb8xgZ1o_hUMkJONVBSVDczRDE0REIzMEZKWVEyNjhGSC4u&route=shorturl) .
+
 La Cámara impulsa la formación continua del personal técnico como un mecanismo para ayudar a garantizar la seguridad, la calidad y la integridad de los proyectos industriales del país. Este primer programa de entrenamiento se inscribe en esa línea de desarrollo de capacidades profesionales y el objetivo es replicarlos.
 
 ![](/images/1781185604996.jfif)
