@@ -204,6 +204,24 @@ const capitulos = [
     titleMaxW="max-w-3xl"
   />
 
+  <!-- Índice de contenidos -->
+  <nav aria-label="Contenidos de esta página" class="bg-surface-container-low border-b border-outline-variant/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <ul class="flex flex-wrap gap-x-1 py-1 md:py-2 text-xs font-semibold tracking-wider uppercase">
+        {[
+          { href: "quienes-somos/#historia", label: "Historia" },
+          { href: "quienes-somos/#mision-vision", label: "Misión y visión" },
+          { href: "quienes-somos/#comite-ejecutivo", label: "Comité ejecutivo" },
+          { href: "quienes-somos/#directores-grupos", label: "Directores por grupo" },
+        ].map((s) => (
+          <li>
+            <a href={s.href} class="inline-flex items-center min-h-[44px] px-3 rounded-md text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors">{s.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+
   <!-- Historia -->
   <HistoriaCronologia
     intro={historia.intro}
@@ -242,7 +260,7 @@ const capitulos = [
       description="La conducción institucional de la CBHE: el Comité Ejecutivo y los representantes de las empresas afiliadas organizados por grupo industrial. Elegidos por la Asamblea General de Socios."
     />
 
-    <div class="rounded-xl bg-inverse-surface px-6 py-7 md:px-8 md:py-8">
+    <div id="comite-ejecutivo" class="scroll-mt-24 rounded-xl bg-inverse-surface px-6 py-7 md:px-8 md:py-8">
       <div class="flex items-center gap-3 mb-6">
         <Icon name="material-symbols:groups" class="text-primary-fixed-dim size-6 shrink-0" />
         <h3 class="font-headline font-bold text-inverse-on-surface text-lg md:text-xl">Comité Ejecutivo</h3>
@@ -265,7 +283,7 @@ const capitulos = [
       ))}
     </div>
 
-    <h3 class="font-headline font-bold text-on-surface text-base md:text-lg mt-10 md:mt-12 mb-5">Directores por grupo industrial</h3>
+    <h3 id="directores-grupos" class="scroll-mt-24 font-headline font-bold text-on-surface text-base md:text-lg mt-10 md:mt-12 mb-5">Directores por grupo industrial</h3>
 
     <div class="flex flex-col gap-5">
       {gruposDirectorio.map((g) => (
