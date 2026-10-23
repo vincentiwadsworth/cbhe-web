@@ -265,15 +265,32 @@ const capitulos = [
         <Icon name="material-symbols:groups" class="text-primary-fixed-dim size-6 shrink-0" />
         <h3 class="font-headline font-bold text-inverse-on-surface text-lg md:text-xl">Comité Ejecutivo</h3>
       </div>
-      <div class="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] [grid-template-rows:repeat(3,auto)] gap-x-8 gap-y-1">
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] [grid-template-rows:repeat(4,auto)] gap-x-8 gap-y-2">
         {miembrosComite.map((m) => (
-          <div class="grid grid-rows-subgrid row-span-3">
+          <div class="grid grid-rows-subgrid row-span-4 gap-y-1">
+            {m.foto ? (
+              <img
+                src={m.foto}
+                alt={`Retrato de ${m.nombre}`}
+                width="320"
+                height="400"
+                loading="lazy"
+                class="aspect-[4/5] w-24 md:w-28 rounded-lg object-cover mb-3"
+              />
+            ) : (
+              <div aria-hidden="true" class="aspect-[4/5] w-24 md:w-28 rounded-lg bg-inverse-on-surface/10 border border-inverse-on-surface/15 grid place-items-center mb-3">
+                <Icon name="material-symbols:person" class="size-10 text-inverse-on-surface/40" />
+              </div>
+            )}
             <div class="text-xs font-semibold tracking-wider uppercase text-primary-fixed-dim">{m.cargo}</div>
             <div class="font-headline font-bold text-inverse-on-surface [text-wrap:balance]">{m.nombre}</div>
             <div class="text-xs font-semibold tracking-wider uppercase text-inverse-on-surface/70">{m.empresa}</div>
           </div>
         ))}
       </div>
+      {miembrosComite.some((m) => !m.foto) && (
+        <p class="mt-6 text-xs text-inverse-on-surface/50">Las fotos del comité ejecutivo se publicarán próximamente.</p>
+      )}
       {directoresEjecutivos.map((m) => (
         <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 mt-6 pt-6 border-t border-inverse-on-surface/20">
           <span class="text-xs font-semibold tracking-wider uppercase text-primary-fixed-dim">{m.cargo}</span>

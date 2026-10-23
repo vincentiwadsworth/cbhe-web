@@ -1,9 +1,9 @@
 {
   "comiteEjecutivo": [
-    { "cargo": "Presidente", "empresa": "Repsol", "nombre": "Mariano Ferrari" },
-    { "cargo": "Vicepresidente", "empresa": "TotalEnergies", "nombre": "Sergio Giorgi" },
-    { "cargo": "Secretario", "empresa": "Halliburton", "nombre": "Pablo Moreno" },
-    { "cargo": "Tesorero", "empresa": "Confipetrol", "nombre": "Diego Orlando Merchan Pico" },
+    { "cargo": "Presidente", "empresa": "Repsol", "nombre": "Mariano Ferrari", "foto": "" },
+    { "cargo": "Vicepresidente", "empresa": "TotalEnergies", "nombre": "Sergio Giorgi", "foto": "" },
+    { "cargo": "Secretario", "empresa": "Halliburton", "nombre": "Pablo Moreno", "foto": "" },
+    { "cargo": "Tesorero", "empresa": "Confipetrol", "nombre": "Diego Orlando Merchan Pico", "foto": "" },
     { "cargo": "Director Ejecutivo", "empresa": "CBHE", "nombre": "Iver von Borries" }
   ],
   "grupos": [
