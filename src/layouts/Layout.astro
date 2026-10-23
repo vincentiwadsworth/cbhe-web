@@ -37,6 +37,10 @@ const baseHref = import.meta.env.BASE_URL === '/'
   ? `${siteUrl}/`
   : `${siteUrl}${import.meta.env.BASE_URL}`;
 
+// Con <base href> un href="#ancla" apunta al home, no a la página actual.
+// Se calcula el path relativo al base (sin "/" inicial) para el skip link.
+const skipHref = `${Astro.url.pathname.replace(import.meta.env.BASE_URL, "")}#main-content`;
+
 // El asistente llama a una Edge Function de Supabase que guarda la clave de
 // DeepSeek server-side. Ninguna clave de IA se expone al navegador.
 const chatEndpoint = import.meta.env.VITE_SUPABASE_URL
@@ -266,7 +270,7 @@ if (currentPath) {
   </head>
   <body>
     <a
-      href="#main-content"
+      href={skipHref}
       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:rounded-sm"
     >
       Saltar al contenido principal
