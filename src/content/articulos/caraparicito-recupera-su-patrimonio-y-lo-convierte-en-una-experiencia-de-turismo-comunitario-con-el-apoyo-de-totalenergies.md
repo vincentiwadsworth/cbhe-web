@@ -14,7 +14,7 @@ La Casa de Encuentro _Tenta Ñovaiti Piakatu Renda_, ubicada en Caraparicito, en
 
 Así nació “Caraparicito Pintado”, el proyecto impulsado con el apoyo de TotalEnergies EP Bolivie y que hoy tiene como protagonista a la comunidad. “Tenemos nuestra cultura, la que siempre tuvimos y la que tuvieron nuestros ancestros: la artesanía, la gastronomía. Todo eso lo estamos reactivando y mostrando”, afirma Alejandro Rojas, capitán grande de la TCO Alto Parapetí.
 
-![El trabajo de recuperación de las piezas arqueológicas se inició en 2014. La Casa de Encuentro alberga las piezas.](/images/caraparicito%20terreno.jpg)
+![El trabajo de recuperación de las piezas arqueológicas se inició en 2014. La Casa de Encuentro alberga las piezas.](/images/caraparicito%20terreno.jpg "El trabajo de recuperación de las piezas arqueológicas se inició en 2014. La Casa de Encuentro alberga las piezas.")
 
 **Un patrimonio que volvió a la comunidad**
 
@@ -24,7 +24,7 @@ Allí se excavaron 78 puntos y se identificaron restos correspondientes a 113 in
 
 Tras un diálogo entre la TCO Alto Parapetí, TotalEnergies y las autoridades nacionales, se acordó conservar los objetos arqueológicos dentro de su territorio y bajo responsabilidad de la comunidad Caraparicito.
 
-![Las mujeres son las que lideran el proyecto de turismo comunitario. Han recuperado sus tejidos.](/images/caraparicito%203.jpg)
+![Las mujeres son las que lideran el proyecto de turismo comunitario. Han recuperado sus tejidos.](/images/caraparicito%203.jpg "Las mujeres son las que lideran el proyecto de turismo comunitario. Han recuperado sus tejidos.")
 
 Así nació la Casa de Encuentro, abierta al público el 6 de diciembre de 2024. Ese día se oficializó la transferencia de la custodia de los objetos arqueológicos de TotalEnergies EP Bolivie a la TCO Alto Parapetí. La infraestructura, inspirada en la cosmovisión guaraní, exhibe 52 piezas precolombinas y cuenta con depósitos acondicionados para resguardar el resto del patrimonio asociado a los entierros. 
 
@@ -64,4 +64,4 @@ La ruta aún está en construcción, pero tiene una base sólida: las piezas arq
 
 Como parte de la difusión y valoración de este patrimonio, que da sentido a la ruta turística, la exposición fotográfica _Incahuasi:_ _Un hallazgo para la historia_ se presenta en la galería Manzana 1 Espacio de Arte hasta el 27 de diciembre.
 
-![La exposición fotográfica estará en la Manzana 1 hasta fines de diciembres.](/images/caraparicito%204.jpg)
+![La exposición fotográfica estará en la Manzana 1 hasta fines de diciembres.](/images/caraparicito%204.jpg "La exposición fotográfica estará en la Manzana 1 hasta fines de diciembres.")

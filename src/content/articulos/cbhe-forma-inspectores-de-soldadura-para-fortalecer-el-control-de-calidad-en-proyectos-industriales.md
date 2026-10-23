@@ -20,7 +20,7 @@ La propuesta formativa fue diseñada para profesionales que buscan desarrollar c
 
 La capacitación estuvo a cargo de **Oliver Añez y Verónica Jaldín**, quienes compartieron su experiencia, conocimientos técnicos y una perspectiva práctica del trabajo en la industria. La CBHE destaca el compromiso, la disciplina y la participación activa de los asistentes durante las distintas etapas del programa.
 
-![La capacitación se realizó de manera virtual y presencial, con el objetivo de lograr una formación integral.](/images/Capacitaci%C3%B3n%20virtual.jpg)
+![La capacitación se realizó de manera virtual y presencial, con el objetivo de lograr una formación integral.](/images/Capacitaci%C3%B3n%20virtual.jpg "La capacitación se realizó de manera virtual y presencial, con el objetivo de lograr una formación integral.")
 
 El próximo curso para inspectores de soldadura se iniciará el 26 de octubre. Los interesados pueden acceder a [**este enlace**](https://forms.cloud.microsoft/pages/responsepage.aspx?id=wN_PbUGitUyyyI24Nnvu1tPcc9YJW2RIgsb8xgZ1o_hUMkJONVBSVDczRDE0REIzMEZKWVEyNjhGSC4u&route=shorturl) para obtener mayor información e inscribirse.
 

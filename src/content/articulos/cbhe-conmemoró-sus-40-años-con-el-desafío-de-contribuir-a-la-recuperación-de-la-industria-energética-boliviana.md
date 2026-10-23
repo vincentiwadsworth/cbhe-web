@@ -42,7 +42,7 @@ Von Borries destacó la labor de quienes trabajan en las empresas operadoras, co
 
 Para el ejecutivo, la trayectoria de la institución también refleja una característica del país y de quienes trabajan en él: la capacidad de persistir en contextos difíciles. “Bolivia siempre ha sido difícil, pero también siempre ha sido posible”, expresó al agradecer el esfuerzo de las personas y compañías que forman parte de la CBHE.
 
-![El acto contó con la participación de los afiliados y de diferentes instituciones.](/images/Asistentes%20CBHE.png)
+![El acto contó con la participación de los afiliados y de diferentes instituciones.](/images/Asistentes%20CBHE.png "El acto contó con la participación de los afiliados y de diferentes instituciones.")
 
 El acto contó con la participación de los afiliados y de diferentes instituciones.
 
