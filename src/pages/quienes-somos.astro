@@ -153,8 +153,18 @@ const historia = {
   ],
 };
 
+type MiembroDirectorio = { nombre: string; cargo: string; empresa: string };
+
 const comiteEjecutivo = directorioData.comiteEjecutivo ?? [];
 const gruposDirectorio = directorioData.grupos;
+
+// El Director Ejecutivo no integra el comité: se muestra aparte, fuera de la grilla.
+const esDirectorEjecutivo = (m: MiembroDirectorio) => /ejecutivo/i.test(m.cargo);
+const miembrosComite = comiteEjecutivo.filter((m) => !esDirectorEjecutivo(m));
+const directoresEjecutivos = comiteEjecutivo.filter(esDirectorEjecutivo);
+
+const normalizarNombre = (nombre: string) => nombre.trim().toLowerCase();
+const nombresComite = new Set(comiteEjecutivo.map((m) => normalizarNombre(m.nombre)));
 
 const capitulos = [
   {
@@ -238,7 +248,7 @@ const capitulos = [
         <h3 class="font-headline font-bold text-inverse-on-surface text-lg md:text-xl">Comité Ejecutivo</h3>
       </div>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] [grid-template-rows:repeat(3,auto)] gap-x-8 gap-y-1">
-        {comiteEjecutivo.map((m) => (
+        {miembrosComite.map((m) => (
           <div class="grid grid-rows-subgrid row-span-3">
             <div class="text-xs font-semibold tracking-wider uppercase text-primary-fixed-dim">{m.cargo}</div>
             <div class="font-headline font-bold text-inverse-on-surface [text-wrap:balance]">{m.nombre}</div>
@@ -246,6 +256,13 @@ const capitulos = [
           </div>
         ))}
       </div>
+      {directoresEjecutivos.map((m) => (
+        <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 mt-6 pt-6 border-t border-inverse-on-surface/20">
+          <span class="text-xs font-semibold tracking-wider uppercase text-primary-fixed-dim">{m.cargo}</span>
+          <span class="font-headline font-bold text-inverse-on-surface [text-wrap:balance]">{m.nombre}</span>
+          <span class="text-xs font-semibold tracking-wider uppercase text-inverse-on-surface/70">{m.empresa}</span>
+        </div>
+      ))}
     </div>
 
     <h3 class="font-headline font-bold text-on-surface text-base md:text-lg mt-10 md:mt-12 mb-5">Directores por grupo industrial</h3>
@@ -257,15 +274,21 @@ const capitulos = [
             {g.grupo}
           </h3>
           <ul class="grid grid-cols-[repeat(auto-fit,minmax(min(340px,100%),1fr))]">
-            {g.miembros.map((m) => (
-              <li class="px-6 py-3.5 border-b border-outline-variant/30 hover:bg-surface-container transition-colors">
-                <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
-                  <span class="font-headline font-bold text-on-surface [text-wrap:balance]">{m.nombre}</span>
-                  <span class="text-xs font-semibold tracking-wider uppercase text-primary">{m.cargo}</span>
-                </div>
-                <div class="mt-1 text-xs font-semibold tracking-wider uppercase text-on-surface-variant">{m.empresa}</div>
-              </li>
-            ))}
+            {g.miembros.map((m) => {
+              // Quien ya figura en el comité no repite su nombre: la empresa ocupa la línea destacada.
+              const enComite = nombresComite.has(normalizarNombre(m.nombre));
+              return (
+                <li class="px-6 py-3.5 border-b border-outline-variant/30 hover:bg-surface-container transition-colors">
+                  <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                    <span class="font-headline font-bold text-on-surface [text-wrap:balance]">{enComite ? m.empresa : m.nombre}</span>
+                    <span class="text-xs font-semibold tracking-wider uppercase text-primary">{m.cargo}</span>
+                  </div>
+                  {!enComite && (
+                    <div class="mt-1 text-xs font-semibold tracking-wider uppercase text-on-surface-variant">{m.empresa}</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </article>
       ))}
