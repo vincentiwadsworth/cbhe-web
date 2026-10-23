@@ -5,23 +5,29 @@ import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import { satteri } from "@astrojs/markdown-satteri"; // shortcut: dependencia directa de astro 7.3.5, si astro la saca hay que instalarla
 
-// Un <img> con `title` en un párrafo se renderiza como <figure> con el title de pie de foto; el resto de los párrafos (varias imágenes, sin title) no cambia. Es el equivalente Sätteri de un plugin rehype (ver markdown-content#plugins).
+// Un <img> con `title` dentro de un párrafo se renderiza como <figure> con ese texto de pie de foto; los párrafos con varias imágenes o sin title no cambian. Es el equivalente Sätteri de un plugin rehype (ver markdown-content#plugins).
+/** @type {import("satteri").HastPluginDefinition} */
 const figureCaption = {
   name: "figure-caption",
   element: {
     filter: ["p"],
     visit(node, ctx) {
-      const images = node.children.filter(
-        (child) => child.type === "element" && child.tagName === "img",
-      );
+      // Los tipos de satteri no narrowean el contenido del párrafo; el shape del nodo lo valida el renderer, así que se opera sobre el nodo suelto.
+      const parrafo = /** @type {any} */ (node);
+      /** @param {any} child */
+      const esImagen = (child) => child.type === "element" && child.tagName === "img";
+      /** @param {any} child */
+      const noEsImagenNiTextoVacio = (child) =>
+        child !== images[0] && !(child.type === "text" && !String(child.value ?? "").trim());
+      /** @type {any[]} */
+      const images = parrafo.children.filter(esImagen);
       const title = images.length === 1 && images[0].properties?.title;
 
       if (typeof title !== "string" || !title.trim()) return;
 
       const { title: _title, ...properties } = images[0].properties ?? {};
-      const rest = node.children.filter(
-        (child) => child !== images[0] && !(child.type === "text" && !child.value.trim()),
-      );
+      /** @type {any[]} */
+      const rest = parrafo.children.filter(noEsImagenNiTextoVacio);
       const figure = {
         type: "element",
         tagName: "figure",
@@ -40,9 +46,11 @@ const figureCaption = {
       // <figure> no es contenido válido dentro de <p>: se reemplaza el párrafo, y el texto que lo acompañaba se conserva en un párrafo propio.
       ctx.replaceNode(
         node,
-        rest.length
-          ? [figure, { type: "element", tagName: "p", properties: node.properties, children: rest }]
-          : figure,
+        /** @type {any} */ (
+          rest.length
+            ? [figure, { type: "element", tagName: "p", properties: parrafo.properties, children: rest }]
+            : figure
+        ),
       );
     },
   },
