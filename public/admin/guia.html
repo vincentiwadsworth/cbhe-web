@@ -206,6 +206,17 @@
       </div>
 
       <div class="card">
+        <h2><span class="emoji">📌</span> Borrador</h2>
+        <p>El interruptor <strong>Borrador</strong> saca el contenido del sitio sin borrarlo: la nota deja de aparecer en Novedades y su dirección deja de estar publicada. El texto queda guardado y se puede volver a publicar más adelante.</p>
+        <ul>
+          <li>Para retirar algo que ya está publicado: activá <strong>Borrador</strong> y guardá con <span class="badge">Publish</span>.</li>
+          <li>Para volver a publicarlo: desactivá <strong>Borrador</strong> y guardá con <span class="badge">Publish</span>.</li>
+          <li>Si guardás con <span class="badge">Save without Publishing</span>, el sitio sigue mostrando lo último publicado: el cambio queda solo en el panel.</li>
+        </ul>
+        <p><strong>No hay publicación programada.</strong> El panel no puede dejar una nota agendada para que aparezca sola otro día: para que se vea tal fecha, hay que guardarla con Publish ese día.</p>
+      </div>
+
+      <div class="card">
         <h2><span class="emoji">🖼️</span> Cómo subir imágenes</h2>
         <ol>
           <li>En cualquier campo de imagen, hacé clic en el botón para subir.</li>
@@ -213,6 +224,19 @@
           <li>Las imágenes se guardan automáticamente en <code>public/images/</code>.</li>
           <li>Conviene usar imágenes en formato WebP o JPG, con un máximo de 2 MB por imagen, ideal menos de 500 KB.</li>
         </ol>
+      </div>
+
+      <div class="card">
+        <h2><span class="emoji">📷</span> Pie de foto</h2>
+        <p>El pie de foto se escribe en el campo <strong>Título</strong> de la imagen, no en el texto del artículo. En el cuerpo, la imagen aparece como un bloque con el encabezado «Imagen»: hacé clic en el encabezado para desplegar sus campos.</p>
+        <ul>
+          <li><strong>Origen</strong> — el archivo de la imagen. Acá se elige o se sube la foto.</li>
+          <li><strong>Texto alternativo</strong> — la descripción de la imagen para quien no puede verla (lectores de pantalla y buscadores). No se muestra en la página.</li>
+          <li><strong>Título</strong> — el pie de foto. Es el único de los tres campos que se ve en el sitio, en letra chica debajo de la imagen.</li>
+          <li><strong>Enlace</strong> — la dirección a la que lleva la imagen al hacer clic. No es el pie de foto.</li>
+        </ul>
+        <p>El pie se muestra solo cuando la imagen está sola en su párrafo. Si en el mismo párrafo hay otra imagen o texto, la imagen se publica sin pie.</p>
+        <p>En modo texto (Markdown), el pie va entre comillas después de la dirección de la imagen: <code>![](/images/foto.jpg "Pie de foto")</code>.</p>
       </div>
 
       <div class="card">

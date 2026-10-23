@@ -43,7 +43,13 @@
 - **Publish** publica el cambio. En 2 o 3 minutos el contenido está visible en el sitio (`https://vincentiwadsworth.github.io/cbhe-web/`).
 - **Save without Publishing** guarda el cambio sin publicarlo. Úselo para seguir editando y publicar más tarde con Publish.
 
-Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento no aparece en el sitio. Para retirar del sitio algo ya publicado, active Borrador y guarde con Publish.
+Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento no aparece en el sitio: la nota sale de la lista de Novedades y su dirección deja de estar publicada, pero el contenido no se borra y se puede volver a publicar.
+
+- Para retirar del sitio algo ya publicado: active Borrador y guarde con **Publish**.
+- Para volver a publicarlo: desactive Borrador y guarde con **Publish**.
+- Si guarda con **Save without Publishing**, el sitio sigue mostrando la última versión publicada: el cambio queda solo en el panel.
+
+El CMS **no** tiene publicación programada: no se puede dejar una nota agendada para que aparezca sola en una fecha futura. Si una nota tiene que aparecer un día determinado, hay que guardarla con **Publish** ese día.
 
 ---
 
@@ -52,6 +58,21 @@ Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté 
 - **Formatos**: JPG para fotos, PNG para logos (transparencia), WebP para mejor calidad con menor peso.
 - **Tamaño**: máximo 2 MB por imagen, ideal menos de 500 KB. Ancho recomendado: 1920 píxeles. Si la imagen supera los 2 MB, Sveltia puede fallar al guardar.
 - **Dónde se guardan**: carpeta `public/images/`. Desde el contenido se referencian como `/images/nombre-archivo.jpg`.
+
+### Pie de foto
+
+El pie de foto va en el campo **Título** de la imagen. En el cuerpo del artículo la imagen se muestra como un bloque con el encabezado «Imagen»: haga clic en el encabezado para desplegar sus campos.
+
+| Campo | Qué es | Qué no es |
+|-------|--------|-----------|
+| Origen | El archivo de la imagen | — |
+| Texto alternativo | Descripción de la imagen para lectores de pantalla y buscadores. No se ve en la página | No es el pie de foto |
+| Título | **El pie de foto**: el único campo que se muestra en el sitio, en letra chica debajo de la imagen | — |
+| Enlace | Dirección a la que lleva la imagen al hacer clic | No es el pie de foto |
+
+El pie se muestra solo cuando la imagen está sola en su párrafo. Si en el mismo párrafo hay otra imagen o texto, la imagen se publica sin pie.
+
+En modo texto (Markdown), el pie va entre comillas después de la dirección: `![](/images/foto.jpg "Pie de foto")`.
 
 ---
 
@@ -163,6 +184,7 @@ Para facilitar la administración, el sitio web aplica reglas automáticas al co
 | *Cursiva* | `*texto*` | `*Importante*` → *Importante* |
 | Link | `[texto](url)` | `[CBHE](https://cbhe.org.bo)` |
 | Imagen | `![](/images/archivo.jpg)` | `![](/images/curso-h2s.jpg)` |
+| Imagen con pie de foto | `![](/images/archivo.jpg "Pie de foto")` | `![](/images/curso-h2s.jpg "Módulo 2 en planta")` |
 | Encabezado | `## Título` | `## Objetivos del curso` |
 | Sub-encabezado | `### Subtítulo` | `### Dirigido a` |
 | Lista con viñetas | `- item` | `- Módulo 1` |
