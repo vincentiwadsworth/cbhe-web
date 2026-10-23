@@ -13,7 +13,7 @@ const porFechaDesc = (a: { data: { date: string } }, b: { data: { date: string }
   parseDateToTimestamp(b.data.date) - parseDateToTimestamp(a.data.date);
 const ordenados = articulos.sort(porFechaDesc);
 
-const featured = ordenados.find((a) => a.data.featured);
+const featured = ordenados[0]?.data.featured ? ordenados[0] : undefined;
 const grid = ordenados.filter((a) => a.id !== featured?.id);
 
 const ARTICULO_ICONOS: Record<string, string> = {
@@ -73,9 +73,9 @@ const ARTICULO_ICONOS: Record<string, string> = {
         </article>
       )}
 
-      <div id="novedades-grid" data-load-more="4" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {grid.map((articulo) => (
-          <article data-load-more-item class="bg-surface-container-low p-6 rounded-lg transition-all duration-300 border border-transparent hover:border-primary/30 flex flex-col">
+          <article class="bg-surface-container-low p-6 rounded-lg transition-all duration-300 border border-transparent hover:border-primary/30 flex flex-col">
             {articulo.data.image ? (
               <div
                 class="h-48 rounded bg-cover bg-center mb-6"
@@ -103,18 +103,6 @@ const ARTICULO_ICONOS: Record<string, string> = {
           </article>
         ))}
       </div>
-
-      <div data-load-more-wrapper class="text-center pt-8">
-        <button data-load-more-btn class="bg-surface-container-high text-primary px-6 py-3 rounded-md font-medium hover:bg-surface-container hover:border-primary/30 transition-all min-h-[44px] border border-transparent inline-flex items-center gap-2">
-          <span data-load-more-text>Cargar más noticias</span>
-          <Icon name="material-symbols:expand-more" class="size-4" />
-        </button>
-      </div>
     </div>
   </div>
-
-  <script>
-    import { initLoadMore } from "../scripts/load-more";
-    initLoadMore();
-  </script>
 </PageLayout>
