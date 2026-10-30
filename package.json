@@ -12,20 +12,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.10",
+    "@astrojs/check": "^0.9.12",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource/inter": "^5.2.8",
-    "@iconify-json/material-symbols": "^1.2.69",
-    "@supabase/supabase-js": "^2.106.2",
+    "@iconify-json/material-symbols": "^1.2.96",
+    "@supabase/supabase-js": "^2.118.0",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.4",
-    "astro": "^7.3.5",
+    "astro": "^7.4.2",
     "astro-icon": "^1.1.5",
     "tailwindcss": "^4.2.4",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "puppeteer": "^25.1.0",
+    "puppeteer": "^25.16.0",
     "qrcode": "^1.5.4",
     "sharp": "^0.35.5"
   }
