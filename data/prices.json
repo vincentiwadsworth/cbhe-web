@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-29T20:44:13.523902+00:00",
+  "updated": "2026-10-30T01:28:49.550346+00:00",
   "usd_bob": {
     "official": 12.12
   },
   "commodities": {
     "WTI": {
-      "price": 102.85,
+      "price": 102.68,
       "unit": "USD/barril",
       "label": "WTI Crudo"
     },
     "BRENT": {
-      "price": 111.64,
+      "price": 111.48,
       "unit": "USD/barril",
       "label": "Brent Crudo"
     },
