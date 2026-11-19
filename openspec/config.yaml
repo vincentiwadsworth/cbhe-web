@@ -8,7 +8,7 @@ context: |
   Content: 4 Zod-validated collections (cursos, articulos, empresas, testimonios).
   CMS: Sveltia CMS at public/admin/ (GitHub backend).
   Auth: GitHub Pages + gh CLI (vincentiwadsworth).
-  AI: Chatbot con proxy server-side (Edge Function Supabase 'asistente' → OpenRouter, modelo nvidia/nemotron-3-ultra-550b-a55b:free). La clave vive como secret de Supabase y nunca se expone al cliente.
+  AI: Chatbot con OpenRouter directo desde el navegador (modelo nvidia/nemotron-3-ultra-550b-a55b:free). El sitio es estático y público, así que la clave viaja en el HTML.
   Forms: Web3Forms.
   Icons: astro-icon + 77 Material Symbols.
   Fonts: Inter self-hosted (Latin subset, weights 400-800).

@@ -41,11 +41,9 @@ const baseHref = import.meta.env.BASE_URL === '/'
 // Se calcula el path relativo al base (sin "/" inicial) para el skip link.
 const skipHref = `${Astro.url.pathname.replace(import.meta.env.BASE_URL, "")}#main-content`;
 
-// El asistente llama a una Edge Function de Supabase que guarda la clave de
-// OpenRouter server-side. Ninguna clave de IA se expone al navegador.
-const chatEndpoint = import.meta.env.VITE_SUPABASE_URL
-  ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/asistente`
-  : "";
+// El widget de chat corre en el navegador, así que la clave de OpenRouter viaja
+// en el HTML del sitio. El repositorio y el sitio son públicos: la clave es pública.
+const openRouterKey = import.meta.env.PUBLIC_OPENROUTER_API_KEY ?? "";
 
 // Build company knowledge base for the chatbot
 const grupoLabels: Record<string, string> = {
@@ -278,34 +276,35 @@ if (currentPath) {
     <CursorGlow />
     <slot />
 
-    <!-- AI Chatbot (multi-ai-sdk) — el SDK no tiene adaptador de OpenRouter, así
-         que se usa su adaptador OpenAI-compatible y un interceptor desvía la
-         llamada a la Edge Function de Supabase; la clave real vive server-side
-         y nunca llega acá. -->
-    <script is:inline define:vars={{ chatbotContext, chatEndpoint }}>
-      if (chatEndpoint) {
-        // Interceptor: redirige api.openai.com -> función de Supabase y quita el
-        // header Authorization. Se instala antes de cargar el SDK.
+    <!-- AI Chatbot (multi-ai-sdk) — el SDK no tiene adaptador de OpenRouter: se usa
+         su adaptador OpenAI-compatible y un interceptor reescribe la URL. -->
+    <script is:inline define:vars={{ chatbotContext, openRouterKey }}>
+      if (openRouterKey) {
+        // multi-ai-sdk arma las llamadas contra api.openai.com; OpenRouter publica
+        // el mismo contrato en openrouter.ai/api/v1.
         (function () {
           var fetchOriginal = window.fetch.bind(window);
+          var ORIGEN_SDK = "https://api.openai.com/v1";
+          var ORIGEN_OPENROUTER = "https://openrouter.ai/api/v1";
           window.fetch = function (recurso, opciones) {
             var url = typeof recurso === "string" ? recurso : (recurso && recurso.url) || "";
-            if (url.indexOf("https://api.openai.com") === 0) {
-              var opcionesProxy = opciones || {};
-              if (opcionesProxy.headers) {
-                var cabeceras = new Headers(opcionesProxy.headers);
-                cabeceras.delete("Authorization");
-                opcionesProxy = Object.assign({}, opcionesProxy, { headers: cabeceras });
-              }
-              return fetchOriginal(chatEndpoint, opcionesProxy);
-            }
-            return fetchOriginal(recurso, opciones);
+            if (url.indexOf(ORIGEN_SDK) !== 0) return fetchOriginal(recurso, opciones);
+            var opcionesOpenRouter = Object.assign({}, opciones || {});
+            var cabeceras = new Headers(opcionesOpenRouter.headers);
+            // OpenRouter atribuye el consumo a la app con estos dos headers.
+            cabeceras.set("HTTP-Referer", "https://cbhe.org.bo");
+            cabeceras.set("X-Title", "CBHE");
+            opcionesOpenRouter.headers = cabeceras;
+            return fetchOriginal(
+              ORIGEN_OPENROUTER + url.slice(ORIGEN_SDK.length),
+              opcionesOpenRouter,
+            );
           };
         })();
         import("https://esm.sh/multi-ai-sdk@2.0.2").then(function (mod) {
           mod.embedChat({
             provider: "openai",
-            apiKey: "proxy",
+            apiKey: openRouterKey,
 
             assistantName: "CBHE",
             assistantAvatar: "⚡",
