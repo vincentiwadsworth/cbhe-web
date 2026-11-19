@@ -262,8 +262,8 @@ Las Edge Functions `generate-qr` y `asistente` acceden a estos vía `Deno.env.ge
 | `SUPABASE_URL` | URL del proyecto (para inicializar el cliente `supabase-js`) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Clave `service_role` (para UPDATE en las tablas) |
 | `PUBLIC_VERIFICATION_URL` | URL base para codificar en el QR |
-| `DEEPSEEK_API_KEY` | API key de DeepSeek usada por la Edge Function `asistente` (proxy server-side del chatbot; nunca se expone al cliente) |
-| `DEEPSEEK_MODELO` | (Opcional) modelo de DeepSeek; default `deepseek-v4-flash` |
+| `OPENROUTER_API_KEY` | API key de OpenRouter usada por la Edge Function `asistente` (proxy server-side del chatbot; nunca se expone al cliente) |
+| `OPENROUTER_MODELO` | (Opcional) modelo de OpenRouter; default `nvidia/nemotron-3-ultra-550b-a55b:free` |
 
 ---
 

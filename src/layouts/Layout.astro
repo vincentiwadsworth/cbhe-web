@@ -42,7 +42,7 @@ const baseHref = import.meta.env.BASE_URL === '/'
 const skipHref = `${Astro.url.pathname.replace(import.meta.env.BASE_URL, "")}#main-content`;
 
 // El asistente llama a una Edge Function de Supabase que guarda la clave de
-// DeepSeek server-side. Ninguna clave de IA se expone al navegador.
+// OpenRouter server-side. Ninguna clave de IA se expone al navegador.
 const chatEndpoint = import.meta.env.VITE_SUPABASE_URL
   ? `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/asistente`
   : "";
@@ -278,17 +278,19 @@ if (currentPath) {
     <CursorGlow />
     <slot />
 
-    <!-- AI Chatbot (multi-ai-sdk) — las llamadas a DeepSeek se desvían a la Edge
-         Function de Supabase; la clave real vive server-side y nunca llega acá. -->
+    <!-- AI Chatbot (multi-ai-sdk) — el SDK no tiene adaptador de OpenRouter, así
+         que se usa su adaptador OpenAI-compatible y un interceptor desvía la
+         llamada a la Edge Function de Supabase; la clave real vive server-side
+         y nunca llega acá. -->
     <script is:inline define:vars={{ chatbotContext, chatEndpoint }}>
       if (chatEndpoint) {
-        // Interceptor: redirige api.deepseek.com -> función de Supabase y quita el
+        // Interceptor: redirige api.openai.com -> función de Supabase y quita el
         // header Authorization. Se instala antes de cargar el SDK.
         (function () {
           var fetchOriginal = window.fetch.bind(window);
           window.fetch = function (recurso, opciones) {
             var url = typeof recurso === "string" ? recurso : (recurso && recurso.url) || "";
-            if (url.indexOf("https://api.deepseek.com") === 0) {
+            if (url.indexOf("https://api.openai.com") === 0) {
               var opcionesProxy = opciones || {};
               if (opcionesProxy.headers) {
                 var cabeceras = new Headers(opcionesProxy.headers);
@@ -302,7 +304,7 @@ if (currentPath) {
         })();
         import("https://esm.sh/multi-ai-sdk@2.0.2").then(function (mod) {
           mod.embedChat({
-            provider: "deepseek",
+            provider: "openai",
             apiKey: "proxy",
 
             assistantName: "CBHE",
@@ -315,7 +317,7 @@ if (currentPath) {
               "¿Qué capacitaciones ofrecen?",
             ],
 
-            model: "deepseek-v4-flash",
+            model: "nvidia/nemotron-3-ultra-550b-a55b:free",
             maxTokens: 1024,
             temperature: 0.7,
 

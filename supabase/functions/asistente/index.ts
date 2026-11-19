@@ -2,13 +2,13 @@
  * asistente — Supabase Edge Function (Deno)
  *
  * Proxy server-side para el asistente virtual de la CBHE.
- * La clave de DeepSeek vive en el entorno de Supabase (secret) y nunca
+ * La clave de OpenRouter vive en el entorno de Supabase (secret) y nunca
  * llega al navegador. El sitio estático llama a esta función; esta función
- * llama a DeepSeek y devuelve el stream al cliente.
+ * llama a OpenRouter y devuelve el stream al cliente.
  *
  * Deploy:  supabase functions deploy asistente --no-verify-jwt
- * Secret:  supabase secrets set DEEPSEEK_API_KEY=...
- * Opcional: supabase secrets set DEEPSEEK_MODELO=deepseek-v4-flash
+ * Secret:  supabase secrets set OPENROUTER_API_KEY=...
+ * Opcional: supabase secrets set OPENROUTER_MODELO=nvidia/nemotron-3-ultra-550b-a55b:free
  */
 
 const ORIGENES_PERMITIDOS = [
@@ -17,8 +17,10 @@ const ORIGENES_PERMITIDOS = [
   "https://www.cbhe.org.bo",
 ];
 
-const ENDPOINT_DEEPSEEK = "https://api.deepseek.com/chat/completions";
-const MODELO_POR_DEFECTO = "deepseek-v4-flash";
+const ENDPOINT_OPENROUTER = "https://openrouter.ai/api/v1/chat/completions";
+const MODELO_POR_DEFECTO = "nvidia/nemotron-3-ultra-550b-a55b:free";
+const REFERENTE_SITIO = "https://cbhe.org.bo";
+const TITULO_APP = "CBHE";
 
 const MAX_MENSAJES = 40;
 const MAX_CARACTERES_POR_MENSAJE = 20000;
@@ -118,9 +120,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return respuestaJson({ error: validacion }, 400, cors);
   }
 
-  const clave = Deno.env.get("DEEPSEEK_API_KEY");
+  const clave = Deno.env.get("OPENROUTER_API_KEY");
   if (!clave) {
-    console.error("[asistente] Falta el secret DEEPSEEK_API_KEY");
+    console.error("[asistente] Falta el secret OPENROUTER_API_KEY");
     return respuestaJson(
       { error: "Configuración del servidor incompleta" },
       500,
@@ -128,7 +130,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     );
   }
 
-  const modelo = Deno.env.get("DEEPSEEK_MODELO") ?? MODELO_POR_DEFECTO;
+  const modelo = Deno.env.get("OPENROUTER_MODELO") ?? MODELO_POR_DEFECTO;
   const maxTokens = Math.min(
     typeof entrada?.maxTokens === "number" ? entrada.maxTokens : MAX_TOKENS_TOPE,
     MAX_TOKENS_TOPE,
@@ -136,13 +138,16 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const temperature =
     typeof entrada?.temperature === "number" ? entrada.temperature : 0.7;
 
-  let respuestaDeepSeek: Response;
+  let respuestaProveedor: Response;
   try {
-    respuestaDeepSeek = await fetch(ENDPOINT_DEEPSEEK, {
+    respuestaProveedor = await fetch(ENDPOINT_OPENROUTER, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${clave}`,
+        // OpenRouter atribuye el consumo a la app con estos dos headers.
+        "HTTP-Referer": REFERENTE_SITIO,
+        "X-Title": TITULO_APP,
       },
       body: JSON.stringify({
         model: modelo,
@@ -154,7 +159,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     });
   } catch (err) {
     console.error(
-      "[asistente] Error al contactar DeepSeek:",
+      "[asistente] Error al contactar OpenRouter:",
       err instanceof Error ? err.message : err,
     );
     return respuestaJson(
@@ -164,11 +169,11 @@ Deno.serve(async (req: Request): Promise<Response> => {
     );
   }
 
-  if (!respuestaDeepSeek.ok || !respuestaDeepSeek.body) {
-    const detalle = await respuestaDeepSeek.text().catch(() => "");
+  if (!respuestaProveedor.ok || !respuestaProveedor.body) {
+    const detalle = await respuestaProveedor.text().catch(() => "");
     console.error(
-      "[asistente] DeepSeek respondió",
-      respuestaDeepSeek.status,
+      "[asistente] OpenRouter respondió",
+      respuestaProveedor.status,
       detalle.slice(0, 500),
     );
     return respuestaJson(
@@ -178,7 +183,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     );
   }
 
-  return new Response(respuestaDeepSeek.body, {
+  return new Response(respuestaProveedor.body, {
     status: 200,
     headers: {
       ...cors,
