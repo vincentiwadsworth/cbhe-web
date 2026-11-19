@@ -481,7 +481,9 @@ if (currentPath) {
           for (const child of bubble.childNodes) {
             if (child.nodeType === 3) raw += child.nodeValue;
           }
-          if (!raw && !existingSpan) return;
+          // Al cerrar el stream el SDK quita su nodo de texto y el observer vuelve
+          // a llamar acá con raw vacío: rehacer el span con "" borraba la respuesta.
+          if (!raw) return;
           if (existingSpan && raw === existingSpan.dataset.lastRaw) return;
 
           if (existingSpan) {
