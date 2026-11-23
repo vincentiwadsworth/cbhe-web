@@ -58,12 +58,12 @@ El pie se muestra cuando el párrafo tiene una sola imagen. Si el párrafo tiene
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
-| Título | ✅ | Texto | Nombre del curso tal como aparece en el catálogo |
-| Categoría | ✅ | Select | "Curso" o "Certificación" |
-| Modalidad | ✅ | Select | Virtual, Presencial o Híbrido |
+| Título | Sí | Texto | Nombre del curso tal como aparece en el catálogo |
+| Categoría | Sí | Select | "Curso" o "Certificación" |
+| Modalidad | Sí | Select | Virtual, Presencial o Híbrido |
 | Imagen | No | Imagen | Foto o banner del curso (opcional si hay link a Canva) |
-| Fecha de inicio | ✅ | Fecha | Cuándo empieza el curso. Se elige en el calendario |
-| Precio / Inversión | ✅ | Texto | Ej: "950 Bs. (750 Bs. lanzamiento hasta 22 de mayo)" |
+| Fecha de inicio | Sí | Fecha | Cuándo empieza el curso. Se elige en el calendario |
+| Precio / Inversión | Sí | Texto | Ej: "950 Bs. (750 Bs. lanzamiento hasta 22 de mayo)" |
 | Fecha límite inscripción | No | Fecha y hora | Fecha de cierre del precio de lanzamiento |
 | Link a Canva | No | Texto | Dirección del diseño en Canva con toda la información del curso |
 | Descripción breve | No | Texto | Una o dos líneas para la vista previa en el catálogo |
@@ -76,21 +76,21 @@ El pie se muestra cuando el párrafo tiene una sola imagen. Si el párrafo tiene
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
-| Título | ✅ | Texto | Título del artículo |
-| Categoría | ✅ | Select | Noticias, Análisis, Eventos o Capacitación |
-| Extracto | ✅ | Texto | Resumen de una o dos líneas que aparece en la lista de novedades |
-| Fecha | ✅ | Fecha | Fecha de publicación. Se elige en el calendario |
+| Título | Sí | Texto | Título del artículo |
+| Categoría | Sí | Select | Noticias, Análisis, Eventos o Capacitación |
+| Extracto | Sí | Texto | Resumen de una o dos líneas que aparece en la lista de novedades |
+| Fecha | Sí | Fecha | Fecha de publicación. Se elige en el calendario |
 | Imagen | No | Imagen | Imagen principal del artículo |
 | Destacado en portada | No | Switch | Activado = el artículo aparece como banner al inicio de la página Novedades |
-| Contenido completo | ✅ | Markdown | Cuerpo del artículo |
+| Contenido completo | Sí | Markdown | Cuerpo del artículo |
 | Borrador | No | Switch | Activado = no aparece en el sitio |
 
 ### Empresas Afiliadas
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
-| Nombre de la Empresa | ✅ | Texto | Razón social tal como aparece en el directorio |
-| Grupo Industrial | ✅ | Select | Exploración y explotación, Servicios en pozo, Servicios en superficie, Industria y transporte, Servicios auxiliares o Adherentes |
+| Nombre de la Empresa | Sí | Texto | Razón social tal como aparece en el directorio |
+| Grupo Industrial | Sí | Select | Exploración y explotación, Servicios en pozo, Servicios en superficie, Industria y transporte, Servicios auxiliares o Adherentes |
 | Sitio Web | No | Texto | Web de la empresa. Si falta `https://`, el sitio lo agrega al publicar |
 | Correo de Contacto | No | Email | Correo público de contacto |
 | Logo | No | Imagen | Logo de la empresa (PNG con fondo transparente, ideal) |
@@ -104,11 +104,11 @@ Aparecen en la portada, en la sección de testimonios que rota automáticamente.
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
-| Nombre de la persona | ✅ | Texto | Nombre tal como se muestra en la tarjeta |
-| Cargo | ✅ | Texto | Cargo en la empresa, por ejemplo Gerente General |
-| Empresa | ✅ | Texto | Empresa de la persona |
-| Testimonio completo | ✅ | Texto | Texto de dos a cuatro líneas que acompaña a la frase destacada |
-| Frase destacada | ✅ | Texto | Frase corta que resalta en negrita dentro de la tarjeta |
+| Nombre de la persona | Sí | Texto | Nombre tal como se muestra en la tarjeta |
+| Cargo | Sí | Texto | Cargo en la empresa, por ejemplo Gerente General |
+| Empresa | Sí | Texto | Empresa de la persona |
+| Testimonio completo | Sí | Texto | Texto de dos a cuatro líneas que acompaña a la frase destacada |
+| Frase destacada | Sí | Texto | Frase corta que resalta en negrita dentro de la tarjeta |
 | Foto | No | Imagen | Foto de la persona. Si falta, la tarjeta se muestra sin imagen |
 | Borrador | No | Switch | Activado = no aparece en el sitio |
 
@@ -118,13 +118,13 @@ Aparece en la página Quiénes somos, en la sección Directorio. Todo se edita d
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
-| Comité Ejecutivo | ✅ | Lista | Cargo, nombre y empresa de cada miembro del Comité |
-| Grupos | ✅ | Lista | Grupos industriales del Directorio |
-| Nombre del grupo | ✅ | Texto | Por ejemplo Exploración y producción o Servicios auxiliares |
-| Miembros | ✅ | Lista | Miembros de ese grupo |
-| Cargo | ✅ | Texto | Cargo en el Directorio, por ejemplo Presidente o Director Titular |
-| Nombre completo | ✅ | Texto | Nombre de la persona |
-| Empresa | ✅ | Texto | Empresa que representa en el Directorio |
+| Comité Ejecutivo | Sí | Lista | Cargo, nombre y empresa de cada miembro del Comité |
+| Grupos | Sí | Lista | Grupos industriales del Directorio |
+| Nombre del grupo | Sí | Texto | Por ejemplo Exploración y producción o Servicios auxiliares |
+| Miembros | Sí | Lista | Miembros de ese grupo |
+| Cargo | Sí | Texto | Cargo en el Directorio, por ejemplo Presidente o Director Titular |
+| Nombre completo | Sí | Texto | Nombre de la persona |
+| Empresa | Sí | Texto | Empresa que representa en el Directorio |
 
 ### Banner publicitario
 
