@@ -65,8 +65,8 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               https://api.github.com/repos/${{ github.repository }}/issues \
               -d '{
-              "title": "Fallo de deploy: la web no se esta actualizando",
-              "body": "El deploy fallo en el commit ${{ github.sha }}. Mientras este issue este abierto, el sitio no publica cambios nuevos.\n\nDetalle tecnico: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\n\nCausa tipica: un contenido guardado desde el CMS con datos invalidos. Revise los ultimos cambios con la guia de editores, seccion 10. Cierre este issue cuando este corregido.",
+              "title": "Fallo de deploy: la web no se está actualizando",
+              "body": "El deploy falló en el commit ${{ github.sha }}. Mientras este issue esté abierto, el sitio no publica cambios nuevos.\n\nDetalle técnico: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\n\nCausa típica: un contenido guardado desde el CMS con datos inválidos. Revise los últimos cambios con la guía de editores, sección 8. Cierre este issue cuando esté corregido.",
               "labels": ["fallo de sistema"]
               }'
             echo "Issue creado"
