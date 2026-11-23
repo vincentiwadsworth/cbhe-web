@@ -32,8 +32,6 @@ Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté 
 - Para volver a publicarlo: desactive Borrador y guarde con **Publish**.
 - Si guarda con **Save without Publishing**, el sitio sigue mostrando la última versión publicada: el cambio queda solo en el panel.
 
-Para que una nota aparezca un día determinado, guárdela con **Publish** ese día.
-
 ---
 
 ## 3. Trabajar con imágenes
