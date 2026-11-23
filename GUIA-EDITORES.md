@@ -1,59 +1,54 @@
 # Guía de Editores (CBHE)
 
-> **Para**: Responsable de Comunicación, Responsable de Capacitación, Responsable de Gestión  
-> **Última revisión**: 23 de noviembre de 2026
+> **Para**: Responsable de Comunicación, Responsable de Capacitación, Responsable de Gestión · **Última revisión**: 23 de noviembre de 2026
 
 ---
 
-## 1. Acceso al CMS
+## 1. Acceso al panel
 
 - **URL**: `https://cbhe.org.bo/admin/`
 - **Iniciar sesión**: botón _Login with GitHub_ → autorizar con su cuenta de GitHub.
-- **Primera vez**: cualquier persona que administre la cuenta GitHub de la CBHE puede generar un **token de acceso personal** con estos pasos:
-  1. Entre a `github.com` e inicie sesión con la cuenta GitHub de la CBHE.
+- **Primera vez**: genere un **token de acceso personal** desde la cuenta de GitHub con la que va a editar:
+  1. Entre a `github.com` e inicie sesión con esa cuenta.
   2. Abra **Settings** desde el menú de su perfil, en la esquina superior derecha.
   3. En el menú de la izquierda, vaya a **Developer settings** → **Personal access tokens** → **Tokens (classic)**.
-  4. Haga clic en **Generate new token**.
+  4. Haga clic en **Generate new token (classic)**.
   5. Marque el scope **repo**.
   6. Haga clic en **Generate token** y copie el token. Solo se muestra una vez.
-- **Guarde el token** en un lugar seguro. Es su contraseña del CMS.
-- **¿No entra?**: revise que el token no haya expirado. Si expiró, genere otro con los pasos anteriores.
+- **Guarde el token** en un lugar seguro. Es su contraseña del panel.
 
 ---
 
-## 2. Publicar contenido
+## 2. Publicación
 
-- **Publish** publica el cambio. En 2 o 3 minutos el contenido está visible en el sitio (`https://cbhe.org.bo/`).
-- **Save without Publishing** guarda el cambio sin publicarlo. Úselo para seguir editando y publicar más tarde con Publish.
+- **Publish** guarda el cambio en GitHub y publica el sitio. El contenido aparece en `https://cbhe.org.bo/` cuando termina la publicación, alrededor de un minuto.
+- **Save without Publishing** guarda el cambio sin publicarlo: el sitio sigue mostrando la última versión publicada y el cambio queda solo en el panel.
 
-Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento no aparece en el sitio: la nota sale de la lista de Novedades y su dirección deja de estar publicada, pero el contenido no se borra y se puede volver a publicar.
+Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté activado, el elemento no aparece en el sitio y su dirección deja de estar publicada. El contenido no se borra.
 
-- Para retirar del sitio algo ya publicado: active Borrador y guarde con **Publish**.
-- Para volver a publicarlo: desactive Borrador y guarde con **Publish**.
-- Si guarda con **Save without Publishing**, el sitio sigue mostrando la última versión publicada: el cambio queda solo en el panel.
+- Para retirar del sitio algo que ya está publicado: active **Borrador** y guarde con **Publish**.
+- Para volver a publicarlo: desactive **Borrador** y guarde con **Publish**.
 
 ---
 
-## 3. Trabajar con imágenes
+## 3. Imágenes
 
-- **Formatos**: JPG para fotos, PNG para logos (transparencia), WebP para mejor calidad con menor peso.
-- **Tamaño**: máximo 2 MB por imagen, ideal menos de 500 KB. Ancho recomendado: 1920 píxeles. Si la imagen supera los 2 MB, Sveltia puede fallar al guardar.
+- **Formatos**: JPG para fotos, PNG para logos con fondo transparente, WebP para fotos que deban pesar menos.
+- **Tamaño**: hasta 500 KB y 1920 píxeles de ancho.
 - **Dónde se guardan**: carpeta `public/images/`. Desde el contenido se referencian como `/images/nombre-archivo.jpg`.
 
 ### Pie de foto
 
-El pie de foto va en el campo **Título** de la imagen. En el cuerpo del artículo la imagen se muestra como un bloque con el encabezado «Imagen»: haga clic en el encabezado para desplegar sus campos.
+El pie de foto va en el campo **Título** de la imagen. En el cuerpo del contenido la imagen se edita como un bloque con el encabezado «Imagen»: haga clic en el encabezado para desplegar sus campos.
 
-| Campo | Qué es | Qué no es |
-|-------|--------|-----------|
-| Origen | El archivo de la imagen | — |
-| Texto alternativo | Descripción de la imagen para lectores de pantalla y buscadores. No se ve en la página | No es el pie de foto |
-| Título | **El pie de foto**: el único campo que se muestra en el sitio, en letra chica debajo de la imagen | — |
-| Enlace | Dirección a la que lleva la imagen al hacer clic | No es el pie de foto |
+| Campo | Qué es |
+|-------|--------|
+| Origen | El archivo de la imagen |
+| Texto alternativo | Descripción de la imagen para lectores de pantalla y buscadores. No se ve en la página |
+| Título | **El pie de foto**: el único de los cuatro campos que se muestra en el sitio, en letra chica debajo de la imagen |
+| Enlace | Dirección a la que lleva la imagen al hacer clic |
 
-El pie se muestra solo cuando la imagen está sola en su párrafo. Si en el mismo párrafo hay otra imagen o texto, la imagen se publica sin pie.
-
-En modo texto (Markdown), el pie va entre comillas después de la dirección: `![](/images/foto.jpg "Pie de foto")`.
+El pie se muestra cuando el párrafo tiene una sola imagen. Si el párrafo tiene dos imágenes o más, ninguna lleva pie.
 
 ---
 
@@ -67,14 +62,14 @@ En modo texto (Markdown), el pie va entre comillas después de la dirección: `!
 | Categoría | ✅ | Select | "Curso" o "Certificación" |
 | Modalidad | ✅ | Select | Virtual, Presencial o Híbrido |
 | Imagen | No | Imagen | Foto o banner del curso (opcional si hay link a Canva) |
-| Fecha de inicio | ✅ | Fecha | Cuándo empieza el curso (formato: DD MMM YYYY) |
+| Fecha de inicio | ✅ | Fecha | Cuándo empieza el curso. Se elige en el calendario |
 | Precio / Inversión | ✅ | Texto | Ej: "950 Bs. (750 Bs. lanzamiento hasta 22 de mayo)" |
-| Fecha límite inscripción | No | Datetime (Calendario) | Selector de fecha. Solo si hay precio de lanzamiento con fecha de corte |
-| Link a Canva | No | URL | URL del diseño en Canva con toda la info del curso |
-| Descripción breve | No | Texto | 1-2 líneas para la vista previa en el catálogo |
+| Fecha límite inscripción | No | Fecha y hora | Fecha de cierre del precio de lanzamiento |
+| Link a Canva | No | Texto | Dirección del diseño en Canva con toda la información del curso |
+| Descripción breve | No | Texto | Una o dos líneas para la vista previa en el catálogo |
 | Ponentes / Instructores | No | Lista | Nombre y biografía de cada instructor |
 | Contenido completo | No | Markdown | Cuerpo del curso (opcional si el Canva cubre todo) |
-| Destacado | No | Switch | Activado = el curso se muestra en la sección de "Cursos destacados" al inicio y se excluye de las listas cronológicas |
+| Destacado | No | Switch | Activado = el curso aparece en «Cursos destacados», en la portada y en Capacitación, y sale de las listas por fecha |
 | Borrador | No | Switch | Activado = no aparece en el sitio |
 
 ### Artículos (Novedades)
@@ -83,10 +78,10 @@ En modo texto (Markdown), el pie va entre comillas después de la dirección: `!
 |-------|:-----------:|------|---------------|
 | Título | ✅ | Texto | Título del artículo |
 | Categoría | ✅ | Select | Noticias, Análisis, Eventos o Capacitación |
-| Extracto | ✅ | Texto | Resumen de 1-2 líneas que aparece en la lista de novedades |
-| Fecha | ✅ | Fecha | Fecha de publicación (formato: DD MMM YYYY) |
+| Extracto | ✅ | Texto | Resumen de una o dos líneas que aparece en la lista de novedades |
+| Fecha | ✅ | Fecha | Fecha de publicación. Se elige en el calendario |
 | Imagen | No | Imagen | Imagen principal del artículo |
-| Destacado en portada | No | Switch | Activado = aparece como banner destacado al inicio de la página Novedades |
+| Destacado en portada | No | Switch | Activado = el artículo aparece como banner al inicio de la página Novedades |
 | Contenido completo | ✅ | Markdown | Cuerpo del artículo |
 | Borrador | No | Switch | Activado = no aparece en el sitio |
 
@@ -95,17 +90,17 @@ En modo texto (Markdown), el pie va entre comillas después de la dirección: `!
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
 | Nombre de la Empresa | ✅ | Texto | Razón social tal como aparece en el directorio |
-| Grupo Industrial | ✅ | Select | Upstream, Servicios en pozo, Servicios en superficie, Downstream, Servicios auxiliares, o Adherentes |
-| Sitio Web | No | URL | Web de la empresa (ej: `https://empresa.com`) |
+| Grupo Industrial | ✅ | Select | Exploración y explotación, Servicios en pozo, Servicios en superficie, Industria y transporte, Servicios auxiliares o Adherentes |
+| Sitio Web | No | Texto | Web de la empresa. Si falta `https://`, el sitio lo agrega al publicar |
 | Correo de Contacto | No | Email | Correo público de contacto |
 | Logo | No | Imagen | Logo de la empresa (PNG con fondo transparente, ideal) |
-| Destacada en portada | No | Switch | Activado = aparece con tarjeta destacada en el home |
+| Destacada en portada | No | Switch | Activado = la empresa aparece con tarjeta destacada en la página Afiliadas |
 | Orden | No | Número | Menor número = aparece primero. Si hay empate, orden alfabético |
 | Borrador | No | Switch | Activado = no aparece en el sitio |
 
 ### Testimonios
 
-Aparecen en la portada, en la sección de testimonios que rota automáticamente. La colección se llama **Testimonios de la Portada**.
+Aparecen en la portada, en la sección de testimonios que rota automáticamente.
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
@@ -114,19 +109,21 @@ Aparecen en la portada, en la sección de testimonios que rota automáticamente.
 | Empresa | ✅ | Texto | Empresa de la persona |
 | Testimonio completo | ✅ | Texto | Texto de dos a cuatro líneas que acompaña a la frase destacada |
 | Frase destacada | ✅ | Texto | Frase corta que resalta en negrita dentro de la tarjeta |
-| Foto | No | Imagen | Foto de la persona. Si no hay, la tarjeta se muestra sin imagen |
+| Foto | No | Imagen | Foto de la persona. Si falta, la tarjeta se muestra sin imagen |
 | Borrador | No | Switch | Activado = no aparece en el sitio |
 
 ### Directorio
 
-Aparece en la página Quiénes somos, en la sección Directorio. Todo se edita desde una sola entrada: los grupos y, dentro de cada grupo, sus miembros.
+Aparece en la página Quiénes somos, en la sección Directorio. Todo se edita desde una sola entrada: el Comité Ejecutivo y los grupos con sus miembros.
 
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
-| Grupo | ✅ | Texto | Nombre del grupo, por ejemplo Upstream o Servicios Auxiliares |
-| Miembros | ✅ | Lista | Lista de cargos de ese grupo |
+| Comité Ejecutivo | ✅ | Lista | Cargo, nombre y empresa de cada miembro del Comité |
+| Grupos | ✅ | Lista | Grupos industriales del Directorio |
+| Nombre del grupo | ✅ | Texto | Por ejemplo Exploración y producción o Servicios auxiliares |
+| Miembros | ✅ | Lista | Miembros de ese grupo |
 | Cargo | ✅ | Texto | Cargo en el Directorio, por ejemplo Presidente o Director Titular |
-| Nombre | ✅ | Texto | Nombre completo de la persona |
+| Nombre completo | ✅ | Texto | Nombre de la persona |
 | Empresa | ✅ | Texto | Empresa que representa en el Directorio |
 
 ### Banner publicitario
@@ -136,30 +133,23 @@ Se muestra al final de cada artículo.
 | Campo | Obligatorio | Tipo | Qué significa |
 |-------|:-----------:|------|---------------|
 | Banner activo | No | Switch | Desactivado = el banner no se muestra |
-| Imagen del banner | ✅ | Imagen | 1600 x 200 píxeles, máximo 150 KB |
+| Imagen del banner | No | Imagen | 1600 x 200 píxeles, máximo 150 KB. Sin imagen el banner no se muestra |
 | Enlace del banner | No | Texto | Dirección web a la que lleva el banner |
 | Texto alternativo | No | Texto | Descripción para lectores de pantalla |
 
-Sin imagen no se muestra nada.
+### Reglas automáticas
 
-### Comportamiento Automático de las Páginas (Web)
+El sitio aplica estas reglas al publicar:
 
-El sitio aplica estas reglas al compilarse (Astro SSG):
-
-#### Página de Capacitación (Cursos)
-- **Cursos pasados:** Se ocultan automáticamente si la fecha de inicio del curso es anterior a la fecha actual del día en que se compila el sitio.
-- **Cursos destacados:** Si un curso tiene activa la casilla **Destacado**, aparecerá en la sección `Cursos destacados` al inicio del catálogo de cursos (en una rejilla estándar) y será excluido de las listas cronológicas para evitar duplicados. Si no hay cursos destacados, la sección no se muestra.
-- **Este mes:** Lista cronológica (ascendente, del más cercano al más lejano) de los cursos activos que inician en el mes corriente. Si no hay cursos este mes, la sección se oculta automáticamente.
-- **Próximas capacitaciones:** Lista cronológica (ascendente) de los cursos activos que inician en meses futuros. Si no hay próximos cursos, la sección se oculta automáticamente.
-
-#### Página de Novedades (Noticias y Publicaciones)
-- **Artículo Destacado:** El artículo más reciente marcado como **Destacado en portada** aparece como un banner de gran formato en la parte superior de la página de Novedades. El resto de los artículos, destacados o no, se listan debajo del más nuevo al más viejo.
+- **Cursos pasados:** un curso sale de «Próximas capacitaciones» cuando su fecha de inicio ya pasó, y su página sigue publicada. Para sacarlo del sitio, active **Borrador**.
+- **Próximas capacitaciones:** lista los cursos activos que inician más adelante, del más cercano al más lejano.
+- **Artículo destacado:** el artículo marcado como **Destacado en portada** aparece como banner de gran formato al inicio de Novedades. El resto se lista del más nuevo al más viejo.
 
 ---
 
 ## 5. Páginas institucionales
 
-Misión y visión, datos de contacto y páginas legales se cambian a pedido: el soporte técnico del sitio las edita y las publica en uno a dos días hábiles.
+Para cambiar estas páginas, envíe el texto nuevo al soporte técnico del sitio. Se publica en uno a dos días hábiles.
 
 | Página | Qué contiene |
 |--------|--------------|
@@ -167,7 +157,7 @@ Misión y visión, datos de contacto y páginas legales se cambian a pedido: el 
 | Datos de contacto (`https://cbhe.org.bo/contacto/`) | Dirección, teléfono, correo y formulario |
 | Privacidad y Términos (`https://cbhe.org.bo/privacidad/` y `https://cbhe.org.bo/terminos/`) | Política de Privacidad y Aviso Legal |
 
-El Directorio de Quiénes somos sí se edita desde el panel (sección 4).
+El Directorio se edita desde el panel (sección 4).
 
 Otras páginas que se cambian a pedido:
 
@@ -179,7 +169,7 @@ Otras páginas que se cambian a pedido:
 
 ---
 
-## 6. Markdown rápido
+## 6. Markdown
 
 | Elemento | Sintaxis | Ejemplo |
 |----------|----------|---------|
@@ -197,48 +187,42 @@ Otras páginas que se cambian a pedido:
 
 ---
 
-## 7. Copia de seguridad: cómo funciona Git
+## 7. Volver a una versión anterior
 
-Cada vez que usted publica un cambio, el sistema guarda en GitHub una versión completa y numerada del sitio. Ninguna se borra ni se puede alterar. Si un cambio sale mal, se restaura la versión anterior y el sitio queda como estaba.
-
-Para restaurar una versión anterior:
+Cada publicación deja un commit en GitHub. Si un cambio sale mal, se copia el contenido de la versión anterior y el sitio vuelve a quedar como estaba.
 
 1. Entre a `github.com`, abra el repositorio del sitio (`cbhe-web`) y abra el archivo que tiene el error.
-2. Haga clic en **History** (historial).
-3. Elija la versión correcta de la lista y ábrala.
-4. Use el botón de revertir o reemplazar para volver el archivo a esa versión y confirme el cambio (commit).
-5. El sitio se reconstruye solo con el proceso automático. Espere unos minutos y verifique en `https://cbhe.org.bo/`.
+2. Haga clic en **History**.
+3. Elija de la lista la versión correcta y ábrala.
+4. Copie el contenido de esa versión, vuelva atrás, pegue el contenido en el archivo con **Edit** y confirme el commit.
+5. El sitio se reconstruye solo. El estado de la publicación está en la pestaña **Actions**.
 
 ---
 
-## 8. Problemas comunes
+## 8. Problemas frecuentes
 
 | Problema | Causa probable | Solución |
 |----------|---------------|----------|
-| No puedo entrar al CMS | Token de GitHub expirado o incorrecto | Genere otro token con el procedimiento de la sección 1 (scope `repo`) |
-| El sitio no se actualiza después de publicar | Run de deploy fallido o atascado en GitHub | Revise la pestaña **Actions** del repositorio en GitHub. Si el último run de **Deploy to GitHub Pages** está en rojo, el problema es un contenido inválido: no siga guardando cambios y reporte el error a soporte. Si está en amarillo o atascado hace varios minutos, relance el deploy: workflow **Deploy to GitHub Pages** → botón **Run workflow** |
-| "Error al guardar" en Sveltia | Imagen demasiado grande (>2 MB) | Redimensione la imagen antes de subirla |
-| La imagen no se ve en el sitio | La referencia en Markdown tiene una ruta incorrecta | Use siempre `/images/nombre-archivo.jpg` (con barra inicial) |
-| Guardé un artículo pero no aparece | El switch **Borrador** (`draft`) está activado | Desactive el switch y vuelva a publicar |
-| El curso no aparece en el catálogo | Filtro de borrador activo o `draft: true` | Verifique que `draft` esté en `false` y vuelva a publicar |
-| No encuentro la colección que busco | Solo se muestran colecciones configuradas en el CMS | Cursos, Artículos, Empresas, Testimonios, Directorio y Banner publicitario están en Sveltia |
-| El formulario de contacto no funciona | `WEB3FORMS_KEY` mal configurada | Requiere ajustar una variable del build: quien administra el repositorio la configura en **Settings → Secrets and variables → Actions** |
+| No puedo entrar al panel | Token de GitHub expirado o incorrecto | Genere otro token con el procedimiento de la sección 1 (scope `repo`) |
+| El sitio no se actualiza después de publicar | Publicación fallida o detenida en GitHub | Revise la pestaña **Actions**. Si el último run de **Deploy to GitHub Pages** está en rojo, hay un contenido inválido: no siga guardando y avise a soporte. Si quedó en amarillo, relance la publicación desde **Actions** → **Deploy to GitHub Pages** → **Run workflow** |
+| «Error al guardar» en el panel | El cambio no se pudo guardar | Recargue la página y guarde de nuevo. Si el error sigue, avise a soporte con una captura del mensaje |
+| La imagen no se ve en el sitio | La referencia en el texto tiene una ruta incorrecta | Use siempre `/images/nombre-archivo.jpg`, con barra inicial |
+| Guardé un artículo pero no aparece | El interruptor **Borrador** está activado | Desactive el interruptor y vuelva a publicar |
+| El curso no aparece en el catálogo | El interruptor **Borrador** está activado o la fecha de inicio ya pasó | Desactive **Borrador** y revise la fecha de inicio |
 
 ---
 
-## 9. Mantenimiento: la base de datos de certificados
+## 9. Certificados
 
-El verificador de certificados usa una base de datos gratuita de Supabase. Si pasan 7 días sin actividad, Supabase la pausa y los QR dejan de verificar. Un ping automático diario la mantiene activa; no requiere ningún cuidado de su parte.
-
-Alertas del sistema y qué hacer ante cada una:
+La verificación de certificados usa una base de datos en Supabase. Un chequeo automático diario la mantiene activa; si falla, el sistema abre un issue en el repositorio.
 
 | Alerta | Dónde aparece | Qué hacer |
 |---|---|---|
-| Correo de Supabase con la palabra **pause** | `cbhe@cbhe.org.bo` (propietaria de la cuenta) | Entre a supabase.com con la cuenta de la CBHE y pulse **Restore project** |
-| Issue **"La base de datos CBHE no responde"** | Repositorio de GitHub | Igual que el caso anterior; cierre el issue al restaurar |
-| Issue **"Fallo de deploy: la web no se está actualizando"** | Repositorio de GitHub | Revise los últimos cambios guardados (sección 8); cierre el issue cuando el sitio vuelva a publicar |
+| Correo de Supabase con la palabra **pause** | `cbhe@cbhe.org.bo` | Entre a supabase.com con la cuenta de la CBHE y pulse **Restore project** |
+| Issue «La base de datos CBHE no responde» | Repositorio de GitHub | Restaure el proyecto y cierre el issue |
+| Issue «Fallo de deploy: la web no se está actualizando» | Repositorio de GitHub | Revise los últimos cambios guardados (sección 8) y cierre el issue cuando el sitio vuelva a publicar |
 
-La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y `tania@cbhe.org.bo` y `alejandra@cbhe.org.bo` son administradoras. Restaurar una pausa no borra datos.
+Emitir y verificar certificados está en la [Guía de Certificados](https://github.com/vincentiwadsworth/cbhe-web/blob/main/GUIA-CERTIFICADOS.md).
 
 ---
 
@@ -249,19 +233,15 @@ La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y 
 | **CBHE** | Cámara Boliviana de Hidrocarburos y Energía |
 | **Sveltia** | El CMS (Content Management System), el panel donde se edita el contenido del sitio |
 | **Markdown** | Lenguaje simple para escribir texto con formato (negritas, títulos, links) sin necesidad de HTML |
-| **Colección** | Grupo de contenido del mismo tipo: Cursos, Artículos, Empresas, Testimonios, Directorio o Banner publicitario |
-| **Publish** | Publica el cambio; en 2 o 3 minutos aparece en el sitio |
+| **Colección** | Grupo de contenido del mismo tipo: Cursos, Artículos, Empresas Afiliadas, Testimonios, Directorio o Banner publicitario |
+| **Publish** | Guarda el cambio en GitHub y publica el sitio |
 | **Save without Publishing** | Guarda el cambio sin publicarlo, para seguir editando |
 | **Borrador** | Interruptor que oculta un elemento del sitio aunque se publique |
-| **Versión** | Fotografía completa del sitio en un momento dado, guardada con su número |
-| **Deploy** | Proceso automático que construye el sitio y lo sube a internet |
-| **GitHub** | Plataforma donde vive el código del sitio. Sveltia guarda los cambios como _commits_ en GitHub |
-| **Token** | Contraseña de acceso personal a GitHub. Cada editor tiene el suyo |
+| **Versión** | Estado del sitio en un momento dado, guardado como commit en GitHub |
+| **Publicación** | Proceso automático que construye el sitio y lo sube a internet |
+| **GitHub** | Plataforma donde vive el código del sitio. El panel guarda los cambios como _commits_ en GitHub |
+| **Token** | Contraseña de acceso personal a GitHub |
 | **RSE** | Responsabilidad Social Empresarial |
-| **Sello CBHE** | Certificación que la CBHE otorga a empresas socialmente responsables |
-| **Upstream / Downstream** | Segmentos de la industria: exploración/producción vs. transporte/distribución |
-| **`[skip ci]`** | Etiqueta en un commit que le dice a GitHub "no hagas deploy". La agrega Save without Publishing |
-| **DNS** | Sistema que traduce nombres de dominio (cbhe.org.bo) a direcciones de internet. Como la guía telefónica de la web: sin DNS, un dominio no lleva a ningún lado. Se configura en nic.bo |
 
 ---
 
@@ -269,15 +249,13 @@ La cuenta de Supabase pertenece a la CBHE: `cbhe@cbhe.org.bo` es propietaria, y 
 
 | Para qué | Quién | Cómo |
 |----------|-------|------|
-| Problemas del CMS o del sitio (no entra al CMS, deploy trabado, error al guardar) | Quien administra la cuenta GitHub de la CBHE | Correo con captura de pantalla del error |
-| Dudas de contenido (campos de una colección, cómo publicar) | Esta guía | Secciones 2 a 5 |
-| Quiero emitir un certificado (Sello o Capacitación) | [Guía de Certificados](./GUIA-CERTIFICADOS.md) | Guía paso a paso |
+| Problemas del panel o del sitio (no entra, la publicación se traba, error al guardar) | Quien administra la cuenta GitHub de la CBHE | Correo con captura de pantalla del error |
+| Emitir un certificado (Sello o Capacitación) | [Guía de Certificados](https://github.com/vincentiwadsworth/cbhe-web/blob/main/GUIA-CERTIFICADOS.md) | Guía paso a paso |
 
 ---
 
 ## Documentos relacionados
 
-- [README](./README.md): panorama general del proyecto (no técnico)
-- [Documentación Técnica](./DOCUMENTACION-TECNICA.md): para developers que necesiten entender el stack técnico
-- [Guía de Certificados](./GUIA-CERTIFICADOS.md): para emitir Sellos CBHE y Certificados de Capacitación
-- [Pendientes de Despliegue](./PENDIENTES-DESPLIEGUE.md): checklist de handoff para puesta en producción
+- [README](https://github.com/vincentiwadsworth/cbhe-web/blob/main/README.md): panorama general del proyecto
+- [Documentación Técnica](https://github.com/vincentiwadsworth/cbhe-web/blob/main/DOCUMENTACION-TECNICA.md): stack técnico para developers
+- [Guía de Certificados](https://github.com/vincentiwadsworth/cbhe-web/blob/main/GUIA-CERTIFICADOS.md): emisión y verificación de certificados
