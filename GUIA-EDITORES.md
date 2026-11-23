@@ -32,7 +32,7 @@ Cada elemento tiene además un interruptor llamado **Borrador**. Mientras esté 
 - Para volver a publicarlo: desactive Borrador y guarde con **Publish**.
 - Si guarda con **Save without Publishing**, el sitio sigue mostrando la última versión publicada: el cambio queda solo en el panel.
 
-El CMS **no** tiene publicación programada: no se puede dejar una nota agendada para que aparezca sola en una fecha futura. Si una nota tiene que aparecer un día determinado, hay que guardarla con **Publish** ese día.
+Para que una nota aparezca un día determinado, guárdela con **Publish** ese día.
 
 ---
 
@@ -159,9 +159,9 @@ El sitio aplica estas reglas al compilarse (Astro SSG):
 
 ---
 
-## 5. Páginas que no se editan desde el CMS
+## 5. Páginas institucionales
 
-Estas páginas no tienen campos en el panel: las cambia el soporte técnico del sitio en uno a dos días hábiles.
+Misión y visión, datos de contacto y páginas legales se cambian a pedido: el soporte técnico del sitio las edita y las publica en uno a dos días hábiles.
 
 | Página | Qué contiene |
 |--------|--------------|
@@ -171,7 +171,7 @@ Estas páginas no tienen campos en el panel: las cambia el soporte técnico del 
 
 El Directorio de Quiénes somos sí se edita desde el panel (sección 4).
 
-Resto del sitio que tampoco se edita desde el panel:
+Otras páginas que se cambian a pedido:
 
 - **Portada**: estructura del inicio (banner, secciones, orden de bloques, textos de presentación).
 - **Afiliación**: requisitos, proceso de aprobación, beneficios y grupos industriales.
