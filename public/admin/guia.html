@@ -98,6 +98,28 @@
 
       .card li { margin-bottom: 0.35rem; }
 
+      .card table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      .card th, .card td {
+        text-align: left;
+        vertical-align: top;
+        padding: 0.5rem 0.6rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .card th {
+        color: #1e3a5f;
+        font-weight: 600;
+        background: #f7fafc;
+      }
+
+      .card td a { color: #2c5282; }
+
       .card code {
         background: #edf2f7;
         padding: 0.1rem 0.35rem;
@@ -188,6 +210,42 @@
       </div>
 
       <div class="card">
+        <h2><span class="emoji">🛠️</span> Páginas que no se editan desde el CMS</h2>
+        <p>Estas páginas no tienen campos en el panel: las cambia el soporte técnico del sitio en uno a dos días hábiles.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Página</th>
+              <th>Qué contiene</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://cbhe.org.bo/quienes-somos/">Misión y visión</a></td>
+              <td>Misión, visión e historia institucional</td>
+            </tr>
+            <tr>
+              <td><a href="https://cbhe.org.bo/contacto/">Datos de contacto</a></td>
+              <td>Dirección, teléfono, correo y formulario</td>
+            </tr>
+            <tr>
+              <td><a href="https://cbhe.org.bo/privacidad/">Privacidad</a> y <a href="https://cbhe.org.bo/terminos/">Términos</a></td>
+              <td>Política de Privacidad y Aviso Legal</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin: 0.75rem 0 0;">El Directorio de Quiénes somos sí se edita desde el panel, en la colección <strong>Directorio</strong>.</p>
+        <p style="margin: 0.75rem 0 0.3rem;">Resto del sitio que tampoco se edita desde el panel:</p>
+        <ul>
+          <li><strong>Portada</strong> — estructura del inicio (banner, secciones, orden de bloques, textos de presentación).</li>
+          <li><strong>Afiliación</strong> — requisitos, proceso de aprobación, beneficios y grupos industriales.</li>
+          <li><strong>RSE</strong> — contenidos de responsabilidad social empresarial.</li>
+          <li><strong>Menú de navegación</strong> — páginas del menú superior y del pie de página.</li>
+          <li><strong>Diseño general</strong> — colores, tipografías, estilos visuales.</li>
+        </ul>
+      </div>
+
+      <div class="card">
         <h2><span class="emoji">✏️</span> Cómo editar contenido</h2>
         <ol>
           <li>Seleccioná una colección en la barra lateral izquierda del CMS.</li>
@@ -253,9 +311,7 @@
       </div>
 
       <div class="nota">
-        <strong>⚠️ Importante:</strong> Cada cambio que guardes queda registrado como un commit en GitHub.
         Los cambios publicados se reflejan en https://cbhe.org.bo/ en pocos minutos.
-        Si tenés dudas, consultá con el equipo de tecnología antes de publicar.
       </div>
     </main>
 
@@ -263,7 +319,7 @@
       <a class="cta-button" href="./">
         Abrir Administrador de Contenido <span class="arrow">→</span>
       </a>
-      <p class="footer-note">Volvé a esta guía cuando necesites — guardala en favoritos</p>
+      <p class="footer-note">Última revisión: 23 de noviembre de 2026</p>
     </div>
   </body>
 </html>
